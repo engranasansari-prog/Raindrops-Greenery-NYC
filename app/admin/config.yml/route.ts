@@ -1,0 +1,41 @@
+const cmsConfig = `backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+site_url: "https://raindropsgreenery.com"
+display_url: "https://raindropsgreenery.com"
+logo_url: "/assets/logo.jpg"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Category", name: "category", widget: "select", options: ["Delivery", "Education", "Ordering", "Product Guide"] }
+      - { label: "Publish Date", name: "publishedAt", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "3 min read" }
+      - { label: "Author", name: "author", widget: "string", default: "Raindrops Greenery" }
+      - { label: "Cover Image", name: "coverImage", widget: "image" }
+      - { label: "Cover Alt Text", name: "coverAlt", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+`;
+
+export function GET() {
+  return new Response(cmsConfig, {
+    headers: {
+      'Content-Type': 'text/yaml; charset=utf-8',
+      'Cache-Control': 'no-store'
+    }
+  });
+}

@@ -1,0 +1,158 @@
+import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
+import { business, serviceAreas, social } from '@/lib/site-data';
+import './globals.css';
+
+const display = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-display', weight: ['600', '700'] });
+const sans = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', weight: ['400', '500', '600', '700', '800'] });
+
+export const metadata: Metadata = {
+  metadataBase: new URL(business.baseUrl),
+  title: {
+    default: 'Raindrops Greenery | New York Cannabis Delivery',
+    template: '%s | Raindrops Greenery'
+  },
+  description:
+    'Raindrops Greenery NY is a premium 21+ cannabis delivery experience for Manhattan, Brooklyn, and Queens with curated Flower, Pre-Rolls, and Edibles.',
+  applicationName: 'Raindrops Greenery',
+  authors: [{ name: business.tradeName }],
+  creator: business.tradeName,
+  publisher: business.legalName,
+  keywords: [
+    'Raindrops Greenery',
+    'cannabis delivery New York',
+    'NYC cannabis delivery',
+    'Manhattan cannabis delivery',
+    'Brooklyn cannabis delivery',
+    'Queens cannabis delivery',
+    'weed delivery NYC',
+    'licensed NY dispensary',
+    'flower NYC',
+    'pre-rolls NYC',
+    'edibles NYC'
+  ],
+  alternates: { canonical: '/' },
+  manifest: '/manifest.json',
+  icons: {
+    icon: [{ url: '/assets/logo.jpg', type: 'image/jpeg' }],
+    apple: [{ url: '/assets/logo.jpg' }],
+    shortcut: ['/assets/logo.jpg']
+  },
+  openGraph: {
+    title: 'Raindrops Greenery | New York Cannabis Delivery',
+    description: 'Browse Raindrops NY Flower, Pre-Rolls, Edibles, delivery details, and customer guides.',
+    url: business.baseUrl,
+    siteName: 'Raindrops Greenery',
+    images: [{ url: '/assets/heroPhoto.jpg', width: 2400, height: 1600, alt: 'Raindrops Greenery premium hero image' }],
+    locale: 'en_US',
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raindrops Greenery | New York Cannabis Delivery',
+    description: 'Premium 21+ delivery for Manhattan, Brooklyn, and Queens.',
+    images: ['/assets/heroPhoto.jpg']
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 }
+  },
+  category: 'cannabis delivery'
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fbf7ee' },
+    { media: '(prefers-color-scheme: dark)', color: '#06130f' }
+  ]
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${business.baseUrl}#business`,
+  name: business.tradeName,
+  legalName: business.legalName,
+  url: business.baseUrl,
+  image: `${business.baseUrl}/assets/heroPhoto.jpg`,
+  logo: `${business.baseUrl}/assets/logo.jpg`,
+  telephone: business.phone,
+  email: business.email,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: `${business.address.line1}, ${business.address.line2}`,
+    addressLocality: business.address.city,
+    addressRegion: business.address.region,
+    postalCode: business.address.postalCode,
+    addressCountry: 'US'
+  },
+  areaServed: serviceAreas.map((area) => ({ '@type': 'City', name: area })),
+  openingHoursSpecification: business.hours.map((slot) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: slot.day,
+    opens: slot.open,
+    closes: slot.close
+  })),
+  sameAs: social.map((item) => item.href)
+};
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${business.baseUrl}#org`,
+  name: business.legalName,
+  url: business.baseUrl,
+  logo: `${business.baseUrl}/assets/logo.jpg`,
+  sameAs: social.map((item) => item.href)
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: business.baseUrl,
+  name: business.tradeName,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${business.baseUrl}/menu?query={search_term_string}`,
+    'query-input': 'required name=search_term_string'
+  }
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+      <body className="font-[var(--font-sans)] antialiased">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--emerald-deep)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-white">
+          Skip to content
+        </a>
+        <Script id="ld-business" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <Script id="ld-org" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
+        <Script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
+        {/*
+          Analytics placeholders. Replace ga_id / pixel_id with real IDs before launch.
+          GA4: https://support.google.com/analytics/answer/9304153
+          Meta Pixel: https://www.facebook.com/business/help/952192354843755
+        */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
+            </Script>
+          </>
+        )}
+        {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${process.env.NEXT_PUBLIC_META_PIXEL_ID}');fbq('track','PageView');`}
+          </Script>
+        )}
+        {children}
+      </body>
+    </html>
+  );
+}

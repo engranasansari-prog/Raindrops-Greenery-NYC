@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+:root {
+  --ivory: #fbf7ee;
+  --cream: #fffdf7;
+  --champagne: #d9b76f;
+  --champagne-dark: #9b7832;
+  --emerald: #0f5b3f;
+  --emerald-deep: #073326;
+  --sage: #dce9df;
+  --ink: #171712;
+  --muted: #6f6b60;
+  --line: rgba(23, 23, 18, 0.1);
+  --shadow-soft: 0 30px 90px rgba(30, 40, 28, 0.12);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #fffaf0 0%, #f7efe0 44%, #edf4ed 100%);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(217, 183, 111, 0.4); color: var(--emerald-deep); }
+
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 4px;
+}
+
+.luxury-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.glass-card {
+  background: rgba(255, 253, 247, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(22px);
+}
+
+.gold-text {
+  background: linear-gradient(120deg, #7f5f1e, #d9b76f 45%, #fff0bc 55%, #8d6c24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.luxe-border {
+  border: 1px solid rgba(217, 183, 111, 0.38);
+}
+
+.mesh-bg {
+  background-image:
+    linear-gradient(rgba(15, 91, 63, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 91, 63, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.product-description-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.legal-prose { color: var(--muted); line-height: 1.85; font-size: 0.95rem; }
+.legal-prose > * + * { margin-top: 1.25rem; }
+.legal-prose h2 {
+  font-family: var(--font-display);
+  color: var(--emerald-deep);
+  font-size: 1.625rem;
+  font-weight: 700;
+  margin-top: 2.25rem;
+  line-height: 1.25;
+}
+.legal-prose h3 {
+  color: var(--emerald-deep);
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
+.legal-prose p { color: var(--muted); }
+.legal-prose strong { color: var(--ink); font-weight: 700; }
+.legal-prose ul { list-style: disc; padding-left: 1.4rem; }
+.legal-prose ol { list-style: decimal; padding-left: 1.4rem; }
+.legal-prose li + li { margin-top: 0.4rem; }
+.legal-prose a {
+  color: var(--emerald-deep);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(217, 183, 111, 0.6);
+}
+.legal-prose a:hover { color: var(--champagne-dark); }
+
+.blog-prose { color: var(--muted); line-height: 1.85; font-size: 1rem; }
+.blog-prose > * + * { margin-top: 1.25rem; }
+.blog-prose h2 {
+  font-family: var(--font-display);
+  color: var(--emerald-deep);
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  line-height: 1.2;
+}
+.blog-prose ul { list-style: disc; padding-left: 1.4rem; }
+.blog-prose ol { list-style: decimal; padding-left: 1.4rem; }
+.blog-prose li + li { margin-top: 0.4rem; }
+.blog-prose strong { color: var(--ink); font-weight: 700; }
+.blog-prose em { color: var(--emerald-deep); font-style: italic; }
+.blog-prose a {
+  color: var(--emerald-deep);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(217, 183, 111, 0.6);
+}
+.blog-prose a:hover { color: var(--champagne-dark); }
+.blog-prose blockquote {
+  border-left: 3px solid var(--champagne);
+  padding-left: 1rem;
+  color: var(--emerald-deep);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .luxury-shell { width: min(100% - 22px, 1180px); }
+}
