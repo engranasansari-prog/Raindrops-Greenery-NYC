@@ -256,14 +256,14 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <div className="luxury-shell flex flex-col gap-5 py-6 text-xs text-white/56 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-3 py-1 font-extrabold uppercase tracking-[0.2em] text-white/72">
-              <ShieldCheck className="h-3.5 w-3.5 text-[var(--champagne)]" />
-              {business.licensingShort}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/14 px-3 py-1 font-bold text-white/72">
+              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[var(--champagne)]" />
+              <span className="break-words">{business.licensingShort}</span>
             </span>
-            <span>&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
+            <span className="break-words">&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {social.map((item) => (
               <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="rounded-full border border-white/14 px-3 py-1 font-bold text-white/70 transition hover:border-[var(--champagne)] hover:text-white">
                 {item.label}

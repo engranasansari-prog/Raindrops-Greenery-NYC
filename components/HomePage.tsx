@@ -49,9 +49,9 @@ function Hero() {
 
       <div className="luxury-shell relative flex min-h-[500px] items-center py-12 sm:min-h-[600px] sm:py-14 md:min-h-[calc(78vh-76px)]">
         <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }} className="max-w-3xl">
-          <motion.div variants={fadeUp} className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/22 bg-white/12 px-4 py-2 backdrop-blur">
-            <Sparkles className="h-4 w-4 text-[var(--champagne)]" />
-            <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-white/86">Premium NYC cannabis delivery</span>
+          <motion.div variants={fadeUp} className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-white/22 bg-white/12 px-4 py-2 backdrop-blur">
+            <Sparkles className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/86 sm:text-xs sm:tracking-[0.22em]">Premium NYC delivery</span>
           </motion.div>
           <motion.h1 variants={fadeUp} className="font-[var(--font-display)] text-[2.75rem] font-extrabold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
             Raindrops Greenery
