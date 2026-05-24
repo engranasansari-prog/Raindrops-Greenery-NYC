@@ -74,7 +74,7 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
       layout
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group flex min-h-[560px] flex-col overflow-hidden rounded-lg border border-white/70 bg-white/82 shadow-[0_18px_54px_rgba(25,35,20,0.09)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_86px_rgba(25,35,20,0.14)]"
+      className="group flex flex-col overflow-hidden rounded-lg border border-white/70 bg-white/82 shadow-[0_18px_54px_rgba(25,35,20,0.09)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_86px_rgba(25,35,20,0.14)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-[#fbf7ee]">
         <ProductImage product={product} />
@@ -170,26 +170,26 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
   };
 
   return (
-    <motion.div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#06130f]/76 p-4 backdrop-blur-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <motion.div initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.97 }} className="max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-lg bg-[#fffaf0] shadow-2xl">
+    <motion.div className="fixed inset-0 z-[90] flex items-stretch justify-center bg-[#06130f]/82 p-0 backdrop-blur-lg sm:items-center sm:p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <motion.div initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.97 }} className="max-h-[100dvh] w-full max-w-5xl overflow-y-auto bg-[#fffaf0] shadow-2xl sm:max-h-[92vh] sm:rounded-lg">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative min-h-[360px] bg-white">
+          <div className="relative h-[240px] bg-white sm:h-[320px] lg:h-auto lg:min-h-[360px]">
             <ProductImage product={product} />
           </div>
-          <div className="p-6 md:p-8">
+          <div className="p-5 sm:p-6 md:p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne-dark)]">{product.category}</p>
-                <h2 className="mt-2 font-[var(--font-display)] text-4xl font-bold leading-tight text-[var(--emerald-deep)]">{product.name}</h2>
+                <h2 className="mt-2 font-[var(--font-display)] text-2xl font-bold leading-tight text-[var(--emerald-deep)] sm:text-3xl md:text-4xl">{product.name}</h2>
               </div>
               <button onClick={onClose} className="rounded-full border border-[var(--line)] bg-white p-3 text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]" aria-label="Close product details">
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="mt-5 flex items-end gap-3">
+            <div className="mt-4 flex items-end gap-3 sm:mt-5">
               {product.salePrice < product.price && <p className="pb-1 text-sm font-bold text-[var(--muted)] line-through">{formatPrice(product.price)}</p>}
-              <p className="font-[var(--font-display)] text-4xl font-bold text-[var(--emerald)]">{formatPrice(product.salePrice)}</p>
+              <p className="font-[var(--font-display)] text-3xl font-bold text-[var(--emerald)] sm:text-4xl">{formatPrice(product.salePrice)}</p>
             </div>
 
             <p className="mt-5 leading-8 text-[var(--muted)]">{getProductDescription(product)}</p>
@@ -338,20 +338,20 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
           <div>
             <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
             <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops NY menu</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Flower, Pre-Rolls, and Edibles.</h1>
+            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Flower, Pre-Rolls, and Edibles.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
               Search and filter a focused menu with product images, pricing, potency, size, brand, and deal details.
             </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             {productCategories.map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(setCategory, item)}
-                className="rounded-lg border border-white/12 bg-white/8 p-4 text-left transition hover:-translate-y-0.5 hover:bg-white/12"
+                className="rounded-lg border border-white/12 bg-white/8 p-3 text-left transition hover:-translate-y-0.5 hover:bg-white/12 sm:p-4"
               >
-                <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne)]">{item}</p>
-                <p className="mt-2 font-[var(--font-display)] text-4xl font-bold">{menuCounts[item]}</p>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--champagne)] sm:text-xs sm:tracking-[0.16em]">{item}</p>
+                <p className="mt-1 font-[var(--font-display)] text-3xl font-bold sm:mt-2 sm:text-4xl">{menuCounts[item]}</p>
               </button>
             ))}
           </div>

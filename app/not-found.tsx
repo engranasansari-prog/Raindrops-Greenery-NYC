@@ -15,7 +15,7 @@ export default function NotFound() {
         <div className="luxury-shell relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">404</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-6xl font-extrabold leading-tight md:text-8xl">Page not found.</h1>
+            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight sm:text-6xl md:text-8xl">Page not found.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               The link you followed may be old, or the page may have moved. From here you can jump back to the menu, see delivery areas, or get a hand from support.
             </p>

@@ -40,7 +40,7 @@ export default function DealsPage() {
           <div>
             <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
             <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Live deals</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Sale pricing on Flower, Pre-Rolls, and Edibles.</h1>
+            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Sale pricing on Flower, Pre-Rolls, and Edibles.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Showing {dealProducts.length} active product deals. Promo codes below stack with sale pricing unless noted otherwise. Final price confirmed at checkout.
             </p>

@@ -32,7 +32,7 @@ export default function LegalLayout({
         <div className="luxury-shell relative max-w-4xl py-14 md:py-20">
           <Breadcrumbs items={[{ label: 'Legal', href: '/legal/privacy' }, { label: title }]} tone="dark" />
           <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">{eyebrow}</p>
-          <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">{title}</h1>
+          <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">{title}</h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-white/74">{intro}</p>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white/52">Last updated {lastUpdated}</p>
         </div>

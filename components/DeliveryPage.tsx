@@ -26,7 +26,7 @@ export default function DeliveryPage() {
           <div>
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
             <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops New York delivery</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Premium delivery for Manhattan, Brooklyn, and Queens.</h1>
+            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Premium delivery for Manhattan, Brooklyn, and Queens.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Browse a focused cannabis menu, check your area, and continue to secure checkout when you are ready to order.
             </p>

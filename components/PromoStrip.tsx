@@ -24,9 +24,9 @@ export default function PromoStrip() {
 
   return (
     <div className="relative z-[60] bg-[var(--emerald-deep)] text-white">
-      <div className="luxury-shell flex items-center gap-3 py-2 text-xs font-bold sm:text-sm">
+      <div className="luxury-shell flex items-center gap-2 py-2 text-[11px] font-bold leading-snug sm:gap-3 sm:text-sm">
         <BadgePercent className="hidden h-4 w-4 shrink-0 text-[var(--champagne)] sm:block" />
-        <p className="flex-1 leading-relaxed">{promoStrip.message}</p>
+        <p className="flex-1">{promoStrip.message}</p>
         {promoStrip.cta && (
           <Link
             href={promoStrip.cta.href}
@@ -39,7 +39,7 @@ export default function PromoStrip() {
         <button
           onClick={dismiss}
           aria-label="Dismiss promotion"
-          className="-mr-1 rounded-full p-1 text-white/70 transition hover:bg-white/12 hover:text-white"
+          className="-mr-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white/70 transition hover:bg-white/12 hover:text-white"
         >
           <X className="h-4 w-4" />
         </button>

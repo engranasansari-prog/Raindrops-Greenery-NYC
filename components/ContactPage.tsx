@@ -34,7 +34,7 @@ export default function ContactPage() {
           <div>
             <Breadcrumbs items={[{ label: 'Contact' }]} tone="dark" />
             <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Get in touch</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Real humans answer here.</h1>
+            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Real humans answer here.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Questions about a delivery, a product, or a partnership? Use the form, give us a call, or message us on social. We answer most messages within one business day.
             </p>

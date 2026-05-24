@@ -12,10 +12,37 @@
   --muted: #6f6b60;
   --line: rgba(23, 23, 18, 0.1);
   --shadow-soft: 0 30px 90px rgba(30, 40, 28, 0.12);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent iOS automatically resizing text when rotating to landscape */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #fffaf0 0%, #f7efe0 44%, #edf4ed 100%);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* No tap highlight, we render our own focus/active states */
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection { background: rgba(217, 183, 111, 0.4); color: var(--emerald-deep); }
+
+/* Fraunces variable axes — tighten letter-spacing on large display headings */
+h1, h2, h3 {
+  font-variation-settings: 'SOFT' 70, 'opsz' 144;
+  letter-spacing: -0.018em;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -26,46 +53,33 @@ html { scroll-behavior: smooth; }
   }
 }
 
-/* Fraunces variable axes — tighten letter-spacing on large headings,
-   enable the SOFT axis for a more rounded display feel. Headings inherit
-   the display family via the body's --font-display variable. */
-h1, h2, h3 {
-  font-variation-settings: 'SOFT' 70, 'opsz' 144;
-  letter-spacing: -0.018em;
-}
-
-body {
-  font-feature-settings: 'ss01', 'cv11';
-}
-
 /* Reserve space under sticky header for anchor-link targets */
 :target { scroll-margin-top: 120px; }
 
-/* Polished focus ring used across interactive elements */
-:focus-visible {
-  outline: 2px solid var(--champagne);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #fffaf0 0%, #f7efe0 44%, #edf4ed 100%);
-  color: var(--ink);
-  overflow-x: hidden;
-}
-
-::selection { background: rgba(217, 183, 111, 0.4); color: var(--emerald-deep); }
-
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible),
-input:focus:not(:focus-visible) {
+input:focus:not(:focus-visible),
+select:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
   outline: none;
 }
 
 :focus-visible {
   outline: 2px solid var(--champagne);
-  outline-offset: 4px;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
+
+/* iOS Safari zooms when an input has font-size < 16px. Force minimum on
+   touch viewports to keep the layout stable when the keyboard appears. */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Respect iPhone safe areas on bottom-floating bars */
+.safe-bottom { padding-bottom: max(1rem, calc(var(--safe-bottom) + 0.75rem)); }
 
 .luxury-shell {
   width: min(1180px, calc(100% - 32px));
@@ -89,9 +103,7 @@ input:focus:not(:focus-visible) {
   color: transparent;
 }
 
-.luxe-border {
-  border: 1px solid rgba(217, 183, 111, 0.38);
-}
+.luxe-border { border: 1px solid rgba(217, 183, 111, 0.38); }
 
 .mesh-bg {
   background-image:
@@ -107,15 +119,29 @@ input:focus:not(:focus-visible) {
   overflow: hidden;
 }
 
+/* Drop expensive blur on small screens to keep paint smooth on mid-range
+   phones. Visual difference is negligible at that scale. */
+@media (max-width: 640px) {
+  .backdrop-blur,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-lg {
+    backdrop-filter: blur(8px);
+  }
+}
+
 .legal-prose { color: var(--muted); line-height: 1.85; font-size: 0.95rem; }
 .legal-prose > * + * { margin-top: 1.25rem; }
 .legal-prose h2 {
   font-family: var(--font-display);
   color: var(--emerald-deep);
-  font-size: 1.625rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-top: 2.25rem;
+  margin-top: 2rem;
   line-height: 1.25;
+}
+@media (min-width: 768px) {
+  .legal-prose h2 { font-size: 1.625rem; margin-top: 2.25rem; }
 }
 .legal-prose h3 {
   color: var(--emerald-deep);
@@ -142,10 +168,13 @@ input:focus:not(:focus-visible) {
 .blog-prose h2 {
   font-family: var(--font-display);
   color: var(--emerald-deep);
-  font-size: 1.875rem;
+  font-size: 1.625rem;
   font-weight: 700;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   line-height: 1.2;
+}
+@media (min-width: 768px) {
+  .blog-prose h2 { font-size: 1.875rem; margin-top: 2.5rem; }
 }
 .blog-prose ul { list-style: disc; padding-left: 1.4rem; }
 .blog-prose ol { list-style: decimal; padding-left: 1.4rem; }
@@ -169,4 +198,8 @@ input:focus:not(:focus-visible) {
 
 @media (max-width: 768px) {
   .luxury-shell { width: min(100% - 22px, 1180px); }
+}
+
+@media (max-width: 480px) {
+  .luxury-shell { width: calc(100% - 24px); }
 }

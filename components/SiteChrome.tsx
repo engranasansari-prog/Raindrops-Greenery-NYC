@@ -296,7 +296,8 @@ function StickyOrderBar() {
           initial={{ opacity: 0, y: 24, x: '-50%' }}
           animate={{ opacity: 1, y: 0, x: '-50%' }}
           exit={{ opacity: 0, y: 24, x: '-50%' }}
-          className="fixed bottom-4 left-1/2 z-40 w-[min(720px,calc(100%-24px))] rounded-full border border-white/70 bg-[#fffaf0]/90 p-2 shadow-[0_20px_70px_rgba(7,51,38,0.22)] backdrop-blur-2xl"
+          className="fixed left-1/2 z-40 w-[min(720px,calc(100%-16px))] rounded-full border border-white/70 bg-[#fffaf0]/92 p-2 shadow-[0_20px_70px_rgba(7,51,38,0.22)] backdrop-blur-2xl"
+          style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="hidden pl-4 sm:block">

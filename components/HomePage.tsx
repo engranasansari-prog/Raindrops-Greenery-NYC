@@ -42,39 +42,39 @@ const categoryTiles = [
 
 function Hero() {
   return (
-    <section className="relative min-h-[680px] overflow-hidden bg-[#06130f] text-white md:min-h-[78vh]">
+    <section className="relative min-h-[560px] overflow-hidden bg-[#06130f] text-white sm:min-h-[640px] md:min-h-[78vh]">
       <Image src="/assets/heroPhoto.jpg" alt="Raindrops Greenery New York delivery" fill priority sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.88)_0%,rgba(6,19,15,0.62)_46%,rgba(6,19,15,0.18)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
 
-      <div className="luxury-shell relative flex min-h-[600px] items-center py-14 md:min-h-[calc(78vh-76px)]">
+      <div className="luxury-shell relative flex min-h-[500px] items-center py-12 sm:min-h-[600px] sm:py-14 md:min-h-[calc(78vh-76px)]">
         <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }} className="max-w-3xl">
           <motion.div variants={fadeUp} className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/22 bg-white/12 px-4 py-2 backdrop-blur">
             <Sparkles className="h-4 w-4 text-[var(--champagne)]" />
             <span className="text-xs font-extrabold uppercase tracking-[0.22em] text-white/86">Premium NYC cannabis delivery</span>
           </motion.div>
-          <motion.h1 variants={fadeUp} className="font-[var(--font-display)] text-6xl font-extrabold leading-[0.92] text-white md:text-8xl">
+          <motion.h1 variants={fadeUp} className="font-[var(--font-display)] text-[2.75rem] font-extrabold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
             Raindrops Greenery
           </motion.h1>
-          <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-lg leading-8 text-white/78 md:text-xl">
+          <motion.p variants={fadeUp} className="mt-4 max-w-2xl text-base leading-7 text-white/78 sm:mt-5 sm:text-lg sm:leading-8 md:text-xl">
             Browse Flower, Pre-Rolls, and Edibles for 21+ delivery in Manhattan, Brooklyn, and Queens.
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link href="/menu" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
+          <motion.div variants={fadeUp} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
+            <Link href="/menu" className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
               <Search className="h-4 w-4" />
               Browse menu
             </Link>
             <OrderButton />
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+          <motion.div variants={fadeUp} className="mt-7 grid max-w-2xl grid-cols-3 gap-2 sm:mt-8 sm:gap-3">
             {[
               [String(menuProducts.length), 'menu items'],
               ['3', 'delivery areas'],
               ['21+', 'adult use only']
             ].map(([value, label]) => (
-              <div key={label} className="rounded-lg border border-white/18 bg-white/12 p-4 backdrop-blur">
-                <p className="font-[var(--font-display)] text-3xl font-bold text-white">{value}</p>
-                <p className="mt-1 text-xs font-extrabold uppercase tracking-[0.16em] text-white/62">{label}</p>
+              <div key={label} className="rounded-lg border border-white/18 bg-white/12 p-3 backdrop-blur sm:p-4">
+                <p className="font-[var(--font-display)] text-2xl font-bold text-white sm:text-3xl">{value}</p>
+                <p className="mt-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/62 sm:text-xs">{label}</p>
               </div>
             ))}
           </motion.div>
@@ -86,12 +86,12 @@ function Hero() {
 
 function MenuPreview() {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-12 sm:py-14 md:py-20">
       <div className="luxury-shell">
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Product discovery</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Shop by format, not by friction.</h2>
+            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Shop by format, not by friction.</h2>
           </div>
           <TextLink href="/menu">Open full filtered menu</TextLink>
         </div>
@@ -136,7 +136,7 @@ function DealsStrip() {
               <BadgePercent className="h-4 w-4" />
               On sale now
             </p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Deals worth grabbing tonight.</h2>
+            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Deals worth grabbing tonight.</h2>
           </div>
           <TextLink href="/deals">See all deals</TextLink>
         </div>
@@ -169,11 +169,11 @@ function DealsStrip() {
 
 function ValuePropBar() {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-12 sm:py-14 md:py-20">
       <div className="luxury-shell">
         <div className="max-w-3xl">
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Why customers choose Raindrops</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Four reasons New Yorkers come back.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Four reasons New Yorkers come back.</h2>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {valueProps.map((item, index) => (
@@ -191,11 +191,11 @@ function ValuePropBar() {
 
 function Testimonials() {
   return (
-    <section className="bg-[#fbf7ee] py-14 md:py-20">
+    <section className="bg-[#fbf7ee] py-12 sm:py-14 md:py-20">
       <div className="luxury-shell">
         <div className="max-w-3xl">
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Customer voices</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Real orders, from real New Yorkers.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Real orders, from real New Yorkers.</h2>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {testimonials.map((item) => (
@@ -219,11 +219,11 @@ function Testimonials() {
 
 function StoryStrip() {
   return (
-    <section className="bg-[#0b3025] py-14 text-white md:py-20">
+    <section className="bg-[#0b3025] py-12 text-white sm:py-14 md:py-20">
       <div className="luxury-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops NY</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold leading-tight md:text-5xl">Built for fast, clear New York delivery.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Built for fast, clear New York delivery.</h2>
           <p className="mt-5 leading-8 text-white/68">
             A cleaner shopping path for adult customers: focused categories, easy product comparison, and a secure checkout flow when you are ready to order.
           </p>
@@ -251,11 +251,11 @@ function DeliveryCheck() {
   }, [clean]);
 
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-12 sm:py-14 md:py-20">
       <div className="luxury-shell grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center">
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Delivery coverage</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Focused on Manhattan, Brooklyn, and Queens.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Focused on Manhattan, Brooklyn, and Queens.</h2>
           <p className="mt-5 max-w-2xl leading-8 text-[var(--muted)]">
             Check your area, browse the menu, and confirm final delivery details during checkout.
           </p>
@@ -295,11 +295,11 @@ function DeliveryCheck() {
 
 function Steps() {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-12 sm:py-14 md:py-20">
       <div className="luxury-shell">
         <div className="mb-8 max-w-3xl">
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Order flow</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Browse confidently, then checkout securely.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Browse confidently, then checkout securely.</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {steps.map((step, index) => (
@@ -317,12 +317,12 @@ function Steps() {
 
 function BlogPreview({ posts }: { posts: BlogPostMeta[] }) {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-12 sm:py-14 md:py-20">
       <div className="luxury-shell">
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Journal</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Guides for smarter ordering.</h2>
+            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Guides for smarter ordering.</h2>
           </div>
           <TextLink href="/blog">View all articles</TextLink>
         </div>
@@ -353,7 +353,7 @@ function FAQ() {
       <div className="luxury-shell grid gap-7 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">FAQ</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Clear answers before checkout.</h2>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Clear answers before checkout.</h2>
         </div>
         <div className="space-y-3">
           {faqs.map((faq, index) => (

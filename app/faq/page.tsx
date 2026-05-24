@@ -36,7 +36,7 @@ export default function FaqPage() {
         <div className="luxury-shell relative max-w-4xl py-14 md:py-20">
           <Breadcrumbs items={[{ label: 'FAQ' }]} tone="dark" />
           <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">FAQ</p>
-          <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Quick answers before you order.</h1>
+          <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Quick answers before you order.</h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
             Clear details about delivery areas, age requirements, product browsing, and checkout.
           </p>

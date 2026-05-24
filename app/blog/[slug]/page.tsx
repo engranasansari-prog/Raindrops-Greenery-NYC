@@ -101,7 +101,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             </Link>
             <div className="mt-8 max-w-4xl">
               <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">{post.category}</p>
-              <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">{post.title}</h1>
+              <h1 className="mt-3 font-[var(--font-display)] text-3xl font-extrabold leading-tight sm:text-4xl md:text-5xl lg:text-6xl">{post.title}</h1>
               <div className="mt-5 flex flex-wrap gap-3 text-sm font-bold text-white/68">
                 <span className="inline-flex items-center gap-2">
                   <CalendarDays className="h-4 w-4 text-[var(--champagne)]" />
