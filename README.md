@@ -2,6 +2,12 @@
 
 Premium Next.js 16 + React 19 website for Raindrops Greenery New York delivery. Focused menu (Flower, Pre-Rolls, Edibles), Dutchie/Flowhub-backed checkout, NYC delivery focus, blog with Decap CMS admin.
 
+**Contact:** (888) 448-9717 · nycraindrops@gmail.com · Daily 10:00 AM – 12:00 AM
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fengranasansari-prog%2FRaindrops-Greenery-NYC&project-name=raindrops-greenery-nyc&repository-name=raindrops-greenery-nyc)
+
+Click the badge above to deploy a live preview link in ~30 seconds. After it deploys, Vercel gives you a URL like `https://raindrops-greenery-nyc.vercel.app` that you can share with the client.
+
 ## Routes
 
 | Path | Purpose |
@@ -73,9 +79,9 @@ npm run build
 
 Before handing off to a client / going live, fill in the values flagged `[REPLACE: ...]` inside `lib/site-data.ts`:
 
-- [ ] Phone, email, support email, press email
+- [x] Phone, email, support email, press email — (888) 448-9717 / nycraindrops@gmail.com
+- [x] Business hours — Daily 10:00 AM – 12:00 AM
 - [ ] Physical address
-- [ ] Business hours
 - [ ] NY OCM retail license number
 - [ ] Social profile URLs (Instagram, TikTok, X, Facebook)
 - [ ] Real production hostname in `business.domain` / `business.baseUrl`

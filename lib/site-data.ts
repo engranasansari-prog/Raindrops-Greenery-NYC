@@ -10,14 +10,14 @@ export const business = {
   tradeName: 'Raindrops Greenery',
   tagline: 'Premium NYC cannabis delivery',
   yearFounded: 2024,
-  phone: '[REPLACE: (555) 555-0123]',
-  phoneHref: 'tel:+15555550123',
-  email: '[REPLACE: hello@raindropsgreenery.com]',
-  emailHref: 'mailto:hello@raindropsgreenery.com',
-  pressEmail: '[REPLACE: press@raindropsgreenery.com]',
-  pressEmailHref: 'mailto:press@raindropsgreenery.com',
-  supportEmail: '[REPLACE: support@raindropsgreenery.com]',
-  supportEmailHref: 'mailto:support@raindropsgreenery.com',
+  phone: '(888) 448-9717',
+  phoneHref: 'tel:+18884489717',
+  email: 'nycraindrops@gmail.com',
+  emailHref: 'mailto:nycraindrops@gmail.com',
+  pressEmail: 'nycraindrops@gmail.com',
+  pressEmailHref: 'mailto:nycraindrops@gmail.com',
+  supportEmail: 'nycraindrops@gmail.com',
+  supportEmailHref: 'mailto:nycraindrops@gmail.com',
   address: {
     line1: '[REPLACE: 000 Example Ave]',
     line2: 'Suite 100',
@@ -26,9 +26,7 @@ export const business = {
     postalCode: '10001'
   },
   hours: [
-    { day: 'Mon - Thu', open: '10:00 AM', close: '10:00 PM' },
-    { day: 'Fri - Sat', open: '10:00 AM', close: '11:00 PM' },
-    { day: 'Sun', open: '11:00 AM', close: '9:00 PM' }
+    { day: 'Every day', open: '10:00 AM', close: '12:00 AM' }
   ],
   // NY Office of Cannabis Management retail dispensary license number.
   ocmLicense: '[REPLACE: OCM-RETAIL-XXXX-XXXX]',
