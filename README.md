@@ -4,9 +4,11 @@ Premium Next.js 16 + React 19 website for Raindrops Greenery New York delivery. 
 
 **Contact:** (888) 448-9717 · nycraindrops@gmail.com · Daily 10:00 AM – 12:00 AM
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fengranasansari-prog%2FRaindrops-Greenery-NYC&project-name=raindrops-greenery-nyc&repository-name=raindrops-greenery-nyc)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/import?s=https%3A%2F%2Fgithub.com%2Fengranasansari-prog%2FRaindrops-Greenery-NYC)
 
-Click the badge above to deploy a live preview link in ~30 seconds. After it deploys, Vercel gives you a URL like `https://raindrops-greenery-nyc.vercel.app` that you can share with the client.
+Click the badge above (or go to https://vercel.com/new and pick this repo) to deploy a live preview link in ~30 seconds. After it deploys, Vercel gives you a URL like `https://raindrops-greenery-nyc.vercel.app` to share with the client.
+
+> Use **Import**, not "Clone" — the GitHub repo already exists, so Vercel just needs to pull from it.
 
 ## Routes
 
