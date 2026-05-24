@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, CalendarDays } from 'lucide-react';
 import SiteChrome from '@/components/SiteChrome';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogPosts } from '@/lib/blog-posts';
 
 export const metadata: Metadata = {
@@ -30,7 +31,8 @@ export default function BlogPage() {
       <section className="relative overflow-hidden bg-[#0b3025] text-white">
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative max-w-4xl py-14 md:py-20">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops Journal</p>
+          <Breadcrumbs items={[{ label: 'Journal' }]} tone="dark" />
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops Journal</p>
           <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Guides for better ordering.</h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
             Product education, delivery notes, and simple ordering tips for adult customers in Manhattan, Brooklyn, and Queens.

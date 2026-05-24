@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { business } from '@/lib/site-data';
 
 const legalNav = [
@@ -29,7 +30,8 @@ export default function LegalLayout({
       <section className="relative overflow-hidden bg-[#0b3025] text-white">
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative max-w-4xl py-14 md:py-20">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">{eyebrow}</p>
+          <Breadcrumbs items={[{ label: 'Legal', href: '/legal/privacy' }, { label: title }]} tone="dark" />
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">{eyebrow}</p>
           <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">{title}</h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-white/74">{intro}</p>
           <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white/52">Last updated {lastUpdated}</p>
@@ -68,7 +70,7 @@ export default function LegalLayout({
             <div className="legal-prose">{children}</div>
             <div className="mt-10 grid gap-3 sm:flex sm:items-center sm:justify-between">
               <p className="text-xs leading-6 text-[var(--muted)]">
-                Operated by {business.legalName}. NY OCM license {business.ocmLicense}.
+                Operated by {business.legalName}. {business.licensingShort} — licensed by the {business.licensingAuthority}.
               </p>
               <OrderButton label="Browse menu" />
             </div>

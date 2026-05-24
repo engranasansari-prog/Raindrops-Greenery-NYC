@@ -1,11 +1,20 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google';
+import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import './globals.css';
 
-const display = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-display', weight: ['600', '700'] });
-const sans = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-sans', weight: ['400', '500', '600', '700', '800'] });
+const display = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: 'variable',
+  axes: ['opsz', 'SOFT']
+});
+const sans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['400', '500', '600', '700', '800']
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(business.baseUrl),
@@ -85,19 +94,18 @@ const jsonLd = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: `${business.address.line1}, ${business.address.line2}`,
-    addressLocality: business.address.city,
-    addressRegion: business.address.region,
-    postalCode: business.address.postalCode,
+    addressRegion: 'NY',
     addressCountry: 'US'
   },
   areaServed: serviceAreas.map((area) => ({ '@type': 'City', name: area })),
-  openingHoursSpecification: business.hours.map((slot) => ({
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: slot.day,
-    opens: slot.open,
-    closes: slot.close
-  })),
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '10:00',
+      closes: '24:00'
+    }
+  ],
   sameAs: social.map((item) => item.href)
 };
 

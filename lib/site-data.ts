@@ -18,19 +18,20 @@ export const business = {
   pressEmailHref: 'mailto:nycraindrops@gmail.com',
   supportEmail: 'nycraindrops@gmail.com',
   supportEmailHref: 'mailto:nycraindrops@gmail.com',
-  address: {
-    line1: '[REPLACE: 000 Example Ave]',
-    line2: 'Suite 100',
-    city: 'New York',
-    region: 'NY',
-    postalCode: '10001'
-  },
+  // Open every day; the live OpenStatus indicator reads this list.
   hours: [
     { day: 'Every day', open: '10:00 AM', close: '12:00 AM' }
   ],
-  // NY Office of Cannabis Management retail dispensary license number.
-  ocmLicense: '[REPLACE: OCM-RETAIL-XXXX-XXXX]',
-  // Replace with the real production hostname before launch.
+  // Continuous open window in 24h, used by the live status badge.
+  openHour: 10,
+  closeHour: 24,
+  // Operating under a sovereign Shinnecock Indian Nation cannabis license.
+  licensingAuthority: 'Shinnecock Indian Nation Cannabis Regulatory Division',
+  licensingShort: 'Shinnecock-licensed cannabis delivery partner',
+  // Sovereign tribal land base (Shinnecock Indian Nation, Long Island, New York).
+  jurisdiction: 'Shinnecock Indian Nation, Long Island, New York',
+  serviceRegion: 'New York City',
+  // Production hostname — update to the actual deployed domain when live.
   domain: 'raindropsgreenery.com',
   baseUrl: 'https://raindropsgreenery.com'
 };
@@ -112,16 +113,16 @@ export const supportedZips = serviceAreaDetails.flatMap((area) => area.zips);
 
 export const trustPoints = [
   {
-    title: 'Curated menu',
-    body: 'Browse a focused selection of Flower, Pre-Rolls, and Edibles without digging through unrelated categories.'
+    title: 'Sovereign-licensed',
+    body: 'Operating under a Shinnecock Indian Nation cannabis license — adult-use, fully sanctioned, fully tracked.'
   },
   {
     title: 'NYC delivery focus',
-    body: 'Built around a simple delivery experience for Manhattan, Brooklyn, and Queens.'
+    body: 'Built around a calm, focused delivery experience for Manhattan, Brooklyn, and Queens.'
   },
   {
     title: 'Secure checkout',
-    body: 'Order buttons open the checkout flow for final availability, payment, and 21+ verification.'
+    body: 'Order buttons open the checkout flow for final availability, payment, and 21+ verification at the door.'
   }
 ];
 
@@ -145,12 +146,12 @@ export const steps = [
 
 export const valueProps = [
   {
-    title: 'NY-tested products',
-    body: 'Every product on the menu is sourced from licensed New York operators with state-required testing on record. Ask for the Certificate of Analysis at checkout for any item.'
+    title: 'Sovereign-licensed',
+    body: 'Sourced and sold under a Shinnecock Indian Nation cannabis license. Every product is tracked from supplier to door.'
   },
   {
     title: 'Transparent pricing',
-    body: 'List price, sale price, weight, and active deal are all visible up front. No hidden fees on the menu — final taxes are confirmed at checkout.'
+    body: 'List price, sale price, weight, and active deal are all visible up front. No hidden fees on the menu — final taxes confirmed at checkout.'
   },
   {
     title: 'Discreet, professional delivery',
@@ -180,21 +181,18 @@ export const testimonials = [
   }
 ];
 
-export const pressMentions = [
-  '[REPLACE: New York Cannabis Insider]',
-  '[REPLACE: Time Out NY]',
-  '[REPLACE: Resident Magazine]',
-  '[REPLACE: High Times Local]'
-];
-
 export const faqs = [
   {
+    q: 'Who licenses Raindrops Greenery?',
+    a: 'Raindrops Greenery operates under a sovereign cannabis license issued by the Shinnecock Indian Nation Cannabis Regulatory Division. All products move through the Shinnecock track-and-trace system.'
+  },
+  {
     q: 'Where does Raindrops Greenery deliver?',
-    a: 'Raindrops Greenery New York delivery focuses on Manhattan, Brooklyn, and Queens. Final delivery eligibility is confirmed during checkout.'
+    a: 'We focus on adult-use delivery for Manhattan, Brooklyn, and Queens. Final delivery eligibility is confirmed during checkout.'
   },
   {
     q: 'Do I need to be 21 or older?',
-    a: 'Yes. This website and checkout experience are intended only for adults 21 and older. A valid government ID is required at the door before a delivery is handed off.'
+    a: 'Yes. This website and the delivery experience are intended only for adults 21 and older. A valid government ID is required at the door before any delivery is handed off.'
   },
   {
     q: 'Can I place an order from the website?',
@@ -210,7 +208,7 @@ export const faqs = [
   },
   {
     q: 'Are products lab tested?',
-    a: 'Yes. All products are sourced from New York licensed operators that are required to test for potency, pesticides, microbials, and heavy metals. Certificates of Analysis are available on request.'
+    a: 'Yes. All products carry potency and contaminant testing under the Shinnecock cannabis program. A Certificate of Analysis is available on request — ask at checkout or contact support.'
   },
   {
     q: 'What payment methods are accepted?',

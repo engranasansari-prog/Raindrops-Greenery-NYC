@@ -19,7 +19,7 @@ export default function PrivacyPage() {
       currentPath="/legal/privacy"
     >
       <p>
-        {business.legalName} (“Raindrops Greenery”, “we”, “us”) operates licensed adult-use cannabis delivery in New York and the website at {business.baseUrl} (the “Service”). We respect the privacy of adults who use our Service and we are committed to handling personal information responsibly and in compliance with applicable law, including the New York Cannabis Law and the New York SHIELD Act.
+        {business.legalName} (“Raindrops Greenery”, “we”, “us”) operates an adult-use cannabis delivery service under a sovereign cannabis license issued by the {business.licensingAuthority}, serving New York City customers through the website at {business.baseUrl} (the “Service”). We respect the privacy of adults who use our Service and we are committed to handling personal information responsibly and in line with applicable Shinnecock and New York law, including the New York SHIELD Act.
       </p>
 
       <h2>1. Who this policy applies to</h2>
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
         <li>Confirm you are 21 or older and verify identity at the door.</li>
         <li>Process, fulfill, and deliver orders.</li>
         <li>Provide customer support and respond to inquiries.</li>
-        <li>Maintain records required by the New York Office of Cannabis Management.</li>
+        <li>Maintain records required by the {business.licensingAuthority}.</li>
         <li>Improve the Service, measure traffic, and prevent fraud or abuse.</li>
         <li>Send transactional messages and, if you opt in, marketing emails.</li>
       </ul>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
       <p>We share personal information only as needed:</p>
       <ul>
         <li>With service providers (payment processing, logistics, delivery, hosting, analytics) bound by confidentiality and use-limitation obligations.</li>
-        <li>With government or regulatory bodies when required by law, including the New York Office of Cannabis Management.</li>
+        <li>With government, tribal, or regulatory bodies when required by law, including the {business.licensingAuthority}.</li>
         <li>In connection with a corporate transaction (merger, acquisition, financing, asset sale) subject to appropriate protections.</li>
       </ul>
       <p>We do not sell personal information.</p>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
 
       <h2>7. Data retention</h2>
       <p>
-        We retain personal information only as long as necessary to provide the Service and to comply with our legal obligations under New York cannabis law and tax law. After that period we delete or de-identify the information.
+        We retain personal information only as long as necessary to provide the Service and to comply with our legal obligations under Shinnecock cannabis program rules and applicable New York tax law. After that period we delete or de-identify the information.
       </p>
 
       <h2>8. Your choices</h2>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
 
       <h2>12. Contact</h2>
       <p>
-        Questions, requests, or complaints: <a href={business.supportEmailHref}>{business.supportEmail}</a> or write to {business.legalName}, {business.address.line1}, {business.address.city}, {business.address.region} {business.address.postalCode}.
+        Questions, requests, or complaints: <a href={business.supportEmailHref}>{business.supportEmail}</a>, call <a href={business.phoneHref}>{business.phone}</a>, or write to {business.legalName} via that email and we will route your request to the appropriate team.
       </p>
     </LegalLayout>
   );

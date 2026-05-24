@@ -7,7 +7,7 @@ import { ArrowRight, BadgePercent, ChevronDown, MapPin, Search, ShieldCheck, Spa
 import { useMemo, useState } from 'react';
 import SiteChrome, { OrderButton, TextLink } from '@/components/SiteChrome';
 import type { BlogPostMeta } from '@/lib/blog-posts';
-import { liveMenuProducts, liveMenuSource } from '@/lib/live-menu-products.generated';
+import { menuCounts, menuProducts } from '@/lib/menu';
 import { faqs, serviceAreas, steps, supportedZips, testimonials, trustPoints, valueProps } from '@/lib/site-data';
 import { formatPrice, getBrandLabel, hasSale } from '@/lib/menu-utils';
 
@@ -21,21 +21,21 @@ const categoryTiles = [
     title: 'Flower',
     href: '/menu?category=Flower',
     image: '/assets/flower.avif',
-    count: liveMenuSource.counts.Flower,
+    count: menuCounts.Flower,
     note: 'Strain-led options with price, size, THC, and deal filters.'
   },
   {
     title: 'Pre-Rolls',
     href: '/menu?category=Pre-Rolls',
     image: '/assets/preroll.avif',
-    count: liveMenuSource.counts['Pre-Rolls'],
+    count: menuCounts['Pre-Rolls'],
     note: 'Ready-to-order formats built for speed and convenience.'
   },
   {
     title: 'Edibles',
     href: '/menu?category=Edibles',
     image: '/assets/edible.avif',
-    count: liveMenuSource.counts.Edibles,
+    count: menuCounts.Edibles,
     note: 'Flavor-first products with clear pricing and product detail.'
   }
 ];
@@ -68,7 +68,7 @@ function Hero() {
           </motion.div>
           <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
             {[
-              [String(liveMenuProducts.length), 'menu items'],
+              [String(menuProducts.length), 'menu items'],
               ['3', 'delivery areas'],
               ['21+', 'adult use only']
             ].map(([value, label]) => (
@@ -124,7 +124,7 @@ function MenuPreview() {
 }
 
 function DealsStrip() {
-  const deals = liveMenuProducts.filter(hasSale).slice(0, 6);
+  const deals = menuProducts.filter(hasSale).slice(0, 6);
   if (deals.length === 0) return null;
 
   return (
@@ -396,7 +396,7 @@ export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
       <FAQ />
       <section className="pb-16">
         <div className="luxury-shell rounded-lg border border-[rgba(217,183,111,0.45)] bg-white/72 p-5 text-sm leading-7 text-[var(--muted)] shadow-sm">
-          <strong className="text-[var(--emerald-deep)]">Menu note:</strong> Browse {liveMenuProducts.length} Flower, Pre-Roll, and Edible products here. Final pricing, availability, and delivery details are confirmed during checkout.
+          <strong className="text-[var(--emerald-deep)]">Menu note:</strong> Browse {menuProducts.length} Flower, Pre-Roll, and Edible products here. Final pricing, availability, and delivery details are confirmed during checkout.
         </div>
       </section>
     </SiteChrome>

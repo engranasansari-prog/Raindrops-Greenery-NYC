@@ -25,6 +25,28 @@ html { scroll-behavior: smooth; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Fraunces variable axes — tighten letter-spacing on large headings,
+   enable the SOFT axis for a more rounded display feel. Headings inherit
+   the display family via the body's --font-display variable. */
+h1, h2, h3 {
+  font-variation-settings: 'SOFT' 70, 'opsz' 144;
+  letter-spacing: -0.018em;
+}
+
+body {
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* Reserve space under sticky header for anchor-link targets */
+:target { scroll-margin-top: 120px; }
+
+/* Polished focus ring used across interactive elements */
+:focus-visible {
+  outline: 2px solid var(--champagne);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 body {
   margin: 0;
   background: linear-gradient(135deg, #fffaf0 0%, #f7efe0 44%, #edf4ed 100%);

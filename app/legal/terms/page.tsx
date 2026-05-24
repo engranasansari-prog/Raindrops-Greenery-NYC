@@ -19,7 +19,7 @@ export default function TermsPage() {
       currentPath="/legal/terms"
     >
       <p>
-        These Terms of Service (“Terms”) govern your access to and use of the Raindrops Greenery website, ordering experience, and delivery service (collectively, the “Service”) operated by {business.legalName} (“Raindrops Greenery”, “we”, “us”). By using the Service, you accept these Terms.
+        These Terms of Service (“Terms”) govern your access to and use of the Raindrops Greenery website, ordering experience, and delivery service (collectively, the “Service”) operated by {business.legalName} (“Raindrops Greenery”, “we”, “us”), a Shinnecock-licensed cannabis delivery partner authorized by the {business.licensingAuthority}. By using the Service, you accept these Terms.
       </p>
 
       <h2>1. Eligibility — 21+ only</h2>
@@ -29,7 +29,7 @@ export default function TermsPage() {
 
       <h2>2. Geographic scope</h2>
       <p>
-        Delivery is offered only to ZIP codes we are licensed and able to serve in Manhattan, Brooklyn, and Queens. Final delivery eligibility is confirmed during checkout. We do not ship cannabis products outside our licensed service area.
+        Delivery is offered only to ZIP codes we are licensed and able to serve in Manhattan, Brooklyn, and Queens, under the cannabis program of the {business.licensingAuthority}. Final delivery eligibility is confirmed during checkout. We do not ship cannabis products outside our licensed service area.
       </p>
 
       <h2>3. Orders, pricing, and availability</h2>
@@ -95,7 +95,7 @@ export default function TermsPage() {
 
       <h2>14. Contact</h2>
       <p>
-        Questions or notices under these Terms: <a href={business.supportEmailHref}>{business.supportEmail}</a> or {business.legalName}, {business.address.line1}, {business.address.city}, {business.address.region} {business.address.postalCode}.
+        Questions or notices under these Terms: <a href={business.supportEmailHref}>{business.supportEmail}</a> or by phone at <a href={business.phoneHref}>{business.phone}</a>. Notices may also be sent in writing to {business.legalName} via the same email.
       </p>
     </LegalLayout>
   );

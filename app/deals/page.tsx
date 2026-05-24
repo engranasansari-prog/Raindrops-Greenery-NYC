@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgePercent, Sparkles, Tag } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
-import { liveMenuProducts, liveMenuSource } from '@/lib/live-menu-products.generated';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { menuProducts, menuSyncedAt } from '@/lib/menu';
 import { formatPrice, getBrandLabel, getDealLabel, hasSale } from '@/lib/menu-utils';
 
 export const metadata: Metadata = {
@@ -28,7 +29,7 @@ const offers = [
 const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 export default function DealsPage() {
-  const dealProducts = liveMenuProducts.filter(hasSale);
+  const dealProducts = menuProducts.filter(hasSale);
 
   return (
     <SiteChrome>
@@ -37,7 +38,8 @@ export default function DealsPage() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.92),rgba(6,19,15,0.55))]" />
         <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Live deals</p>
+            <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Live deals</p>
             <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Sale pricing on Flower, Pre-Rolls, and Edibles.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Showing {dealProducts.length} active product deals. Promo codes below stack with sale pricing unless noted otherwise. Final price confirmed at checkout.
@@ -49,7 +51,7 @@ export default function DealsPage() {
               </Link>
               <OrderButton />
             </div>
-            <p className="mt-4 text-xs text-white/52">Synced {formatter.format(new Date(liveMenuSource.syncedAt))} from the live Raindrops menu.</p>
+            <p className="mt-4 text-xs text-white/52">Synced {formatter.format(new Date(menuSyncedAt))} from the live Raindrops menu.</p>
           </div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { ArrowRight } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { faqs } from '@/lib/site-data';
 
 export const metadata: Metadata = {
@@ -33,7 +34,8 @@ export default function FaqPage() {
       <section className="relative overflow-hidden bg-[#0b3025] text-white">
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative max-w-4xl py-14 md:py-20">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">FAQ</p>
+          <Breadcrumbs items={[{ label: 'FAQ' }]} tone="dark" />
+          <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">FAQ</p>
           <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Quick answers before you order.</h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
             Clear details about delivery areas, age requirements, product browsing, and checkout.

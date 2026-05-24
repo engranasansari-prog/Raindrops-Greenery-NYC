@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { ArrowRight, Check, Clock, Mail, MapPin, MessageSquare, Phone } from 'lucide-react';
+import { ArrowRight, Check, Clock, Mail, MessageSquare, Phone, ShieldCheck } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { business, social } from '@/lib/site-data';
 
 const topics = ['Order help', 'Delivery question', 'Wholesale / brand partnership', 'Press', 'Other'];
@@ -31,7 +32,8 @@ export default function ContactPage() {
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Get in touch</p>
+            <Breadcrumbs items={[{ label: 'Contact' }]} tone="dark" />
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Get in touch</p>
             <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Real humans answer here.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Questions about a delivery, a product, or a partnership? Use the form, give us a call, or message us on social. We answer most messages within one business day.
@@ -54,12 +56,9 @@ export default function ContactPage() {
               <p className="mt-2 font-bold">{business.pressEmail}</p>
             </a>
             <div className="rounded-lg border border-white/12 bg-white/8 p-5">
-              <MapPin className="h-6 w-6 text-[var(--champagne)]" />
-              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Office</p>
-              <p className="mt-2 font-bold leading-6">
-                {business.address.line1}<br />
-                {business.address.city}, {business.address.region} {business.address.postalCode}
-              </p>
+              <ShieldCheck className="h-6 w-6 text-[var(--champagne)]" />
+              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Licensing</p>
+              <p className="mt-2 font-bold leading-6">{business.licensingAuthority}</p>
             </div>
           </div>
         </div>

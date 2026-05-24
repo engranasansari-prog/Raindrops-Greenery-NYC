@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Compass, HandHeart, Leaf, Shield, Sparkles, Truck } from 'lucide-react';
 import SiteChrome, { OrderButton, TextLink } from '@/components/SiteChrome';
-import { business, pressMentions, serviceAreas, testimonials, valueProps } from '@/lib/site-data';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -33,7 +34,8 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.92),rgba(6,19,15,0.62))]" />
         <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">About Raindrops</p>
+            <Breadcrumbs items={[{ label: 'About' }]} tone="dark" />
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">About Raindrops</p>
             <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">A premium New York cannabis delivery, done right.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Raindrops Greenery launched to bring a calmer, more confident path into licensed cannabis delivery for {serviceAreas.join(', ')}. Less noise, better product detail, and a delivery experience that respects your time.
@@ -125,12 +127,11 @@ export default function AboutPage() {
 
       <section className="pb-16">
         <div className="luxury-shell rounded-lg border border-[rgba(217,183,111,0.45)] bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)] md:p-9">
-          <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">As seen in</p>
-          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
-            {pressMentions.map((press) => (
-              <span key={press}>{press}</span>
-            ))}
-          </div>
+          <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">Sovereign-licensed cannabis</p>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] md:text-4xl">Operating under Shinnecock Indian Nation authority.</h2>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)]">
+            Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Lab testing, packaging, and supply records are maintained accordingly.
+          </p>
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             <OrderButton label="Start an order" />
             <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-white px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]">
@@ -139,7 +140,7 @@ export default function AboutPage() {
             </Link>
           </div>
           <p className="mt-5 text-xs leading-6 text-[var(--muted)]">
-            Operated by {business.legalName}. NY OCM license {business.ocmLicense}.
+            Operated by {business.legalName}. {business.licensingShort}.
           </p>
         </div>
       </section>

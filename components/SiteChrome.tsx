@@ -4,10 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Mail, Menu, MapPin, Phone, ShieldCheck, ShoppingBag, X } from 'lucide-react';
+import { ArrowRight, Clock, Mail, Menu, Phone, ShieldCheck, ShoppingBag, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import PromoStrip from '@/components/PromoStrip';
 import NewsletterForm from '@/components/NewsletterForm';
+import OpenStatus from '@/components/OpenStatus';
 import { business, checkout, footerLinkGroups, navItems, serviceAreas, social } from '@/lib/site-data';
 
 export function OrderButton({ label = 'Order now', className = '' }: { label?: string; className?: string }) {
@@ -32,6 +33,18 @@ function AgeGate() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setShow(localStorage.getItem('rd_age_confirmed') !== 'yes');
   }, []);
+
+  // Lock the underlying page scroll while the age gate is open.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (show) {
+      const previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = previousOverflow;
+      };
+    }
+  }, [show]);
 
   const confirmAge = () => {
     localStorage.setItem('rd_age_confirmed', 'yes');
@@ -143,9 +156,10 @@ function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white/70 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)]">
-            <ShieldCheck className="h-4 w-4 text-[var(--emerald)]" />
-            21+ delivery
+          <OpenStatus />
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white/70 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[var(--emerald)]" />
+            21+
           </span>
           <OrderButton />
         </div>
@@ -180,7 +194,6 @@ function Header() {
 }
 
 function Footer() {
-  const address = business.address;
   return (
     <footer className="border-t border-[var(--line)] bg-[#06130f] text-white">
       <div className="luxury-shell grid gap-10 py-14 lg:grid-cols-[1.2fr_2fr]">
@@ -199,13 +212,6 @@ function Footer() {
           </p>
 
           <ul className="mt-6 grid gap-2 text-sm text-white/74">
-            <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" />
-              <span>
-                {address.line1}, {address.line2}<br />
-                {address.city}, {address.region} {address.postalCode}
-              </span>
-            </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
               <a href={business.phoneHref} className="hover:text-white">{business.phone}</a>
@@ -214,7 +220,15 @@ function Footer() {
               <Mail className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
               <a href={business.emailHref} className="hover:text-white">{business.email}</a>
             </li>
+            <li className="flex items-center gap-3">
+              <Clock className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
+              <span>Daily 10:00 AM – 12:00 AM</span>
+            </li>
           </ul>
+
+          <div className="mt-5">
+            <OpenStatus tone="dark" />
+          </div>
 
           <div className="mt-6">
             <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--champagne)]">Get drops by email</p>
@@ -243,8 +257,9 @@ function Footer() {
       <div className="border-t border-white/10">
         <div className="luxury-shell flex flex-col gap-5 py-6 text-xs text-white/56 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="rounded-full border border-white/14 px-3 py-1 font-extrabold uppercase tracking-[0.2em] text-white/72">
-              NY OCM license: {business.ocmLicense}
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/14 px-3 py-1 font-extrabold uppercase tracking-[0.2em] text-white/72">
+              <ShieldCheck className="h-3.5 w-3.5 text-[var(--champagne)]" />
+              {business.licensingShort}
             </span>
             <span>&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
           </div>
@@ -257,7 +272,7 @@ function Footer() {
           </div>
         </div>
         <div className="luxury-shell pb-6 text-[11px] leading-6 text-white/40">
-          For use only by adults 21 years of age or older. Keep out of reach of children and pets. Do not operate a vehicle or machinery under the influence of cannabis. There may be health risks associated with consumption of this product. Cannabis has not been analyzed or approved by the FDA. For more information go to the New York State Cannabis Control Board.
+          For use only by adults 21 years of age or older. Keep out of reach of children and pets. Do not operate a vehicle or machinery under the influence of cannabis. There may be health risks associated with consumption of this product. Cannabis has not been analyzed or approved by the FDA. Sales and delivery are conducted under a cannabis license issued by the {business.licensingAuthority}.
         </div>
       </div>
     </footer>

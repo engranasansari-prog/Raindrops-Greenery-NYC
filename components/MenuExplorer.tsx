@@ -3,10 +3,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, BadgePercent, Check, Filter, Leaf, PackageCheck, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, Tag, X } from 'lucide-react';
+import { ArrowRight, BadgePercent, Check, Filter, PackageCheck, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, Tag, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
-import { liveMenuProducts, liveMenuSource, type LiveMenuProduct } from '@/lib/live-menu-products.generated';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { menuCounts, menuProducts, menuSyncedAt, type LiveMenuProduct } from '@/lib/menu';
 import {
   effectOptions,
   formatPrice,
@@ -30,10 +31,11 @@ import { checkout } from '@/lib/site-data';
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
 type SortMode = 'featured' | 'price-low' | 'price-high' | 'potency-high' | 'name';
 
-const maxAvailablePrice = getMaxPrice(liveMenuProducts);
-const brands = getAvailableBrands(liveMenuProducts);
-const weights = getAvailableWeights(liveMenuProducts);
-const profiles = getAvailableProfiles(liveMenuProducts);
+const maxAvailablePrice = getMaxPrice(menuProducts);
+const brands = getAvailableBrands(menuProducts);
+const weights = getAvailableWeights(menuProducts);
+const profiles = getAvailableProfiles(menuProducts);
+const totalProducts = menuProducts.length;
 
 const sortLabels: Record<SortMode, string> = {
   featured: 'Featured',
@@ -49,17 +51,11 @@ function normalizeCategory(category?: string): CategoryFilter {
 }
 
 function ProductImage({ product }: { product: LiveMenuProduct }) {
-  if (!product.image) {
-    return (
-      <div className="flex h-full w-full items-center justify-center bg-[var(--sage)] text-[var(--emerald-deep)]">
-        <Leaf className="h-12 w-12" />
-      </div>
-    );
-  }
-
+  // Image-less products are filtered out upstream in lib/menu.ts. Image is always
+  // present here; the non-null assertion keeps types tight.
   return (
     <Image
-      src={product.image}
+      src={product.image!}
       alt={product.name}
       fill
       unoptimized
@@ -273,7 +269,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   const [visibleCount, setVisibleCount] = useState(18);
   const [selectedProduct, setSelectedProduct] = useState<LiveMenuProduct | null>(() => {
     if (!initialProductId) return null;
-    return liveMenuProducts.find((product) => product.id === initialProductId) ?? null;
+    return menuProducts.find((product) => product.id === initialProductId) ?? null;
   });
 
   // Keep ?product= in the URL in sync with the open modal so individual items are shareable.
@@ -291,7 +287,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return liveMenuProducts
+    return menuProducts
       .filter((product) => category === 'All' || product.category === category)
       .filter((product) => brand === 'All' || getBrandLabel(product) === brand)
       .filter((product) => profile === 'All' || inferProfile(product) === profile)
@@ -312,7 +308,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   }, [brand, category, dealsOnly, effect, inStockOnly, minThc, priceMax, profile, query, sort, weight]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
-  const syncedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(liveMenuSource.syncedAt));
+  const syncedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(menuSyncedAt));
 
   const resetFilters = () => {
     setCategory('All');
@@ -340,7 +336,8 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops NY menu</p>
+            <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops NY menu</p>
             <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Flower, Pre-Rolls, and Edibles.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
               Search and filter a focused menu with product images, pricing, potency, size, brand, and deal details.
@@ -354,7 +351,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                 className="rounded-lg border border-white/12 bg-white/8 p-4 text-left transition hover:-translate-y-0.5 hover:bg-white/12"
               >
                 <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne)]">{item}</p>
-                <p className="mt-2 font-[var(--font-display)] text-4xl font-bold">{liveMenuSource.counts[item]}</p>
+                <p className="mt-2 font-[var(--font-display)] text-4xl font-bold">{menuCounts[item]}</p>
               </button>
             ))}
           </div>
@@ -446,7 +443,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               </div>
               <p className="inline-flex items-center gap-2 text-sm font-bold text-[var(--muted)]">
                 <Filter className="h-4 w-4 text-[var(--emerald)]" />
-                Showing {filteredProducts.length} of {liveMenuProducts.length} products
+                Showing {filteredProducts.length} of {menuProducts.length} products
               </p>
             </div>
           </div>

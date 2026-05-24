@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check, MapPin, ShieldCheck, Truck } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { serviceAreas, supportedZips, trustPoints } from '@/lib/site-data';
 
 export default function DeliveryPage() {
@@ -23,7 +24,8 @@ export default function DeliveryPage() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.9),rgba(6,19,15,0.58),rgba(6,19,15,0.72))]" />
         <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1fr_0.9fr] lg:items-end">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops New York delivery</p>
+            <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops New York delivery</p>
             <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight md:text-7xl">Premium delivery for Manhattan, Brooklyn, and Queens.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
               Browse a focused cannabis menu, check your area, and continue to secure checkout when you are ready to order.
