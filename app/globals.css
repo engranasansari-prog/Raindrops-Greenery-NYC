@@ -131,6 +131,120 @@ textarea:focus:not(:focus-visible) {
   background-size: 42px 42px;
 }
 
+/* Cinematic smoke layer used inside the hero slider */
+.smoke-blob {
+  position: absolute;
+  width: 70vw;
+  height: 70vw;
+  max-width: 720px;
+  max-height: 720px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 45%, transparent 70%);
+  filter: blur(60px);
+  opacity: 0.65;
+  will-change: transform, opacity;
+}
+.smoke-blob-1 { top: -10%; left: -15%; animation: smoke-drift-1 22s ease-in-out infinite; }
+.smoke-blob-2 { bottom: -20%; right: -10%; animation: smoke-drift-2 26s ease-in-out infinite; background: radial-gradient(circle at 50% 50%, rgba(15, 91, 63, 0.18), rgba(15, 91, 63, 0.04) 50%, transparent 70%); }
+.smoke-blob-3 { top: 20%; right: 20%; width: 40vw; height: 40vw; animation: smoke-drift-3 18s ease-in-out infinite; opacity: 0.4; }
+
+@keyframes smoke-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(8%, -4%) scale(1.05); }
+}
+@keyframes smoke-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-6%, 6%) scale(1.08); }
+}
+@keyframes smoke-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  50%      { transform: translate(4%, 4%) scale(1.12); opacity: 0.55; }
+}
+
+@media (max-width: 768px) {
+  /* Lighter smoke on phones for paint perf — two faint blobs is enough */
+  .smoke-blob-3 { display: none; }
+  .smoke-blob { filter: blur(40px); opacity: 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .smoke-blob { animation: none !important; }
+}
+
+/* Consistent premium button language */
+.btn-luxe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.875rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.btn-luxe:hover { transform: translateY(-2px); }
+.btn-luxe-primary {
+  background: linear-gradient(135deg, #0f5b3f 0%, #073326 100%);
+  color: #ffffff;
+  box-shadow: 0 18px 44px rgba(7, 51, 38, 0.32);
+}
+.btn-luxe-primary:hover {
+  background: linear-gradient(135deg, #14744f 0%, #0a4332 100%);
+  box-shadow: 0 24px 60px rgba(7, 51, 38, 0.45);
+}
+.btn-luxe-gold {
+  background: linear-gradient(135deg, #d9b76f 0%, #b58a3e 100%);
+  color: #073326;
+  box-shadow: 0 18px 44px rgba(155, 120, 50, 0.32);
+}
+.btn-luxe-gold:hover {
+  background: linear-gradient(135deg, #e9c987 0%, #c39a4a 100%);
+  box-shadow: 0 24px 60px rgba(155, 120, 50, 0.45);
+}
+.btn-luxe-ghost {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+}
+.btn-luxe-ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(217, 183, 111, 0.6);
+}
+.btn-luxe-light {
+  background: #ffffff;
+  color: #073326;
+  box-shadow: 0 18px 44px rgba(7, 51, 38, 0.18);
+}
+.btn-luxe-light:hover {
+  background: #fff7e6;
+  box-shadow: 0 24px 60px rgba(7, 51, 38, 0.28);
+}
+
+/* Premium dark backdrop with subtle texture, used by deep sections */
+.luxe-dark {
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(15, 91, 63, 0.45) 0%, transparent 60%),
+    linear-gradient(180deg, #06130f 0%, #03100b 100%);
+  color: #ffffff;
+  position: relative;
+}
+.luxe-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .product-description-clamp {
   display: -webkit-box;
   -webkit-line-clamp: 4;

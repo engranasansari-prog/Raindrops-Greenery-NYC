@@ -3,18 +3,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, BadgePercent, ChevronDown, MapPin, Search, ShieldCheck, Sparkles, Star, Tag, Truck } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { ArrowRight, BadgePercent, ChevronDown, Sparkles, Star, Tag } from 'lucide-react';
+import { useState } from 'react';
 import SiteChrome, { OrderButton, TextLink } from '@/components/SiteChrome';
+import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
+import ClaimOfferModal from '@/components/ClaimOfferModal';
+import CoverageMap from '@/components/CoverageMap';
 import type { BlogPostMeta } from '@/lib/blog-posts';
 import { menuCounts, menuProducts } from '@/lib/menu';
-import { faqs, serviceAreas, steps, supportedZips, testimonials, trustPoints, valueProps } from '@/lib/site-data';
 import { formatPrice, getBrandLabel, hasSale } from '@/lib/menu-utils';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  visible: { opacity: 1, y: 0 }
-};
+import { faqs, steps, testimonials, valueProps } from '@/lib/site-data';
 
 const categoryTiles = [
   {
@@ -40,45 +38,31 @@ const categoryTiles = [
   }
 ];
 
-function Hero() {
+function ClaimSection({ onClaim }: { onClaim: () => void }) {
   return (
-    <section className="relative min-h-[560px] overflow-hidden bg-[#06130f] text-white sm:min-h-[640px] md:min-h-[78vh]">
-      <Image src="/assets/heroPhoto.jpg" alt="Raindrops Greenery New York delivery" fill priority sizes="100vw" className="object-cover" />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.88)_0%,rgba(6,19,15,0.62)_46%,rgba(6,19,15,0.18)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#fbf7ee] to-transparent" />
-
-      <div className="luxury-shell relative flex min-h-[500px] items-center py-12 sm:min-h-[600px] sm:py-14 md:min-h-[calc(78vh-76px)]">
-        <motion.div initial="hidden" animate="visible" transition={{ staggerChildren: 0.1 }} className="max-w-3xl">
-          <motion.div variants={fadeUp} className="mb-5 inline-flex max-w-full items-center gap-2 rounded-full border border-white/22 bg-white/12 px-4 py-2 backdrop-blur">
-            <Sparkles className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
-            <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/86 sm:text-xs sm:tracking-[0.22em]">Premium NYC delivery</span>
-          </motion.div>
-          <motion.h1 variants={fadeUp} className="font-[var(--font-display)] text-[2.75rem] font-extrabold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
-            Raindrops Greenery
-          </motion.h1>
-          <motion.p variants={fadeUp} className="mt-4 max-w-2xl text-base leading-7 text-white/78 sm:mt-5 sm:text-lg sm:leading-8 md:text-xl">
-            Browse Flower, Pre-Rolls, and Edibles for 21+ delivery in Manhattan, Brooklyn, and Queens.
-          </motion.p>
-          <motion.div variants={fadeUp} className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row">
-            <Link href="/menu" className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
-              <Search className="h-4 w-4" />
-              Browse menu
-            </Link>
-            <OrderButton />
-          </motion.div>
-          <motion.div variants={fadeUp} className="mt-7 grid max-w-2xl grid-cols-3 gap-2 sm:mt-8 sm:gap-3">
-            {[
-              [String(menuProducts.length), 'menu items'],
-              ['3', 'delivery areas'],
-              ['21+', 'adult use only']
-            ].map(([value, label]) => (
-              <div key={label} className="rounded-lg border border-white/18 bg-white/12 p-3 backdrop-blur sm:p-4">
-                <p className="font-[var(--font-display)] text-2xl font-bold text-white sm:text-3xl">{value}</p>
-                <p className="mt-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/62 sm:text-xs">{label}</p>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
+    <section className="luxe-dark relative overflow-hidden py-14 sm:py-16">
+      <div className="luxury-shell relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne)] sm:text-xs">
+            <Sparkles className="h-3.5 w-3.5" />
+            Free gift drop
+          </p>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl">
+            Scan, claim, delivered to your door.
+          </h2>
+          <p className="mt-4 max-w-xl text-sm leading-7 text-white/68 sm:text-base sm:leading-8">
+            Spot the Raindrops sticker around NYC? Drop your details — adults 21+ in Manhattan, Brooklyn, or Queens are eligible for a complimentary gift with their next order.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+          <button onClick={onClaim} className="btn-luxe btn-luxe-gold">
+            Claim this offer
+            <ArrowRight className="h-4 w-4" />
+          </button>
+          <Link href="#coverage" className="btn-luxe btn-luxe-ghost">
+            Check coverage
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -86,11 +70,11 @@ function Hero() {
 
 function MenuPreview() {
   return (
-    <section className="py-12 sm:py-14 md:py-20">
+    <section className="py-14 sm:py-16 md:py-20">
       <div className="luxury-shell">
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Product discovery</p>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">Shop categories</p>
             <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Shop by format, not by friction.</h2>
           </div>
           <TextLink href="/menu">Open full filtered menu</TextLink>
@@ -99,17 +83,17 @@ function MenuPreview() {
         <div className="grid gap-4 md:grid-cols-3">
           {categoryTiles.map((tile, index) => (
             <motion.div key={tile.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }}>
-              <Link href={tile.href} className="group block overflow-hidden rounded-lg border border-white/70 bg-white/76 shadow-[0_18px_54px_rgba(25,35,20,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(25,35,20,0.12)]">
+              <Link href={tile.href} className="group block overflow-hidden rounded-2xl border border-white/70 bg-white/76 shadow-[0_18px_54px_rgba(25,35,20,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(25,35,20,0.12)]">
                 <div className="relative aspect-[5/3] overflow-hidden bg-[#f8f1e4]">
                   <Image src={tile.image} alt={`${tile.title} products`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/88 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] backdrop-blur">
+                  <div className="absolute left-4 top-4 rounded-full bg-white/88 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.12em] text-[var(--emerald-deep)] backdrop-blur sm:text-xs sm:tracking-[0.14em]">
                     {tile.count} items
                   </div>
                 </div>
                 <div className="p-5">
                   <h3 className="font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)]">{tile.title}</h3>
                   <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{tile.note}</p>
-                  <p className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">
+                  <p className="mt-4 inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.16em]">
                     Filter category
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </p>
@@ -128,12 +112,12 @@ function DealsStrip() {
   if (deals.length === 0) return null;
 
   return (
-    <section className="border-y border-[var(--line)] bg-[#fffdf7] py-12 md:py-16">
+    <section className="border-y border-[var(--line)] bg-[#fffdf7] py-12 sm:py-14 md:py-16">
       <div className="luxury-shell">
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">
-              <BadgePercent className="h-4 w-4" />
+            <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">
+              <BadgePercent className="h-3.5 w-3.5" />
               On sale now
             </p>
             <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Deals worth grabbing tonight.</h2>
@@ -142,12 +126,10 @@ function DealsStrip() {
         </div>
         <div className="grid gap-3 md:grid-cols-3">
           {deals.map((product) => (
-            <Link key={product.id} href={`/menu?product=${encodeURIComponent(product.id)}`} className="group flex items-center gap-3 rounded-lg border border-white/70 bg-white/82 p-3 shadow-[0_18px_54px_rgba(25,35,20,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(25,35,20,0.12)]">
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-[#fbf7ee]">
-                {product.image ? (
+            <Link key={product.id} href={`/menu?product=${encodeURIComponent(product.id)}`} className="group flex items-center gap-3 rounded-2xl border border-white/70 bg-white/82 p-3 shadow-[0_18px_54px_rgba(25,35,20,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_24px_70px_rgba(25,35,20,0.12)]">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[#fbf7ee]">
+                {product.image && (
                   <Image src={product.image} alt={product.name} fill unoptimized sizes="80px" className="object-contain p-2" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-[var(--emerald-deep)]/40 text-xs">No image</div>
                 )}
               </div>
               <div className="min-w-0 flex-1">
@@ -169,15 +151,15 @@ function DealsStrip() {
 
 function ValuePropBar() {
   return (
-    <section className="py-12 sm:py-14 md:py-20">
+    <section className="py-14 sm:py-16 md:py-20">
       <div className="luxury-shell">
         <div className="max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Why customers choose Raindrops</p>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">Why choose Raindrops</p>
           <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Four reasons New Yorkers come back.</h2>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {valueProps.map((item, index) => (
-            <motion.div key={item.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="rounded-lg border border-white/70 bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
+            <motion.div key={item.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.05 }} className="rounded-2xl border border-white/70 bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
               <Star className="h-6 w-6 text-[var(--emerald)]" />
               <h3 className="mt-4 font-[var(--font-display)] text-2xl font-bold text-[var(--emerald-deep)]">{item.title}</h3>
               <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{item.body}</p>
@@ -189,122 +171,18 @@ function ValuePropBar() {
   );
 }
 
-function Testimonials() {
-  return (
-    <section className="bg-[#fbf7ee] py-12 sm:py-14 md:py-20">
-      <div className="luxury-shell">
-        <div className="max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Customer voices</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Real orders, from real New Yorkers.</h2>
-        </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
-          {testimonials.map((item) => (
-            <figure key={item.author} className="rounded-lg border border-white/70 bg-white/86 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-              <div className="flex items-center gap-1 text-[var(--champagne)]">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={index} className="h-4 w-4 fill-current" />
-                ))}
-              </div>
-              <blockquote className="mt-4 font-[var(--font-display)] text-xl leading-7 text-[var(--emerald-deep)]">“{item.quote}”</blockquote>
-              <figcaption className="mt-5 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">
-                {item.author} • {item.location}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function StoryStrip() {
-  return (
-    <section className="bg-[#0b3025] py-12 text-white sm:py-14 md:py-20">
-      <div className="luxury-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-        <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops NY</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Built for fast, clear New York delivery.</h2>
-          <p className="mt-5 leading-8 text-white/68">
-            A cleaner shopping path for adult customers: focused categories, easy product comparison, and a secure checkout flow when you are ready to order.
-          </p>
-        </div>
-        <div className="grid gap-3 md:grid-cols-3">
-          {trustPoints.map((point) => (
-            <div key={point.title} className="rounded-lg border border-white/12 bg-white/8 p-5">
-              <ShieldCheck className="h-6 w-6 text-[var(--champagne)]" />
-              <h3 className="mt-4 font-bold text-white">{point.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-white/58">{point.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DeliveryCheck() {
-  const [zip, setZip] = useState('');
-  const clean = zip.replace(/\D/g, '').slice(0, 5);
-  const status = useMemo(() => {
-    if (clean.length < 5) return null;
-    return supportedZips.includes(clean);
-  }, [clean]);
-
-  return (
-    <section className="py-12 sm:py-14 md:py-20">
-      <div className="luxury-shell grid gap-6 lg:grid-cols-[1fr_0.9fr] lg:items-center">
-        <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Delivery coverage</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Focused on Manhattan, Brooklyn, and Queens.</h2>
-          <p className="mt-5 max-w-2xl leading-8 text-[var(--muted)]">
-            Check your area, browse the menu, and confirm final delivery details during checkout.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {serviceAreas.map((area) => (
-              <span key={area} className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white/72 px-4 py-2 text-sm font-bold text-[var(--emerald-deep)] shadow-sm">
-                <MapPin className="h-4 w-4 text-[var(--emerald)]" />
-                {area}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-lg border border-white/70 bg-white/78 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)] backdrop-blur">
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--emerald-deep)] text-white">
-            <Truck className="h-6 w-6" />
-          </div>
-          <h3 className="mt-5 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)]">Quick ZIP check</h3>
-          <input
-            value={clean}
-            onChange={(event) => setZip(event.target.value)}
-            inputMode="numeric"
-            aria-label="ZIP code"
-            placeholder="Enter NYC ZIP code"
-            className="mt-5 w-full rounded-lg border border-[var(--line)] bg-white px-4 py-4 text-lg font-bold text-[var(--emerald-deep)] outline-none transition focus:border-[var(--champagne)]"
-          />
-          <div className="mt-4 min-h-16 rounded-lg border border-[var(--line)] bg-white/70 p-4">
-            {status === null && <p className="text-sm text-[var(--muted)]">Enter a 5-digit ZIP to preview coverage.</p>}
-            {status === true && <p className="font-bold text-[var(--emerald)]">This ZIP is in the current NYC coverage list. Final delivery details are confirmed during checkout.</p>}
-            {status === false && <p className="font-bold text-[#92542c]">This ZIP is not in the preview list. Checkout will confirm final delivery eligibility.</p>}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Steps() {
   return (
-    <section className="py-12 sm:py-14 md:py-20">
+    <section className="py-14 sm:py-16 md:py-20">
       <div className="luxury-shell">
         <div className="mb-8 max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Order flow</p>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">How ordering works</p>
           <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Browse confidently, then checkout securely.</h2>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {steps.map((step, index) => (
-            <motion.div key={step.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }} className="rounded-lg border border-white/70 bg-white/76 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)]">{step.eyebrow}</p>
+            <motion.div key={step.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }} className="rounded-2xl border border-white/70 bg-white/76 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.2em]">{step.eyebrow}</p>
               <h3 className="mt-4 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)]">{step.title}</h3>
               <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{step.body}</p>
             </motion.div>
@@ -315,25 +193,53 @@ function Steps() {
   );
 }
 
+function Testimonials() {
+  return (
+    <section className="bg-[#fbf7ee] py-14 sm:py-16 md:py-20">
+      <div className="luxury-shell">
+        <div className="max-w-3xl">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">Customer voices</p>
+          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Real orders, from real New Yorkers.</h2>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {testimonials.map((item) => (
+            <figure key={item.author} className="rounded-2xl border border-white/70 bg-white/86 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
+              <div className="flex items-center gap-1 text-[var(--champagne)]">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <blockquote className="mt-4 font-[var(--font-display)] text-xl leading-7 text-[var(--emerald-deep)]">“{item.quote}”</blockquote>
+              <figcaption className="mt-5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.16em]">
+                {item.author} • {item.location}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BlogPreview({ posts }: { posts: BlogPostMeta[] }) {
   return (
-    <section className="py-12 sm:py-14 md:py-20">
+    <section className="py-14 sm:py-16 md:py-20">
       <div className="luxury-shell">
         <div className="mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Journal</p>
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">Journal</p>
             <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Guides for smarter ordering.</h2>
           </div>
           <TextLink href="/blog">View all articles</TextLink>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
           {posts.slice(0, 3).map((post) => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group overflow-hidden rounded-lg border border-white/70 bg-white/78 shadow-[0_18px_54px_rgba(25,35,20,0.08)] transition hover:-translate-y-1">
+            <Link key={post.slug} href={`/blog/${post.slug}`} className="group overflow-hidden rounded-2xl border border-white/70 bg-white/78 shadow-[0_18px_54px_rgba(25,35,20,0.08)] transition hover:-translate-y-1">
               <div className="relative aspect-[5/3] overflow-hidden bg-[#f8f1e4]">
                 <Image src={post.coverImage} alt={post.coverAlt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
               </div>
               <div className="p-5">
-                <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne-dark)]">{post.category} - {post.readTime}</p>
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.18em]">{post.category} - {post.readTime}</p>
                 <h3 className="mt-3 font-[var(--font-display)] text-2xl font-bold leading-tight text-[var(--emerald-deep)]">{post.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-[var(--muted)]">{post.excerpt}</p>
               </div>
@@ -349,15 +255,15 @@ function FAQ() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="faq" className="py-14 md:py-20">
+    <section id="faq" className="py-14 sm:py-16 md:py-20">
       <div className="luxury-shell grid gap-7 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">FAQ</p>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne-dark)] sm:text-xs sm:tracking-[0.24em]">FAQ</p>
           <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] sm:text-4xl md:text-5xl">Clear answers before checkout.</h2>
         </div>
         <div className="space-y-3">
           {faqs.map((faq, index) => (
-            <div key={faq.q} className="overflow-hidden rounded-lg border border-[var(--line)] bg-white/76 shadow-sm">
+            <div key={faq.q} className="overflow-hidden rounded-2xl border border-[var(--line)] bg-white/76 shadow-sm">
               <button
                 onClick={() => setActive(active === index ? -1 : index)}
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-bold text-[var(--emerald-deep)]"
@@ -382,23 +288,58 @@ function FAQ() {
 }
 
 export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
+  const [claimOpen, setClaimOpen] = useState(false);
+  const openClaim = () => setClaimOpen(true);
+  const closeClaim = () => setClaimOpen(false);
+
+  const slides: HeroSlide[] = [
+    {
+      id: 'free-gift',
+      image: '/assets/banner-gift.jpg',
+      imageAlt: 'Raindrops Greenery free gift drop — Manhattan, Brooklyn, Queens',
+      imagePosition: 'right center',
+      eyebrow: 'NYC ONLY · 21+',
+      headline: 'Your FREE GIFT is waiting',
+      headlineAccent: 'FREE GIFT',
+      subtext: 'Scan the sticker. Claim your offer. Available for NYC customers only.',
+      primary: { label: 'Claim this offer', onClick: openClaim },
+      secondary: { label: 'Browse menu', href: '/menu' }
+    },
+    {
+      id: 'premium-drops',
+      image: '/assets/banner-drops.webp',
+      imageAlt: 'Premium Raindrops Greenery deliveries across New York City',
+      imagePosition: 'center',
+      eyebrow: 'Members only · 21+',
+      headline: 'Premium drops. NYC only.',
+      headlineAccent: 'NYC only',
+      subtext: 'Exclusive Raindrops Greenery offers for local customers — same-day delivery across Manhattan, Brooklyn, and Queens.',
+      primary: { label: 'Check availability', href: '#coverage' },
+      secondary: { label: 'Shop deals', href: '/deals' }
+    }
+  ];
+
   return (
     <SiteChrome>
-      <Hero />
+      <HeroSlider slides={slides} />
+      <ClaimSection onClaim={openClaim} />
+      <div id="coverage">
+        <CoverageMap />
+      </div>
       <MenuPreview />
       <DealsStrip />
       <ValuePropBar />
-      <StoryStrip />
-      <DeliveryCheck />
       <Steps />
       <Testimonials />
       <BlogPreview posts={posts} />
       <FAQ />
       <section className="pb-16">
-        <div className="luxury-shell rounded-lg border border-[rgba(217,183,111,0.45)] bg-white/72 p-5 text-sm leading-7 text-[var(--muted)] shadow-sm">
+        <div className="luxury-shell rounded-2xl border border-[rgba(217,183,111,0.45)] bg-white/72 p-5 text-sm leading-7 text-[var(--muted)] shadow-sm">
           <strong className="text-[var(--emerald-deep)]">Menu note:</strong> Browse {menuProducts.length} Flower, Pre-Roll, and Edible products here. Final pricing, availability, and delivery details are confirmed during checkout.
         </div>
       </section>
+
+      <ClaimOfferModal open={claimOpen} onClose={closeClaim} />
     </SiteChrome>
   );
 }
