@@ -307,7 +307,7 @@ export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
     },
     {
       id: 'premium-drops',
-      image: '/assets/banner-drops.webp',
+      image: '/assets/banner-drops.png',
       imageAlt: 'Premium Raindrops Greenery deliveries across New York City',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
