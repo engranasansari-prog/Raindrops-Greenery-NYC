@@ -1,19 +1,30 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google';
+import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import './globals.css';
 
+// Display — Fraunces (variable, opsz + SOFT for editorial feel)
 const display = Fraunces({
   subsets: ['latin'],
   variable: '--font-display',
   weight: 'variable',
-  axes: ['opsz', 'SOFT']
+  axes: ['opsz', 'SOFT'],
+  display: 'swap'
 });
-const sans = Plus_Jakarta_Sans({
+// Body — DM Sans (clean, modern, non-Inter)
+const sans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
-  weight: ['400', '500', '600', '700', '800']
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap'
+});
+// Mono — JetBrains Mono for prices, badges, eyebrows
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap'
 });
 
 export const metadata: Metadata = {
@@ -77,8 +88,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fbf7ee' },
-    { media: '(prefers-color-scheme: dark)', color: '#06130f' }
+    { media: '(prefers-color-scheme: light)', color: '#F5F1E8' },
+    { media: '(prefers-color-scheme: dark)', color: '#0A1410' }
   ]
 };
 
@@ -135,9 +146,9 @@ const websiteLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable}`}>
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="font-[var(--font-sans)] antialiased">
-        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--emerald-deep)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-white">
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--rd-glow)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-[var(--rd-ink)]">
           Skip to content
         </a>
         <Script id="ld-business" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

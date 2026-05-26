@@ -1,61 +1,144 @@
 @import "tailwindcss";
 
+/* =====================================================================
+   Raindrops Greenery — Design System (per /raindrops-design-brief.md §2)
+   Editorial luxury meets botanical.
+   ===================================================================== */
 :root {
-  --ivory: #fbf7ee;
-  --cream: #fffdf7;
-  --champagne: #d9b76f;
-  --champagne-dark: #9b7832;
-  --emerald: #0f5b3f;
-  --emerald-deep: #073326;
-  --sage: #dce9df;
-  --ink: #171712;
-  --muted: #6f6b60;
-  --line: rgba(23, 23, 18, 0.1);
-  --shadow-soft: 0 30px 90px rgba(30, 40, 28, 0.12);
+  /* Foundation — 80% of the canvas */
+  --rd-ink:        #0A1410;
+  --rd-ink-soft:   #11201A;
+  --rd-paper:      #F5F1E8;
+  --rd-paper-soft: #EBE5D6;
+
+  /* Greenery — 15%, signature */
+  --rd-moss:       #2D4A3A;
+  --rd-fern:       #5B8C6E;
+  --rd-mint:       #B8D4C2;
+  --rd-glow:       #C8E66E;   /* electric lime — CTA + sale badges only */
+
+  /* Accents — 5%, sparing */
+  --rd-amber:      #D4A574;
+  --rd-amber-dark: #A38554;
+  --rd-rain:       #6FA8DC;
+
+  /* Text — on ink */
+  --rd-text:       #F5F1E8;
+  --rd-text-dim:   rgba(245, 241, 232, 0.65);
+  --rd-text-mute:  rgba(245, 241, 232, 0.45);
+
+  /* Text — on paper */
+  --rd-on-paper:        #0A1410;
+  --rd-on-paper-dim:    rgba(10, 20, 16, 0.65);
+  --rd-on-paper-mute:   rgba(10, 20, 16, 0.45);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* iOS safe-area */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Legacy aliases — keep so all existing components inherit the new look
+     without needing component-by-component rewrites this pass. */
+  --ivory:          var(--rd-paper);
+  --cream:          var(--rd-paper-soft);
+  --champagne:      var(--rd-amber);
+  --champagne-dark: var(--rd-amber-dark);
+  --emerald:        var(--rd-fern);
+  --emerald-deep:   var(--rd-moss);
+  --sage:           var(--rd-mint);
+  --ink:            var(--rd-ink);
+  --muted:          rgba(10, 20, 16, 0.55);
+  --line:           rgba(10, 20, 16, 0.1);
+  --shadow-soft:    0 30px 90px rgba(10, 20, 16, 0.12);
 }
 
 * {
   box-sizing: border-box;
-  /* Long emails/URLs wrap instead of pushing the page wider than the viewport */
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 html {
   scroll-behavior: smooth;
-  /* Prevent iOS automatically resizing text when rotating to landscape */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Hard guard rail against horizontal scroll on any device */
   overflow-x: hidden;
   max-width: 100vw;
 }
 
 body {
   margin: 0;
-  background: linear-gradient(135deg, #fffaf0 0%, #f7efe0 44%, #edf4ed 100%);
-  color: var(--ink);
+  /* Editorial cream → soft paper gradient. Dark sections override per-section. */
+  background: linear-gradient(180deg, var(--rd-paper) 0%, var(--rd-paper-soft) 100%);
+  color: var(--rd-on-paper);
   overflow-x: hidden;
   max-width: 100vw;
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
   font-feature-settings: 'ss01', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* No tap highlight, we render our own focus/active states */
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Images, video, and SVG never exceed their container */
+::selection { background: var(--rd-glow); color: var(--rd-ink); }
+
 img, svg, video, canvas { max-width: 100%; height: auto; }
 
-::selection { background: rgba(217, 183, 111, 0.4); color: var(--emerald-deep); }
-
-/* Fraunces variable axes — tighten letter-spacing on large display headings */
-h1, h2, h3 {
+/* =====================================================================
+   Typography — Fraunces display + DM Sans body + JetBrains Mono
+   ===================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display), 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
   font-variation-settings: 'SOFT' 70, 'opsz' 144;
-  letter-spacing: -0.018em;
 }
 
+h1 {
+  font-size: clamp(2.5rem, 6vw + 1rem, 5.5rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw + 0.75rem, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h4 { font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem); font-weight: 500; }
+h5 { font-size: 1.125rem; font-weight: 500; line-height: 1.3; }
+h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; }
+
+.rd-eyebrow {
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;        /* 11px */
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rd-text-dim);
+}
+@media (min-width: 768px) { .rd-eyebrow { font-size: 0.75rem; } }
+
+.rd-mono { font-family: var(--font-mono), 'JetBrains Mono', monospace; }
+.rd-display { font-family: var(--font-display), 'Fraunces', Georgia, serif; }
+
+/* =====================================================================
+   Motion / accessibility
+   ===================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -65,7 +148,6 @@ h1, h2, h3 {
   }
 }
 
-/* Reserve space under sticky header for anchor-link targets */
 :target { scroll-margin-top: 120px; }
 
 a:focus:not(:focus-visible),
@@ -77,29 +159,28 @@ textarea:focus:not(:focus-visible) {
 }
 
 :focus-visible {
-  outline: 2px solid var(--champagne);
-  outline-offset: 3px;
+  outline: 2px solid var(--rd-glow);
+  outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* iOS Safari zooms when an input has font-size < 16px. Force minimum on
-   touch viewports to keep the layout stable when the keyboard appears. */
+/* Anti-iOS-zoom on focus */
 @media (max-width: 768px) {
   input, select, textarea {
     font-size: 16px !important;
   }
 }
 
-/* On small screens, cap letter-spacing on uppercase eyebrow/pill text so
-   long phrases don't render wider than the viewport (which would force the
-   browser to zoom out and shift the page sideways). */
+/* Cap letter-spacing on uppercase eyebrow text on phones */
 @media (max-width: 480px) {
   .uppercase { letter-spacing: 0.08em !important; }
 }
 
-/* Respect iPhone safe areas on bottom-floating bars */
 .safe-bottom { padding-bottom: max(1rem, calc(var(--safe-bottom) + 0.75rem)); }
 
+/* =====================================================================
+   Layout primitives
+   ===================================================================== */
 .luxury-shell {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
@@ -108,6 +189,7 @@ textarea:focus:not(:focus-visible) {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* Cards / utility */
 .glass-card {
   background: rgba(255, 253, 247, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -116,144 +198,46 @@ textarea:focus:not(:focus-visible) {
 }
 
 .gold-text {
-  background: linear-gradient(120deg, #7f5f1e, #d9b76f 45%, #fff0bc 55%, #8d6c24);
+  background: linear-gradient(120deg, var(--rd-amber-dark), var(--rd-amber) 45%, #fff0bc 55%, var(--rd-amber-dark));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.luxe-border { border: 1px solid rgba(217, 183, 111, 0.38); }
+.luxe-border { border: 1px solid rgba(212, 165, 116, 0.38); }
 
 .mesh-bg {
   background-image:
-    linear-gradient(rgba(15, 91, 63, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 91, 63, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(91, 140, 110, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 140, 110, 0.06) 1px, transparent 1px);
   background-size: 42px 42px;
 }
 
-/* Cinematic smoke layer used inside the hero slider */
-.smoke-blob {
-  position: absolute;
-  width: 70vw;
-  height: 70vw;
-  max-width: 720px;
-  max-height: 720px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02) 45%, transparent 70%);
-  filter: blur(60px);
-  opacity: 0.65;
-  will-change: transform, opacity;
-}
-.smoke-blob-1 { top: -10%; left: -15%; animation: smoke-drift-1 22s ease-in-out infinite; }
-.smoke-blob-2 { bottom: -20%; right: -10%; animation: smoke-drift-2 26s ease-in-out infinite; background: radial-gradient(circle at 50% 50%, rgba(15, 91, 63, 0.18), rgba(15, 91, 63, 0.04) 50%, transparent 70%); }
-.smoke-blob-3 { top: 20%; right: 20%; width: 40vw; height: 40vw; animation: smoke-drift-3 18s ease-in-out infinite; opacity: 0.4; }
-
-@keyframes smoke-drift-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(8%, -4%) scale(1.05); }
-}
-@keyframes smoke-drift-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%      { transform: translate(-6%, 6%) scale(1.08); }
-}
-@keyframes smoke-drift-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
-  50%      { transform: translate(4%, 4%) scale(1.12); opacity: 0.55; }
-}
-
-@media (max-width: 768px) {
-  /* Lighter smoke on phones for paint perf — two faint blobs is enough */
-  .smoke-blob-3 { display: none; }
-  .smoke-blob { filter: blur(40px); opacity: 0.45; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .smoke-blob { animation: none !important; }
-}
-
-/* Consistent premium button language */
-.btn-luxe {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 48px;
-  padding: 0.875rem 1.5rem;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 0.75rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-.btn-luxe:hover { transform: translateY(-2px); }
-.btn-luxe-primary {
-  background: linear-gradient(135deg, #0f5b3f 0%, #073326 100%);
-  color: #ffffff;
-  box-shadow: 0 18px 44px rgba(7, 51, 38, 0.32);
-}
-.btn-luxe-primary:hover {
-  background: linear-gradient(135deg, #14744f 0%, #0a4332 100%);
-  box-shadow: 0 24px 60px rgba(7, 51, 38, 0.45);
-}
-.btn-luxe-gold {
-  background: linear-gradient(135deg, #d9b76f 0%, #b58a3e 100%);
-  color: #073326;
-  box-shadow: 0 18px 44px rgba(155, 120, 50, 0.32);
-}
-.btn-luxe-gold:hover {
-  background: linear-gradient(135deg, #e9c987 0%, #c39a4a 100%);
-  box-shadow: 0 24px 60px rgba(155, 120, 50, 0.45);
-}
-.btn-luxe-ghost {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(10px);
-}
-.btn-luxe-ghost:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(217, 183, 111, 0.6);
-}
-.btn-luxe-light {
-  background: #ffffff;
-  color: #073326;
-  box-shadow: 0 18px 44px rgba(7, 51, 38, 0.18);
-}
-.btn-luxe-light:hover {
-  background: #fff7e6;
-  box-shadow: 0 24px 60px rgba(7, 51, 38, 0.28);
-}
-
-/* Premium dark backdrop with subtle texture, used by deep sections */
-.luxe-dark {
-  background:
-    radial-gradient(80% 60% at 50% 0%, rgba(15, 91, 63, 0.45) 0%, transparent 60%),
-    linear-gradient(180deg, #06130f 0%, #03100b 100%);
-  color: #ffffff;
-  position: relative;
-}
-.luxe-dark::before {
-  content: '';
+/* Film-grain overlay for hero / dark sections */
+.rd-grain::before {
+  content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.6) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(255, 255, 255, 0.4) 0.5px, transparent 0.5px);
+  background-size: 3px 3px, 5px 5px;
+  background-position: 0 0, 1.5px 1.5px;
 }
 
-.product-description-clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Subtle radial vignette */
+.rd-vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 20, 16, 0.55) 100%);
 }
 
-/* Drop expensive blur on small screens to keep paint smooth on mid-range
-   phones. Visual difference is negligible at that scale. */
+/* Drop expensive blur on small screens for paint performance */
 @media (max-width: 640px) {
   .backdrop-blur,
   .backdrop-blur-xl,
@@ -263,70 +247,85 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
-.legal-prose { color: var(--muted); line-height: 1.85; font-size: 0.95rem; }
+.product-description-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =====================================================================
+   Long-form prose (legal + blog)
+   ===================================================================== */
+.legal-prose { color: var(--rd-on-paper-dim); line-height: 1.85; font-size: 0.95rem; }
 .legal-prose > * + * { margin-top: 1.25rem; }
 .legal-prose h2 {
   font-family: var(--font-display);
-  color: var(--emerald-deep);
+  color: var(--rd-ink);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 500;
   margin-top: 2rem;
   line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 @media (min-width: 768px) {
-  .legal-prose h2 { font-size: 1.625rem; margin-top: 2.25rem; }
+  .legal-prose h2 { font-size: 1.75rem; margin-top: 2.25rem; }
 }
 .legal-prose h3 {
-  color: var(--emerald-deep);
+  color: var(--rd-ink);
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 1.5rem;
 }
-.legal-prose p { color: var(--muted); }
-.legal-prose strong { color: var(--ink); font-weight: 700; }
+.legal-prose p { color: var(--rd-on-paper-dim); }
+.legal-prose strong { color: var(--rd-ink); font-weight: 600; }
 .legal-prose ul { list-style: disc; padding-left: 1.4rem; }
 .legal-prose ol { list-style: decimal; padding-left: 1.4rem; }
 .legal-prose li + li { margin-top: 0.4rem; }
 .legal-prose a {
-  color: var(--emerald-deep);
-  font-weight: 700;
+  color: var(--rd-moss);
+  font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(217, 183, 111, 0.6);
+  text-decoration-color: var(--rd-glow);
+  transition: color 240ms var(--ease-out);
 }
-.legal-prose a:hover { color: var(--champagne-dark); }
+.legal-prose a:hover { color: var(--rd-fern); }
 
-.blog-prose { color: var(--muted); line-height: 1.85; font-size: 1rem; }
+.blog-prose { color: var(--rd-on-paper-dim); line-height: 1.85; font-size: 1rem; }
 .blog-prose > * + * { margin-top: 1.25rem; }
 .blog-prose h2 {
   font-family: var(--font-display);
-  color: var(--emerald-deep);
+  color: var(--rd-ink);
   font-size: 1.625rem;
-  font-weight: 700;
+  font-weight: 500;
   margin-top: 2rem;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 @media (min-width: 768px) {
-  .blog-prose h2 { font-size: 1.875rem; margin-top: 2.5rem; }
+  .blog-prose h2 { font-size: 2rem; margin-top: 2.5rem; }
 }
 .blog-prose ul { list-style: disc; padding-left: 1.4rem; }
 .blog-prose ol { list-style: decimal; padding-left: 1.4rem; }
 .blog-prose li + li { margin-top: 0.4rem; }
-.blog-prose strong { color: var(--ink); font-weight: 700; }
-.blog-prose em { color: var(--emerald-deep); font-style: italic; }
+.blog-prose strong { color: var(--rd-ink); font-weight: 600; }
+.blog-prose em { color: var(--rd-moss); font-style: italic; }
 .blog-prose a {
-  color: var(--emerald-deep);
-  font-weight: 700;
+  color: var(--rd-moss);
+  font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(217, 183, 111, 0.6);
+  text-decoration-color: var(--rd-glow);
 }
-.blog-prose a:hover { color: var(--champagne-dark); }
+.blog-prose a:hover { color: var(--rd-fern); }
 .blog-prose blockquote {
-  border-left: 3px solid var(--champagne);
+  border-left: 3px solid var(--rd-glow);
   padding-left: 1rem;
-  color: var(--emerald-deep);
+  color: var(--rd-ink);
+  font-family: var(--font-display);
   font-style: italic;
+  font-size: 1.125rem;
 }
 
 @media (max-width: 768px) {
@@ -336,3 +335,148 @@ textarea:focus:not(:focus-visible) {
 @media (max-width: 480px) {
   .luxury-shell { width: calc(100% - 24px); }
 }
+
+/* =====================================================================
+   Reusable button primitives (use via className for new components)
+   ===================================================================== */
+.rd-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  min-height: 48px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 240ms var(--ease-out), background 240ms var(--ease-out), color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+  cursor: pointer;
+}
+.rd-cta-glow {
+  background: var(--rd-glow);
+  color: var(--rd-ink);
+  box-shadow: 0 12px 36px rgba(200, 230, 110, 0.32);
+}
+.rd-cta-glow:hover { transform: translateY(-1px); box-shadow: 0 16px 44px rgba(200, 230, 110, 0.42); }
+.rd-cta-ghost {
+  background: transparent;
+  color: var(--rd-text);
+  border: 1px solid rgba(245, 241, 232, 0.32);
+}
+.rd-cta-ghost:hover {
+  border-color: var(--rd-glow);
+  color: var(--rd-glow);
+}
+.rd-cta-ink {
+  background: var(--rd-ink);
+  color: var(--rd-paper);
+}
+.rd-cta-ink:hover {
+  background: var(--rd-moss);
+  transform: translateY(-1px);
+}
+
+/* "Live" pulsing dot (used in eyebrows and open indicator) */
+.rd-pulse {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rd-glow);
+}
+.rd-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--rd-glow);
+  opacity: 0.4;
+  animation: rd-pulse 1.8s var(--ease-out) infinite;
+}
+@keyframes rd-pulse {
+  0%   { transform: scale(0.7); opacity: 0.6; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Scroll cue chevron */
+.rd-scroll-cue {
+  animation: rd-bob 2.4s var(--ease-out) infinite;
+}
+@keyframes rd-bob {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* Staggered fade-up on hero load */
+@keyframes rd-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rd-fade-up { animation: rd-fade-up 560ms var(--ease-out) both; }
+
+/* =====================================================================
+   Legacy btn-luxe-* classes used by HeroSlider / ClaimOfferModal /
+   CoverageMap / HomePage. These were previously referenced without
+   definitions (latent bug). Map them to the new design tokens.
+   ===================================================================== */
+.btn-luxe {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  min-height: 48px;
+  border-radius: 999px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 280ms var(--ease-out), background 280ms var(--ease-out),
+              color 280ms var(--ease-out), box-shadow 280ms var(--ease-out),
+              border-color 280ms var(--ease-out);
+  white-space: nowrap;
+}
+.btn-luxe svg { width: 1rem; height: 1rem; transition: transform 280ms var(--ease-out); }
+.btn-luxe:hover svg { transform: translateX(2px); }
+
+.btn-luxe-gold {
+  background: var(--rd-glow);
+  color: var(--rd-ink);
+  border: 1px solid var(--rd-glow);
+  box-shadow: 0 12px 36px rgba(200, 230, 110, 0.32);
+}
+.btn-luxe-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 48px rgba(200, 230, 110, 0.42);
+}
+
+.btn-luxe-ghost {
+  background: transparent;
+  color: var(--rd-text);
+  border: 1px solid rgba(245, 241, 232, 0.28);
+}
+.btn-luxe-ghost:hover {
+  color: var(--rd-glow);
+  border-color: var(--rd-glow);
+}
+
+.btn-luxe-dark {
+  background: var(--rd-ink);
+  color: var(--rd-paper);
+  border: 1px solid var(--rd-ink);
+}
+.btn-luxe-dark:hover { background: var(--rd-moss); transform: translateY(-1px); }
+
+.btn-luxe-paper {
+  background: var(--rd-paper);
+  color: var(--rd-ink);
+  border: 1px solid var(--rd-paper);
+}
+.btn-luxe-paper:hover { background: var(--rd-glow); transform: translateY(-1px); }

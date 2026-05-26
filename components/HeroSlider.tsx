@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, MapPin, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import SmokeLayer from '@/components/SmokeLayer';
 
@@ -14,7 +14,9 @@ export type HeroSlide = {
   /** Object-position tuned per-slide so the subject stays visible on phones */
   imagePosition?: string;
   eyebrow: string;
+  /** Plain headline text; if `headlineAccent` is set, that substring is styled in --rd-glow */
   headline: string;
+  /** Optional substring of `headline` to emphasize with the glow accent + heavier weight */
   headlineAccent?: string;
   subtext: string;
   primary?: { label: string; href?: string; onClick?: () => void };
@@ -24,11 +26,28 @@ export type HeroSlide = {
 type Props = {
   slides: HeroSlide[];
   autoplayMs?: number;
-  onClaim?: () => void;
 };
 
 const AUTOPLAY_MS_DEFAULT = 7000;
+const easeOut = [0.22, 1, 0.36, 1] as const;
 
+/**
+ * Hero banner slider — see /raindrops-design-brief.md §3.2 for spec.
+ *
+ * Visual stack (back to front):
+ *   1. Per-slide image (cross-faded with subtle Ken Burns zoom)
+ *   2. Cinematic gradient overlay so headline + buttons stay readable
+ *   3. Film-grain texture (.rd-grain)
+ *   4. Radial vignette (.rd-vignette)
+ *   5. Drifting smoke layer (SmokeLayer)
+ *   6. Slide content with staggered fade-up on change
+ *
+ * Behaviour:
+ *   - 7s autoplay with hover/touch pause
+ *   - Keyboard ← → navigation
+ *   - Touch swipe (40px threshold)
+ *   - Respects prefers-reduced-motion (no autoplay, no zoom)
+ */
 export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -41,7 +60,6 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
 
-  // Autoplay with hover-pause and reduced-motion respect.
   useEffect(() => {
     if (paused || slides.length <= 1) return;
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -51,7 +69,6 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
     };
   }, [autoplayMs, index, next, paused, slides.length]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (event.key === 'ArrowLeft') prev();
@@ -61,7 +78,6 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
     return () => window.removeEventListener('keydown', handler);
   }, [next, prev]);
 
-  // Basic touch swipe support
   const touchRef = useRef<{ startX: number } | null>(null);
   const onTouchStart = (event: React.TouchEvent) => {
     touchRef.current = { startX: event.touches[0].clientX };
@@ -80,7 +96,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   return (
     <section
-      className="relative isolate w-full overflow-hidden bg-[#03100b] text-white"
+      className="rd-grain rd-vignette relative isolate -mt-[72px] w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] md:-mt-[84px]"
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}
@@ -88,15 +104,15 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* Slide images, cross-faded */}
+      {/* Layer 1: slide image (cross-faded with slow zoom) */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, scale: 1.04 }}
+            initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.04 }}
-            transition={{ opacity: { duration: 1.1, ease: 'easeInOut' }, scale: { duration: 6, ease: 'easeOut' } }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ opacity: { duration: 1.1, ease: easeOut }, scale: { duration: 7, ease: 'easeOut' } }}
             className="absolute inset-0"
           >
             <Image
@@ -108,98 +124,141 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               className="object-cover"
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,16,11,0.92)_0%,rgba(3,16,11,0.72)_40%,rgba(3,16,11,0.32)_75%,rgba(3,16,11,0.55)_100%)]" />
-            <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#03100b] to-transparent" />
+            {/* Cinematic side gradient — keeps text on left readable */}
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94)_0%,rgba(10,20,16,0.78)_38%,rgba(10,20,16,0.32)_72%,rgba(10,20,16,0.58)_100%)]" />
+            {/* Bottom fade for nav-content seam */}
+            <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Cinematic smoke layer */}
+      {/* Layer 2: drifting smoke (lightweight, respects reduced motion) */}
       <SmokeLayer />
 
-      {/* Slide content */}
-      <div className="luxury-shell relative z-10 grid min-h-[620px] items-center py-16 sm:min-h-[680px] sm:py-20 lg:min-h-[88vh]">
+      {/* Layer 3: slide content */}
+      <div className="luxury-shell relative z-10 grid min-h-[640px] items-center pt-[112px] pb-20 sm:min-h-[720px] sm:pt-[140px] sm:pb-24 lg:min-h-[92vh]">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.65, ease: easeOut }}
             className="max-w-3xl"
           >
-            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/20 bg-white/8 px-4 py-2 backdrop-blur-sm">
-              <Sparkles className="h-4 w-4 shrink-0 text-[var(--champagne)]" />
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/86 sm:text-xs sm:tracking-[0.22em]">{slide.eyebrow}</span>
-            </span>
+            {/* Eyebrow with live pulse */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
+              className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-3.5 py-1.5 backdrop-blur-sm"
+            >
+              <span className="rd-pulse motion-safe:[animation-play-state:running]" aria-hidden />
+              <span className="rd-eyebrow text-[color:var(--rd-text)]">{slide.eyebrow}</span>
+            </motion.div>
 
-            <h1 className="mt-5 font-[var(--font-display)] text-[2.6rem] font-extrabold leading-[0.95] text-white sm:text-6xl md:text-7xl lg:text-8xl">
-              {slide.headlineAccent ? (
-                <>
-                  {slide.headline.split(slide.headlineAccent)[0]}
-                  <span className="text-[var(--emerald)]">{slide.headlineAccent}</span>
-                  {slide.headline.split(slide.headlineAccent)[1]}
-                </>
-              ) : (
-                slide.headline
-              )}
-            </h1>
+            {/* Headline — Fraunces with mixed weight per brief */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
+              className="mt-6 text-[2.75rem] leading-[1] text-[color:var(--rd-text)] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+            >
+              {renderHeadline(slide.headline, slide.headlineAccent)}
+            </motion.h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/76 sm:text-lg sm:leading-8 md:text-xl">
+            {/* Subtext */}
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.21, ease: easeOut }}
+              className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8 md:text-xl"
+            >
               {slide.subtext}
-            </p>
+            </motion.p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              {slide.primary && (
-                <SlideCta {...slide.primary} variant="gold" />
-              )}
-              {slide.secondary && (
-                <SlideCta {...slide.secondary} variant="ghost" />
-              )}
-            </div>
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.29, ease: easeOut }}
+              className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+            >
+              {slide.primary && <SlideCta {...slide.primary} variant="gold" />}
+              {slide.secondary && <SlideCta {...slide.secondary} variant="ghost" />}
+            </motion.div>
 
-            <div className="mt-9 flex items-center gap-4 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white/56 sm:text-xs">
-              <MapPin className="h-3.5 w-3.5 text-[var(--champagne)]" />
-              <span>21+ • NYC only • While supplies last</span>
-            </div>
+            {/* Compliance footer line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
+              className="mt-10 flex items-center gap-3"
+            >
+              <span className="h-px w-12 bg-[color:var(--rd-paper)]/24" />
+              <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">21+ · NYC only · While supplies last</span>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Controls */}
+      {/* Layer 4: controls */}
       {slides.length > 1 && (
-        <div className="absolute inset-x-0 bottom-6 z-20 flex flex-col items-center gap-4 sm:bottom-8">
-          <div className="flex items-center gap-2">
+        <>
+          {/* Dots */}
+          <div className="absolute inset-x-0 bottom-6 z-20 flex justify-center gap-2 sm:bottom-10">
             {slides.map((s, i) => (
               <button
                 key={s.id}
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={i === index}
                 onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-500 ${i === index ? 'w-9 bg-[var(--champagne)]' : 'w-3 bg-white/30 hover:bg-white/55'}`}
+                className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
+                  i === index ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 hover:bg-[color:var(--rd-paper)]/55'
+                }`}
               />
             ))}
           </div>
 
-          <div className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 items-center justify-between px-4 sm:flex">
+          {/* Arrows (desktop) */}
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-between px-6 sm:flex">
             <button
               aria-label="Previous slide"
               onClick={prev}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/18 bg-black/24 text-white/80 backdrop-blur-md transition hover:border-[var(--champagne)] hover:text-white"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               aria-label="Next slide"
               onClick={next}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/18 bg-black/24 text-white/80 backdrop-blur-md transition hover:border-[var(--champagne)] hover:text-white"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
             >
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
-        </div>
+        </>
       )}
+
+      {/* Layer 5: scroll cue */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center pb-[max(env(safe-area-inset-bottom,0px),8px)] sm:bottom-4">
+        <ChevronDown className="rd-scroll-cue h-5 w-5 text-[color:var(--rd-text-mute)]" aria-hidden />
+      </div>
     </section>
+  );
+}
+
+function renderHeadline(headline: string, accent?: string) {
+  if (!accent) return <span style={{ fontWeight: 500 }}>{headline}</span>;
+  const parts = headline.split(accent);
+  if (parts.length === 1) return <span style={{ fontWeight: 500 }}>{headline}</span>;
+  return (
+    <>
+      <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[0]}</span>
+      <span style={{ fontWeight: 600, color: 'var(--rd-glow)', fontStyle: 'normal' }}>{accent}</span>
+      <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[1]}</span>
+    </>
   );
 }
 
@@ -219,14 +278,14 @@ function SlideCta({
     return (
       <Link href={href} className={cls}>
         {label}
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight />
       </Link>
     );
   }
   return (
     <button type="button" onClick={onClick} className={cls}>
       {label}
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRight />
     </button>
   );
 }

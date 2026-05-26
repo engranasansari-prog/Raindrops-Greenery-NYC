@@ -22,7 +22,7 @@ function computeStatus(): Status {
     if (closesInMinutes <= 60) {
       return { open: true, label: `Open · closes in ${closesInMinutes} min` };
     }
-    return { open: true, label: 'Open now · delivering' };
+    return { open: true, label: 'Open · delivering' };
   }
 
   const minutesToOpen = currentMinutes < openMinutes
@@ -37,6 +37,13 @@ function computeStatus(): Status {
   return { open: false, label: `Opens in ${hoursToOpen}h` };
 }
 
+/**
+ * Live open/closed indicator.
+ *
+ * IMPORTANT: This was previously rendering a "Loading" placeholder during SSR
+ * which would briefly appear in the nav before client hydration computed the
+ * real status. We now return null until hydrated so nothing flashes in.
+ */
 export default function OpenStatus({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   const [status, setStatus] = useState<Status | null>(null);
 
@@ -47,20 +54,28 @@ export default function OpenStatus({ tone = 'light' }: { tone?: 'light' | 'dark'
     return () => window.clearInterval(interval);
   }, []);
 
-  if (!status) {
-    return (
-      <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] ${tone === 'dark' ? 'border-white/14 text-white/70' : 'border-[var(--line)] text-[var(--muted)] bg-white/70'}`}>
-        <span className="h-1.5 w-1.5 rounded-full bg-[var(--muted)]/40" />
-        Loading
-      </span>
-    );
-  }
+  if (!status) return null;
+
+  const baseClasses =
+    'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] [font-family:var(--font-mono)]';
+
+  const toneClasses = tone === 'dark'
+    ? status.open
+      ? 'border-[color:var(--rd-glow)]/40 bg-[color:var(--rd-glow)]/10 text-[color:var(--rd-glow)]'
+      : 'border-white/14 bg-white/8 text-white/70'
+    : status.open
+      ? 'border-[color:var(--rd-fern)] bg-[color:var(--rd-fern)]/8 text-[color:var(--rd-moss)]'
+      : 'border-[color:var(--line)] bg-white/70 text-[color:var(--muted)]';
 
   return (
-    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] ${tone === 'dark' ? (status.open ? 'border-emerald-300/40 bg-emerald-400/12 text-emerald-100' : 'border-white/14 bg-white/8 text-white/70') : (status.open ? 'border-[var(--emerald)] bg-[var(--emerald)]/8 text-[var(--emerald-deep)]' : 'border-[var(--line)] bg-white/70 text-[var(--muted)]')}`} aria-live="polite">
-      <span className={`relative inline-flex h-2 w-2`}>
-        <span className={`absolute inset-0 rounded-full ${status.open ? 'bg-[var(--emerald)] motion-safe:animate-ping opacity-60' : 'bg-[var(--muted)]/40'}`} />
-        <span className={`relative inline-flex h-2 w-2 rounded-full ${status.open ? 'bg-[var(--emerald)]' : 'bg-[var(--muted)]/60'}`} />
+    <span className={`${baseClasses} ${toneClasses}`} aria-live="polite">
+      <span className="relative inline-flex h-2 w-2">
+        {status.open && (
+          <span className="motion-safe:animate-ping absolute inset-0 rounded-full bg-[color:var(--rd-glow)] opacity-60" />
+        )}
+        <span
+          className={`relative inline-flex h-2 w-2 rounded-full ${status.open ? 'bg-[color:var(--rd-glow)]' : 'bg-[color:var(--muted)]/60'}`}
+        />
       </span>
       {status.label}
     </span>
