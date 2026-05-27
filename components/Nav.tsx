@@ -18,6 +18,7 @@ import {
   X
 } from 'lucide-react';
 import { InstagramIcon } from '@/components/SocialIcons';
+import DeliveryEta from '@/components/DeliveryEta';
 import { checkout } from '@/lib/site-data';
 
 /**
@@ -155,8 +156,9 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Right cluster: 21+ pill + Order CTA */}
+          {/* Right cluster: live delivery ETA + 21+ pill + Order CTA */}
           <div className="flex items-center gap-2 md:gap-3">
+            <DeliveryEta variant="desktop" />
             <span className="hidden items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[color:var(--rd-ink)] [font-family:var(--font-mono)] sm:inline-flex">
               21+
             </span>
@@ -187,10 +189,13 @@ export default function Nav() {
             aria-modal="true"
             aria-label="Navigation menu"
           >
-            <div className="flex items-center justify-between border-b border-[rgba(245,241,232,0.06)] p-4">
-              <span className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                21+
-              </span>
+            <div className="flex items-center justify-between gap-3 border-b border-[rgba(245,241,232,0.06)] p-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                  21+
+                </span>
+                <DeliveryEta variant="mobile" />
+              </div>
               <button
                 onClick={() => setDrawerOpen(false)}
                 aria-label="Close menu"

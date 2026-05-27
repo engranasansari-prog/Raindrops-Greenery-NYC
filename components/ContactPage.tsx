@@ -9,6 +9,25 @@ import { business, social } from '@/lib/site-data';
 
 const topics = ['Order help', 'Delivery question', 'Wholesale / brand partnership', 'Press', 'Other'];
 
+function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; label: string; value: string; href?: string }) {
+  const className = "group block rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_22px_60px_rgba(200,230,110,0.10)]";
+  const content = (
+    <>
+      <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" />
+      <p className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)]">{label}</p>
+      <p className="mt-2 text-sm font-medium leading-6 text-[color:var(--rd-text)]">{value}</p>
+    </>
+  );
+  if (href) {
+    return (
+      <a href={href} className={className}>
+        {content}
+      </a>
+    );
+  }
+  return <div className={className}>{content}</div>;
+}
+
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [name, setName] = useState('');
@@ -26,125 +45,151 @@ export default function ContactPage() {
     setSent(true);
   };
 
+  const inputClass =
+    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)]/60';
+
   return (
     <SiteChrome>
-      <section className="relative overflow-hidden bg-[#0b3025] text-white">
-        <div className="absolute inset-0 mesh-bg opacity-15" />
-        <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
+          }}
+        />
+        <div className="luxury-shell relative grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Contact' }]} tone="dark" />
-            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Get in touch</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Real humans answer here.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Get in touch</p>
+            <h1 className="mt-4 text-[color:var(--rd-text)]">
+              Real humans <span className="italic">answer here.</span>
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               Questions about a delivery, a product, or a partnership? Use the form, give us a call, or message us on social. We answer most messages within one business day.
             </p>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
-            <a href={business.phoneHref} className="rounded-lg border border-white/12 bg-white/8 p-5 transition hover:bg-white/12">
-              <Phone className="h-6 w-6 text-[var(--champagne)]" />
-              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Phone</p>
-              <p className="mt-2 font-bold">{business.phone}</p>
-            </a>
-            <a href={business.emailHref} className="rounded-lg border border-white/12 bg-white/8 p-5 transition hover:bg-white/12">
-              <Mail className="h-6 w-6 text-[var(--champagne)]" />
-              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Support</p>
-              <p className="mt-2 font-bold">{business.email}</p>
-            </a>
-            <a href={business.pressEmailHref} className="rounded-lg border border-white/12 bg-white/8 p-5 transition hover:bg-white/12">
-              <MessageSquare className="h-6 w-6 text-[var(--champagne)]" />
-              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Press</p>
-              <p className="mt-2 font-bold">{business.pressEmail}</p>
-            </a>
-            <div className="rounded-lg border border-white/12 bg-white/8 p-5">
-              <ShieldCheck className="h-6 w-6 text-[var(--champagne)]" />
-              <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)]">Licensing</p>
-              <p className="mt-2 font-bold leading-6">{business.licensingAuthority}</p>
-            </div>
+            <ContactStat icon={Phone} label="Phone" value={business.phone} href={business.phoneHref} />
+            <ContactStat icon={Mail} label="Support" value={business.email} href={business.emailHref} />
+            <ContactStat icon={MessageSquare} label="Press" value={business.pressEmail} href={business.pressEmailHref} />
+            <ContactStat icon={ShieldCheck} label="Licensing" value={business.licensingAuthority} />
           </div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20">
+      {/* Form + sidebar */}
+      <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
         <div className="luxury-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <form onSubmit={send} className="rounded-lg border border-white/70 bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)] md:p-9">
-            <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">Send a message</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] md:text-4xl">Tell us what you need.</h2>
+          <form
+            onSubmit={send}
+            className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-9"
+          >
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Send a message</p>
+            <h2
+              className="mt-3 text-[color:var(--rd-text)]"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.6rem, 2.4vw, 2.2rem)', letterSpacing: '-0.02em' }}
+            >
+              Tell us what <span className="italic">you need.</span>
+            </h2>
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="grid gap-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Your name</span>
-                <input required value={name} onChange={(event) => setName(event.target.value)} className="h-12 rounded-lg border border-[var(--line)] bg-white px-3 text-sm font-bold text-[var(--emerald-deep)] outline-none transition focus:border-[var(--champagne)]" />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Your name</span>
+                <input required value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Email</span>
-                <input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="h-12 rounded-lg border border-[var(--line)] bg-white px-3 text-sm font-bold text-[var(--emerald-deep)] outline-none transition focus:border-[var(--champagne)]" />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Email</span>
+                <input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2 md:col-span-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Topic</span>
-                <select value={topic} onChange={(event) => setTopic(event.target.value)} className="h-12 rounded-lg border border-[var(--line)] bg-white px-3 text-sm font-bold text-[var(--emerald-deep)] outline-none transition focus:border-[var(--champagne)]">
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Topic</span>
+                <select value={topic} onChange={(event) => setTopic(event.target.value)} className={inputClass}>
                   {topics.map((item) => (
                     <option key={item}>{item}</option>
                   ))}
                 </select>
               </label>
               <label className="grid gap-2 md:col-span-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Message</span>
-                <textarea required value={message} onChange={(event) => setMessage(event.target.value)} rows={5} className="rounded-lg border border-[var(--line)] bg-white p-3 text-sm leading-7 text-[var(--emerald-deep)] outline-none transition focus:border-[var(--champagne)]" />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Message</span>
+                <textarea
+                  required
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
+                  rows={5}
+                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)]/60"
+                />
               </label>
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-[var(--emerald-deep)] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-white transition hover:bg-[var(--emerald)]">
+              <button
+                type="submit"
+                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+              >
                 Send message
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
               </button>
               {sent && (
-                <span className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald)]">
+                <span className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
                   <Check className="h-4 w-4" />
                   Your email app opened.
                 </span>
               )}
             </div>
 
-            <p className="mt-4 text-xs leading-6 text-[var(--muted)]">
+            <p className="mt-5 text-xs leading-6 text-[color:var(--rd-text-mute)]">
               Please do not include payment information. For order issues, call {business.phone} or email {business.email}.
             </p>
           </form>
 
           <aside className="grid gap-4 self-start">
-            <div className="rounded-lg border border-white/70 bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-              <Clock className="h-6 w-6 text-[var(--emerald)]" />
-              <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Hours</p>
-              <ul className="mt-3 grid gap-2 text-sm font-bold text-[var(--emerald-deep)]">
+            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+              <Clock className="h-6 w-6 text-[color:var(--rd-glow)]" />
+              <p className="mt-3 rd-eyebrow text-[color:var(--rd-text-mute)]">Hours</p>
+              <ul className="mt-3 grid gap-2 text-sm text-[color:var(--rd-text)] [font-family:var(--font-mono)]">
                 {business.hours.map((slot) => (
-                  <li key={slot.day} className="flex items-center justify-between gap-3">
-                    <span>{slot.day}</span>
+                  <li key={slot.day} className="flex items-center justify-between gap-3 border-b border-[color:var(--rd-paper)]/8 pb-2 last:border-0 last:pb-0">
+                    <span className="text-[color:var(--rd-text-dim)]">{slot.day}</span>
                     <span>{slot.open} – {slot.close}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-lg border border-[rgba(217,183,111,0.45)] bg-[rgba(217,183,111,0.12)] p-6">
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne-dark)]">Find us social</p>
+            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-glow)]/8 p-6 shadow-[0_24px_72px_rgba(0,0,0,0.20)]">
+              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Find us social</p>
               <ul className="mt-4 grid gap-2 text-sm">
                 {social.map((item) => (
                   <li key={item.label}>
-                    <a href={item.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-extrabold text-[var(--emerald-deep)] transition hover:text-[var(--champagne-dark)]">
-                      {item.label} <span className="text-[var(--muted)]">— {item.handle}</span>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 font-medium text-[color:var(--rd-text)] transition hover:text-[color:var(--rd-glow)]"
+                    >
+                      {item.label}
+                      <span className="text-[color:var(--rd-text-mute)]">— {item.handle}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-lg border border-white/70 bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-              <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[var(--champagne-dark)]">Need an order, not a chat?</p>
-              <h3 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)]">Skip ahead to checkout.</h3>
+            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+              <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Need an order, not a chat?</p>
+              <h3
+                className="mt-3 text-[color:var(--rd-text)]"
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.35rem, 1.8vw, 1.65rem)', letterSpacing: '-0.015em' }}
+              >
+                Skip ahead <span className="italic">to checkout.</span>
+              </h3>
               <div className="mt-5 grid gap-3">
-                <Link href="/menu" className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-white px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]">
+                <Link href="/menu" className="btn-luxe btn-luxe-paper w-full">
                   Browse menu
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight />
                 </Link>
                 <OrderButton className="w-full" />
               </div>
