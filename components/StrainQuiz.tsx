@@ -412,7 +412,17 @@ export default function StrainQuiz() {
                             </div>
                             <div className="flex flex-1 flex-col p-5">
                               <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-                              <h3 className="mt-2 truncate text-lg text-[color:var(--rd-text)] sm:text-xl" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.015em' }}>
+                              <h3
+                                className="mt-2 line-clamp-2 break-words text-[color:var(--rd-text)]"
+                                style={{
+                                  fontFamily: 'var(--font-display)',
+                                  fontWeight: 400,
+                                  letterSpacing: '-0.015em',
+                                  fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
+                                  lineHeight: 1.25
+                                }}
+                                title={product.name}
+                              >
                                 {product.name}
                               </h3>
                               <p className="mt-2 text-xs text-[color:var(--rd-text-dim)]">{inferProfile(product)}</p>

@@ -60,14 +60,24 @@ function ProductCard({ product }: { product: LiveMenuProduct }) {
       </div>
       <div className="flex flex-1 flex-col p-5">
         <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-        <h3 className="mt-1 truncate text-base font-medium text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)' }}>
+        <h3
+          className="mt-1 line-clamp-2 break-words text-[color:var(--rd-text)]"
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 500,
+            fontSize: 'clamp(0.95rem, 1.3vw, 1.05rem)',
+            lineHeight: 1.3,
+            minHeight: 'calc(1.3em * 2)'
+          }}
+          title={product.name}
+        >
           {product.name}
         </h3>
-        <div className="mt-auto flex items-end justify-between pt-4">
+        <div className="mt-auto flex items-end justify-between gap-3 pt-4">
           <p className="text-lg font-semibold text-[color:var(--rd-amber)] [font-family:var(--font-mono)]">
             {formatPrice(product.salePrice)}
           </p>
-          <span className="inline-flex items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
+          <span className="inline-flex shrink-0 items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
             View
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
           </span>

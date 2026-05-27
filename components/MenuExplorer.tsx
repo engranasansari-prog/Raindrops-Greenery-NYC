@@ -102,15 +102,25 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-            <h2 className="mt-2 truncate text-xl text-[color:var(--rd-text)] sm:text-2xl" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}>
+            <h2
+              className="mt-2 line-clamp-2 break-words text-[color:var(--rd-text)]"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+                fontSize: 'clamp(1.05rem, 1.6vw, 1.4rem)',
+                lineHeight: 1.2
+              }}
+              title={product.name}
+            >
               {product.name}
             </h2>
           </div>
           <div className="shrink-0 text-right [font-family:var(--font-mono)]">
-            <p className="text-2xl font-semibold text-[color:var(--rd-amber)] sm:text-3xl">{formatPrice(product.salePrice)}</p>
+            <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</p>
           </div>
         </div>
 

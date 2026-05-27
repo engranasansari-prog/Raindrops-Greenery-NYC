@@ -233,7 +233,17 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
               </div>
               <div className="flex flex-1 flex-col p-4">
                 <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{deal.brand}</p>
-                <h3 className="mt-1 truncate text-base font-medium text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)' }}>
+                <h3
+                  className="mt-1 line-clamp-2 break-words text-[color:var(--rd-text)]"
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 500,
+                    fontSize: 'clamp(0.95rem, 1.25vw, 1.05rem)',
+                    lineHeight: 1.3,
+                    minHeight: 'calc(1.3em * 2)'
+                  }}
+                  title={deal.name}
+                >
                   {deal.name}
                 </h3>
                 <div className="mt-auto flex items-end justify-between pt-3">
