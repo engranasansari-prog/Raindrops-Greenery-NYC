@@ -1,11 +1,11 @@
 /**
  * Coverage data — V4 brief §3. Single source of truth.
  *
- * 31 ZIPs across 7 clusters spanning Manhattan + East River neighborhoods
+ * 32 ZIPs across 7 clusters spanning Manhattan + East River neighborhoods
  * (LIC, Williamsburg, Greenpoint). Every coverage check, neighborhood card,
  * map polygon, and FAQ answer must derive from this file.
  *
- * Free delivery is unconditional — no minimum.
+ * Free delivery on orders over $25.
  */
 
 export type CoverageCluster = {
@@ -38,12 +38,15 @@ export const COVERAGE = {
       zips: ['10001', '10016', '10017', '10018', '10019', '10022', '10036']
     },
     {
+      // Client correction: 10009 is East Village (not Chelsea). Cluster
+      // re-led with East Village to match local usage. 10002 added per
+      // client request (Lower East Side, borders 10009/10003).
       id: 'chelsea-flatiron-ev',
-      name: 'Chelsea / Flatiron / Gramercy / East Village',
-      shortName: 'Chelsea & EV',
+      name: 'East Village / Lower East Side / Gramercy / Chelsea',
+      shortName: 'East Village & Chelsea',
       borough: 'Manhattan',
       etaMinutes: 35,
-      zips: ['10003', '10009', '10010', '10011']
+      zips: ['10003', '10009', '10002', '10010', '10011']
     },
     {
       id: 'gv-soho-tribeca',

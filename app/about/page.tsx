@@ -63,8 +63,8 @@ export default function AboutPage() {
               <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Adult, 21+ delivery handled with care and discretion.</li>
               <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Indian Nation Cannabis Regulatory Division.</li>
               <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-free under sovereign authority — no NY State cannabis tax.</li>
-              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order. No minimum.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Discreet, unbranded packaging. ID verified at the door.</li>
+              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order over $25.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> ID verified at the door. Discreet hand-offs.</li>
             </ul>
           </div>
         </div>

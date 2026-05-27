@@ -459,7 +459,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       eyebrow: 'Members only · 21+',
       headline: 'Manhattan + East River. Same-day.',
       headlineAccent: 'East River',
-      subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery. No minimum.',
+      subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery on orders over $25.',
       primary: { label: 'Check coverage', href: '#coverage' },
       secondary: { label: 'Shop deals', href: '/deals' }
     }

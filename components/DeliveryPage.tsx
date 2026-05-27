@@ -27,10 +27,10 @@ const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
 });
 
 const PILLARS = [
-  { icon: Truck, title: 'Free delivery', body: 'Unconditional. Every order, every covered ZIP. No minimum, no hidden fees.' },
+  { icon: Truck, title: 'Free delivery', body: 'Free on every order over $25, every covered ZIP. No surge, no hidden fees.' },
   { icon: Sparkles, title: 'Tax-free', body: 'Sovereign Shinnecock authority — no NY State cannabis excise or sales tax.' },
   { icon: Clock, title: 'Same-day', body: 'Open 10 AM – 10 PM. Average drop-off window: 35–55 minutes depending on zone.' },
-  { icon: ShieldCheck, title: 'Discreet', body: 'Unbranded packaging. 21+ ID verified at the door. Short, professional hand-offs.' }
+  { icon: ShieldCheck, title: 'Discreet', body: '21+ ID verified at the door. Short, professional hand-offs.' }
 ];
 
 export default function DeliveryPage() {
@@ -52,7 +52,7 @@ export default function DeliveryPage() {
               Manhattan. <span className="italic">East River.</span> Same-day.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              31 ZIPs across 7 neighborhoods. Free, tax-free, no minimum. Average drop-off in under an hour.
+              33 ZIPs across 7 neighborhoods. Free delivery on orders over $25, tax-free. Average drop-off in under an hour.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/menu" className="btn-luxe btn-luxe-gold">
@@ -94,7 +94,7 @@ export default function DeliveryPage() {
             <div className="max-w-2xl">
               <p className="rd-eyebrow text-[color:var(--rd-moss)]">Where we go</p>
               <h2 className="mt-3 text-[color:var(--rd-ink)]">
-                7 neighborhoods. <span className="italic">31 ZIPs.</span>
+                7 neighborhoods. <span className="italic">32 ZIPs.</span>
               </h2>
               <p className="mt-3 text-sm text-[color:var(--rd-on-paper-dim)] sm:text-base">
                 Hover a card to highlight its zone on the map above. Tap to focus.

@@ -159,7 +159,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="font-[var(--font-sans)] antialiased">
         <noscript>
           <div style={{ background: '#0A1410', color: '#F5F1E8', padding: '16px 24px', textAlign: 'center', fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: 14, lineHeight: 1.6 }}>
-            This site uses JavaScript for the interactive menu, ZIP checker, and age verification. Please enable JavaScript, or call us at <strong style={{ color: '#C8E66E' }}>(888) 448-9717</strong> to order. 21+ only.
+            This site uses JavaScript for the interactive menu, ZIP checker, and age verification. Please enable JavaScript, or call us at <strong style={{ color: '#C8E66E' }}>(888) 448-4717</strong> to order. 21+ only.
           </div>
         </noscript>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--rd-glow)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-[var(--rd-ink)]">

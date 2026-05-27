@@ -290,7 +290,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               Manhattan + <span className="italic">East River.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              31 ZIPs across 7 neighborhoods. Tax-free, free same-day delivery on every order.
+              32 ZIPs across 7 neighborhoods. Tax-free, free same-day delivery on every order.
               Tap a zone, drop a ZIP, ride the bridge.
             </p>
           </motion.div>

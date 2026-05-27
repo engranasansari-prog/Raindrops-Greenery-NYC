@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Check, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -41,6 +42,32 @@ import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
 type SortMode = 'featured' | 'price-low' | 'price-high' | 'potency-high' | 'name';
+
+/**
+ * Category icons + display labels — client review request.
+ *
+ * • Flower → renamed to "Flower Strains" in the UI (data stays 'Flower')
+ * • All view ordering: Edibles → Flower → Pre-Rolls
+ * • Min-THC filter only applies to Flower; hidden for Pre-Rolls + Edibles
+ */
+const CATEGORY_ICONS: Record<LiveMenuProduct['category'], LucideIcon> = {
+  Edibles: Cookie,
+  Flower: Cannabis,
+  'Pre-Rolls': Cigarette
+};
+
+const CATEGORY_LABEL: Record<LiveMenuProduct['category'], string> = {
+  Edibles: 'Edibles',
+  Flower: 'Flower Strains',
+  'Pre-Rolls': 'Pre-Rolls'
+};
+
+/** Custom sort order used when filter is "All" — Edibles → Flower → Pre-Rolls */
+const CATEGORY_ORDER: Record<LiveMenuProduct['category'], number> = {
+  Edibles: 0,
+  Flower: 1,
+  'Pre-Rolls': 2
+};
 
 const maxAvailablePrice = getMaxPrice(menuProducts);
 const brands = getAvailableBrands(menuProducts);
@@ -388,14 +415,20 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
       .filter((product) => profile === 'All' || inferProfile(product) === profile)
       .filter((product) => weight === 'All' || product.weight === weight)
       .filter((product) => product.salePrice / 100 <= priceMax)
-      // Min THC only applies to non-Edibles (Edibles use mg; out of slider range)
-      .filter((product) => category === 'Edibles' || getPrimaryPotency(product) >= minThc)
+      // Min-THC slider applies ONLY to Flower (client request — Pre-Rolls
+      // are pre-made products where the % varies less, and Edibles use mg).
+      .filter((product) => category !== 'Flower' || getPrimaryPotency(product) >= minThc)
       .filter((product) => !normalizedQuery || getMenuSearchText(product).includes(normalizedQuery))
       .sort((a, b) => {
         if (sort === 'price-low') return a.salePrice - b.salePrice;
         if (sort === 'price-high') return b.salePrice - a.salePrice;
         if (sort === 'potency-high') return getPrimaryPotency(b) - getPrimaryPotency(a);
         if (sort === 'name') return a.name.localeCompare(b.name);
+        // Featured: when "All" is selected, group by category (Edibles
+        // first, then Flower, then Pre-Rolls per client request); then
+        // sticky-on-sale priority, in-stock, name.
+        const categoryDelta = category === 'All' ? CATEGORY_ORDER[a.category] - CATEGORY_ORDER[b.category] : 0;
+        if (categoryDelta !== 0) return categoryDelta;
         return Number(hasSale(b)) - Number(hasSale(a)) || Number(b.quantity > 0) - Number(a.quantity > 0) || a.name.localeCompare(b.name);
       });
   }, [category, minThc, priceMax, profile, query, sort, weight]);
@@ -434,7 +467,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops NY menu</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
-              Flower, Pre-Rolls, <span className="italic">and Edibles.</span>
+              Flower Strains, Pre-Rolls, <span className="italic">and Edibles.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               Search and filter a focused menu — product images, pricing, potency, size, brand, and deal details. Tap any product to head to secure checkout.
@@ -454,9 +487,18 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                       : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/30 hover:bg-[color:var(--rd-ink-soft)]/80'
                   }`}
                 >
-                  <p className={`rd-eyebrow ${active ? 'text-[color:var(--rd-glow)]' : 'text-[color:var(--rd-text-mute)]'}`}>{item}</p>
+                  {(() => {
+                    const Icon = CATEGORY_ICONS[item];
+                    return (
+                      <Icon
+                        className={`h-5 w-5 transition-colors ${active ? 'text-[color:var(--rd-glow)]' : 'text-[color:var(--rd-text-dim)] group-hover:text-[color:var(--rd-glow)]'}`}
+                        strokeWidth={1.6}
+                      />
+                    );
+                  })()}
+                  <p className={`mt-2 rd-eyebrow ${active ? 'text-[color:var(--rd-glow)]' : 'text-[color:var(--rd-text-mute)]'}`}>{CATEGORY_LABEL[item]}</p>
                   <p
-                    className="mt-1 text-[color:var(--rd-text)] sm:mt-2"
+                    className="mt-1 text-[color:var(--rd-text)]"
                     style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.85rem, 3vw, 2.5rem)', letterSpacing: '-0.02em' }}
                   >
                     {menuCounts[item]}
@@ -485,18 +527,21 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
                 {(['All', ...productCategories] as CategoryFilter[]).map((item) => {
                   const active = category === item;
+                  const Icon = item === 'All' ? null : CATEGORY_ICONS[item];
+                  const label = item === 'All' ? 'All' : CATEGORY_LABEL[item];
                   return (
                     <button
                       key={item}
                       onClick={() => setFilter(setCategory, item)}
                       aria-pressed={active}
-                      className={`whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
+                      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
                         active
                           ? 'bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(200,230,110,0.32)]'
                           : 'border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]'
                       }`}
                     >
-                      {item}
+                      {Icon && <Icon className="h-3.5 w-3.5" strokeWidth={1.8} />}
+                      {label}
                     </button>
                   );
                 })}
@@ -536,8 +581,8 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   className="h-12 accent-[color:var(--rd-glow)]"
                 />
               </label>
-              {/* Min THC only applies to Flower / Pre-Rolls — Edibles use mg. */}
-              {category !== 'Edibles' && (
+              {/* Min-THC slider — client request: Flower only. */}
+              {category === 'Flower' && (
                 <label className="grid gap-2">
                   <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
                     Min THC <span className="text-[color:var(--rd-glow)]">{minThc}%</span>

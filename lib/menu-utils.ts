@@ -70,11 +70,14 @@ export function getStrainTag(product: LiveMenuProduct): StrainTag {
   return 'BALANCED';
 }
 
-/** STICKY-icky tier: parse THC% and flag if >= 30%. */
+/**
+ * STICKY-icky tier — client rule: ONLY products priced at $40 or more.
+ * (Previously gated on THC%; updated per client review to a clean
+ * price-based filter so the badge consistently signals premium tier.)
+ * salePrice is stored in cents, so $40 = 4000.
+ */
 export function isSticky(product: LiveMenuProduct): boolean {
-  const thcMatch = getPotencyLabel(product).match(/THC\s+([\d.]+)/i);
-  if (!thcMatch) return false;
-  return parseFloat(thcMatch[1]) >= 30;
+  return product.salePrice >= 4000;
 }
 
 const EFFECT_TAGS: Array<{ effect: string; profiles: string[]; categories?: string[] }> = [

@@ -38,10 +38,18 @@ export type LiveMenuProduct = {
 };
 
 function pickWeight(product: Product): string | null {
-  // Pick the first variant label that looks like a weight; fallback null.
+  // Client rule (V9): only 3.5g and 7g weights are surfaced. Pre-roll
+  // "1.5g" labels are suppressed entirely — pre-rolls render without a
+  // weight chip and the weight filter only offers 3.5g / 7g.
   const firstLabel = product.variants[0]?.label;
   if (!firstLabel || firstLabel === 'Default') return null;
+  if (firstLabel === '1.5g') return null;
   return firstLabel;
+}
+
+/** Strip "1.5 Gram " from pre-roll product names per client request. */
+function cleanName(name: string): string {
+  return name.replace(/\s*1\.5\s*Gram\s*/i, ' ').replace(/\s{2,}/g, ' ').trim();
 }
 
 function buildPotencies(product: Product): LiveMenuProduct['potencies'] {
@@ -84,7 +92,7 @@ function adapt(product: Product): LiveMenuProduct {
     id: product.id,
     productId: product.id,
     variantId: product.id,
-    name: product.name,
+    name: cleanName(product.name),
     category: product.category,
     brand: product.brand,
     type: product.strainType,
@@ -103,7 +111,10 @@ function adapt(product: Product): LiveMenuProduct {
     deals: [],
     sourceUrl: product.orderUrl,
     orderUrl: product.orderUrl,
-    isSticky: product.isSticky,
+    // Client rule (V9): STICKY badge = $40+ only. The migration JSON has
+    // a baked-in isSticky from the old THC-based logic; we override here
+    // so every consumer (cards, deals, menu) sees the same definition.
+    isSticky: priceCents >= 4000,
     strainType: product.strainType
   };
 }

@@ -10,8 +10,8 @@ export const business = {
   tradeName: 'Raindrops Greenery',
   tagline: 'Premium NYC cannabis delivery',
   yearFounded: 2024,
-  phone: '(888) 448-9717',
-  phoneHref: 'tel:+18884489717',
+  phone: '(888) 448-4717',
+  phoneHref: 'tel:+18884484717',
   email: 'nycraindrops@gmail.com',
   emailHref: 'mailto:nycraindrops@gmail.com',
   pressEmail: 'nycraindrops@gmail.com',
@@ -58,7 +58,7 @@ export const footerLinkGroups = [
     heading: 'Shop',
     links: [
       { label: 'Full menu', href: '/menu' },
-      { label: 'Flower', href: '/menu?category=Flower' },
+      { label: 'Flower Strains', href: '/menu?category=Flower' },
       { label: 'Pre-Rolls', href: '/menu?category=Pre-Rolls' },
       { label: 'Edibles', href: '/menu?category=Edibles' },
       { label: 'Today’s deals', href: '/deals' },
@@ -110,7 +110,7 @@ export const trustPoints = [
   },
   {
     title: 'Free delivery',
-    body: 'Unconditional. Every order, every ZIP we cover. No minimum, no hidden fees.'
+    body: 'Free on every order over $25, every ZIP we cover. No surge, no hidden fees.'
   },
   {
     title: 'Same-day NYC',
@@ -143,7 +143,7 @@ export const valueProps = [
   },
   {
     title: 'Free delivery',
-    body: 'Unconditional. No minimum, no surge pricing, no hidden fees. Every order, every covered ZIP.'
+    body: 'Free on every order over $25, every covered ZIP. No surge pricing, no hidden fees.'
   },
   {
     title: 'Sticky icky',
@@ -151,7 +151,7 @@ export const valueProps = [
   },
   {
     title: 'Discreet & professional',
-    body: 'Unbranded packaging. 21+ ID verified at the door. Courteous drivers, short and clean hand-offs.'
+    body: '21+ ID verified at the door. Courteous drivers, short and clean hand-offs.'
   }
 ];
 
@@ -180,7 +180,7 @@ export const faqs = [
   },
   {
     q: 'Is delivery really free?',
-    a: 'Yes — free delivery on every order, no minimum, across our Manhattan + East River coverage area. No hidden fees.'
+    a: 'Yes — free delivery on every order over $25, across our Manhattan + East River coverage area. No hidden fees.'
   },
   {
     q: 'Do I get a free gift?',
@@ -216,7 +216,7 @@ export const faqs = [
   },
   {
     q: 'How discreet is the delivery?',
-    a: 'Packaging is plain and unbranded. Drivers are trained to keep handoffs short and professional, and we verify your 21+ ID at the door.'
+    a: 'Drivers are trained to keep handoffs short and professional, and we verify your 21+ ID at the door.'
   },
   {
     q: 'What is your return policy?',
