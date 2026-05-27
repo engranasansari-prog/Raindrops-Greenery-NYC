@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import HookPills from '@/components/HookPills';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import { formatPrice, getBrandLabel, getStrainTag } from '@/lib/menu-utils';
+import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 
 export const metadata: Metadata = {
   title: 'Deals',
@@ -28,7 +29,7 @@ const STRAIN_TINT: Record<string, string> = {
   BALANCED: 'border-[color:var(--rd-mint)]/40 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
 };
 
-function ProductCard({ product }: { product: LiveMenuProduct }) {
+function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eager?: boolean }) {
   const strain = getStrainTag(product);
   const tint = STRAIN_TINT[strain] ?? STRAIN_TINT.BALANCED;
   return (
@@ -42,8 +43,13 @@ function ProductCard({ product }: { product: LiveMenuProduct }) {
             src={product.image}
             alt={product.name}
             fill
-            unoptimized
-            sizes="(max-width: 768px) 100vw, 33vw"
+            // Next.js Image Optimization — AVIF/WebP + edge-cached. The
+            // Dutchie CDN host is whitelisted in next.config.mjs.
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            quality={72}
+            placeholder="blur"
+            blurDataURL={PRODUCT_BLUR_DATA_URL}
+            loading={eager ? 'eager' : 'lazy'}
             className="object-contain p-6"
           />
         )}
@@ -121,8 +127,9 @@ function Section({
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {products.map((p, idx) => (
+            /* First 4 cards above the fold in each section render eager */
+            <ProductCard key={p.id} product={p} eager={idx < 4} />
           ))}
         </div>
       </div>

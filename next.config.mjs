@@ -13,6 +13,13 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Long edge cache — Dutchie product images don't change; once Next.js
+    // optimizes one, keep it for a year.
+    minimumCacheTTL: 60 * 60 * 24 * 365,
+    // Tighter device + image sizes so we don't generate unused 3840px
+    // variants of small product cards.
+    deviceSizes: [360, 640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: 'https',

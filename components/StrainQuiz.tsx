@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
+import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import {
   formatPrice,
   getBrandLabel,
@@ -395,8 +396,11 @@ export default function StrainQuiz() {
                                   src={product.image}
                                   alt={product.name}
                                   fill
-                                  unoptimized
                                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                  quality={72}
+                                  placeholder="blur"
+                                  blurDataURL={PRODUCT_BLUR_DATA_URL}
+                                  loading="eager"
                                   className="object-contain p-6 transition-transform duration-[1400ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05]"
                                 />
                               )}

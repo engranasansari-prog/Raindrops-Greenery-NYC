@@ -37,6 +37,7 @@ const STRAIN_BADGE: Record<StrainTag, string> = {
   BALANCED: 'bg-[color:var(--rd-mint)]/40 text-[color:var(--rd-moss)] border-[color:var(--rd-moss)]/35'
 };
 import { checkout } from '@/lib/site-data';
+import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
 type SortMode = 'featured' | 'price-low' | 'price-high' | 'potency-high' | 'name';
@@ -60,7 +61,7 @@ function normalizeCategory(category?: string): CategoryFilter {
   return 'All';
 }
 
-function ProductImage({ product }: { product: LiveMenuProduct }) {
+function ProductImage({ product, eager = false }: { product: LiveMenuProduct; eager?: boolean }) {
   // Image-less products are filtered out upstream in lib/menu.ts. Image is always
   // present here; the non-null assertion keeps types tight.
   return (
@@ -68,14 +69,30 @@ function ProductImage({ product }: { product: LiveMenuProduct }) {
       src={product.image!}
       alt={product.name}
       fill
-      unoptimized
-      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+      // Removed `unoptimized` — Next.js now routes through /_next/image
+      // to serve AVIF/WebP variants at the right pixel density. With the
+      // s3-us-west-2.amazonaws.com/dutchie-images/** remotePattern in
+      // next.config, every product asset is optimized + edge-cached.
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      quality={72}
+      placeholder="blur"
+      blurDataURL={PRODUCT_BLUR_DATA_URL}
+      loading={eager ? 'eager' : 'lazy'}
       className="object-contain p-5 transition duration-500 group-hover:scale-105"
     />
   );
 }
 
-function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetails: (product: LiveMenuProduct) => void }) {
+function ProductCard({
+  product,
+  onDetails,
+  eager = false
+}: {
+  product: LiveMenuProduct;
+  onDetails: (product: LiveMenuProduct) => void;
+  /** When true, the card image is hinted eager so the first 6 above-the-fold load immediately */
+  eager?: boolean;
+}) {
   const potency = getPotencyLabel(product);
   const strain = getStrainTag(product);
   const sticky = isSticky(product);
@@ -88,7 +105,7 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
       className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--rd-paper-soft)]">
-        <ProductImage product={product} />
+        <ProductImage product={product} eager={eager} />
         <div className="absolute left-3 top-3 flex flex-col gap-1.5">
           <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${STRAIN_BADGE[strain]}`}>
             {strain}
@@ -560,7 +577,14 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             {visibleProducts.length > 0 ? (
               <motion.div layout className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {visibleProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} onDetails={setSelectedProduct} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onDetails={setSelectedProduct}
+                    /* First 6 cards above the fold are hinted eager so they render
+                       without waiting for IntersectionObserver. */
+                    eager={visibleProducts.indexOf(product) < 6}
+                  />
                 ))}
               </motion.div>
             ) : (

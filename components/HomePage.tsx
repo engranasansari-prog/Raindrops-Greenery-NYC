@@ -18,6 +18,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
 import LiveOrderToasts from '@/components/LiveOrderToasts';
+import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import ClaimOfferModal from '@/components/ClaimOfferModal';
 import HookPills from '@/components/HookPills';
@@ -205,9 +206,14 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                     src={deal.image}
                     alt={deal.name}
                     fill
-                    unoptimized
-                    loading="lazy"
+                    /* Next.js Image Optimization on. The home page only ships 3
+                       featured deals so all 3 are hinted eager — they're near-fold
+                       on any viewport. */
                     sizes="(max-width: 640px) 78vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={72}
+                    placeholder="blur"
+                    blurDataURL={PRODUCT_BLUR_DATA_URL}
+                    loading="eager"
                     className="object-contain p-6 transition-transform duration-[4000ms] [transition-timing-function:linear] group-hover:scale-[1.07]"
                   />
                 )}
