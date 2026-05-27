@@ -228,13 +228,15 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       }`}
                     >
                       <p className="rd-eyebrow truncate text-[color:var(--rd-text-dim)]">{cluster.shortName}</p>
-                      <p className="mt-1 inline-flex items-baseline gap-1.5 text-[color:var(--rd-text)]">
-                        <span className="text-xl font-semibold [font-family:var(--font-mono)]">~{cluster.etaMinutes}</span>
-                        <span className="text-xs uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">min</span>
-                        <span className="ml-auto text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+                      <div className="mt-1 flex items-baseline justify-between gap-2 text-[color:var(--rd-text)]">
+                        <div className="flex items-baseline gap-1.5 [font-family:var(--font-mono)]">
+                          <span className="text-xl font-semibold">~{cluster.etaMinutes}</span>
+                          <span className="text-xs uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">min</span>
+                        </div>
+                        <span className="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
                           {cluster.zips.length} ZIP{cluster.zips.length === 1 ? '' : 's'}
                         </span>
-                      </p>
+                      </div>
                     </button>
                   );
                 })}
@@ -292,65 +294,83 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   exit={{ y: 40, opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.45, ease: easeOut }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-lg overflow-hidden rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] p-6 text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:rounded-3xl sm:p-8"
+                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[80vh] sm:rounded-3xl"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenCluster(null)}
-                    aria-label="Close details"
-                    className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-
-                  <p className="rd-eyebrow text-[color:var(--rd-glow)]">{c.shortName}</p>
-                  <h3
-                    className="mt-3 text-[color:var(--rd-text)]"
-                    style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.5rem, 2.4vw, 2rem)', letterSpacing: '-0.02em', lineHeight: 1.15 }}
-                  >
-                    {c.name}
-                  </h3>
-
-                  <div className="mt-5 grid grid-cols-3 gap-3 [font-family:var(--font-mono)]">
-                    <div className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 p-3 text-center">
-                      <p className="text-2xl font-semibold text-[color:var(--rd-glow)]">~{c.etaMinutes}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">min ETA</p>
+                  {/* Sticky header — close button doesn't overlap text */}
+                  <div className="relative flex items-start gap-3 px-5 pt-5 pb-3 sm:px-7 sm:pt-7">
+                    <div className="min-w-0 flex-1">
+                      <p className="rd-eyebrow truncate text-[color:var(--rd-glow)]">{c.shortName}</p>
+                      <h3
+                        className="mt-2 break-words text-[color:var(--rd-text)]"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontWeight: 400,
+                          fontSize: 'clamp(1.15rem, 4vw, 1.85rem)',
+                          letterSpacing: '-0.015em',
+                          lineHeight: 1.18,
+                          wordBreak: 'break-word'
+                        }}
+                      >
+                        {c.name}
+                      </h3>
                     </div>
-                    <div className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 p-3 text-center">
-                      <p className="text-2xl font-semibold text-[color:var(--rd-text)]">{c.zips.length}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">ZIPs</p>
-                    </div>
-                    <div className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 p-3 text-center">
-                      <p className="text-2xl font-semibold text-[color:var(--rd-amber)]">$25+</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">free delivery</p>
-                    </div>
-                  </div>
-
-                  <p className="mt-5 rd-eyebrow text-[color:var(--rd-text-mute)]">Covered ZIPs</p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {c.zips.map((z) => (
-                      <span key={z} className="inline-flex rounded-md border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
-                        {z}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <Link href="/menu" className="btn-luxe btn-luxe-gold">
-                      Order in {c.shortName}
-                      <ArrowRight />
-                    </Link>
                     <button
                       type="button"
-                      onClick={() => {
-                        pickZipFromCluster(c.id);
-                        setOpenCluster(null);
-                      }}
-                      className="btn-luxe btn-luxe-ghost"
+                      onClick={() => setOpenCluster(null)}
+                      aria-label="Close details"
+                      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
                     >
-                      <Sparkles className="h-4 w-4" />
-                      Use this ZIP
+                      <X className="h-4 w-4" />
                     </button>
+                  </div>
+
+                  {/* Scrollable body so long ZIP lists never overflow */}
+                  <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 sm:px-7">
+                    {/* Stat tiles — 3-col on sm+, 3-col equal on mobile but smaller */}
+                    <div className="mt-2 grid grid-cols-3 gap-2 [font-family:var(--font-mono)] sm:gap-3">
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-glow)] sm:text-2xl">~{c.etaMinutes}</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">min ETA</p>
+                      </div>
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-text)] sm:text-2xl">{c.zips.length}</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">ZIPs</p>
+                      </div>
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">$25+</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">free ship</p>
+                      </div>
+                    </div>
+
+                    <p className="mt-5 rd-eyebrow text-[color:var(--rd-text-mute)]">Covered ZIPs</p>
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {c.zips.map((z) => (
+                        <span key={z} className="inline-flex shrink-0 rounded-md border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
+                          {z}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Sticky CTA footer */}
+                  <div className="border-t border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] px-5 py-4 sm:px-7 sm:py-5">
+                    <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
+                      <Link href="/menu" className="btn-luxe btn-luxe-gold w-full justify-center sm:w-auto">
+                        Order menu
+                        <ArrowRight />
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          pickZipFromCluster(c.id);
+                          setOpenCluster(null);
+                        }}
+                        className="btn-luxe btn-luxe-ghost w-full justify-center sm:w-auto"
+                      >
+                        <Sparkles className="h-4 w-4" />
+                        Use this ZIP
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               </motion.div>

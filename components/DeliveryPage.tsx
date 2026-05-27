@@ -133,17 +133,24 @@ export default function DeliveryPage() {
                   role="button"
                   aria-pressed={isActive}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="rd-eyebrow text-[color:var(--rd-moss)]">{cluster.shortName}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="rd-eyebrow truncate text-[color:var(--rd-moss)]">{cluster.shortName}</p>
                       <h3
-                        className="mt-2 text-xl leading-tight text-[color:var(--rd-ink)] sm:text-2xl"
-                        style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}
+                        className="mt-2 break-words text-[color:var(--rd-ink)]"
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontWeight: 400,
+                          fontSize: 'clamp(1.05rem, 2.4vw, 1.4rem)',
+                          letterSpacing: '-0.015em',
+                          lineHeight: 1.2,
+                          wordBreak: 'break-word'
+                        }}
                       >
                         {cluster.name}
                       </h3>
                     </div>
-                    <span className="rounded-full bg-[color:var(--rd-moss)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-paper)] [font-family:var(--font-mono)]">
+                    <span className="shrink-0 whitespace-nowrap rounded-full bg-[color:var(--rd-moss)] px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-paper)] [font-family:var(--font-mono)]">
                       ~{cluster.etaMinutes} min
                     </span>
                   </div>
