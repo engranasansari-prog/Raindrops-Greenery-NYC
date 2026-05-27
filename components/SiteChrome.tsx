@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import PromoStrip from '@/components/PromoStrip';
 import NewsletterForm from '@/components/NewsletterForm';
 import OpenStatus from '@/components/OpenStatus';
+import TrustMarquee from '@/components/TrustMarquee';
 import { business, checkout, footerLinkGroups, navItems, serviceAreas, social } from '@/lib/site-data';
 
 /**
@@ -34,9 +35,10 @@ function AgeGate() {
   const [show, setShow] = useState(false);
   const [declined, setDeclined] = useState(false);
 
+  // sessionStorage per the brief (§4.1) — re-prompt each new session
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setShow(localStorage.getItem('rd_age_confirmed') !== 'yes');
+    setShow(sessionStorage.getItem('rd_age_confirmed') !== 'yes');
   }, []);
 
   useEffect(() => {
@@ -51,7 +53,7 @@ function AgeGate() {
   }, [show]);
 
   const confirmAge = () => {
-    localStorage.setItem('rd_age_confirmed', 'yes');
+    sessionStorage.setItem('rd_age_confirmed', 'yes');
     setShow(false);
   };
 
@@ -61,36 +63,61 @@ function AgeGate() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[color:var(--rd-ink)]/92 p-5 backdrop-blur-xl"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[color:var(--rd-ink)] p-5 text-[color:var(--rd-text)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           aria-modal="true"
           role="dialog"
           aria-labelledby="agegate-title"
         >
+          {/* Full-bleed cinematic background */}
+          <div className="absolute inset-0">
+            <Image
+              src="/assets/heroPhoto.jpg"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover opacity-40"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(10,20,16,0.62),rgba(10,20,16,0.95))]" />
+          </div>
+
           <motion.div
-            initial={{ opacity: 0, y: 18, scale: 0.96 }}
+            initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            className="w-full max-w-md rounded-2xl border border-[color:var(--rd-paper-soft)]/60 bg-[color:var(--rd-paper)] p-8 text-center shadow-2xl"
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full max-w-lg text-center"
           >
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/50 bg-white shadow-lg">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <Image src="/assets/logo.jpg" width={80} height={80} alt="Raindrops Greenery logo" className="h-full w-full object-cover" />
             </div>
-            <p className="rd-eyebrow text-[color:var(--rd-amber-dark)]">21+ only</p>
-            <h2 id="agegate-title" className="mt-4 text-3xl text-[color:var(--rd-ink)]">
-              Welcome to Raindrops NY
+
+            <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+              <span className="rd-pulse" aria-hidden />
+              21+ only · NYC delivery
+            </p>
+
+            <h2
+              id="agegate-title"
+              className="mt-5 text-[color:var(--rd-text)]"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+            >
+              Welcome to <span className="italic" style={{ fontWeight: 500 }}>Raindrops NY.</span>
             </h2>
+
             {declined ? (
               <>
-                <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
-                  Sorry — this website and our delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
+                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                  This website and delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
                 </p>
-                <div className="mt-6">
+                <div className="mt-7 flex justify-center">
                   <button
                     onClick={() => setDeclined(false)}
-                    className="rounded-full border border-[color:var(--line)] bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] transition hover:border-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+                    className="btn-luxe btn-luxe-ghost"
                   >
                     Back
                   </button>
@@ -98,22 +125,22 @@ function AgeGate() {
               </>
             ) : (
               <>
-                <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
-                  This website is intended for adults 21 and older. By entering you confirm that you are 21+ and accept our{' '}
-                  <Link href="/legal/terms" className="underline decoration-[color:var(--rd-glow)] underline-offset-4">Terms</Link> and{' '}
-                  <Link href="/legal/privacy" className="underline decoration-[color:var(--rd-glow)] underline-offset-4">Privacy Policy</Link>.
+                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                  This site is intended for adults 21 and older. By entering you confirm that you are 21+ and accept our{' '}
+                  <Link href="/legal/terms" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Terms</Link> and{' '}
+                  <Link href="/legal/privacy" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Privacy Policy</Link>.
                 </p>
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                  <button onClick={confirmAge} className="rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--rd-ink)] transition hover:-translate-y-0.5 [transition-timing-function:var(--ease-out)] [font-family:var(--font-mono)]">
+                <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                  <button onClick={confirmAge} className="btn-luxe btn-luxe-gold">
                     I am 21 or older
                   </button>
-                  <button onClick={declineAge} className="rounded-full border border-[color:var(--line)] bg-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--rd-ink)] transition hover:border-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
+                  <button onClick={declineAge} className="btn-luxe btn-luxe-ghost">
                     I am under 21
                   </button>
                 </div>
               </>
             )}
-            <p className="mt-6 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">
+            <p className="mt-8 rd-eyebrow text-[color:var(--rd-text-mute)]">
               Keep cannabis out of reach of children and pets.
             </p>
           </motion.div>
@@ -150,6 +177,7 @@ function Header() {
       }`}
     >
       <PromoStrip />
+      <TrustMarquee />
       <div className="luxury-shell flex h-[72px] items-center justify-between gap-5 md:h-[84px]">
         <Link href="/" className="group flex items-center gap-3" aria-label="Raindrops Greenery home">
           <span className="relative flex h-10 w-10 overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 bg-[color:var(--rd-ink-soft)] shadow-sm transition-transform duration-500 [transition-timing-function:var(--ease-out)] group-hover:scale-105 md:h-11 md:w-11">

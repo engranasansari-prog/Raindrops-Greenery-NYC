@@ -47,6 +47,7 @@ export const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Menu', href: '/menu' },
   { label: 'Deals', href: '/deals' },
+  { label: 'Quiz', href: '/quiz' },
   { label: 'Delivery', href: '/delivery' },
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
@@ -62,7 +63,8 @@ export const footerLinkGroups = [
       { label: 'Flower', href: '/menu?category=Flower' },
       { label: 'Pre-Rolls', href: '/menu?category=Pre-Rolls' },
       { label: 'Edibles', href: '/menu?category=Edibles' },
-      { label: 'Today’s deals', href: '/deals' }
+      { label: 'Today’s deals', href: '/deals' },
+      { label: 'Strain finder quiz', href: '/quiz' }
     ]
   },
   {

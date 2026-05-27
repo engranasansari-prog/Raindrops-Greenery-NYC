@@ -424,6 +424,12 @@ textarea:focus:not(:focus-visible) {
   to   { opacity: 1; }
 }
 
+/* Trust marquee — duplicated content; shift one full width to the left */
+@keyframes rd-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* =====================================================================
    Legacy btn-luxe-* classes used by HeroSlider / ClaimOfferModal /
    CoverageMap / HomePage. These were previously referenced without
