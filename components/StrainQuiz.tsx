@@ -222,8 +222,13 @@ export default function StrainQuiz() {
 
         <div className="luxury-shell relative py-16 sm:py-20 lg:py-24">
           <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
-          <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-2xl">
+
+          {/* Two-column hero: text left, hero image right.
+              Image first on mobile DOM via order-1/order-2 so it sits
+              right under the breadcrumbs on small screens — keeps the
+              quiz CTA above the fold. */}
+          <div className="mt-6 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+            <div className="order-2 max-w-2xl lg:order-1">
               <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                 <Sparkles className="h-3.5 w-3.5" />
                 4 questions · 30 seconds
@@ -234,17 +239,47 @@ export default function StrainQuiz() {
               <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
                 Tell us how you want to feel — we’ll pull three drops from the live menu that fit. Not medical advice, just a smart starting point.
               </p>
+              {!finished && (
+                <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
+                  Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
+                </span>
+              )}
             </div>
-            {!finished && (
-              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)] sm:self-auto">
-                Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
-              </span>
-            )}
+
+            {/* Hero artwork — premium framed image, full-bleed on mobile,
+                fixed aspect, lazy-aware but priority for above-the-fold LCP. */}
+            <div className="order-1 lg:order-2">
+              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] shadow-[0_30px_90px_rgba(0,0,0,0.45)] sm:max-w-md lg:ml-auto lg:max-w-none lg:aspect-[5/6]">
+                <Image
+                  src="/assets/STRAIN.jpg"
+                  alt="Premium cannabis strain — Raindrops Greenery NY"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 480px"
+                  className="object-cover"
+                />
+                {/* Soft ink scrim so any embedded text in the photo
+                    blends into the dark hero palette */}
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  aria-hidden
+                  style={{
+                    background:
+                      'linear-gradient(180deg, transparent 55%, rgba(10,20,16,0.55) 100%)'
+                  }}
+                />
+                {/* Lime accent corner — ties the artwork to the brand */}
+                <span
+                  className="pointer-events-none absolute -bottom-px -right-px h-16 w-16 rounded-tl-3xl border-l border-t border-[color:var(--rd-glow)]/40"
+                  aria-hidden
+                />
+              </div>
+            </div>
           </div>
 
           {/* Progress rail */}
           {!finished && (
-            <div className="mt-8 h-px w-full bg-[color:var(--rd-paper)]/8">
+            <div className="mt-10 h-px w-full bg-[color:var(--rd-paper)]/8">
               <motion.div
                 initial={false}
                 animate={{ width: `${progress}%` }}
