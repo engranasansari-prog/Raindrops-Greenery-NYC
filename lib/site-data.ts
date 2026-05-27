@@ -31,9 +31,16 @@ export const business = {
   // Sovereign tribal land base (Shinnecock Indian Nation, Long Island, New York).
   jurisdiction: 'Shinnecock Indian Nation, Long Island, New York',
   serviceRegion: 'New York City',
-  // Production hostname — update to the actual deployed domain when live.
-  domain: 'raindropsgreenery.com',
-  baseUrl: 'https://raindropsgreenery.com'
+  // Production deploy: the site lives at
+  // https://www.raindropsgreenery.com/nyc-raindrops-greenery
+  // Used by canonical URLs, OG meta, sitemap entries, and every JSON-LD
+  // @id/url field — single source of truth.
+  domain: 'www.raindropsgreenery.com',
+  baseUrl: 'https://www.raindropsgreenery.com/nyc-raindrops-greenery',
+  // Manhattan-centered coordinates for LocalBusiness geo signal. Cannabis
+  // delivery is operated from a Manhattan dispatch hub; this is the
+  // anchor point shown to Google for local-pack queries.
+  geo: { latitude: 40.7484, longitude: -73.9857 }
 };
 
 // V6 §10 — Instagram only. TikTok / X / Facebook removed site-wide.

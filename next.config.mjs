@@ -11,6 +11,13 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  // Production deploy path: the site lives at
+  // https://www.raindropsgreenery.com/nyc-raindrops-greenery
+  // basePath makes every internal Next.js route render under that prefix
+  // and ensures <Link>, next/image, and the asset pipeline all generate
+  // correctly prefixed URLs. Use BASE_PATH env var so we can still run
+  // local dev / preview without the prefix.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
     formats: ['image/avif', 'image/webp'],
     // Long edge cache — Dutchie product images don't change; once Next.js
