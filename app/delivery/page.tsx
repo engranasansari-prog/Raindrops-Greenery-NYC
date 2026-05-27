@@ -4,11 +4,11 @@ import DeliveryPage from '@/components/DeliveryPage';
 export const metadata: Metadata = {
   title: 'NYC Delivery',
   description:
-    'Raindrops Greenery NY delivery serves Manhattan, Brooklyn, and Queens with a focused 21+ ordering experience.',
+    'Raindrops Greenery NY serves Manhattan + East River neighborhoods (LIC, Williamsburg, Greenpoint) — tax-free, free same-day delivery, 21+.',
   alternates: { canonical: '/delivery' },
   openGraph: {
     title: 'Raindrops Greenery NY Delivery',
-    description: 'A focused New York delivery experience for Manhattan, Brooklyn, and Queens.',
+    description: 'Same-day delivery across Manhattan + East River neighborhoods.',
     url: '/delivery',
     images: [{ url: '/assets/storefront.webp', width: 1200, height: 800, alt: 'Raindrops Greenery delivery' }]
   }

@@ -29,7 +29,7 @@ export default function TermsPage() {
 
       <h2>2. Geographic scope</h2>
       <p>
-        Delivery is offered only to ZIP codes we are licensed and able to serve in Manhattan, Brooklyn, and Queens, under the cannabis program of the {business.licensingAuthority}. Final delivery eligibility is confirmed during checkout. We do not ship cannabis products outside our licensed service area.
+        Delivery is offered only to ZIP codes we are licensed and able to serve in Manhattan plus the East River neighborhoods of Long Island City, Williamsburg, and Greenpoint, under the cannabis program of the {business.licensingAuthority}. Final delivery eligibility is confirmed during checkout. We do not ship cannabis products outside our licensed service area.
       </p>
 
       <h2>3. Orders, pricing, and availability</h2>

@@ -4,7 +4,7 @@ import ContactPage from '@/components/ContactPage';
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Contact Raindrops Greenery NY for delivery questions, order support, business inquiries, and press. Manhattan, Brooklyn, and Queens.',
+    'Contact Raindrops Greenery NY for delivery questions, order support, business inquiries, and press. Manhattan + LIC, Williamsburg, Greenpoint.',
   alternates: { canonical: '/contact' },
   openGraph: {
     title: 'Contact Raindrops Greenery',

@@ -2,17 +2,14 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Clock, Mail, Menu, Phone, ShieldCheck, ShoppingBag, X } from 'lucide-react';
+import { ArrowRight, Clock, Mail, Phone, ShieldCheck, ShoppingBag } from 'lucide-react';
 import { InstagramIcon } from '@/components/SocialIcons';
 import { useEffect, useState } from 'react';
-import PromoStrip from '@/components/PromoStrip';
 import NewsletterForm from '@/components/NewsletterForm';
 import OpenStatus from '@/components/OpenStatus';
-import TrustMarquee from '@/components/TrustMarquee';
 import BackToTop from '@/components/BackToTop';
-import { business, checkout, footerLinkGroups, navItems, social } from '@/lib/site-data';
+import { business, checkout, footerLinkGroups, social } from '@/lib/site-data';
 
 
 /**
@@ -153,147 +150,6 @@ function AgeGate() {
   );
 }
 
-function Header() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === '/';
-
-  useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 16);
-    handle();
-    window.addEventListener('scroll', handle, { passive: true });
-    return () => window.removeEventListener('scroll', handle);
-  }, []);
-
-  const isActive = (href: string) => {
-    if (href === '/') return pathname === '/';
-    if (href.startsWith('/#')) return false;
-    return pathname.startsWith(href);
-  };
-
-  // On the home page the hero sits behind a transparent nav; on every other
-  // page there is no dark hero, so we render the nav with the blurred-ink
-  // backdrop from first paint to avoid a "white-solid" subpage look (V4 §10.1)
-  const shouldFrostHeader = scrolled || !isHome;
-
-  return (
-    <header
-      data-scrolled={scrolled || undefined}
-      className={`sticky top-0 z-50 transition-[background,backdrop-filter,border-color] duration-500 [transition-timing-function:var(--ease-out)] ${
-        shouldFrostHeader
-          ? 'border-b border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)]/82 backdrop-blur-2xl backdrop-saturate-150'
-          : 'border-b border-transparent bg-transparent'
-      }`}
-    >
-      <PromoStrip />
-      <TrustMarquee />
-      <div className="luxury-shell flex h-[72px] items-center justify-between gap-5 md:h-[84px]">
-        <Link href="/" className="group flex items-center gap-3" aria-label="Raindrops Greenery home">
-          <span className="relative flex h-10 w-10 overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 bg-[color:var(--rd-ink-soft)] shadow-sm transition-transform duration-500 [transition-timing-function:var(--ease-out)] group-hover:scale-105 md:h-11 md:w-11">
-            <Image src="/assets/logo.jpg" alt="Raindrops Greenery" fill sizes="44px" className="object-cover" />
-          </span>
-          <span className="leading-none">
-            <span className="block text-2xl font-medium tracking-[-0.02em] text-[color:var(--rd-text)] [font-family:var(--font-display)] md:text-[1.625rem]">
-              Raindrops
-            </span>
-            <span className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
-              NY · Delivery
-            </span>
-          </span>
-        </Link>
-
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">
-          {navItems.map((item) => {
-            const active = isActive(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`group relative px-3 py-2 text-sm transition-colors duration-300 [transition-timing-function:var(--ease-out)] ${
-                  active ? 'text-[color:var(--rd-glow)]' : 'text-[color:var(--rd-text-dim)] hover:text-[color:var(--rd-text)]'
-                }`}
-              >
-                {item.label}
-                <span
-                  className={`pointer-events-none absolute inset-x-3 -bottom-px h-px origin-left scale-x-0 bg-[color:var(--rd-glow)] transition-transform duration-300 [transition-timing-function:var(--ease-out)] ${
-                    active ? 'scale-x-100' : 'group-hover:scale-x-100'
-                  }`}
-                />
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="hidden items-center gap-3 lg:flex">
-          <OpenStatus tone="dark" />
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-            21+
-          </span>
-          <OrderButton />
-        </div>
-
-        <button
-          onClick={() => setOpen((value) => !value)}
-          className="rounded-full border border-[color:var(--rd-text-dim)]/30 bg-[color:var(--rd-ink-soft)]/60 p-3 text-[color:var(--rd-text)] backdrop-blur transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] lg:hidden"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="mobile-navigation"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-navigation"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)]/95 backdrop-blur-2xl lg:hidden"
-          >
-            <div className="luxury-shell grid gap-2 py-5">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl border border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)] px-4 py-3.5 text-sm font-medium text-[color:var(--rd-text)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="mt-2 flex items-center justify-between gap-3">
-                <OpenStatus tone="dark" />
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                  21+
-                </span>
-              </div>
-              <OrderButton className="mt-2 w-full" />
-              {/* Instagram link in drawer footer (V6 §10.2) */}
-              {social.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Follow Raindrops Greenery on ${item.label}`}
-                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 px-4 py-2.5 text-sm text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
-                  onClick={() => setOpen(false)}
-                >
-                  <InstagramIcon className="h-4 w-4" />
-                  {item.handle}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
-}
 
 function Footer() {
   return (
@@ -450,8 +306,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       <AgeGate />
-      <Header />
-      <main id="main">{children}</main>
+      <main id="main" className="pt-[72px]">{children}</main>
       <Footer />
       <StickyOrderBar />
       <BackToTop />

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
+import Nav from '@/components/Nav';
 import './globals.css';
 
 // Display — Fraunces (variable, opsz + SOFT for editorial feel)
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     template: '%s | Raindrops Greenery'
   },
   description:
-    'Raindrops Greenery NY is a premium 21+ cannabis delivery experience for Manhattan, Brooklyn, and Queens with curated Flower, Pre-Rolls, and Edibles.',
+    'Raindrops Greenery NY is a premium 21+ cannabis delivery experience for Manhattan plus Long Island City, Williamsburg, and Greenpoint with curated Flower, Pre-Rolls, and Edibles.',
   applicationName: 'Raindrops Greenery',
   authors: [{ name: business.tradeName }],
   creator: business.tradeName,
@@ -71,7 +72,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Raindrops Greenery | New York Cannabis Delivery',
-    description: 'Premium 21+ delivery for Manhattan, Brooklyn, and Queens.'
+    description: 'Premium 21+ delivery for Manhattan + East River neighborhoods.'
   },
   robots: {
     index: true,
@@ -163,6 +164,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--rd-glow)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-[var(--rd-ink)]">
           Skip to content
         </a>
+        <Nav />
         <Script id="ld-business" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Script id="ld-org" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
         <Script id="ld-website" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />

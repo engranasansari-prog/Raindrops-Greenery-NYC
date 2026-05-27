@@ -96,7 +96,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   return (
     <section
-      className="rd-grain rd-vignette relative isolate -mt-[72px] w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] md:-mt-[84px]"
+      className="rd-grain rd-vignette relative isolate -mt-[72px] w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]"
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}

@@ -21,4 +21,4 @@ When you are ready to order, use any order button to continue to checkout. Final
 
 ## Delivery focus
 
-Raindrops Greenery New York delivery focuses on Manhattan, Brooklyn, and Queens. Delivery eligibility can vary by location and is confirmed during checkout.
+Raindrops Greenery New York delivery covers Manhattan plus the East River neighborhoods of Long Island City, Williamsburg, and Greenpoint. Delivery eligibility can vary by location and is confirmed during checkout.

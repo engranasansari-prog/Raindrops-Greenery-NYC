@@ -454,6 +454,12 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
+/* Nav — mobile drawer slide-in (V7 §1.2) */
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
 /* CoverageMap — flowing light along East River bridges */
 @keyframes rd-bridge-flow {
   from { stroke-dashoffset: 0; }

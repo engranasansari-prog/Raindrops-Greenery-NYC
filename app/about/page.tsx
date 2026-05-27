@@ -9,7 +9,7 @@ import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-dat
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Raindrops Greenery is a New York licensed cannabis delivery operator focused on Manhattan, Brooklyn, and Queens. Curated menu, transparent pricing, professional handoff.',
+    'Raindrops Greenery is a Shinnecock-licensed cannabis delivery operator for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated menu, transparent pricing, free delivery.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Raindrops Greenery',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const pillars = [
   { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
   { icon: Shield, title: 'Compliant', body: 'New York licensed, age-verified at the door, fully tax-aware checkout.' },
-  { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan, Brooklyn, and Queens — with windows that fit the way the city moves.' },
+  { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus the East River neighborhoods of LIC, Williamsburg, and Greenpoint — with windows that fit the way the city moves.' },
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
 ];
 
