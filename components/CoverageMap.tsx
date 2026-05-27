@@ -213,12 +213,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
 
   // Build raindrops on the client only so SSR markup matches initial render.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDrops(buildDrops(14));
   }, []);
 
   // Time-of-day default — auto night-mode after 8 PM, day-mode otherwise.
   useEffect(() => {
     const hour = new Date().getHours();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNightMode(hour >= 20 || hour < 6);
   }, []);
 
@@ -237,6 +239,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
   // matched polygon.
   useEffect(() => {
     if (!matchedClusterId) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPulseMatch(true);
     const id = window.setTimeout(() => setPulseMatch(false), 2400);
     return () => window.clearTimeout(id);

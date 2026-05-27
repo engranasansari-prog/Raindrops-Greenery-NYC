@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Compass, HandHeart, Leaf, Shield, Sparkles, Truck } from 'lucide-react';
-import SiteChrome, { OrderButton, TextLink } from '@/components/SiteChrome';
+import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-data';
 
@@ -29,96 +29,148 @@ const pillars = [
 export default function AboutPage() {
   return (
     <SiteChrome>
-      <section className="relative overflow-hidden bg-[#06130f] text-white">
-        <Image src="/assets/heroPhoto.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-32" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.92),rgba(6,19,15,0.62))]" />
-        <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+        <Image src="/assets/heroPhoto.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.28]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94),rgba(10,20,16,0.55))]" />
+        <div className="luxury-shell relative grid gap-8 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'About' }]} tone="dark" />
-            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">About Raindrops</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">A premium New York cannabis delivery, done right.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">About Raindrops</p>
+            <h1 className="mt-4 text-[color:var(--rd-text)]">
+              A premium New York <span className="italic">cannabis delivery,</span> done right.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               Raindrops Greenery launched to bring a calmer, more confident path into licensed cannabis delivery for {serviceAreas.join(', ')}. Less noise, better product detail, and a delivery experience that respects your time.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/menu" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
+              <Link href="/menu" className="btn-luxe btn-luxe-gold">
                 Browse the menu
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight />
               </Link>
               <OrderButton />
             </div>
           </div>
-          <div className="rounded-lg border border-white/14 bg-white/10 p-6 backdrop-blur">
-            <Compass className="h-7 w-7 text-[var(--champagne)]" />
-            <h2 className="mt-4 font-[var(--font-display)] text-3xl font-bold">Our promise</h2>
-            <ul className="mt-4 grid gap-3 text-sm leading-7 text-white/72">
-              <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Adult, 21+ delivery handled with care and discretion.</li>
-              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Sourced through the Shinnecock Indian Nation Cannabis Regulatory Division.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Tax-free under sovereign authority — no NY State cannabis tax.</li>
-              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Free delivery on every order. No minimum.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Discreet, unbranded packaging. ID verified at the door.</li>
+          <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/65 p-6 shadow-[0_24px_72px_rgba(0,0,0,0.32)] backdrop-blur">
+            <Compass className="h-7 w-7 text-[color:var(--rd-glow)]" />
+            <h2
+              className="mt-4 text-[color:var(--rd-text)]"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.5rem, 2.2vw, 2rem)', letterSpacing: '-0.015em' }}
+            >
+              Our <span className="italic">promise</span>
+            </h2>
+            <ul className="mt-5 grid gap-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
+              <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Adult, 21+ delivery handled with care and discretion.</li>
+              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Indian Nation Cannabis Regulatory Division.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-free under sovereign authority — no NY State cannabis tax.</li>
+              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order. No minimum.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Discreet, unbranded packaging. ID verified at the door.</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20">
-        <div className="luxury-shell grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      {/* Why we built this */}
+      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+        <div className="luxury-shell grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-start">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Why we built this</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">A clearer way to shop in a noisy market.</h2>
-            <p className="mt-5 leading-8 text-[var(--muted)]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Why we built this</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
+              A clearer way <span className="italic">to shop in a noisy market.</span>
+            </h2>
+            <p className="mt-5 text-base leading-8 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
               When New York opened legal adult-use cannabis, the customer experience didn’t catch up. Endless menus, vague product detail, and clunky checkout. Raindrops Greenery started with a simple bet: keep the catalog focused, show the details that actually help an adult customer decide, and make checkout fast.
             </p>
-            <p className="mt-4 leading-8 text-[var(--muted)]">
+            <p className="mt-4 text-base leading-8 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
               We curate Flower, Pre-Rolls, and Edibles — three categories, picked carefully — and we run delivery the way we’d want one for ourselves: discreet, on time, and respectful of your space.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <TextLink href="/menu">Browse the menu</TextLink>
-              <TextLink href="/delivery">See delivery areas</TextLink>
+              <Link href="/menu" className="btn-luxe btn-luxe-dark">
+                Browse the menu
+                <ArrowRight />
+              </Link>
+              <Link href="/delivery" className="btn-luxe btn-luxe-ghost text-[color:var(--rd-ink)] border-[color:var(--rd-moss)]/30 hover:border-[color:var(--rd-moss)]">
+                See delivery areas
+                <ArrowRight />
+              </Link>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {pillars.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="rounded-lg border border-white/70 bg-white/82 p-5 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-                <Icon className="h-7 w-7 text-[var(--emerald)]" />
-                <h3 className="mt-4 font-[var(--font-display)] text-2xl font-bold text-[var(--emerald-deep)]">{title}</h3>
-                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{body}</p>
+              <div
+                key={title}
+                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 p-6 shadow-[0_18px_54px_rgba(45,74,58,0.08)]"
+              >
+                <Icon className="h-7 w-7 text-[color:var(--rd-moss)]" />
+                <h3
+                  className="mt-4 text-[color:var(--rd-ink)]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.25rem, 1.6vw, 1.5rem)', letterSpacing: '-0.015em' }}
+                >
+                  {title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-[#0b3025] py-14 text-white md:py-20">
+      {/* What we stand on — dark band */}
+      <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
         <div className="luxury-shell">
           <div className="max-w-3xl">
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">What we stand on</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold leading-tight md:text-5xl">Four commitments to every adult New York customer.</h2>
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">What we stand on</p>
+            <h2 className="mt-3 text-[color:var(--rd-text)]">
+              Four commitments <span className="italic">to every adult New York customer.</span>
+            </h2>
           </div>
-          <div className="mt-9 grid gap-4 md:grid-cols-2">
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {valueProps.map((value) => (
-              <div key={value.title} className="rounded-lg border border-white/12 bg-white/8 p-6">
-                <h3 className="font-[var(--font-display)] text-2xl font-bold">{value.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-white/68">{value.body}</p>
+              <div key={value.title} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-6">
+                <h3
+                  className="text-[color:var(--rd-text)]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(1.2rem, 1.6vw, 1.4rem)', letterSpacing: '-0.015em' }}
+                >
+                  {value.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">{value.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-14 md:py-20">
+      {/* Customer voices */}
+      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
         <div className="luxury-shell">
           <div className="max-w-3xl">
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne-dark)]">Customer voices</p>
-            <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">Real orders, from real New Yorkers.</h2>
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Customer voices</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
+              Real orders, <span className="italic">from real New Yorkers.</span>
+            </h2>
           </div>
-          <div className="mt-9 grid gap-4 md:grid-cols-3">
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
             {testimonials.map((item) => (
-              <figure key={item.author} className="rounded-lg border border-white/70 bg-white/84 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)]">
-                <blockquote className="font-[var(--font-display)] text-xl leading-7 text-[var(--emerald-deep)]">“{item.quote}”</blockquote>
-                <figcaption className="mt-5 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">
-                  {item.author} • {item.location}
+              <figure
+                key={item.author}
+                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-7 shadow-[0_18px_54px_rgba(45,74,58,0.08)]"
+              >
+                <blockquote
+                  className="text-[color:var(--rd-ink)]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(1.1rem, 1.5vw, 1.25rem)', lineHeight: 1.45, letterSpacing: '-0.01em' }}
+                >
+                  “{item.quote}”
+                </blockquote>
+                <figcaption className="mt-6 inline-flex items-center gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-sm font-semibold text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                    {item.author.charAt(0)}
+                  </span>
+                  <span className="text-left leading-tight">
+                    <span className="block text-sm font-semibold text-[color:var(--rd-ink)]">{item.author}</span>
+                    <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
+                      {item.location}
+                    </span>
+                  </span>
                 </figcaption>
               </figure>
             ))}
@@ -126,23 +178,28 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-16">
-        <div className="luxury-shell rounded-lg border border-[rgba(217,183,111,0.45)] bg-white/82 p-6 shadow-[0_18px_54px_rgba(25,35,20,0.08)] md:p-9">
-          <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">Sovereign-licensed cannabis</p>
-          <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] md:text-4xl">Operating under Shinnecock Indian Nation authority.</h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)]">
-            Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Sovereign authority means our sales are exempt from New York State cannabis excise and sales taxes.
-          </p>
-          <div className="mt-7 grid gap-3 sm:grid-cols-2">
-            <OrderButton label="Start an order" />
-            <Link href="/contact" className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-white px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]">
-              Talk to support
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+      {/* Sovereign authority CTA card */}
+      <section className="bg-[color:var(--rd-paper)] pb-20 sm:pb-24">
+        <div className="luxury-shell">
+          <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-amber)]/30 bg-[color:var(--rd-paper-soft)]/85 p-8 shadow-[0_24px_72px_rgba(45,74,58,0.10)] sm:p-12">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Sovereign-licensed cannabis</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
+              Operating under <span className="italic">Shinnecock Indian Nation</span> authority.
+            </h2>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
+              Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Sovereign authority means our sales are exempt from New York State cannabis excise and sales taxes.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <OrderButton label="Start an order" />
+              <Link href="/contact" className="btn-luxe btn-luxe-ghost text-[color:var(--rd-ink)] border-[color:var(--rd-moss)]/30 hover:border-[color:var(--rd-moss)]">
+                Talk to support
+                <ArrowRight />
+              </Link>
+            </div>
+            <p className="mt-6 text-xs leading-6 text-[color:var(--rd-on-paper-mute)]">
+              Operated by {business.legalName}. {business.licensingShort}.
+            </p>
           </div>
-          <p className="mt-5 text-xs leading-6 text-[var(--muted)]">
-            Operated by {business.legalName}. {business.licensingShort}.
-          </p>
         </div>
       </section>
     </SiteChrome>

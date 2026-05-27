@@ -21,7 +21,7 @@ const ROTATE_MS = 12_000;
 const FIRST_SHOW_DELAY_MS = 3_500;
 
 export default function LiveOrderToasts() {
-  const events = useMemo(buildSampleFeed, []);
+  const events = useMemo(() => buildSampleFeed(), []);
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -33,6 +33,7 @@ export default function LiveOrderToasts() {
     if (typeof window !== 'undefined') {
       const stored = window.sessionStorage.getItem('rd_toasts_dismissed');
       if (stored === 'yes') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setDismissed(true);
         return;
       }

@@ -46,7 +46,6 @@ function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eag
             // Next.js Image Optimization — AVIF/WebP + edge-cached. The
             // Dutchie CDN host is whitelisted in next.config.mjs.
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            quality={72}
             placeholder="blur"
             blurDataURL={PRODUCT_BLUR_DATA_URL}
             loading={eager ? 'eager' : 'lazy'}

@@ -210,7 +210,6 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                        featured deals so all 3 are hinted eager — they're near-fold
                        on any viewport. */
                     sizes="(max-width: 640px) 78vw, (max-width: 1024px) 50vw, 33vw"
-                    quality={72}
                     placeholder="blur"
                     blurDataURL={PRODUCT_BLUR_DATA_URL}
                     loading="eager"

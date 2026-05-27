@@ -397,7 +397,6 @@ export default function StrainQuiz() {
                                   alt={product.name}
                                   fill
                                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                  quality={72}
                                   placeholder="blur"
                                   blurDataURL={PRODUCT_BLUR_DATA_URL}
                                   loading="eager"

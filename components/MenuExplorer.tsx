@@ -74,7 +74,9 @@ function ProductImage({ product, eager = false }: { product: LiveMenuProduct; ea
       // s3-us-west-2.amazonaws.com/dutchie-images/** remotePattern in
       // next.config, every product asset is optimized + edge-cached.
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      quality={72}
+      // quality defaults to 75 (Next.js's only allowed value unless we
+      // override images.qualities in next.config). Difference between
+      // 72 and 75 is imperceptible — let it default to avoid 400s.
       placeholder="blur"
       blurDataURL={PRODUCT_BLUR_DATA_URL}
       loading={eager ? 'eager' : 'lazy'}
@@ -122,7 +124,7 @@ function ProductCard({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-            <h2
+            <h3
               className="mt-2 line-clamp-2 break-words text-[color:var(--rd-text)]"
               style={{
                 fontFamily: 'var(--font-display)',
@@ -134,7 +136,7 @@ function ProductCard({
               title={product.name}
             >
               {product.name}
-            </h2>
+            </h3>
           </div>
           <div className="shrink-0 text-right [font-family:var(--font-mono)]">
             <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</p>
