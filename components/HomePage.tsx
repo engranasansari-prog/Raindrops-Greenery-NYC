@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
+import LiveOrderToasts from '@/components/LiveOrderToasts';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import ClaimOfferModal from '@/components/ClaimOfferModal';
 import HookPills from '@/components/HookPills';
@@ -443,6 +444,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       <TestimonialFeature />
 
       <ClaimOfferModal open={claimOpen} onClose={closeClaim} />
+      <LiveOrderToasts />
     </SiteChrome>
   );
 }
