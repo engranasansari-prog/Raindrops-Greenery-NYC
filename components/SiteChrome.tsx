@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Clock, Mail, Menu, Phone, ShieldCheck, ShoppingBag, X } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from '@/components/SocialIcons';
+import { InstagramIcon } from '@/components/SocialIcons';
 import { useEffect, useState } from 'react';
 import PromoStrip from '@/components/PromoStrip';
 import NewsletterForm from '@/components/NewsletterForm';
@@ -14,14 +14,6 @@ import TrustMarquee from '@/components/TrustMarquee';
 import BackToTop from '@/components/BackToTop';
 import { business, checkout, footerLinkGroups, navItems, social } from '@/lib/site-data';
 
-// Map social label → custom inline SVG (V4 §10.7).
-// lucide-react v1.x doesn't ship brand glyphs so we render our own monoline set.
-const SOCIAL_ICON = {
-  Instagram: InstagramIcon,
-  TikTok: TikTokIcon,
-  X: XIcon,
-  Facebook: FacebookIcon
-} as const;
 
 /**
  * Primary CTA — pill in --rd-glow with ink text. Matches design brief §3.1.
@@ -280,6 +272,21 @@ function Header() {
                 </span>
               </div>
               <OrderButton className="mt-2 w-full" />
+              {/* Instagram link in drawer footer (V6 §10.2) */}
+              {social.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Follow Raindrops Greenery on ${item.label}`}
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 px-4 py-2.5 text-sm text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+                  onClick={() => setOpen(false)}
+                >
+                  <InstagramIcon className="h-4 w-4" />
+                  {item.handle}
+                </a>
+              ))}
             </div>
           </motion.div>
         )}
@@ -382,23 +389,20 @@ function Footer() {
             </span>
             <span className="break-words">&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {social.map((item) => {
-              const Icon = SOCIAL_ICON[item.label as keyof typeof SOCIAL_ICON] ?? InstagramIcon;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Raindrops Greenery on ${item.label}`}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              );
-            })}
-          </div>
+          {/* V6 §10 — Instagram only, show @handle next to icon */}
+          {social.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Follow Raindrops Greenery on ${item.label}`}
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 px-3.5 py-1.5 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              <span className="text-sm font-medium">{item.handle}</span>
+            </a>
+          ))}
         </div>
         <div className="luxury-shell pb-6 text-[11px] leading-6 text-[color:var(--rd-text-mute)]">
           For use only by adults 21 years of age or older. Keep out of reach of children and pets. Do not operate a vehicle or machinery under the influence of cannabis. There may be health risks associated with consumption of this product. Cannabis has not been analyzed or approved by the FDA. Sales and delivery are conducted under a cannabis license issued by the {business.licensingAuthority}.

@@ -36,11 +36,9 @@ export const business = {
   baseUrl: 'https://raindropsgreenery.com'
 };
 
+// V6 §10 — Instagram only. TikTok / X / Facebook removed site-wide.
 export const social = [
-  { label: 'Instagram', href: 'https://instagram.com/raindropsgreenery', handle: '@raindropsgreenery' },
-  { label: 'TikTok', href: 'https://tiktok.com/@raindropsgreenery', handle: '@raindropsgreenery' },
-  { label: 'X', href: 'https://x.com/raindropsgreenery', handle: '@raindropsgreenery' },
-  { label: 'Facebook', href: 'https://facebook.com/raindropsgreenery', handle: 'Raindrops Greenery' }
+  { label: 'Instagram', href: 'https://www.instagram.com/raindropsgreenery/', handle: '@raindropsgreenery' }
 ];
 
 export const navItems = [
