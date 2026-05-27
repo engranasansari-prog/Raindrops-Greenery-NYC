@@ -144,7 +144,14 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
           <button onClick={() => onDetails(product)} className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]">
             Details
           </button>
-          <Link href={checkout.dutchieUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--emerald-deep)] px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-white transition hover:bg-[var(--emerald)]">
+          {/* Per-product Dutchie URL — links directly to the same product's page on Dutchie */}
+          <Link
+            href={product.orderUrl || checkout.dutchieUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Order ${product.name} on Dutchie`}
+            className="inline-flex items-center gap-2 rounded-full bg-[var(--emerald-deep)] px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-white transition hover:bg-[var(--emerald)]"
+          >
             Order
             <ArrowRight className="h-4 w-4" />
           </Link>
@@ -246,7 +253,17 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
             )}
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <OrderButton label="Order now" />
+              {/* Order CTA in the detail modal goes to THIS product's page on Dutchie */}
+              <Link
+                href={product.orderUrl || checkout.dutchieUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Order ${product.name} on Dutchie`}
+                className="group inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+              >
+                Order on Dutchie
+                <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
+              </Link>
               <button onClick={share} className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--line)] bg-white px-5 py-3 text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] transition hover:border-[var(--champagne)]">
                 <Share2 className="h-4 w-4" />
                 {copied ? 'Link copied' : 'Share'}
@@ -276,13 +293,9 @@ function SelectField({ label, value, onChange, children }: { label: string; valu
 export default function MenuExplorer({ initialCategory, initialProductId, initialDealsOnly, initialEffect }: { initialCategory?: string; initialProductId?: string; initialDealsOnly?: boolean; initialEffect?: string }) {
   const [category, setCategory] = useState<CategoryFilter>(normalizeCategory(initialCategory));
   const [query, setQuery] = useState('');
-  const [brand, setBrand] = useState('All');
   const [profile, setProfile] = useState('All');
   const [weight, setWeight] = useState('All');
-  const [effect, setEffect] = useState(initialEffect && effectOptions.includes(initialEffect) ? initialEffect : 'All');
   const [sort, setSort] = useState<SortMode>('featured');
-  const [dealsOnly, setDealsOnly] = useState(Boolean(initialDealsOnly));
-  const [inStockOnly, setInStockOnly] = useState(false);
   const [priceMax, setPriceMax] = useState(maxAvailablePrice);
   const [minThc, setMinThc] = useState(0);
   const [visibleCount, setVisibleCount] = useState(18);
@@ -308,14 +321,11 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
 
     return menuProducts
       .filter((product) => category === 'All' || product.category === category)
-      .filter((product) => brand === 'All' || getBrandLabel(product) === brand)
       .filter((product) => profile === 'All' || inferProfile(product) === profile)
       .filter((product) => weight === 'All' || product.weight === weight)
-      .filter((product) => effect === 'All' || inferEffects(product).includes(effect))
-      .filter((product) => !dealsOnly || hasSale(product))
-      .filter((product) => !inStockOnly || product.quantity > 0)
       .filter((product) => product.salePrice / 100 <= priceMax)
-      .filter((product) => getPrimaryPotency(product) >= minThc)
+      // Min THC only applies to non-Edibles (Edibles use mg; out of slider range)
+      .filter((product) => category === 'Edibles' || getPrimaryPotency(product) >= minThc)
       .filter((product) => !normalizedQuery || getMenuSearchText(product).includes(normalizedQuery))
       .sort((a, b) => {
         if (sort === 'price-low') return a.salePrice - b.salePrice;
@@ -324,20 +334,16 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
         if (sort === 'name') return a.name.localeCompare(b.name);
         return Number(hasSale(b)) - Number(hasSale(a)) || Number(b.quantity > 0) - Number(a.quantity > 0) || a.name.localeCompare(b.name);
       });
-  }, [brand, category, dealsOnly, effect, inStockOnly, minThc, priceMax, profile, query, sort, weight]);
+  }, [category, minThc, priceMax, profile, query, sort, weight]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
   const resetFilters = () => {
     setCategory('All');
     setQuery('');
-    setBrand('All');
     setProfile('All');
     setWeight('All');
-    setEffect('All');
     setSort('featured');
-    setDealsOnly(false);
-    setInStockOnly(false);
     setPriceMax(maxAvailablePrice);
     setMinThc(0);
     setVisibleCount(18);
@@ -404,13 +410,9 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               </div>
             </div>
 
-            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-7">
-              <SelectField label="Brand" value={brand} onChange={(value) => setFilter(setBrand, value)}>
-                <option>All</option>
-                {brands.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </SelectField>
+            {/* V8 §4.5 — trimmed filter set. Brand/Effect/DealsOnly/InMenu
+                removed (single brand, no sale data, all products in menu). */}
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               <SelectField label="Profile" value={profile} onChange={(value) => setFilter(setProfile, value)}>
                 <option>All</option>
                 {profiles.map((item) => (
@@ -423,12 +425,6 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   <option key={item}>{item}</option>
                 ))}
               </SelectField>
-              <SelectField label="Effect" value={effect} onChange={(value) => setFilter(setEffect, value)}>
-                <option>All</option>
-                {effectOptions.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </SelectField>
               <SelectField label="Sort" value={sort} onChange={(value) => setFilter(setSort, value as SortMode)}>
                 {(Object.keys(sortLabels) as SortMode[]).map((item) => (
                   <option key={item} value={item}>{sortLabels[item]}</option>
@@ -436,24 +432,19 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               </SelectField>
               <label className="grid gap-2">
                 <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Max price: {formatPrice(priceMax * 100)}</span>
-                <input type="range" min={10} max={maxAvailablePrice} value={priceMax} onChange={(event) => setFilter(setPriceMax, Number(event.target.value))} className="h-12 accent-[var(--emerald-deep)]" />
+                <input type="range" min={15} max={Math.max(maxAvailablePrice, 50)} value={priceMax} onChange={(event) => setFilter(setPriceMax, Number(event.target.value))} className="h-12 accent-[var(--emerald-deep)]" />
               </label>
-              <label className="grid gap-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Min THC: {minThc}%</span>
-                <input type="range" min={0} max={40} value={minThc} onChange={(event) => setFilter(setMinThc, Number(event.target.value))} className="h-12 accent-[var(--emerald-deep)]" />
-              </label>
+              {/* Min THC only applies to Flower / Pre-Rolls — Edibles use mg. */}
+              {category !== 'Edibles' && (
+                <label className="grid gap-2">
+                  <span className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">Min THC: {minThc}%</span>
+                  <input type="range" min={0} max={40} value={minThc} onChange={(event) => setFilter(setMinThc, Number(event.target.value))} className="h-12 accent-[var(--emerald-deep)]" />
+                </label>
+              )}
             </div>
 
             <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-wrap gap-2">
-                <button onClick={() => setFilter(setDealsOnly, !dealsOnly)} aria-pressed={dealsOnly} className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-[0.13em] transition ${dealsOnly ? 'bg-[var(--champagne)] text-[var(--emerald-deep)]' : 'border border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--champagne)] hover:text-[var(--emerald-deep)]'}`}>
-                  <BadgePercent className="h-4 w-4" />
-                  Deals only
-                </button>
-                <button onClick={() => setFilter(setInStockOnly, !inStockOnly)} aria-pressed={inStockOnly} className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-[0.13em] transition ${inStockOnly ? 'bg-[var(--emerald-deep)] text-white' : 'border border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--champagne)] hover:text-[var(--emerald-deep)]'}`}>
-                  <PackageCheck className="h-4 w-4" />
-                  In menu
-                </button>
                 <button onClick={resetFilters} className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-xs font-extrabold uppercase tracking-[0.13em] text-[var(--muted)] transition hover:border-[var(--champagne)] hover:text-[var(--emerald-deep)]">
                   <RotateCcw className="h-4 w-4" />
                   Reset

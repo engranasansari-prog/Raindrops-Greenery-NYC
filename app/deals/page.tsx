@@ -1,47 +1,156 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BadgePercent, Sparkles } from 'lucide-react';
+import { ArrowRight, BadgePercent } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { menuProducts } from '@/lib/menu';
-import { formatPrice, getBrandLabel, getDealLabel, hasSale } from '@/lib/menu-utils';
+import HookPills from '@/components/HookPills';
+import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
+import { formatPrice, getBrandLabel, getStrainTag } from '@/lib/menu-utils';
 
 export const metadata: Metadata = {
   title: 'Deals',
   description:
-    'Tax-free Shinnecock-licensed cannabis deals on Flower, Pre-Rolls, and Edibles. Free delivery across Manhattan, LIC, Williamsburg, and Greenpoint.',
+    'Tax-free Shinnecock-licensed cannabis picks — Heavy Hitters, Top Shelf, and Under $25. Free delivery across Manhattan + East River neighborhoods.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Raindrops Greenery NY Deals',
-    description: 'Tax-free deals on Flower, Pre-Rolls, and Edibles for NYC delivery.',
+    description: 'Tax-free cannabis picks for NYC delivery. Heavy Hitters, Top Shelf, Under $25.',
     url: '/deals',
     images: [{ url: '/assets/flower.avif', width: 1200, height: 800, alt: 'Raindrops Greenery deals' }]
   }
 };
 
+const STRAIN_TINT: Record<string, string> = {
+  INDICA: 'border-[color:var(--rd-rain)]/40 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
+  SATIVA: 'border-[color:var(--rd-glow)]/40 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/10',
+  HYBRID: 'border-[color:var(--rd-amber)]/40 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
+  BALANCED: 'border-[color:var(--rd-mint)]/40 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
+};
+
+function ProductCard({ product }: { product: LiveMenuProduct }) {
+  const strain = getStrainTag(product);
+  const tint = STRAIN_TINT[strain] ?? STRAIN_TINT.BALANCED;
+  return (
+    <Link
+      href={`/menu?product=${encodeURIComponent(product.id)}`}
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+    >
+      <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
+        {product.image && (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            unoptimized
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-contain p-6"
+          />
+        )}
+        <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+          <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${tint}`}>
+            {strain}
+          </span>
+          {product.isSticky && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+              ✦ STICKY
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
+        <h3 className="mt-1 truncate text-base font-medium text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)' }}>
+          {product.name}
+        </h3>
+        <div className="mt-auto flex items-end justify-between pt-4">
+          <p className="text-lg font-semibold text-[color:var(--rd-amber)] [font-family:var(--font-mono)]">
+            {formatPrice(product.salePrice)}
+          </p>
+          <span className="inline-flex items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
+            View
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function Section({
+  eyebrow,
+  title,
+  italic,
+  body,
+  products
+}: {
+  eyebrow: string;
+  title: string;
+  italic: string;
+  body: string;
+  products: LiveMenuProduct[];
+}) {
+  if (products.length === 0) return null;
+  return (
+    <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
+      <div className="luxury-shell">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">{eyebrow}</p>
+            <h2 className="mt-3 text-[color:var(--rd-text)]">
+              {title} <span className="italic">{italic}</span>
+            </h2>
+            <p className="mt-3 text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">{body}</p>
+          </div>
+          <Link
+            href="/menu"
+            className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+          >
+            <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Open full menu</span>
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {products.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function DealsPage() {
-  const dealProducts = menuProducts.filter(hasSale);
+  // V8 §4 — re-organized into 3 curated sections (no sale-pricing in the
+  // current dataset; "deals" = curated picks).
+  const heavyHitters = menuProducts.filter((p) => p.isSticky);
+  const topShelf = menuProducts.filter((p) => p.category === 'Flower' && p.salePrice >= 4000); // $40+
+  const underTwentyFive = menuProducts.filter((p) => p.salePrice <= 2500);
+  const totalCurated = heavyHitters.length + topShelf.length + underTwentyFive.length;
 
   return (
     <SiteChrome>
-      <section className="relative overflow-hidden bg-[#06130f] text-white">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-22" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,19,15,0.92),rgba(6,19,15,0.55))]" />
-        <div className="luxury-shell relative grid gap-8 py-14 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94),rgba(10,20,16,0.55))]" />
+        <div className="luxury-shell relative grid gap-8 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
-            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Live deals</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
-              Tonight’s drops.
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Tonight’s drops</p>
+            <h1 className="mt-4 text-[color:var(--rd-text)]">
+              Curated picks. <span className="italic">No codes needed.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
-              Free weed gift with every order. No codes needed. Spend it how you like — every order includes a complimentary pre-roll. Browse the deals below and order direct.
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+              Free weed gift with every order. Browse the deals below and order direct on Dutchie — every product card links straight to its checkout page.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/menu?deals=1" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
-                Filter menu to deals
-                <ArrowRight className="h-4 w-4" />
+              <Link
+                href="/menu"
+                className="btn-luxe btn-luxe-paper"
+              >
+                Open full menu
+                <ArrowRight />
               </Link>
               <OrderButton />
             </div>
@@ -49,65 +158,94 @@ export default function DealsPage() {
         </div>
       </section>
 
-      <section className="pb-16 pt-12 md:pt-16">
+      {/* Hooks pill row */}
+      <section className="bg-[color:var(--rd-paper)] py-8 sm:py-10">
         <div className="luxury-shell">
-          <div className="mb-7 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">On sale right now</p>
-              <h2 className="mt-3 font-[var(--font-display)] text-4xl font-bold text-[var(--emerald-deep)] md:text-5xl">{dealProducts.length} products with active deals</h2>
-            </div>
-            <Link href="/menu?deals=1" className="inline-flex items-center gap-2 font-extrabold text-[var(--emerald-deep)] hover:text-[var(--champagne-dark)]">
-              See in menu
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <HookPills tone="light" />
+        </div>
+      </section>
 
-          {dealProducts.length === 0 ? (
-            <div className="rounded-lg border border-[var(--line)] bg-white/78 p-10 text-center">
-              <Sparkles className="mx-auto h-10 w-10 text-[var(--emerald)]" />
-              <h3 className="mt-4 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)]">No active deals right now.</h3>
-              <p className="mt-2 text-[var(--muted)]">Check back soon — sale items are added throughout the week.</p>
+      {totalCurated === 0 ? (
+        <section className="bg-[color:var(--rd-ink)] py-20 text-[color:var(--rd-text)] sm:py-24">
+          <div className="luxury-shell">
+            <div className="mx-auto max-w-2xl rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-10 text-center">
+              <BadgePercent className="mx-auto h-10 w-10 text-[color:var(--rd-glow)]" />
+              <h2 className="mt-5 text-[color:var(--rd-text)]">
+                No curated drops <span className="italic">right now.</span>
+              </h2>
+              <p className="mt-3 text-[color:var(--rd-text-dim)]">
+                The full 44-product menu is open. Free weed gift still applies.
+              </p>
               <div className="mt-6 inline-flex">
-                <OrderButton label="Browse full menu" />
+                <Link href="/menu" className="btn-luxe btn-luxe-gold">
+                  Browse menu
+                  <ArrowRight />
+                </Link>
               </div>
             </div>
-          ) : (
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {dealProducts.slice(0, 18).map((product) => (
-                <Link key={product.id} href={`/menu?product=${encodeURIComponent(product.id)}`} className="group flex flex-col overflow-hidden rounded-lg border border-white/70 bg-white/82 shadow-[0_18px_54px_rgba(25,35,20,0.08)] transition hover:-translate-y-1 hover:shadow-[0_30px_86px_rgba(25,35,20,0.14)]">
-                  <div className="relative aspect-[5/3] overflow-hidden bg-[#fbf7ee]">
-                    {product.image ? (
-                      <Image src={product.image} alt={product.name} fill unoptimized sizes="(max-width: 768px) 100vw, 33vw" className="object-contain p-6 transition duration-500 group-hover:scale-105" />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center text-[var(--emerald-deep)]/30">No image</div>
-                    )}
-                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[var(--champagne)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)]">
-                      <BadgePercent className="h-3 w-3" />
-                      {getDealLabel(product) ?? 'Deal'}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--champagne-dark)]">{getBrandLabel(product)}</p>
-                    <h3 className="mt-2 font-[var(--font-display)] text-2xl font-bold leading-tight text-[var(--emerald-deep)]">{product.name}</h3>
-                    <div className="mt-auto flex items-end justify-between gap-3 pt-5">
-                      <div>
-                        {product.salePrice < product.price && <p className="text-xs font-bold text-[var(--muted)] line-through">{formatPrice(product.price)}</p>}
-                        <p className="font-[var(--font-display)] text-3xl font-bold text-[var(--emerald)]">{formatPrice(product.salePrice)}</p>
-                      </div>
-                      <span className="inline-flex items-center gap-2 rounded-full bg-[var(--emerald-deep)] px-4 py-2 text-xs font-extrabold uppercase tracking-[0.14em] text-white">
-                        View
-                        <ArrowRight className="h-4 w-4" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* Heavy Hitters — sticky / 30%+ flower + 1000mg gummies */}
+          <Section
+            eyebrow="Heavy hitters"
+            title="Highest THC"
+            italic="in the shop."
+            body="The seven products that wear the ✦ STICKY badge — 30%+ flower and 1000mg gummies. Strong stuff."
+            products={heavyHitters}
+          />
 
-          <div className="mt-10 rounded-lg border border-[var(--line)] bg-white/60 p-5 text-xs leading-6 text-[color:var(--rd-on-paper-mute)] shadow-sm md:p-6">
+          {/* Top Shelf — $40+ flower */}
+          <Section
+            eyebrow="Top shelf"
+            title="Premium picks"
+            italic="worth the splurge."
+            body="The flower we'd order ourselves. $40 and up — top-grade nugs that justify the price tag."
+            products={topShelf}
+          />
+
+          {/* Under $25 — entry-priced */}
+          <Section
+            eyebrow="Under $25"
+            title="Easy entries"
+            italic="without the splurge."
+            body="Lower-priced picks for first-time customers or budget rounds. Same quality bar."
+            products={underTwentyFive}
+          />
+        </>
+      )}
+
+      {/* Decorative footer band */}
+      <section className="bg-[color:var(--rd-paper)] py-16">
+        <div className="luxury-shell">
+          <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] p-8 text-[color:var(--rd-text)] sm:p-12">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,230,110,0.18),transparent_55%)]" aria-hidden />
+            <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+              <div>
+                <p className="rd-eyebrow text-[color:var(--rd-glow)]">Every order</p>
+                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                  Free weed gift, <span className="italic">free delivery.</span>
+                </h2>
+                <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+                  Tax-free under Shinnecock authority. Every order ships with a complimentary pre-roll. 21+ only. Open daily 10 AM – 10 PM.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+                <Link href="/menu" className="btn-luxe btn-luxe-paper">
+                  Open menu
+                  <ArrowRight />
+                </Link>
+                <OrderButton />
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 rounded-2xl border border-[var(--line)] bg-white/60 p-5 text-xs leading-6 text-[color:var(--rd-on-paper-mute)] shadow-sm md:p-6">
             <p className="rd-eyebrow text-[color:var(--rd-on-paper-dim)]">Fine print</p>
-            <p className="mt-2">Sale pricing reflects on the menu. Subject to change without notice. Free weed gift applies to every order; one complimentary pre-roll per first-time order while supplies last. Must be 21+ to order.</p>
+            <p className="mt-2">
+              Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll per first-time order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
+            </p>
           </div>
         </div>
       </section>

@@ -20,6 +20,8 @@ export type FeaturedDeal = {
   brand: string;
   image: string | null;
   hrefId: string;
+  /** Direct Dutchie product URL — used by the home "Order" CTA */
+  orderUrl: string;
   strain: StrainTag;
   sticky: boolean;
   pctOff: number;
@@ -57,6 +59,8 @@ export function getFeaturedDeals(limit = 3): FeaturedDeal[] {
         brand: getBrandLabel(product),
         image: product.image,
         hrefId: encodeURIComponent(product.id),
+        // orderUrl comes from the V8 adapter (lib/menu.ts) — direct Dutchie product link
+        orderUrl: (product as typeof product & { orderUrl?: string }).orderUrl ?? '',
         strain: getStrainTag(product),
         sticky: isSticky(product),
         pctOff: calculatePercentOff(product.price, product.salePrice),
