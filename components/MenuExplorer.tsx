@@ -211,14 +211,27 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
   const [copied, setCopied] = useState(false);
   const potency = getPotencyLabel(product);
   const effects = inferEffects(product);
-  const detailRows = [
-    ['Category', product.category],
-    ['Brand', getBrandLabel(product)],
-    ['Profile', inferProfile(product)],
-    ['Size', product.weight ?? 'Confirm at checkout'],
-    ['Potency', potency || 'Confirm at checkout'],
-    ['Availability', product.quantity > 0 ? 'Available in menu' : 'Confirm at checkout']
+  // Build detail rows conditionally so we only show fields the customer
+  // can actually act on. Edibles don't have a "Size" (all variants are
+  // Default), and pre-rolls' 1.5g is suppressed per client request — so
+  // hiding the Size row entirely for those categories avoids "Confirm
+  // at checkout" placeholders that just confuse the customer.
+  const detailRows: Array<[string, string]> = [
+    ['Category', CATEGORY_LABEL[product.category]],
+    ['Brand', getBrandLabel(product)]
   ];
+  if (product.category !== 'Edibles') {
+    detailRows.push(['Profile', inferProfile(product)]);
+  }
+  if (product.weight) {
+    detailRows.push(['Size', product.weight]);
+  }
+  if (potency) {
+    detailRows.push(['Potency', potency]);
+  }
+  if (product.quantity > 0) {
+    detailRows.push(['Availability', 'Available in menu']);
+  }
 
   const sharePath = typeof window !== 'undefined'
     ? `${window.location.origin}/menu?product=${encodeURIComponent(product.id)}`
