@@ -468,7 +468,7 @@ textarea:focus:not(:focus-visible) {
   to   { transform: translateX(-33.333%); }
 }
 .animate-marquee {
-  animation: marquee 21s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 .animate-marquee:hover {
   animation-play-state: paused;
