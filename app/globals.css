@@ -430,6 +430,40 @@ textarea:focus:not(:focus-visible) {
   to   { transform: translateX(-50%); }
 }
 
+/* CoverageMap — breathing cluster polygons (staggered via inline animation-delay) */
+@keyframes rd-cluster-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.85; }
+}
+.rd-cluster {
+  animation: rd-cluster-breathe 4.6s var(--ease-out) infinite;
+  transform-origin: center;
+}
+
+/* CoverageMap — raindrops fall over covered zones */
+@keyframes rd-rainfall {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% { opacity: 0.8; }
+  85% { opacity: 0.5; }
+  100% {
+    transform: translateY(var(--rd-rain-end, 600px));
+    opacity: 0;
+  }
+}
+
+/* CoverageMap — flowing light along East River bridges */
+@keyframes rd-bridge-flow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -94; }
+}
+.rd-bridge-flow {
+  animation: rd-bridge-flow 1.8s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(200, 230, 110, 0.6));
+}
+
 /* =====================================================================
    Legacy btn-luxe-* classes used by HeroSlider / ClaimOfferModal /
    CoverageMap / HomePage. These were previously referenced without

@@ -12,7 +12,8 @@ function computeStatus(): Status {
   const currentMinutes = hour * 60 + minute;
 
   const openMinutes = business.openHour * 60;
-  // Close-at-midnight is encoded as 24 in site-data.
+  // Close-at-midnight is encoded as 24 in site-data; any other hour is the
+  // literal 24h value (e.g. 22 = 10 PM).
   const closeMinutes = business.closeHour === 24 ? 24 * 60 : business.closeHour * 60;
 
   const isOpen = currentMinutes >= openMinutes && currentMinutes < closeMinutes;

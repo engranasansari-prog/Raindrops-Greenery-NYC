@@ -341,7 +341,7 @@ function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <Clock className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              <span>Daily 10:00 AM – 12:00 AM</span>
+              <span>Daily 10:00 AM – 10:00 PM</span>
             </li>
           </ul>
 

@@ -20,11 +20,11 @@ export const business = {
   supportEmailHref: 'mailto:nycraindrops@gmail.com',
   // Open every day; the live OpenStatus indicator reads this list.
   hours: [
-    { day: 'Every day', open: '10:00 AM', close: '12:00 AM' }
+    { day: 'Every day', open: '10:00 AM', close: '10:00 PM' }
   ],
   // Continuous open window in 24h, used by the live status badge.
   openHour: 10,
-  closeHour: 24,
+  closeHour: 22,
   // Operating under a sovereign Shinnecock Indian Nation cannabis license.
   licensingAuthority: 'Shinnecock Indian Nation Cannabis Regulatory Division',
   licensingShort: 'Shinnecock-licensed cannabis delivery partner',
@@ -228,6 +228,6 @@ export const faqs = [
 
 export const promoStrip = {
   // Set message to null to hide the strip.
-  message: 'Free delivery in Manhattan + East River neighborhoods · Tax-free under Shinnecock · Order by 11pm',
+  message: 'Free delivery in Manhattan + East River neighborhoods · Tax-free under Shinnecock · Open 10am–10pm',
   cta: { label: 'Check coverage', href: '#coverage' }
 };

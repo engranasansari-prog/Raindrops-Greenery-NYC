@@ -883,8 +883,8 @@ export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
       eyebrow: 'NYC · 21+ · Tax-free',
       headline: 'Guaranteed best flower on the market.',
       headlineAccent: 'best flower',
-      subtext: 'Free weed with every order. Tax-free under Shinnecock authority. Same-day delivery.',
-      primary: { label: 'Claim free weed', href: '/menu' },
+      subtext: 'Free weed gift with every order. Tax-free under Shinnecock authority. Same-day delivery.',
+      primary: { label: 'Claim free weed gift', href: '/menu' },
       secondary: { label: 'Check coverage', href: '#coverage' }
     },
     {

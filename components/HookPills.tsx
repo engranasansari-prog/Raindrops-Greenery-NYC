@@ -2,7 +2,7 @@ import { Droplet, Leaf, Sparkles, Truck } from 'lucide-react';
 
 const HOOKS = [
   { icon: Droplet, label: 'Tax free' },
-  { icon: Sparkles, label: 'Free weed' },
+  { icon: Sparkles, label: 'Free weed gift' },
   { icon: Truck, label: 'Free delivery' },
   { icon: Leaf, label: 'Sticky · icky' }
 ] as const;
