@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import MenuExplorer from '@/components/MenuExplorer';
 import { menuProducts } from '@/lib/menu';
-import { formatPrice, getBrandLabel, inferProfile } from '@/lib/menu-utils';
+import { getBrandLabel, inferProfile } from '@/lib/menu-utils';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
@@ -21,9 +20,14 @@ export const metadata: Metadata = {
 type MenuSearchParams = { category?: string; product?: string; deals?: string; effect?: string };
 
 /**
- * Build Product schema for the menu catalog (brief §6 / Phase 5.2).
- * Limited to the top 30 products with images to keep page weight reasonable —
- * Google indexes the first ~10-15 anyway.
+ * Build Product ItemList JSON-LD for the menu catalog. Enriched with
+ * productID, sku, mpn, and condition fields so Google + AI engines have
+ * the maximum-resolution signal per product.
+ *
+ * Capped at 30 products with images to manage payload — Google's product
+ * crawler indexes the first ~10-15 items in an ItemList anyway, and the
+ * remaining products are discoverable via the menu UI + direct deep
+ * links.
  */
 function buildProductSchema() {
   const items = menuProducts.slice(0, 30).map((product, index) => ({
@@ -31,17 +35,29 @@ function buildProductSchema() {
     position: index + 1,
     item: {
       '@type': 'Product',
+      '@id': `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}#product`,
       name: product.name,
       image: product.image ?? undefined,
       brand: { '@type': 'Brand', name: getBrandLabel(product) },
+      manufacturer: { '@type': 'Organization', name: getBrandLabel(product) },
       category: product.category,
-      description: product.description?.trim() || `${inferProfile(product)} ${product.category.toLowerCase()} from ${getBrandLabel(product)}.`,
+      productID: product.id,
+      sku: product.id,
+      itemCondition: 'https://schema.org/NewCondition',
+      description:
+        product.description?.trim() ||
+        `${inferProfile(product)} ${product.category.toLowerCase()} from ${getBrandLabel(product)}.`,
       offers: {
         '@type': 'Offer',
         price: (product.salePrice / 100).toFixed(2),
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
-        url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`
+        itemCondition: 'https://schema.org/NewCondition',
+        url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
+        seller: { '@id': `${business.baseUrl}#business` },
+        // Price valid for at least 7 days from build — Google requires a
+        // priceValidUntil to surface the offer in rich results.
+        priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
       }
     }
   }));
@@ -49,19 +65,42 @@ function buildProductSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Raindrops Greenery NY menu',
-    description: 'Curated cannabis menu for adult-use NYC delivery — Flower, Pre-Rolls, and Edibles.',
+    '@id': `${business.baseUrl}/menu#menu-list`,
+    name: 'Raindrops Greenery NY delivery menu',
+    description:
+      'Curated cannabis menu for tax-free 21+ NYC delivery — Flower Strains, Pre-Rolls, and Edibles. Free delivery on orders over $25, same-day across Manhattan + LIC + Williamsburg + Greenpoint.',
     numberOfItems: items.length,
     itemListElement: items
   };
 }
+
+const menuBreadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: business.baseUrl },
+    { '@type': 'ListItem', position: 2, name: 'Menu', item: `${business.baseUrl}/menu` }
+  ]
+};
 
 export default async function MenuPage({ searchParams }: { searchParams?: Promise<MenuSearchParams> }) {
   const params = searchParams ? await searchParams : {};
   const productSchema = buildProductSchema();
   return (
     <>
-      <Script id="ld-menu-products" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      {/* Plain <script> tags so JSON-LD ships in the initial SSR HTML
+          for Googlebot + AI engines. ItemList → product rich results;
+          BreadcrumbList → search breadcrumb display. */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(menuBreadcrumbLd) }}
+      />
       <MenuExplorer
         initialCategory={params.category}
         initialProductId={params.product}

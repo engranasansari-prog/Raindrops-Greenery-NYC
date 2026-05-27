@@ -6,8 +6,9 @@ import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import HookPills from '@/components/HookPills';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
-import { formatPrice, getBrandLabel, getStrainTag } from '@/lib/menu-utils';
+import { formatPrice, getBrandLabel, getStrainTag, inferProfile } from '@/lib/menu-utils';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
+import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Deals',
@@ -146,8 +147,57 @@ export default function DealsPage() {
   const underTwentyFive = menuProducts.filter((p) => p.salePrice <= 2500);
   const totalCurated = heavyHitters.length + topShelf.length + underTwentyFive.length;
 
+  // Curated picks as an ItemList — surfaces this page as a discrete
+  // "best of" listing in Google's rich product results and gives AI
+  // engines a clean answer for "best NYC weed deals." Capped at the top
+  // 20 across all three sections to keep payload tight.
+  const curatedFeed = [...heavyHitters, ...topShelf, ...underTwentyFive].slice(0, 20);
+  const dealsListLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${business.baseUrl}/deals#deals-list`,
+    name: 'Tonight’s curated cannabis picks — Raindrops Greenery NY',
+    description:
+      'Heavy Hitters (highest THC), Top Shelf ($40+ flower), and Under-$25 entry picks for tax-free NYC delivery. Free delivery on orders over $25.',
+    numberOfItems: curatedFeed.length,
+    itemListElement: curatedFeed.map((product, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        '@id': `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}#product`,
+        name: product.name,
+        image: product.image ?? undefined,
+        brand: { '@type': 'Brand', name: getBrandLabel(product) },
+        category: product.category,
+        productID: product.id,
+        sku: product.id,
+        description:
+          product.description?.trim() ||
+          `${inferProfile(product)} ${product.category.toLowerCase()} from ${getBrandLabel(product)}.`,
+        offers: {
+          '@type': 'Offer',
+          price: (product.salePrice / 100).toFixed(2),
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
+          seller: { '@id': `${business.baseUrl}#business` },
+          priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+        }
+      }
+    }))
+  };
+
   return (
     <SiteChrome>
+      {/* Plain <script> so the curated deals list ships in the initial
+          SSR HTML. Lets Google + Perplexity / ChatGPT Search answer
+          "best NYC cannabis deals" with our actual product cards. */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(dealsListLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-22" />

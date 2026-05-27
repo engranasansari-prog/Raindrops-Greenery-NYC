@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Script from 'next/script';
 import { ArrowRight } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -30,7 +29,15 @@ const faqLd = {
 export default function FaqPage() {
   return (
     <SiteChrome>
-      <Script id="ld-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      {/* Plain <script> tag (not next/script) so the FAQPage schema is in
+          the initial SSR HTML where Googlebot + AI engines can pick it up
+          on first crawl. Powers FAQ rich results in Google + answer
+          snippets in Perplexity / ChatGPT Search. */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">

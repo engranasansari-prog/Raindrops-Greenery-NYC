@@ -158,6 +158,39 @@ export const viewport: Viewport = {
 
 const ZIP_LIST = COVERAGE.clusters.flatMap((c) => [...c.zips]);
 
+// Parent brand — the Raindrops Greenery multi-location entity that owns
+// every regional location (Southampton, NYC, Long Island). Defined as a
+// stable @id so each location's JSON-LD can reference it via
+// parentOrganization / branchOf. Lives at the bare apex (no sub-path) so
+// it's a single canonical entity across all three location sites.
+const BRAND_ORIGIN = 'https://www.raindropsgreenery.com';
+const BRAND_ID = `${BRAND_ORIGIN}#brand`;
+
+const brandLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': BRAND_ID,
+  name: 'Raindrops Greenery',
+  alternateName: 'Raindrops Greenery NY LLC',
+  url: BRAND_ORIGIN,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${business.baseUrl}/assets/logo.jpg`,
+    width: 800,
+    height: 800
+  },
+  description:
+    'Raindrops Greenery is a multi-location premium cannabis brand operating under sovereign Shinnecock Indian Nation authority — tax-free, same-day delivery across New York with locations in Southampton, New York City, and Long Island.',
+  sameAs: social.map((item) => item.href),
+  // The three locations under one brand. New Long Island URL will go in
+  // when that site launches.
+  subOrganization: [
+    { '@type': 'Organization', name: 'Raindrops Greenery — Southampton', url: `${BRAND_ORIGIN}/southampton-raindrops-greenery` },
+    { '@type': 'Organization', '@id': `${business.baseUrl}#org`, name: 'Raindrops Greenery — New York City', url: business.baseUrl },
+    { '@type': 'Organization', name: 'Raindrops Greenery — Long Island', url: `${BRAND_ORIGIN}/long-island-raindrops-greenery` }
+  ]
+};
+
 const organizationLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -165,6 +198,9 @@ const organizationLd = {
   name: business.legalName,
   alternateName: business.tradeName,
   url: business.baseUrl,
+  // Links this NYC location to the multi-location brand entity so search
+  // engines + AI engines understand all three locations are one brand.
+  parentOrganization: { '@id': BRAND_ID },
   logo: {
     '@type': 'ImageObject',
     url: `${business.baseUrl}/assets/logo.jpg`,
@@ -204,9 +240,14 @@ const localBusinessLd = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'Store'],
   '@id': `${business.baseUrl}#business`,
-  name: business.tradeName,
+  name: `${business.tradeName} — New York City`,
   legalName: business.legalName,
   url: business.baseUrl,
+  // Ties this LocalBusiness to the multi-location parent brand. Combined
+  // with parentOrganization on the Organization node, this is what tells
+  // Google + AI engines "this is one of three Raindrops Greenery
+  // locations" rather than treating it as a standalone shop.
+  branchOf: { '@id': BRAND_ID },
   image: [
     `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`,
     `${business.baseUrl}/assets/dispensaryimage2.jpg`,
@@ -349,6 +390,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* DNS-prefetch the Flowhub product image CDN so menu thumbs warm up. */}
         <link rel="dns-prefetch" href="https://storage.googleapis.com" />
         {/*
+          AI-crawler discovery hints. /llms.txt + /llms-full.txt follow
+          the llmstxt.org spec and are the highest-fidelity surface for
+          Perplexity / ChatGPT Search / Claude / Google AI Overviews to
+          ground answers about Raindrops Greenery. /api/site-summary is
+          the JSON equivalent.
+        */}
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly summary" />
+        <link rel="alternate" type="application/json" href="/api/site-summary" title="Structured site summary" />
+        {/*
           JSON-LD structured data — rendered as plain <script> tags inside
           <head> so they ship in the initial server-rendered HTML. We avoid
           next/script (which defers JSON-LD into the RSC Flight payload and
@@ -356,6 +406,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           it on a single-pass crawl). Per Google's structured-data docs,
           inline JSON-LD in <head> is the gold standard for discoverability.
         */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(brandLd) }}
+        />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
