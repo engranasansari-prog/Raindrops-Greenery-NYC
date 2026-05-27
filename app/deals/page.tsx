@@ -142,7 +142,7 @@ export default function DealsPage() {
               Curated picks. <span className="italic">No codes needed.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              Free weed gift with every order. Browse the deals below and order direct on Dutchie — every product card links straight to its checkout page.
+              Free weed gift with every order. Browse the picks below and tap any product to head to secure checkout — every card links straight through.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

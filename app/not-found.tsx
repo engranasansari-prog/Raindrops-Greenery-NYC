@@ -10,39 +10,47 @@ export const metadata = {
 export default function NotFound() {
   return (
     <SiteChrome>
-      <section className="relative overflow-hidden bg-[#06130f] text-white">
-        <div className="absolute inset-0 mesh-bg opacity-15" />
+      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
+          }}
+        />
         <div className="luxury-shell relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Error 404</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
-              <span style={{ fontStyle: 'italic', fontWeight: 300 }}>This page is</span>{' '}
-              <span style={{ fontWeight: 600, color: 'var(--rd-glow)' }}>out of stock.</span>
+              This page is <span className="italic">out of stock.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               The link you followed is either old or got rolled up and smoked. Pick a destination below — your free weed gift is still waiting.
             </p>
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:max-w-lg">
-              <Link href="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:max-w-lg">
+              <Link href="/" className="btn-luxe btn-luxe-gold">
                 <Home className="h-4 w-4" />
                 Home
               </Link>
-              <Link href="/menu" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-white transition hover:bg-white/16">
+              <Link href="/menu" className="btn-luxe btn-luxe-paper">
                 Browse menu
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight />
               </Link>
             </div>
           </div>
-          <div className="rounded-lg border border-white/14 bg-white/10 p-6 backdrop-blur">
-            <Compass className="h-7 w-7 text-[var(--champagne)]" />
-            <h2 className="mt-4 font-[var(--font-display)] text-3xl font-bold">Helpful jumps</h2>
-            <ul className="mt-4 grid gap-3 text-sm">
-              <li><Link href="/deals" className="font-extrabold text-white/82 hover:text-white">→ Today’s deals</Link></li>
-              <li><Link href="/delivery" className="font-extrabold text-white/82 hover:text-white">→ Delivery areas</Link></li>
-              <li><Link href="/about" className="font-extrabold text-white/82 hover:text-white">→ About Raindrops</Link></li>
-              <li><Link href="/blog" className="font-extrabold text-white/82 hover:text-white">→ Journal</Link></li>
-              <li><Link href="/faq" className="font-extrabold text-white/82 hover:text-white">→ FAQ</Link></li>
-              <li><Link href="/contact" className="font-extrabold text-white/82 hover:text-white">→ Contact support</Link></li>
+          <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.32)] backdrop-blur">
+            <Compass className="h-7 w-7 text-[color:var(--rd-glow)]" />
+            <h2 className="mt-4 text-[color:var(--rd-text)]">
+              Helpful <span className="italic">jumps.</span>
+            </h2>
+            <ul className="mt-5 grid gap-3 text-sm">
+              <li><Link href="/deals" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ Today’s deals</Link></li>
+              <li><Link href="/delivery" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ Delivery areas</Link></li>
+              <li><Link href="/about" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ About Raindrops</Link></li>
+              <li><Link href="/blog" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ Journal</Link></li>
+              <li><Link href="/faq" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ FAQ</Link></li>
+              <li><Link href="/contact" className="font-medium text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">→ Contact support</Link></li>
             </ul>
             <div className="mt-6">
               <OrderButton label="Continue to checkout" />

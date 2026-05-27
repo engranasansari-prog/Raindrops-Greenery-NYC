@@ -30,7 +30,8 @@ import { checkout } from '@/lib/site-data';
  *  - lucide-react@1.16 lacks an Instagram brand glyph; we use our monoline
  *    <InstagramIcon /> from components/SocialIcons.tsx
  *  - Tailwind's `font-serif` / `font-mono` shortcuts replaced with explicit
- *    `[font-family:var(--font-display|mono)]` to match the design system
+ *    `[font-family:var(--font-display)]` and `[font-family:var(--font-mono)]`
+ *    to match the design system tokens
  *  - Order CTA uses the dispensary URL from lib/site-data for consistency
  */
 
