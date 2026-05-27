@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
@@ -12,8 +12,11 @@ import {
   formatPrice,
   getBrandLabel,
   getPotencyLabel,
-  hasSale,
-  inferProfile
+  getPrimaryPotency,
+  getStrainTag,
+  inferProfile,
+  isSticky,
+  type StrainTag
 } from '@/lib/menu-utils';
 
 type FeelTag = 'Energized' | 'Calm' | 'Sleepy' | 'Social';
@@ -28,10 +31,20 @@ type Answers = {
   level?: LevelTag;
 };
 
-const QUESTIONS = [
+type AnswerKey = keyof Answers;
+
+type Question = {
+  key: AnswerKey;
+  label: string;
+  italic: string;
+  options: Array<{ value: string; body: string }>;
+};
+
+const QUESTIONS: Question[] = [
   {
-    key: 'feel' as const,
-    label: 'How do you want to feel?',
+    key: 'feel',
+    label: 'How do you want',
+    italic: 'to feel?',
     options: [
       { value: 'Energized', body: 'Focused, productive, ready to go.' },
       { value: 'Calm', body: 'Even-keeled, low-stress, present.' },
@@ -40,8 +53,9 @@ const QUESTIONS = [
     ]
   },
   {
-    key: 'window' as const,
-    label: 'When are you using it?',
+    key: 'window',
+    label: 'When are you',
+    italic: 'using it?',
     options: [
       { value: 'Daytime', body: 'Morning or mid-day.' },
       { value: 'Evening', body: 'After work, dinner, hanging.' },
@@ -50,8 +64,9 @@ const QUESTIONS = [
     ]
   },
   {
-    key: 'format' as const,
-    label: 'Preferred format?',
+    key: 'format',
+    label: 'Preferred',
+    italic: 'format?',
     options: [
       { value: 'Flower', body: 'Classic, customizable, fast onset.' },
       { value: 'Pre-Rolls', body: 'No setup. Ready to go.' },
@@ -60,8 +75,9 @@ const QUESTIONS = [
     ]
   },
   {
-    key: 'level' as const,
-    label: 'Experience level?',
+    key: 'level',
+    label: 'Experience',
+    italic: 'level?',
     options: [
       { value: 'New', body: 'First time or close to it.' },
       { value: 'Casual', body: 'Maybe once or twice a month.' },
@@ -71,51 +87,74 @@ const QUESTIONS = [
   }
 ];
 
+const STRAIN_BADGE: Record<StrainTag, string> = {
+  INDICA: 'border-[color:var(--rd-rain)]/40 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
+  SATIVA: 'border-[color:var(--rd-glow)]/40 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/10',
+  HYBRID: 'border-[color:var(--rd-amber)]/40 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
+  BALANCED: 'border-[color:var(--rd-mint)]/40 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
+};
+
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+const THC_CEILING: Record<LevelTag, number> = {
+  New: 18,
+  Casual: 24,
+  Regular: 30,
+  Frequent: 100
+};
+
 /**
- * Map answers to a target product profile, then score every menu product and
- * return the top N matches. Lightweight heuristic — not a clinical engine.
+ * V8.1 — Map the four quiz answers to a scored shortlist of three real
+ * products from the live menu. Scoring is intentionally lightweight; it
+ * favors strain profile first, then format, then a THC fit against the
+ * customer's experience level. Works against the 44-product V8 dataset.
  */
 function recommend(answers: Answers): LiveMenuProduct[] {
   if (!answers.feel || !answers.window || !answers.format || !answers.level) return [];
 
-  // Determine preferred strain profile based on the feel + window
-  let preferredProfile: 'sativa' | 'indica' | 'hybrid' = 'hybrid';
-  if (answers.feel === 'Energized' || answers.window === 'Daytime') preferredProfile = 'sativa';
-  if (answers.feel === 'Sleepy' || answers.window === 'Bedtime') preferredProfile = 'indica';
-  if (answers.feel === 'Calm' && answers.window === 'Evening') preferredProfile = 'indica';
-  if (answers.feel === 'Social') preferredProfile = 'hybrid';
+  // Map feel + window to a target strain profile.
+  let target: 'sativa' | 'indica' | 'hybrid' = 'hybrid';
+  if (answers.feel === 'Energized' || answers.window === 'Daytime') target = 'sativa';
+  if (answers.feel === 'Sleepy' || answers.window === 'Bedtime') target = 'indica';
+  if (answers.feel === 'Calm' && (answers.window === 'Evening' || answers.window === 'Bedtime')) target = 'indica';
+  if (answers.feel === 'Social') target = 'hybrid';
 
-  // THC ceiling based on experience level
-  const thcCeiling: Record<LevelTag, number> = {
-    New: 18,
-    Casual: 24,
-    Regular: 30,
-    Frequent: 100
-  };
-  const ceiling = thcCeiling[answers.level];
+  const ceiling = THC_CEILING[answers.level];
 
   const score = (product: LiveMenuProduct): number => {
     let s = 0;
     const profile = inferProfile(product).toLowerCase();
-    if (profile.includes(preferredProfile)) s += 4;
-    if (profile.includes('hybrid')) s += 1;
+    const tag = getStrainTag(product).toLowerCase();
 
-    if (answers.format !== 'Any' && product.category === answers.format) s += 3;
+    // Strain profile fit (0–5)
+    if (tag.includes(target)) s += 5;
+    else if (profile.includes(target)) s += 4;
+    else if (profile.includes('hybrid')) s += 2;
 
-    const thcMatch = getPotencyLabel(product).match(/THC\s+([\d.]+)/i);
-    const thc = thcMatch ? parseFloat(thcMatch[1]) : 18;
-    if (thc <= ceiling) s += 2;
-    if (Math.abs(thc - ceiling * 0.85) < 4) s += 1;
+    // Format fit (0–4) — "Any" still rewards the matched profile.
+    if (answers.format === 'Any') s += 1;
+    else if (product.category === answers.format) s += 4;
 
-    if (hasSale(product)) s += 1;
+    // THC fit vs. experience level
+    const thc = getPrimaryPotency(product);
+    if (thc > 0) {
+      if (thc <= ceiling) s += 2;
+      // sweet-spot bonus around 85% of ceiling
+      if (Math.abs(thc - ceiling * 0.85) < 5) s += 1;
+    }
+
+    // ✦ STICKY bonus for frequent users; penalty for new users
+    if (isSticky(product)) {
+      if (answers.level === 'Frequent' || answers.level === 'Regular') s += 1;
+      if (answers.level === 'New') s -= 2;
+    }
+
     return s;
   };
 
   return menuProducts
     .map((product) => ({ product, s: score(product) }))
-    .sort((a, b) => b.s - a.s)
+    .sort((a, b) => b.s - a.s || a.product.name.localeCompare(b.product.name))
     .slice(0, 3)
     .map(({ product }) => product);
 }
@@ -127,19 +166,26 @@ export default function StrainQuiz() {
   const total = QUESTIONS.length;
   const finished = step >= total;
   const progress = Math.min((step / total) * 100, 100);
-
-  const current = QUESTIONS[step];
+  const current = !finished ? QUESTIONS[step] : null;
   const selectedValue = current ? (answers[current.key] as string | undefined) : undefined;
 
   const results = useMemo(() => (finished ? recommend(answers) : []), [answers, finished]);
+
+  // Scroll-to-top on step change so each question lands at the same visual position.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [step]);
 
   const select = (value: string) => {
     if (!current) return;
     const nextAnswers: Answers = { ...answers, [current.key]: value };
     setAnswers(nextAnswers);
-    // Auto-advance after a brief delight pause
-    window.setTimeout(() => setStep((s) => s + 1), 280);
+    // Auto-advance the moment they pick. No timer race — go immediately.
+    setStep((s) => s + 1);
   };
+
+  const back = () => setStep((s) => Math.max(0, s - 1));
 
   const reset = () => {
     setStep(0);
@@ -148,8 +194,16 @@ export default function StrainQuiz() {
 
   return (
     <SiteChrome>
+      {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(200,230,110,0.10),transparent_55%)]" aria-hidden />
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden
+          style={{
+            background:
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
+          }}
+        />
 
         <div className="luxury-shell relative py-16 sm:py-20 lg:py-24">
           <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
@@ -163,11 +217,11 @@ export default function StrainQuiz() {
                 Find your <span className="italic">strain.</span>
               </h1>
               <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
-                Tell us how you want to feel and we’ll point you at three drops worth ordering. Not medical advice — just a smart starting point.
+                Tell us how you want to feel — we’ll pull three drops from the live menu that fit. Not medical advice, just a smart starting point.
               </p>
             </div>
             {!finished && (
-              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)] sm:self-auto">
+              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)] sm:self-auto">
                 Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
               </span>
             )}
@@ -191,7 +245,7 @@ export default function StrainQuiz() {
       <section className="bg-[color:var(--rd-ink)] pb-20 text-[color:var(--rd-text)] sm:pb-24">
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
-            {!finished ? (
+            {!finished && current ? (
               <motion.div
                 key={`step-${step}`}
                 initial={{ opacity: 0, y: 16 }}
@@ -199,36 +253,42 @@ export default function StrainQuiz() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.45, ease: easeOut }}
               >
-                <p className="rd-eyebrow text-[color:var(--rd-text-dim)]">Question {step + 1}</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">{current?.label}</h2>
+                <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Question {step + 1} of {total}</p>
+                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                  {current.label} <span className="italic">{current.italic}</span>
+                </h2>
 
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {current?.options.map((option) => {
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {current.options.map((option) => {
                     const isSelected = selectedValue === option.value;
                     return (
                       <button
                         key={option.value}
+                        type="button"
                         onClick={() => select(option.value)}
                         aria-pressed={isSelected}
-                        className={`group relative overflow-hidden rounded-2xl border p-5 text-left transition-[transform,border-color,background] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 sm:p-6 ${
+                        className={`group relative overflow-hidden rounded-2xl border p-6 text-left transition-[transform,border-color,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 ${
                           isSelected
-                            ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/10'
-                            : 'border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)]/55 hover:border-[color:var(--rd-glow)]/40'
+                            ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12 shadow-[0_20px_60px_rgba(200,230,110,0.18)]'
+                            : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_24px_70px_rgba(0,0,0,0.24)]'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">
-                          <h3 className="text-xl text-[color:var(--rd-text)] sm:text-2xl" style={{ fontFamily: 'var(--font-display)', fontWeight: 500, letterSpacing: '-0.02em' }}>
+                          <h3
+                            className="text-2xl text-[color:var(--rd-text)] sm:text-3xl"
+                            style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}
+                          >
                             {option.value}
                           </h3>
                           <span
-                            className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border transition ${
+                            className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition ${
                               isSelected
                                 ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)]'
                                 : 'border-[color:var(--rd-paper)]/22 text-transparent group-hover:border-[color:var(--rd-glow)]/40'
                             }`}
                             aria-hidden
                           >
-                            <Check className="h-3.5 w-3.5" />
+                            <Check className="h-4 w-4" />
                           </span>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-[color:var(--rd-text-dim)] sm:text-base">{option.body}</p>
@@ -237,16 +297,17 @@ export default function StrainQuiz() {
                   })}
                 </div>
 
-                <div className="mt-8 flex items-center justify-between">
+                <div className="mt-10 flex items-center justify-between">
                   <button
-                    onClick={() => setStep((s) => Math.max(0, s - 1))}
+                    type="button"
+                    onClick={back}
                     disabled={step === 0}
                     className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-text)] disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     <ArrowLeft className="h-4 w-4" />
                     Back
                   </button>
-                  <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Pick to continue</span>
+                  <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Tap an option to continue</span>
                 </div>
               </motion.div>
             ) : (
@@ -257,7 +318,7 @@ export default function StrainQuiz() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.6, ease: easeOut }}
               >
-                <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+                <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
                   <div>
                     <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                       <Check className="h-3.5 w-3.5" />
@@ -266,7 +327,7 @@ export default function StrainQuiz() {
                     <h2 className="mt-3 text-[color:var(--rd-text)]">
                       Three drops <span className="italic">picked for you.</span>
                     </h2>
-                    <p className="mt-3 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
+                    <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
                       Based on{' '}
                       <span className="text-[color:var(--rd-glow)]">{answers.feel?.toLowerCase()}</span>
                       {' · '}
@@ -277,20 +338,25 @@ export default function StrainQuiz() {
                       <span className="text-[color:var(--rd-glow)]">{answers.level?.toLowerCase()}</span>.
                     </p>
                   </div>
-                  <button onClick={reset} className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-sm text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)] sm:self-auto">
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)] sm:self-auto [font-family:var(--font-mono)]"
+                  >
                     <RotateCcw className="h-4 w-4" />
                     Retake
                   </button>
                 </div>
 
                 {results.length === 0 ? (
-                  <p className="mt-10 rounded-2xl border border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)]/55 p-8 text-[color:var(--rd-text-dim)]">
+                  <div className="mt-10 rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-8 text-[color:var(--rd-text-dim)]">
                     No exact matches in stock right now — open the full menu to keep browsing.
-                  </p>
+                  </div>
                 ) : (
-                  <div className="mt-10 grid gap-4 md:grid-cols-3">
+                  <div className="mt-10 grid gap-5 md:grid-cols-3">
                     {results.map((product, i) => {
-                      const profile = inferProfile(product);
+                      const strain = getStrainTag(product);
+                      const tint = STRAIN_BADGE[strain];
                       const potency = getPotencyLabel(product);
                       const thcMatch = potency.match(/THC\s+([\d.]+)/i);
                       const thc = thcMatch ? thcMatch[1] : null;
@@ -303,7 +369,7 @@ export default function StrainQuiz() {
                         >
                           <Link
                             href={`/menu?product=${encodeURIComponent(product.id)}`}
-                            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+                            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.20)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
                           >
                             <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
                               {product.image && (
@@ -316,22 +382,22 @@ export default function StrainQuiz() {
                                   className="object-contain p-6 transition-transform duration-[1400ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05]"
                                 />
                               )}
-                              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] shadow-sm [font-family:var(--font-mono)]">
                                 #{i + 1} match
+                              </span>
+                              <span className={`absolute right-3 top-3 inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${tint}`}>
+                                {strain}
                               </span>
                             </div>
                             <div className="flex flex-1 flex-col p-5">
-                              <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-                              <h3 className="mt-1 text-lg text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)', fontWeight: 500 }}>
+                              <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
+                              <h3 className="mt-2 truncate text-lg text-[color:var(--rd-text)] sm:text-xl" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.015em' }}>
                                 {product.name}
                               </h3>
-                              <p className="mt-2 rd-eyebrow text-[color:var(--rd-text-dim)]">{profile}</p>
-                              <div className="mt-auto flex items-end justify-between pt-4">
+                              <p className="mt-2 text-xs text-[color:var(--rd-text-dim)]">{inferProfile(product)}</p>
+                              <div className="mt-auto flex items-end justify-between pt-5">
                                 <div className="[font-family:var(--font-mono)]">
-                                  {product.salePrice < product.price && (
-                                    <span className="block text-[11px] text-[color:var(--rd-text-mute)] line-through">{formatPrice(product.price)}</span>
-                                  )}
-                                  <span className="block text-lg font-semibold text-[color:var(--rd-amber)]">{formatPrice(product.salePrice)}</span>
+                                  <span className="block text-xl font-semibold text-[color:var(--rd-amber)]">{formatPrice(product.salePrice)}</span>
                                 </div>
                                 {thc && (
                                   <span className="text-right [font-family:var(--font-mono)]">

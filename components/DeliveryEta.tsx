@@ -4,18 +4,22 @@ import { useEffect, useState } from 'react';
 import { business } from '@/lib/site-data';
 
 /**
- * Premium delivery-ETA chip rendered inside Nav.
+ * Live "we're open" chip rendered inside Nav.
  *
- * - When the shop is open: pulsing lime dot + "Delivering now" eyebrow +
- *   live average ETA range from the coverage data (≈30–50 min across
- *   Manhattan + East River).
- * - When closed: dim dot + "Reopens at 10 AM" copy.
+ * Shows the storefront hours window (10 AM – 10 PM) with a pulsing lime
+ * dot during open hours, or a dim "Reopens 10 AM" line when closed.
  *
- * Returns null until hydrated so nothing flashes in during SSR (mirrors
- * the existing OpenStatus pattern).
+ * Returns null until hydrated so nothing flashes in during SSR.
  */
 
 type Status = { open: boolean; eyebrow: string; line: string };
+
+function formatHour(hour24: number): string {
+  if (hour24 === 0 || hour24 === 24) return '12 AM';
+  if (hour24 === 12) return '12 PM';
+  if (hour24 > 12) return `${hour24 - 12} PM`;
+  return `${hour24} AM`;
+}
 
 function computeStatus(): Status {
   const now = new Date();
@@ -24,21 +28,21 @@ function computeStatus(): Status {
   const closeMin = (business.closeHour === 24 ? 24 : business.closeHour) * 60;
   const isOpen = minutes >= openMin && minutes < closeMin;
 
+  const openLabel = formatHour(business.openHour);
+  const closeLabel = formatHour(business.closeHour === 24 ? 24 : business.closeHour);
+
   if (isOpen) {
     return {
       open: true,
-      eyebrow: 'Delivering now',
-      line: '30–50 min'
+      eyebrow: 'Open today',
+      line: `${openLabel} – ${closeLabel}`
     };
   }
 
-  // Closed — show a friendly reopen line.
-  const reopenHour = business.openHour;
-  const reopenLabel = `${reopenHour > 12 ? reopenHour - 12 : reopenHour} ${reopenHour >= 12 ? 'PM' : 'AM'}`;
   return {
     open: false,
     eyebrow: 'Closed',
-    line: `Reopens ${reopenLabel}`
+    line: `Reopens ${openLabel}`
   };
 }
 
@@ -83,11 +87,9 @@ export default function DeliveryEta({ variant = 'desktop' }: { variant?: 'deskto
         />
       </span>
 
-      {/* Two-line stack: eyebrow + time */}
+      {/* Two-line stack: eyebrow + hours */}
       <span className="flex flex-col leading-none">
-        <span
-          className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]"
-        >
+        <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
           {status.eyebrow}
         </span>
         <span

@@ -327,13 +327,15 @@ function TestimonialFeature() {
               “{t.quote}”
             </blockquote>
 
-            <figcaption className="mt-8 flex items-center justify-center gap-3">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-base font-semibold text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+            <figcaption className="mt-10 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-moss)]/20 bg-[color:var(--rd-paper)]/85 px-5 py-3 shadow-[0_12px_36px_rgba(45,74,58,0.10)]">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-base font-semibold text-[color:var(--rd-glow)] shadow-inner [font-family:var(--font-mono)]">
                 {t.author.charAt(0)}
               </span>
-              <span className="text-left">
-                <span className="block text-sm font-medium text-[color:var(--rd-ink)]">{t.author}</span>
-                <span className="block rd-eyebrow text-[color:var(--rd-on-paper-dim)]">{t.location}</span>
+              <span className="text-left leading-tight">
+                <span className="block text-[15px] font-semibold text-[color:var(--rd-ink)]">{t.author}</span>
+                <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
+                  {t.location}
+                </span>
               </span>
             </figcaption>
 
