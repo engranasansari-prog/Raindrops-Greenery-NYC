@@ -378,14 +378,16 @@ function Footer() {
             </span>
             <span className="break-words">&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
           </div>
-          {/* V6 §10 — Instagram only, show @handle next to icon */}
+          {/* V6 §10 — Instagram only, show @handle next to icon.
+              aria-label starts with the visible @handle so WCAG 2.5.3
+              (label-content-name-mismatch) passes. */}
           {social.map((item) => (
             <a
               key={item.label}
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Follow Raindrops Greenery on ${item.label}`}
+              aria-label={`${item.handle} on ${item.label}`}
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 px-3.5 py-1.5 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
             >
               <InstagramIcon className="h-4 w-4" />

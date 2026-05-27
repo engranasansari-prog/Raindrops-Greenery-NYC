@@ -9,7 +9,11 @@ import { useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import HookPills from '@/components/HookPills';
-import LiveOrderToasts from '@/components/LiveOrderToasts';
+// LiveOrderToasts only appears 3.5s after mount — lazy-load to keep it off
+// the critical-path JS.
+const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
+  ssr: false
+});
 import { COVERAGE } from '@/lib/coverage';
 
 const easeOut = [0.22, 1, 0.36, 1] as const;

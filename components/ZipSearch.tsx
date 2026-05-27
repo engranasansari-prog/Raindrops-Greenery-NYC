@@ -160,7 +160,10 @@ export default function ZipSearch({
           onClick={useLocation}
           disabled={geoStatus === 'requesting' || geoStatus === 'looking-up'}
           className="group inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-glow)] disabled:opacity-60 [font-family:var(--font-mono)]"
-          aria-label="Use my location to find my ZIP"
+          /* aria-label must START WITH the visible text "Use location" so
+             voice-control + screen-reader users get a consistent name
+             (WCAG 2.5.3). */
+          aria-label="Use location to detect ZIP"
         >
           {geoStatus === 'requesting' || geoStatus === 'looking-up' ? (
             <Loader2 className="h-3 w-3 animate-spin" />
@@ -203,7 +206,11 @@ export default function ZipSearch({
             maxLength={5}
             placeholder="e.g. 10013"
             aria-label="ZIP code"
-            aria-controls={listId}
+            // aria-controls should only point at an element that exists
+            // in the DOM — the listbox only renders when showDropdown is
+            // true. Setting it unconditionally caused an aria-* validation
+            // failure in Lighthouse.
+            aria-controls={showDropdown ? listId : undefined}
             aria-activedescendant={activeIdx >= 0 ? `${listId}-opt-${activeIdx}` : undefined}
             className="w-full bg-transparent text-base font-medium tracking-wider text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]"
           />

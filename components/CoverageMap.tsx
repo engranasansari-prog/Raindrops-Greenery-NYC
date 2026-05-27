@@ -453,7 +453,9 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                 type="button"
                 onClick={() => setNightMode((n) => !n)}
                 className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
-                aria-label={nightMode ? 'Switch to day theme' : 'Switch to night theme'}
+                /* aria-label starts with the visible text label so voice
+                   control + screen readers report the same name (WCAG 2.5.3) */
+                aria-label={nightMode ? 'Night theme · switch to Day' : 'Day theme · switch to Night'}
               >
                 {nightMode ? <Moon className="h-3 w-3 text-[color:var(--rd-glow)]" /> : <Sun className="h-3 w-3 text-[color:var(--rd-amber)]" />}
                 {nightMode ? 'Night' : 'Day'}

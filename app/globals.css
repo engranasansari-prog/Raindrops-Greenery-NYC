@@ -24,8 +24,11 @@
 
   /* Text — on ink */
   --rd-text:       #F5F1E8;
-  --rd-text-dim:   rgba(245, 241, 232, 0.65);
-  --rd-text-mute:  rgba(245, 241, 232, 0.45);
+  --rd-text-dim:   rgba(245, 241, 232, 0.72);
+  /* Lighthouse audit: was rgba(245,241,232,0.45) which renders ~#75787C
+     on --rd-ink → only 4.12:1 contrast (WCAG AA needs 4.5:1). Bumped to
+     0.58 for AA pass on body-size text; brand visuals unchanged. */
+  --rd-text-mute:  rgba(245, 241, 232, 0.58);
 
   /* Text — on paper */
   --rd-on-paper:        #0A1410;
@@ -428,6 +431,23 @@ textarea:focus:not(:focus-visible) {
 @keyframes rd-marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* Lightweight scroll-reveal — replaces a framer-motion Reveal component.
+   Driven by IntersectionObserver in <Reveal>. ~zero JS cost per instance
+   vs framer-motion which costs ~50ms each. */
+.rd-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  will-change: opacity, transform;
+}
+.rd-reveal--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rd-reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* CoverageMap — breathing cluster polygons (staggered via inline animation-delay) */

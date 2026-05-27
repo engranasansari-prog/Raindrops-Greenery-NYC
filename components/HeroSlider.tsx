@@ -109,7 +109,11 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={slide.id}
-            initial={{ opacity: 0, scale: 1.05 }}
+            // Skip the opacity 0 → 1 fade for the FIRST slide so LCP fires
+            // immediately (Lighthouse was clocking LCP at 5.1s because
+            // the initial fade delayed the browser's largest-element pick).
+            // Subsequent slides still cross-fade for the slideshow effect.
+            initial={index === 0 ? false : { opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ opacity: { duration: 1.1, ease: easeOut }, scale: { duration: 7, ease: 'easeOut' } }}
@@ -120,6 +124,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               alt={slide.imageAlt}
               fill
               priority={index === 0}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
               sizes="100vw"
               className="object-cover"
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
