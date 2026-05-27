@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -18,25 +19,41 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import SiteChrome, { TextLink } from '@/components/SiteChrome';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import ClaimOfferModal from '@/components/ClaimOfferModal';
-import CoverageMap from '@/components/CoverageMap';
 import HookPills from '@/components/HookPills';
-import { menuProducts } from '@/lib/menu';
-import {
-  formatPrice,
-  getBrandLabel,
-  getDealLabel,
-  getPotencyLabel,
-  getStrainTag,
-  hasSale,
-  isSticky,
-  type StrainTag
-} from '@/lib/menu-utils';
 import { testimonials, valueProps } from '@/lib/site-data';
+import { type FeaturedDeal } from '@/lib/featured-deals';
+import { type StrainTag } from '@/lib/menu-utils';
+
+// Lazy-load CoverageMap — it's heavy (SVG + raindrop animation + breathing
+// polygons + Framer Motion). Loads only when scrolled into view, with a
+// lightweight skeleton during fetch.
+const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
+  ssr: false,
+  loading: () => (
+    <section className="bg-[color:var(--rd-ink)] py-20 sm:py-24 lg:py-28">
+      <div className="luxury-shell">
+        <div className="h-3 w-32 animate-pulse rounded-full bg-[color:var(--rd-paper)]/10" />
+        <div className="mt-4 h-10 w-60 animate-pulse rounded-md bg-[color:var(--rd-paper)]/10" />
+        <div className="mt-10 grid gap-10 lg:grid-cols-2">
+          <div className="space-y-3">
+            <div className="h-14 animate-pulse rounded-2xl bg-[color:var(--rd-paper)]/8" />
+            <div className="grid grid-cols-2 gap-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="h-16 animate-pulse rounded-xl bg-[color:var(--rd-paper)]/8" />
+              ))}
+            </div>
+          </div>
+          <div className="aspect-[4/3] animate-pulse rounded-3xl bg-[color:var(--rd-paper)]/8" />
+        </div>
+      </div>
+    </section>
+  )
+});
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 // =====================================================================
-// Reusable scroll-reveal wrapper
+// Reusable scroll-reveal wrapper (lighter than full Framer fade)
 // =====================================================================
 function Reveal({
   children,
@@ -49,10 +66,10 @@ function Reveal({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: 0.7, delay, ease: easeOut }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay, ease: easeOut }}
       className={className}
     >
       {children}
@@ -81,7 +98,7 @@ function ValueProps() {
           {valueProps.map((item, index) => {
             const Icon = VALUE_ICONS[index] ?? Droplet;
             return (
-              <Reveal key={item.title} delay={index * 0.06}>
+              <Reveal key={item.title} delay={index * 0.05}>
                 <div className="group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-7 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/30 sm:p-9">
                   <div className="flex items-start justify-between gap-5">
                     <Icon className="h-10 w-10 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-12 sm:w-12" />
@@ -111,8 +128,6 @@ function ValueProps() {
 
 // =====================================================================
 // 4. Featured deals — 3 products MAX (V6 §4.3)
-// Mobile: horizontal scroll-snap carousel + position dots
-// Desktop: 3-column grid
 // =====================================================================
 const strainTone: Record<StrainTag, string> = {
   INDICA: 'bg-[color:var(--rd-rain)]/15 text-[color:var(--rd-rain)] border-[color:var(--rd-rain)]/30',
@@ -121,27 +136,15 @@ const strainTone: Record<StrainTag, string> = {
   BALANCED: 'bg-[color:var(--rd-mint)]/15 text-[color:var(--rd-mint)] border-[color:var(--rd-mint)]/30'
 };
 
-function calculatePercentOff(price: number, salePrice: number) {
-  if (price <= 0 || salePrice >= price) return 0;
-  return Math.round(((price - salePrice) / price) * 100);
-}
-
-function FeaturedDeals() {
-  // Pick the 3 best deals by % off (or hasSale fallback)
-  const deals = menuProducts
-    .filter(hasSale)
-    .sort((a, b) => calculatePercentOff(b.price, b.salePrice) - calculatePercentOff(a.price, a.salePrice))
-    .slice(0, 3);
-
+function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Update active dot based on horizontal scroll position (mobile carousel)
   useEffect(() => {
     const el = scrollerRef.current;
-    if (!el) return;
+    if (!el || deals.length === 0) return;
     const onScroll = () => {
-      const cardWidth = el.scrollWidth / Math.max(deals.length, 1);
+      const cardWidth = el.scrollWidth / deals.length;
       const idx = Math.round(el.scrollLeft / cardWidth);
       setActiveIndex(Math.min(Math.max(idx, 0), deals.length - 1));
     };
@@ -185,86 +188,77 @@ function FeaturedDeals() {
           </div>
         </Reveal>
 
-        {/* Carousel rail */}
         <div
           ref={scrollerRef}
           className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:pb-0 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
         >
-          {deals.map((product, i) => {
-            const strainTag = getStrainTag(product);
-            const pctOff = calculatePercentOff(product.price, product.salePrice);
-            const potency = getPotencyLabel(product);
-            const thcMatch = potency.match(/THC\s+([\d.]+)/i);
-            const thc = thcMatch ? thcMatch[1] : null;
-            const sticky = isSticky(product);
-            return (
-              <Reveal key={product.id} delay={Math.min(i * 0.05, 0.15)} className="snap-start min-w-[78vw] max-w-[78vw] flex-shrink-0 md:min-w-0 md:max-w-none">
-                <Link
-                  href={`/menu?product=${encodeURIComponent(product.id)}`}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
-                >
-                  <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
-                    {product.image && (
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 640px) 78vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-contain p-6 transition-transform duration-[4000ms] [transition-timing-function:linear] group-hover:scale-[1.07]"
-                      />
+          {deals.map((deal) => (
+            <Link
+              key={deal.id}
+              href={`/menu?product=${deal.hrefId}`}
+              className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)] md:min-w-0 md:max-w-none"
+            >
+              <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
+                {deal.image && (
+                  <Image
+                    src={deal.image}
+                    alt={deal.name}
+                    fill
+                    unoptimized
+                    loading="lazy"
+                    sizes="(max-width: 640px) 78vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain p-6 transition-transform duration-[4000ms] [transition-timing-function:linear] group-hover:scale-[1.07]"
+                  />
+                )}
+                <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+                  <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[deal.strain]}`}>
+                    {deal.strain}
+                  </span>
+                  {deal.sticky && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                      ✦ STICKY
+                    </span>
+                  )}
+                </div>
+                {deal.pctOff > 0 && (
+                  <span className="absolute right-3 top-3 inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                    {deal.pctOff}% off
+                  </span>
+                )}
+                <div className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-500 [transition-timing-function:var(--ease-out)] group-hover:translate-y-0 group-hover:opacity-100">
+                  <span className="pointer-events-auto inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[color:var(--rd-glow)] py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                    <Plus className="h-3.5 w-3.5" /> Add
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-1 flex-col p-4">
+                <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{deal.brand}</p>
+                <h3 className="mt-1 truncate text-base font-medium text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)' }}>
+                  {deal.name}
+                </h3>
+                <div className="mt-auto flex items-end justify-between pt-3">
+                  <div className="[font-family:var(--font-mono)]">
+                    {deal.isSale && (
+                      <span className="block text-[11px] text-[color:var(--rd-text-mute)] line-through">{deal.priceLabel}</span>
                     )}
-                    <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-                      <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[strainTag]}`}>
-                        {strainTag}
-                      </span>
-                      {sticky && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                          ✦ STICKY
-                        </span>
-                      )}
-                    </div>
-                    {pctOff > 0 && (
-                      <span className="absolute right-3 top-3 inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                        {pctOff}% off
-                      </span>
-                    )}
-                    <div className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-500 [transition-timing-function:var(--ease-out)] group-hover:translate-y-0 group-hover:opacity-100">
-                      <span className="pointer-events-auto inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[color:var(--rd-glow)] py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                        <Plus className="h-3.5 w-3.5" /> Add
-                      </span>
-                    </div>
+                    <span className="block text-lg font-semibold text-[color:var(--rd-amber)]">{deal.salePriceLabel}</span>
                   </div>
-                  <div className="flex flex-1 flex-col p-4">
-                    <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
-                    <h3 className="mt-1 truncate text-base font-medium text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-sans)' }}>
-                      {product.name}
-                    </h3>
-                    <div className="mt-auto flex items-end justify-between pt-3">
-                      <div className="[font-family:var(--font-mono)]">
-                        {product.salePrice < product.price && (
-                          <span className="block text-[11px] text-[color:var(--rd-text-mute)] line-through">{formatPrice(product.price)}</span>
-                        )}
-                        <span className="block text-lg font-semibold text-[color:var(--rd-amber)]">{formatPrice(product.salePrice)}</span>
-                      </div>
-                      {thc && (
-                        <span className="text-right [font-family:var(--font-mono)]">
-                          <span className="block text-base font-semibold text-[color:var(--rd-glow)]">{thc}%</span>
-                          <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">THC</span>
-                        </span>
-                      )}
-                    </div>
-                    {getDealLabel(product) && (
-                      <p className="mt-2 truncate text-[11px] text-[color:var(--rd-text-mute)]">{getDealLabel(product)}</p>
-                    )}
-                  </div>
-                </Link>
-              </Reveal>
-            );
-          })}
+                  {deal.thc && (
+                    <span className="text-right [font-family:var(--font-mono)]">
+                      <span className="block text-base font-semibold text-[color:var(--rd-glow)]">{deal.thc}%</span>
+                      <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">THC</span>
+                    </span>
+                  )}
+                </div>
+                {deal.dealLabel && (
+                  <p className="mt-2 truncate text-[11px] text-[color:var(--rd-text-mute)]">{deal.dealLabel}</p>
+                )}
+              </div>
+            </Link>
+          ))}
         </div>
 
-        {/* Position dots (mobile only) */}
+        {/* Mobile position dots */}
         <div className="mt-6 flex justify-center gap-2 md:hidden" role="tablist" aria-label="Featured deals position">
           {deals.map((deal, i) => (
             <button
@@ -281,7 +275,7 @@ function FeaturedDeals() {
           ))}
         </div>
 
-        {/* Carousel arrows (mobile) */}
+        {/* Mobile carousel arrows */}
         <div className="mt-4 flex justify-center gap-3 md:hidden">
           <button
             type="button"
@@ -311,7 +305,7 @@ function FeaturedDeals() {
 // 5. One testimonial (V6 §4)
 // =====================================================================
 function TestimonialFeature() {
-  const t = testimonials[0]; // strongest review goes here
+  const t = testimonials[0];
   return (
     <section className="bg-[color:var(--rd-paper-soft)] py-20 sm:py-24">
       <div className="luxury-shell">
@@ -356,7 +350,7 @@ function TestimonialFeature() {
 // =====================================================================
 // Page composition — exactly 6 sections per V6 §4
 // =====================================================================
-export default function HomePage() {
+export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
   const [claimOpen, setClaimOpen] = useState(false);
   const closeClaim = () => setClaimOpen(false);
 
@@ -389,31 +383,23 @@ export default function HomePage() {
 
   return (
     <SiteChrome>
-      {/* 1. Hero */}
       <HeroSlider slides={slides} />
 
-      {/* Hook pills row immediately below hero */}
       <section className="bg-[color:var(--rd-paper)] py-8 sm:py-10">
         <div className="luxury-shell">
           <HookPills tone="light" />
         </div>
       </section>
 
-      {/* 2. Coverage map */}
       <div id="coverage">
         <CoverageMap />
       </div>
 
-      {/* 3. Why Raindrops */}
       <ValueProps />
 
-      {/* 4. Featured deals */}
-      <FeaturedDeals />
+      <FeaturedDeals deals={deals} />
 
-      {/* 5. One testimonial */}
       <TestimonialFeature />
-
-      {/* 6. Footer — rendered by SiteChrome */}
 
       <ClaimOfferModal open={claimOpen} onClose={closeClaim} />
     </SiteChrome>
