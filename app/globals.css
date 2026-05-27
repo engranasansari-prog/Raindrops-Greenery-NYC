@@ -452,14 +452,13 @@ textarea:focus:not(:focus-visible) {
      cross-browser pattern. */
   will-change: transform;
 }
-/* Slow the marquee on phone-sized viewports so each pip gets enough
-   on-screen time to actually read between the edge fades. At 10s the
-   short pips ("Free delivery in Brooklyn") flew past in <1s and the
-   long pips ("Guaranteed best flowers on the market") felt like they
-   were on screen forever — perception was that the bar was repeating. */
+/* Mobile gets a slightly slower cadence (13s vs 10s desktop) — gives
+   each pip enough on-screen time between the slim edge fades but doesn't
+   feel sluggish. Combined with interleaved item ordering, the bar reads
+   as six distinct rotating messages, not a stuck loop. */
 @media (max-width: 768px) {
   .animate-marquee {
-    animation-duration: 22s;
+    animation-duration: 13s;
   }
 }
 .animate-marquee:hover {

@@ -13,12 +13,15 @@
 
 type Item = { lead: string; accent: string; tail: string };
 
+// Item order interleaves the three boroughs with the value props so the
+// bar never has three consecutive "Free delivery in X" pips reading
+// like a single repeating phrase. Each pip now reads as its own line.
 const ITEMS: Item[] = [
   { lead: 'Free weed', accent: 'gift', tail: 'with every order' },
-  { lead: 'Guaranteed best', accent: 'flowers', tail: 'on the market' },
-  { lead: 'Tax-free under', accent: 'Shinnecock', tail: 'authority' },
   { lead: 'Free delivery in', accent: 'Manhattan', tail: '' },
+  { lead: 'Guaranteed best', accent: 'flowers', tail: 'on the market' },
   { lead: 'Free delivery in', accent: 'Brooklyn', tail: '' },
+  { lead: 'Tax-free under', accent: 'Shinnecock', tail: 'authority' },
   { lead: 'Free delivery in', accent: 'Queens', tail: '' }
 ];
 
