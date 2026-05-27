@@ -53,9 +53,10 @@ export default function AboutPage() {
             <h2 className="mt-4 font-[var(--font-display)] text-3xl font-bold">Our promise</h2>
             <ul className="mt-4 grid gap-3 text-sm leading-7 text-white/72">
               <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Adult, 21+ delivery handled with care and discretion.</li>
-              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Sourced from licensed New York operators, lab-tested by NY-certified facilities.</li>
-              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Fast, on-time arrivals in {serviceAreas.join(' / ')} with clear pricing.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Secure checkout, ID verified at the door, unbranded packaging.</li>
+              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Sourced through the Shinnecock Indian Nation Cannabis Regulatory Division.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Tax-free under sovereign authority — no NY State cannabis tax.</li>
+              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Free delivery on every order. No minimum.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[var(--champagne)]" /> Discreet, unbranded packaging. ID verified at the door.</li>
             </ul>
           </div>
         </div>
@@ -130,7 +131,7 @@ export default function AboutPage() {
           <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[var(--champagne-dark)]">Sovereign-licensed cannabis</p>
           <h2 className="mt-3 font-[var(--font-display)] text-3xl font-bold text-[var(--emerald-deep)] md:text-4xl">Operating under Shinnecock Indian Nation authority.</h2>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--muted)]">
-            Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Lab testing, packaging, and supply records are maintained accordingly.
+            Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Sovereign authority means our sales are exempt from New York State cannabis excise and sales taxes.
           </p>
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
             <OrderButton label="Start an order" />

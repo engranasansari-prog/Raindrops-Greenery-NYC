@@ -1,13 +1,15 @@
 'use client';
 
-import { CheckCircle2, Leaf, Lock, Star, Truck } from 'lucide-react';
+import { CheckCircle2, Droplet, Lock, Sparkles, Star, Truck } from 'lucide-react';
 
+// V4 §7 — no "Lab tested", no "$80+", no "Manhattan only"
 const items = [
-  { icon: Leaf, label: 'Lab tested' },
-  { icon: Truck, label: 'Same-day delivery' },
-  { icon: Lock, label: 'Discreet packaging' },
+  { icon: Droplet, label: 'Tax free' },
+  { icon: Truck, label: 'Free delivery' },
+  { icon: Lock, label: 'Same-day NYC' },
   { icon: CheckCircle2, label: 'Shinnecock-licensed' },
-  { icon: Star, label: '4.9 / 5 from NYC' }
+  { icon: Sparkles, label: 'Sticky · icky · delivered' },
+  { icon: Star, label: '4.9★ from NYC' }
 ];
 
 /**

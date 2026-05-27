@@ -4,29 +4,27 @@ import Link from 'next/link';
 import { ArrowRight, BadgePercent, Sparkles, Tag } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { menuProducts, menuSyncedAt } from '@/lib/menu';
+import { menuProducts } from '@/lib/menu';
 import { formatPrice, getBrandLabel, getDealLabel, hasSale } from '@/lib/menu-utils';
 
 export const metadata: Metadata = {
   title: 'Deals',
   description:
-    'Active deals on Raindrops Greenery NY Flower, Pre-Rolls, and Edibles. Sale pricing and live promotions for Manhattan, Brooklyn, and Queens delivery.',
+    'Tax-free Shinnecock-licensed cannabis deals on Flower, Pre-Rolls, and Edibles. Free delivery across Manhattan, LIC, Williamsburg, and Greenpoint.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Raindrops Greenery NY Deals',
-    description: 'Active sale pricing and promotions on Flower, Pre-Rolls, and Edibles for NYC delivery.',
+    description: 'Tax-free deals on Flower, Pre-Rolls, and Edibles for NYC delivery.',
     url: '/deals',
     images: [{ url: '/assets/flower.avif', width: 1200, height: 800, alt: 'Raindrops Greenery deals' }]
   }
 };
 
 const offers = [
-  { eyebrow: 'New customer', title: '$10 off your first order', body: 'Apply code WELCOME10 at checkout. One-time use, valid on orders over $60.', code: 'WELCOME10' },
-  { eyebrow: 'Reorder', title: '10% back on repeat orders', body: 'Sign in at checkout and earn store credit on every order over $80.', code: 'AUTO' },
-  { eyebrow: 'Refer-a-friend', title: 'Give $15, get $15', body: 'Send a friend $15 off. When their order ships, your account gets $15 too.', code: 'INVITE-15' }
+  { eyebrow: 'First time', title: 'Free pre-roll on first order', body: 'Every first-time customer in our coverage area gets a complimentary pre-roll dropped in the bag. 21+ only, while supplies last.', code: 'AUTO' },
+  { eyebrow: 'Refer-a-friend', title: 'Give $15, get $15', body: 'Send a friend $15 off their first order. When it ships, your account gets $15 in credit.', code: 'INVITE-15' },
+  { eyebrow: 'Tax-free', title: '0% NY State cannabis tax', body: 'Sovereign Shinnecock authority — every order ships tax-free. The price on the card is the price at the door.', code: 'SOVEREIGN' }
 ];
-
-const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 export default function DealsPage() {
   const dealProducts = menuProducts.filter(hasSale);
@@ -42,7 +40,7 @@ export default function DealsPage() {
             <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Live deals</p>
             <h1 className="mt-3 font-[var(--font-display)] text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">Sale pricing on Flower, Pre-Rolls, and Edibles.</h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
-              Showing {dealProducts.length} active product deals. Promo codes below stack with sale pricing unless noted otherwise. Final price confirmed at checkout.
+              {dealProducts.length} deals live tonight. Codes stack with sale prices.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/menu?deals=1" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">
@@ -51,7 +49,6 @@ export default function DealsPage() {
               </Link>
               <OrderButton />
             </div>
-            <p className="mt-4 text-xs text-white/52">Synced {formatter.format(new Date(menuSyncedAt))} from the live Raindrops menu.</p>
           </div>
         </div>
       </section>
@@ -130,8 +127,9 @@ export default function DealsPage() {
             </div>
           )}
 
-          <div className="mt-10 rounded-lg border border-[rgba(217,183,111,0.45)] bg-white/72 p-5 text-sm leading-7 text-[var(--muted)] shadow-sm md:p-7">
-            <strong className="text-[var(--emerald-deep)]">Deal terms:</strong> Promo codes are limited to one per order unless the code description states otherwise. Sale pricing is reflected on the menu and not combinable with other discounts. Excludes taxes and delivery fees. Subject to change without notice. Must be 21+ to order.
+          <div className="mt-10 rounded-lg border border-[var(--line)] bg-white/60 p-5 text-xs leading-6 text-[color:var(--rd-on-paper-mute)] shadow-sm md:p-6">
+            <p className="rd-eyebrow text-[color:var(--rd-on-paper-dim)]">Fine print</p>
+            <p className="mt-2">Promo codes are limited to one per order unless the code description states otherwise. Sale pricing reflects on the menu and is not combinable with other discounts. Subject to change without notice. Must be 21+ to order.</p>
           </div>
         </div>
       </section>

@@ -5,12 +5,23 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Clock, Mail, Menu, Phone, ShieldCheck, ShoppingBag, X } from 'lucide-react';
+import { FacebookIcon, InstagramIcon, TikTokIcon, XIcon } from '@/components/SocialIcons';
 import { useEffect, useState } from 'react';
 import PromoStrip from '@/components/PromoStrip';
 import NewsletterForm from '@/components/NewsletterForm';
 import OpenStatus from '@/components/OpenStatus';
 import TrustMarquee from '@/components/TrustMarquee';
-import { business, checkout, footerLinkGroups, navItems, serviceAreas, social } from '@/lib/site-data';
+import BackToTop from '@/components/BackToTop';
+import { business, checkout, footerLinkGroups, navItems, social } from '@/lib/site-data';
+
+// Map social label → custom inline SVG (V4 §10.7).
+// lucide-react v1.x doesn't ship brand glyphs so we render our own monoline set.
+const SOCIAL_ICON = {
+  Instagram: InstagramIcon,
+  TikTok: TikTokIcon,
+  X: XIcon,
+  Facebook: FacebookIcon
+} as const;
 
 /**
  * Primary CTA — pill in --rd-glow with ink text. Matches design brief §3.1.
@@ -154,9 +165,10 @@ function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === '/';
 
   useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 24);
+    const handle = () => setScrolled(window.scrollY > 16);
     handle();
     window.addEventListener('scroll', handle, { passive: true });
     return () => window.removeEventListener('scroll', handle);
@@ -168,10 +180,16 @@ function Header() {
     return pathname.startsWith(href);
   };
 
+  // On the home page the hero sits behind a transparent nav; on every other
+  // page there is no dark hero, so we render the nav with the blurred-ink
+  // backdrop from first paint to avoid a "white-solid" subpage look (V4 §10.1)
+  const shouldFrostHeader = scrolled || !isHome;
+
   return (
     <header
+      data-scrolled={scrolled || undefined}
       className={`sticky top-0 z-50 transition-[background,backdrop-filter,border-color] duration-500 [transition-timing-function:var(--ease-out)] ${
-        scrolled
+        shouldFrostHeader
           ? 'border-b border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)]/82 backdrop-blur-2xl backdrop-saturate-150'
           : 'border-b border-transparent bg-transparent'
       }`}
@@ -305,7 +323,7 @@ function Footer() {
             </span>
           </Link>
           <p className="mt-5 max-w-md text-sm leading-7 text-[color:var(--rd-text-dim)]">
-            Premium 21+ cannabis delivery for {serviceAreas.join(', ')}. Browse Flower, Pre-Rolls, and Edibles before completing secure checkout.
+            Premium 21+ cannabis delivery across Manhattan and the East River neighborhoods of LIC, Williamsburg, and Greenpoint. Free delivery, tax-free under Shinnecock authority.
           </p>
 
           <ul className="mt-6 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">
@@ -365,20 +383,21 @@ function Footer() {
             <span className="break-words">&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {social.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={item.label}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
-              >
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em]">
-                  {item.label.slice(0, 2)}
-                </span>
-              </a>
-            ))}
+            {social.map((item) => {
+              const Icon = SOCIAL_ICON[item.label as keyof typeof SOCIAL_ICON] ?? InstagramIcon;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Raindrops Greenery on ${item.label}`}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
           </div>
         </div>
         <div className="luxury-shell pb-6 text-[11px] leading-6 text-[color:var(--rd-text-mute)]">
@@ -431,6 +450,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <main id="main">{children}</main>
       <Footer />
       <StickyOrderBar />
+      <BackToTop />
     </>
   );
 }

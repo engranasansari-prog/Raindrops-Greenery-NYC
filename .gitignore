@@ -21,3 +21,6 @@ Thumbs.db
 .idea/
 .claude/
 
+# Local scrape cache + Dutchie data exports — never commit
+exports/
+

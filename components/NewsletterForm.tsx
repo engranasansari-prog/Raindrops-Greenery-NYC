@@ -62,7 +62,7 @@ export default function NewsletterForm({ compact = false }: { compact?: boolean 
         </button>
       </div>
       <p className="text-[11px] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
-        SMS opt-in coming soon · Unsubscribe anytime
+        Unsubscribe anytime · 21+ only
       </p>
       {error && (
         <p className="rd-eyebrow text-[color:var(--rd-amber)]">{error}</p>

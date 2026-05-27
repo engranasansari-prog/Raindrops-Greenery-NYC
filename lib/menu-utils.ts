@@ -79,20 +79,13 @@ export function inferEffects(product: LiveMenuProduct): string[] {
   return Array.from(new Set(matched));
 }
 
+/**
+ * Real product description if available, empty string otherwise.
+ * V4 §6.2 — the AI-template fallback ("X is a flower item from ...") is dropped
+ * because the card already shows category, profile, size, THC, and price.
+ */
 export function getProductDescription(product: LiveMenuProduct) {
-  if (product.description.trim()) return product.description.trim();
-
-  const potency = getPotencyLabel(product);
-  const profile = inferProfile(product);
-  const details = [
-    profile && `${profile} profile`,
-    product.type && `${product.type} format`,
-    product.weight && `${product.weight} size`,
-    potency && potency
-  ].filter(Boolean);
-
-  const article = /^[aeiou]/i.test(product.category) ? 'an' : 'a';
-  return `${product.name} is ${article} ${product.category.toLowerCase()} item from ${getBrandLabel(product)}${details.length ? ` with ${details.join(', ')}` : ''}. Confirm final availability and delivery details during checkout.`;
+  return product.description?.trim() ?? '';
 }
 
 export function getDealLabel(product: LiveMenuProduct) {

@@ -7,7 +7,7 @@ import { ArrowRight, BadgePercent, Check, Filter, PackageCheck, RotateCcw, Searc
 import { useEffect, useMemo, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { menuCounts, menuProducts, menuSyncedAt, type LiveMenuProduct } from '@/lib/menu';
+import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import {
   effectOptions,
   formatPrice,
@@ -109,7 +109,9 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
           {potency && <span className="rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs font-bold text-[var(--emerald-deep)]">{potency}</span>}
         </div>
 
-        <p className="product-description-clamp mt-4 text-sm leading-7 text-[var(--muted)]">{getProductDescription(product)}</p>
+        {getProductDescription(product) && (
+          <p className="product-description-clamp mt-4 text-sm leading-7 text-[var(--muted)]">{getProductDescription(product)}</p>
+        )}
 
         {deal && (
           <div className="mt-4 rounded-lg border border-[rgba(217,183,111,0.45)] bg-[rgba(217,183,111,0.12)] p-3">
@@ -192,7 +194,9 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               <p className="font-[var(--font-display)] text-3xl font-bold text-[var(--emerald)] sm:text-4xl">{formatPrice(product.salePrice)}</p>
             </div>
 
-            <p className="mt-5 leading-8 text-[var(--muted)]">{getProductDescription(product)}</p>
+            {getProductDescription(product) && (
+              <p className="mt-5 leading-8 text-[var(--muted)]">{getProductDescription(product)}</p>
+            )}
 
             {effects.length > 0 && (
               <div className="mt-5 flex flex-wrap items-center gap-2">
@@ -215,9 +219,6 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               ))}
             </div>
 
-            <p className="mt-4 text-xs leading-6 text-[var(--muted)]">
-              Lab tested at a New York State certified facility. Certificate of Analysis available on request — ask any team member at checkout or contact support.
-            </p>
 
             {product.deals.length > 0 && (
               <div className="mt-6 rounded-lg border border-[rgba(217,183,111,0.48)] bg-[rgba(217,183,111,0.14)] p-4">
@@ -308,7 +309,6 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   }, [brand, category, dealsOnly, effect, inStockOnly, minThc, priceMax, profile, query, sort, weight]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
-  const syncedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(menuSyncedAt));
 
   const resetFilters = () => {
     setCategory('All');
@@ -452,16 +452,6 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
 
       <section className="pb-16">
         <div className="luxury-shell">
-          <div className="mb-5 flex flex-col gap-3 rounded-lg border border-[rgba(217,183,111,0.45)] bg-[rgba(217,183,111,0.12)] p-4 text-sm leading-7 text-[var(--muted)] md:flex-row md:items-center md:justify-between">
-            <p>
-              <strong className="text-[var(--emerald-deep)]">Updated {syncedDate}:</strong> final availability, payment, verification, and delivery details are confirmed during checkout.
-            </p>
-            <Link href={checkout.dutchieUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 font-extrabold text-[var(--emerald-deep)]">
-              Open checkout
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-
           <AnimatePresence mode="popLayout">
             {visibleProducts.length > 0 ? (
               <motion.div layout className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

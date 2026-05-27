@@ -107,7 +107,7 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-4 text-xs leading-6 text-[var(--muted)]">
-              Submitting will open your email app pre-filled to {business.email}. Please do not include payment information by email.
+              Please do not include payment information. For order issues, call {business.phone} or email {business.email}.
             </p>
           </form>
 

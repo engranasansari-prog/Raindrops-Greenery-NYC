@@ -22,6 +22,7 @@ import SiteChrome, { OrderButton, TextLink } from '@/components/SiteChrome';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import ClaimOfferModal from '@/components/ClaimOfferModal';
 import CoverageMap from '@/components/CoverageMap';
+import HookPills from '@/components/HookPills';
 import type { BlogPostMeta } from '@/lib/blog-posts';
 import { menuCounts, menuProducts } from '@/lib/menu';
 import {
@@ -106,7 +107,7 @@ const categories = [
     href: '/menu?category=Flower',
     image: '/assets/flower.avif',
     count: menuCounts.Flower,
-    note: 'Strain-led. Filter by THC, profile, size, deal.',
+    note: 'Top-shelf nugs. Sticky as it gets.',
     tone: 'moss' as const
   },
   {
@@ -114,7 +115,7 @@ const categories = [
     href: '/menu?category=Pre-Rolls',
     image: '/assets/preroll.avif',
     count: menuCounts['Pre-Rolls'],
-    note: 'Ready when you are.',
+    note: 'Ready to spark.',
     tone: 'ink' as const
   },
   {
@@ -122,7 +123,7 @@ const categories = [
     href: '/menu?category=Edibles',
     image: '/assets/edible.avif',
     count: menuCounts.Edibles,
-    note: 'Flavor-first, clear dosing.',
+    note: 'Eat your high. All balanced.',
     tone: 'amber' as const
   }
 ];
@@ -872,29 +873,30 @@ export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
   const openClaim = () => setClaimOpen(true);
   const closeClaim = () => setClaimOpen(false);
 
+  // V4 §8 — mixed-weight Fraunces headline
   const slides: HeroSlide[] = [
     {
-      id: 'free-gift',
-      image: '/assets/banner-gift.jpg',
-      imageAlt: 'Raindrops Greenery free gift drop — Manhattan, Brooklyn, Queens',
+      id: 'best-flower',
+      image: '/assets/banner-gift1.jpg',
+      imageAlt: 'Raindrops Greenery premium NYC cannabis delivery',
       imagePosition: 'right center',
-      eyebrow: 'NYC only · 21+',
-      headline: 'Your FREE GIFT is waiting',
-      headlineAccent: 'FREE GIFT',
-      subtext: 'Scan the sticker. Claim your offer. Available for NYC customers only.',
-      primary: { label: 'Claim free gift', onClick: openClaim },
-      secondary: { label: 'Browse menu', href: '/menu' }
+      eyebrow: 'NYC · 21+ · Tax-free',
+      headline: 'Guaranteed best flower on the market.',
+      headlineAccent: 'best flower',
+      subtext: 'Free weed with every order. Tax-free under Shinnecock authority. Same-day delivery.',
+      primary: { label: 'Claim free weed', href: '/menu' },
+      secondary: { label: 'Check coverage', href: '#coverage' }
     },
     {
-      id: 'premium-drops',
+      id: 'manhattan-east-river',
       image: '/assets/banner-drops.png',
-      imageAlt: 'Premium Raindrops Greenery deliveries across New York City',
+      imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan and the East River',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
-      headline: 'Premium drops. NYC only.',
-      headlineAccent: 'NYC only',
-      subtext: 'Exclusive Raindrops Greenery offers for local customers — same-day delivery across Manhattan, Brooklyn, and Queens.',
-      primary: { label: 'Check availability', href: '#coverage' },
+      headline: 'Manhattan + East River. Same-day.',
+      headlineAccent: 'East River',
+      subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery. No minimum.',
+      primary: { label: 'Check coverage', href: '#coverage' },
       secondary: { label: 'Shop deals', href: '/deals' }
     }
   ];
@@ -902,6 +904,12 @@ export default function HomePage({ posts }: { posts: BlogPostMeta[] }) {
   return (
     <SiteChrome>
       <HeroSlider slides={slides} />
+      {/* Hook pills row (V4 §7) immediately below hero on cream */}
+      <section className="bg-[color:var(--rd-paper)] py-8 sm:py-10">
+        <div className="luxury-shell">
+          <HookPills tone="light" />
+        </div>
+      </section>
       <ClaimSection onClaim={openClaim} />
       <div id="coverage">
         <CoverageMap />

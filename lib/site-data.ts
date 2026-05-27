@@ -88,43 +88,35 @@ export const footerLinkGroups = [
   }
 ];
 
-export const serviceAreas = ['Manhattan', 'Brooklyn', 'Queens'];
+// Coverage data now lives in /lib/coverage.ts (V4 brief §3). These exports
+// remain for legacy consumers that still import from site-data — they derive
+// from the canonical coverage source.
+import { COVERAGE, ALL_ZIPS } from './coverage';
 
-export const serviceAreaDetails = [
-  {
-    name: 'Manhattan',
-    headline: 'Downtown to Uptown coverage',
-    body: 'From the Financial District through Midtown to the Upper West and East Sides, with frequent drops across Chelsea, SoHo, the Village, and Harlem.',
-    zips: ['10001', '10002', '10003', '10009', '10010', '10011', '10012', '10013', '10014']
-  },
-  {
-    name: 'Brooklyn',
-    headline: 'North & West Brooklyn corridor',
-    body: 'DUMBO, Williamsburg, Bushwick, Fort Greene, Park Slope, Crown Heights, and Bed-Stuy with extended evening windows.',
-    zips: ['11201', '11205', '11206', '11211', '11215', '11216', '11217', '11221', '11222']
-  },
-  {
-    name: 'Queens',
-    headline: 'Long Island City to Flushing',
-    body: 'Long Island City, Astoria, Sunnyside, Woodside, Jackson Heights, and Flushing with timed afternoon and evening runs.',
-    zips: ['11101', '11102', '11103', '11104', '11105', '11354', '11355', '11372', '11373']
-  }
-];
+export const serviceAreas = ['Manhattan', 'Long Island City', 'Williamsburg', 'Greenpoint'];
 
-export const supportedZips = serviceAreaDetails.flatMap((area) => area.zips);
+export const serviceAreaDetails = COVERAGE.clusters.map((cluster) => ({
+  name: cluster.name,
+  shortName: cluster.shortName,
+  headline: `${cluster.etaMinutes} min average ETA`,
+  body: `Free same-day delivery — ${cluster.zips.length} ZIP${cluster.zips.length === 1 ? '' : 's'}.`,
+  zips: [...cluster.zips]
+}));
+
+export const supportedZips = ALL_ZIPS;
 
 export const trustPoints = [
   {
-    title: 'Sovereign-licensed',
-    body: 'Operating under a Shinnecock Indian Nation cannabis license — adult-use, fully sanctioned, fully tracked.'
+    title: 'Tax-free',
+    body: 'Sovereign Shinnecock authority — no NY State cannabis tax on your order.'
   },
   {
-    title: 'NYC delivery focus',
-    body: 'Built around a calm, focused delivery experience for Manhattan, Brooklyn, and Queens.'
+    title: 'Free delivery',
+    body: 'Unconditional. Every order, every ZIP we cover. No minimum, no hidden fees.'
   },
   {
-    title: 'Secure checkout',
-    body: 'Order buttons open the checkout flow for final availability, payment, and 21+ verification at the door.'
+    title: 'Same-day NYC',
+    body: 'Manhattan and the East River neighborhoods of LIC, Williamsburg, and Greenpoint.'
   }
 ];
 
@@ -148,20 +140,20 @@ export const steps = [
 
 export const valueProps = [
   {
-    title: 'Sovereign-licensed',
-    body: 'Sourced and sold under a Shinnecock Indian Nation cannabis license. Every product is tracked from supplier to door.'
+    title: 'Tax-free',
+    body: 'Sovereign Shinnecock authority — no NY State cannabis excise or sales tax. The price on the card is the price at the door.'
   },
   {
-    title: 'Transparent pricing',
-    body: 'List price, sale price, weight, and active deal are all visible up front. No hidden fees on the menu — final taxes confirmed at checkout.'
+    title: 'Free delivery',
+    body: 'Unconditional. No minimum, no surge pricing, no hidden fees. Every order, every covered ZIP.'
   },
   {
-    title: 'Discreet, professional delivery',
-    body: 'Unbranded packaging. Verified 21+ at the door. Trained, courteous drivers focused on a calm hand-off.'
+    title: 'Sticky icky',
+    body: 'Top-shelf flower hand-picked for resin. We carry strains we’d order ourselves — and we tell you the truth about them.'
   },
   {
-    title: 'Built for repeat orders',
-    body: 'Reorder favorites in a few taps. Easy zip check, transparent inventory, and a checkout flow that remembers your verified status.'
+    title: 'Discreet & professional',
+    body: 'Unbranded packaging. 21+ ID verified at the door. Courteous drivers, short and clean hand-offs.'
   }
 ];
 
@@ -177,20 +169,32 @@ export const testimonials = [
     location: 'Chelsea, Manhattan'
   },
   {
-    quote: 'Ordered edibles on a Friday night and they were at my door inside the window. Will use them again.',
+    quote: 'Ordered edibles on a Friday and they crossed the bridge in 50 minutes. Doing this again.',
     author: 'Daniel R.',
-    location: 'Astoria, Queens'
+    location: 'Long Island City, Queens'
   }
 ];
 
 export const faqs = [
   {
+    q: 'Why is Raindrops tax-free?',
+    a: 'Raindrops operates under the sovereign cannabis authority of the Shinnecock Indian Nation. Sales through our license are exempt from the New York State cannabis excise and sales taxes that apply to OCM-licensed dispensaries.'
+  },
+  {
+    q: 'Is delivery really free?',
+    a: 'Yes — free delivery on every order, no minimum, across our Manhattan + East River coverage area. No hidden fees.'
+  },
+  {
+    q: 'Do I get a free gift?',
+    a: 'Every first-time customer in our coverage area gets a complimentary pre-roll added to their order. Spot a Raindrops sticker around the city for additional welcome drops. 21+ only, while supplies last.'
+  },
+  {
     q: 'Who licenses Raindrops Greenery?',
-    a: 'Raindrops Greenery operates under a sovereign cannabis license issued by the Shinnecock Indian Nation Cannabis Regulatory Division. All products move through the Shinnecock track-and-trace system.'
+    a: 'Raindrops Greenery operates under a sovereign cannabis license issued by the Shinnecock Indian Nation Cannabis Regulatory Division.'
   },
   {
     q: 'Where does Raindrops Greenery deliver?',
-    a: 'We focus on adult-use delivery for Manhattan, Brooklyn, and Queens. Final delivery eligibility is confirmed during checkout.'
+    a: 'We deliver across Manhattan plus the East River neighborhoods of Long Island City (Queens), Williamsburg (Brooklyn), and Greenpoint (Brooklyn). Use the coverage checker on the home page to confirm your ZIP.'
   },
   {
     q: 'Do I need to be 21 or older?',
@@ -209,20 +213,12 @@ export const faqs = [
     a: 'Prices and availability can change. Please confirm final product details during checkout before placing an order.'
   },
   {
-    q: 'Are products lab tested?',
-    a: 'Yes. All products carry potency and contaminant testing under the Shinnecock cannabis program. A Certificate of Analysis is available on request — ask at checkout or contact support.'
-  },
-  {
     q: 'What payment methods are accepted?',
     a: 'Accepted payment options are shown in checkout and at the door. Cash is always accepted; debit and additional options may be available subject to current processor support.'
   },
   {
-    q: 'What is the delivery fee and minimum?',
-    a: 'A minimum order and a small delivery fee may apply depending on your zone. Both are shown clearly in checkout before you confirm an order.'
-  },
-  {
     q: 'How discreet is the delivery?',
-    a: 'Packaging is plain and unbranded. Drivers are trained to keep handoffs short and professional.'
+    a: 'Packaging is plain and unbranded. Drivers are trained to keep handoffs short and professional, and we verify your 21+ ID at the door.'
   },
   {
     q: 'What is your return policy?',
@@ -231,7 +227,7 @@ export const faqs = [
 ];
 
 export const promoStrip = {
-  // Set to null to hide the strip.
-  message: 'First-time NYC delivery? Use code WELCOME10 at checkout for $10 off your first order.',
-  cta: { label: 'Shop deals', href: '/deals' }
+  // Set message to null to hide the strip.
+  message: 'Free delivery in Manhattan + East River neighborhoods · Tax-free under Shinnecock · Order by 11pm',
+  cta: { label: 'Check coverage', href: '#coverage' }
 };
