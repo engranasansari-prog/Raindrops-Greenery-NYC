@@ -3,6 +3,7 @@ import Script from 'next/script';
 import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import Nav from '@/components/Nav';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import './globals.css';
 
 // Display — Fraunces (variable, opsz + SOFT for editorial feel)
@@ -164,6 +165,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--rd-glow)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-[var(--rd-ink)]">
           Skip to content
         </a>
+        <AnnouncementBar />
         <Nav />
         <Script id="ld-business" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Script id="ld-org" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />

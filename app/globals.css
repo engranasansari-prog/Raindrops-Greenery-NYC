@@ -460,6 +460,20 @@ textarea:focus:not(:focus-visible) {
   to   { transform: translateX(0);     opacity: 1; }
 }
 
+/* AnnouncementBar marquee (V8 §1.5) — translate one-third so the next set
+   slides seamlessly into place. Pauses on hover; disabled by
+   prefers-reduced-motion (handled globally in this stylesheet). */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* CoverageMap — flowing light along East River bridges */
 @keyframes rd-bridge-flow {
   from { stroke-dashoffset: 0; }

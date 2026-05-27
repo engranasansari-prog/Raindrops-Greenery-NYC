@@ -83,14 +83,14 @@ export default function Nav() {
     <>
       <header
         data-scrolled={scrolled}
-        className="fixed inset-x-0 top-0 z-50 h-[72px]
+        className="fixed inset-x-0 top-9 z-50 h-[72px]
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-                   bg-[rgba(10,20,16,0.55)]
+                   bg-[color:var(--rd-ink)]
+                   border-b border-[rgba(200,230,110,0.08)]
                    data-[scrolled=true]:bg-[rgba(10,20,16,0.88)]
                    data-[scrolled=true]:backdrop-blur-xl
                    data-[scrolled=true]:backdrop-saturate-150
-                   data-[scrolled=true]:border-b
-                   data-[scrolled=true]:border-[rgba(200,230,110,0.12)]
+                   data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
                    data-[scrolled=true]:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)]"
       >
         <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 md:px-6">

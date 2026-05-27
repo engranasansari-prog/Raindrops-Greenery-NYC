@@ -1,0 +1,1467 @@
+{
+  "meta": {
+    "source": "Dutchie public storefront",
+    "exportedAt": "2026-05-27T03:25:07.744Z",
+    "totalProducts": 44,
+    "categories": {
+      "Flower": 14,
+      "Pre-Rolls": 14,
+      "Edibles": 16
+    }
+  },
+  "products": [
+    {
+      "id": "animal-runtz",
+      "slug": "animal-runtz",
+      "name": "Animal Runtz",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Animal Runtz is a slightly indica dominant hybrid strain (60% indica/40% sativa) created through crossing the tasty Animal Cookies X Runtz strains.\n\nThis balanced hybrid is said to be a patient favorite for its mouthwatering flavor and super sociable high that's often preferred for those with social anxiety.\n\nThe taste of Animal Runtz will linger long after you finish toking, with flavors of sweet fruity berries, nutty cherries and sugary citrus dancing across your tongue.\n\nThe aroma is just as bright and vibrant, with a sour, citrusy overtone accented by fresh berries and nutty cookies.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/534cf33603ed816aa3a76e5cb718d22f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/animal-runtz",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 25
+        },
+        {
+          "label": "7g",
+          "price": 45
+        }
+      ],
+      "thc": {
+        "value": 30,
+        "unit": "%",
+        "display": "30%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 30%"
+      ]
+    },
+    {
+      "id": "bazooka-punch",
+      "slug": "bazooka-punch",
+      "name": "Bazooka Punch",
+      "category": "Flower",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Bazooka Punch is not just a name; it's a promise of a robust and balanced cannabis experience.\n\nThis strain packs a punch, inducing a delightful combination of euphoria and relaxation.\n\nThe terpene profile, featuring Fruit Punch, Fuel, Limonene, Caryophyllene, and Humulene, adds layers of flavor to the journey.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/87047401df05935bf93f3724726caa8a",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/bazooka-punch",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 55
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "berry-blast-63312",
+      "slug": "berry-blast-63312",
+      "name": "Berry Blast",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Berry Blast is an indica dominant hybrid strain (70% indica/30% sativa) created through crossing the classic Blue Dream Super Silver Haze Cut X Johnny Blaze strains.\n\nIf you're after a fast-hitting high with a delicious flavor to it, too, Berry Blast is the bud for you.\n\nThis bud has a sweet and fruity sugary blueberry candy flavor with a lightly spicy exhale. The aroma is of fresh fruity berries, sugary candies and a hint of spicy earthiness.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/89e859c39960c5fd40959fd5448ed8e9",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/berry-blast-63312",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 75
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "blackberry",
+      "slug": "blackberry",
+      "name": "Blackberry",
+      "category": "Flower",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Blackberry is a hybrid strain with a perfect blend of indica and sativa. The strain is mouthwatering to say the least. Not only are the buds beautiful, but they are scrumptious at the same time.\n\nThe aroma is intoxicating, as it is quite fruity with a hint of earth. There is a pretty good reason why the strain is referred to as Blackberry.\n\nIt tastes amazing and smooth just like a bowl of fruit. If you are looking for a daytime strain, you should not look any further.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/613a1c7432fbc56c6ca8222ade4ea4bb",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/blackberry",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 55
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "cheetah-mintz",
+      "slug": "cheetah-mintz",
+      "name": "Cheetah Mintz",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cheetah Mintz is an indica dominant hybrid strain (70% indica/30% sativa) created through crossing the delicious (Cheetah Piss X Cold Heat) X (Zonuts X Ice Cream Cake) strains.\n\nThis powerful combination creates a potent child strain with amazing 1:1 THC:CBD levels and long-lasting effects to go right along with it.\n\nThis bud has a sweet and creamy mint candy flavor with an earthy and herbal cheese aroma to go along with it.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/5f9925bfd1690566e6f1afd5e06ca4ec",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/cheetah-mintz",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 75
+        }
+      ],
+      "thc": {
+        "value": 30,
+        "unit": "%",
+        "display": "30%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 30%"
+      ]
+    },
+    {
+      "id": "critical-cheese",
+      "slug": "critical-cheese",
+      "name": "Critical Cheese",
+      "category": "Flower",
+      "strainType": "Sativa-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Critical Cheese is a sativa dominant hybrid strain created through a cross of the deliciously potent Cheese X Critical Plus strains.\n\nThis bud is best known for its intense flavor of minty buttery cheese with citrus tinges that can be disgusting to some users.\n\nThe aroma is very much the same, with a citrus and minty cheesy aroma that is incredibly strong and can fill a room with its stench within seconds.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/4575118d26f7df149ca914be701f4e4f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/critical-cheese",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 75
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "frosted-flakes",
+      "slug": "frosted-flakes",
+      "name": "Frosted Flakes",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Frosted Flakes is an indica dominant strain with a 70:30 indica/ sativa ratio. It is a cross between pre-98 and White Bubba.\n\nThe buds look as though they have been dipped in coke and smells like cereal, which explains how it got its name in the first place.\n\nThe high is quite exquisite and will not leave locked to your couch.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/257228b813a3c3080b674d0b7057ccde",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/frosted-flakes",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 75
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "gorilla-glue-4-x-zkittles",
+      "slug": "gorilla-glue-4-x-zkittles",
+      "name": "Gorilla Glue 4 X Zkittles",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Gorilla Glue 4 X Zkittlez is a slightly indica dominant hybrid strain (60% indica/40% sativa).\n\nIf you love a great hybrid with a slight indica lean and a great flavor, Gorilla Glue 4 X Zkittlez is totally made for you.\n\nThis bud packs the best of everything, with a stimulating yet soothing high and a mouthwatering taste that will leave you begging for more.\u00a0\n\nThe aroma is very similar, with a spicy overtone that's accented by creamy dark chocolate and earthy flowers.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/fbf0f556a72e922f1542bff838f77f74",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/gorilla-glue-4-x-zkittles",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 30
+        },
+        {
+          "label": "7g",
+          "price": 55
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "jack-widow-flower",
+      "slug": "jack-widow-flower",
+      "name": "Jack Widow Flower",
+      "category": "Flower",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "This Sativa dominant strain has an Indica/Sativa content of 20/80 percent.\n\nIt is produced by mating White Widow with Jack Herer.\n\nIt has a strong aroma that is a mixture of skunk-y and citrus scents. It has a fresh aroma that is a blend of lemon, spicy and sweet flavors.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/67a0fe0129d27ffc629f0f5a27752d03",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/jack-widow-flower",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 25
+        },
+        {
+          "label": "7g",
+          "price": 45
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "mac-stomper",
+      "slug": "mac-stomper",
+      "name": "Mac Stomper",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "MAC Stomper is an indica dominant hybrid strain (70% indica/30% sativa) created through crossing the potent MAC X Grape Stomper strains.\n\nIf you're looking for something amazing in the flavor department to help you get to sleep at night, look no further than this gorgeous gal.\n\nMAC Stomper packs a unique, mouthwatering taste that's filled with a bouquet of fresh fruity berries, spicy grapes and a touch of sour, lemony citrus that tingles on the tongue.\n\nOn the aromatic side, the scent of MAC Stomper is much spicier and more floral, filled with rich grape wine and a touch of earthiness.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/ae26584c6158590c3b808755b148f05c",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/mac-stomper",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 25
+        },
+        {
+          "label": "7g",
+          "price": 45
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "pablo-s-revenge",
+      "slug": "pablo-s-revenge",
+      "name": "Pablo's Revenge",
+      "category": "Flower",
+      "strainType": "Indica-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Pablo's Revenge is a slightly indica dominant hybrid strain (60% indica/40% sativa) created through crossing the delicious Animal Mints X Sherbet Cake strains.\n\nIf you've been seeking out the perfect bud to help end out your day in style, look no further than Pablo's Revenge.\n\nThis bud packs a punch of full-bodied effects that will settle both mind and body before gently carrying you off to dreamland.\n\nThis bud has a sweet and fruity berry citrus flavor with a punch of sharp mint upon exhale. The aroma takes it up a level, adding in layers of spicy diesel and peppery herbs.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/8520cbdc7a282ffa3d62ae921fbceffe",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/pablo-s-revenge",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        },
+        {
+          "label": "7g",
+          "price": 75
+        }
+      ],
+      "thc": {
+        "value": 30,
+        "unit": "%",
+        "display": "30%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Indica-Hybrid",
+        "THC: 30%"
+      ]
+    },
+    {
+      "id": "peanut-butter-breath",
+      "slug": "peanut-butter-breath",
+      "name": "Peanut Butter Breath",
+      "category": "Flower",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Peanut Butter Breath is a rare evenly balanced hybrid strain (50% indica/50% sativa) created through crossing the classic Dosidos X Mendobreath F2 strains.\n\nWith this bud, the name says it all \u2013 the flavor is nutty and earthy with a rich herbal overtone. The aroma follows the same profile, with an earthy herbal overtone that's accented by rich nuttiness.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/6fdaedb82ac85590f075b9c2f0480a6f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/peanut-butter-breath",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 30
+        },
+        {
+          "label": "7g",
+          "price": 55
+        }
+      ],
+      "thc": {
+        "value": 29,
+        "unit": "%",
+        "display": "29%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 29%"
+      ]
+    },
+    {
+      "id": "sour-diesel-x-og-kush",
+      "slug": "sour-diesel-x-og-kush",
+      "name": "Sour Diesel X OG Kush",
+      "category": "Flower",
+      "strainType": "Sativa-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Sour Diesel X OG Kush, is a popular and intensely potent combination of Sour Diesel and OG Kush, two of the most legendary strains in the world.\n\nThis strain delivers a strong, delightful mix of head and body effects, including a deep physical buzz, relaxation, euphoria, mental relief, and cerebral introspection.\n\nThis strain has a sweet, tangy flavor and a fruity aroma.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/43c2fd5e232f9fec0c66e143b732ef6d",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/sour-diesel-x-og-kush",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 30
+        },
+        {
+          "label": "7g",
+          "price": 55
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa-Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "super-boof",
+      "slug": "super-boof",
+      "name": "Super Boof",
+      "category": "Flower",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Super Boof is an evenly balanced hybrid strain (50% indica/50% sativa) created through crossing the potent Black Cherry Punch X Tropicana Cookies strains.\n\nIf you're in the market for a new super balanced hybrid to add to your lineup, look no further than Super Boof.\n\nThis bud has a sweet and fruity cherry berry flavor with a super nutty and sour citrusy aroma to match.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/083c92a4f36e63cbeb5bfd0d9b4454f0",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/super-boof",
+      "basePrice": 40,
+      "variants": [
+        {
+          "label": "3.5g",
+          "price": 40
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "blue-dream-infused-1-5-gram-pre-roll",
+      "slug": "blue-dream-infused-1-5-gram-pre-roll",
+      "name": "Blue Dream Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/blue-dream-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 28,
+        "unit": "%",
+        "display": "28%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 28%"
+      ]
+    },
+    {
+      "id": "bubba-kush-infused-1-5-gram-pre-roll",
+      "slug": "bubba-kush-infused-1-5-gram-pre-roll",
+      "name": "Bubba Kush Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Indica",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/04df00336b6273f6aeab26b2f3924a75",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/bubba-kush-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "candy-runtz-infused-1-5-gram-pre-roll",
+      "slug": "candy-runtz-infused-1-5-gram-pre-roll",
+      "name": "Candy Runtz Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/c7405f1f344369cb7ba82dee1f80193d",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/candy-runtz-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "critical-cheese-infused-1-5-gram-pre-roll",
+      "slug": "critical-cheese-infused-1-5-gram-pre-roll",
+      "name": "Critical Cheese Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa-Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/critical-cheese-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa-Hybrid",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "grandaddy-purple-infused-1-5-gram-pre-roll",
+      "slug": "grandaddy-purple-infused-1-5-gram-pre-roll",
+      "name": "Grandaddy Purple Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Indica",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/04df00336b6273f6aeab26b2f3924a75",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/grandaddy-purple-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "jack-herer-infused-1-5-gram-pre-roll",
+      "slug": "jack-herer-infused-1-5-gram-pre-roll",
+      "name": "Jack Herer Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/jack-herer-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "jealousy-infused-1-5-gram-pre-roll",
+      "slug": "jealousy-infused-1-5-gram-pre-roll",
+      "name": "Jealousy Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/c7405f1f344369cb7ba82dee1f80193d",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/jealousy-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "lemon-cherry-gelato-infused-1-5-gram-pre-roll",
+      "slug": "lemon-cherry-gelato-infused-1-5-gram-pre-roll",
+      "name": "Lemon Cherry Gelato Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/c7405f1f344369cb7ba82dee1f80193d",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/lemon-cherry-gelato-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "northern-lights-infused-1-5-gram-pre-roll",
+      "slug": "northern-lights-infused-1-5-gram-pre-roll",
+      "name": "Northern Lights Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Indica",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/04df00336b6273f6aeab26b2f3924a75",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/northern-lights-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "purple-punch-infused-1-5-gram-pre-roll",
+      "slug": "purple-punch-infused-1-5-gram-pre-roll",
+      "name": "Purple Punch Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Indica",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/04df00336b6273f6aeab26b2f3924a75",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/purple-punch-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "sour-diesel-infused-1-5-gram-pre-roll",
+      "slug": "sour-diesel-infused-1-5-gram-pre-roll",
+      "name": "Sour Diesel Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/sour-diesel-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "tropicana-cookies-infused-1-5-gram-pre-roll",
+      "slug": "tropicana-cookies-infused-1-5-gram-pre-roll",
+      "name": "Tropicana Cookies Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/tropicana-cookies-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "white-widow-infused-1-5-gram-pre-roll",
+      "slug": "white-widow-infused-1-5-gram-pre-roll",
+      "name": "White Widow Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Sativa",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/a456f0a6bd120b38b6d601b08c7b2f7f",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/white-widow-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Sativa",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "zkittles-infused-1-5-gram-pre-roll",
+      "slug": "zkittles-infused-1-5-gram-pre-roll",
+      "name": "Zkittles Infused 1.5 Gram Pre-Roll",
+      "category": "Pre-Rolls",
+      "strainType": "Indica",
+      "brand": "Raindrops Greenery",
+      "description": "Rolled up and ready to smoke, Pre-Rolls are a convenient and effective way to consume cannabis. Pre-Rolls come in many different forms and can be rolled with flower, shake, \"b-buds\", infused with concentrates, and more.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/04df00336b6273f6aeab26b2f3924a75",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/zkittles-infused-1-5-gram-pre-roll",
+      "basePrice": 15,
+      "variants": [
+        {
+          "label": "1.5g",
+          "price": 15
+        }
+      ],
+      "thc": {
+        "value": 32,
+        "unit": "%",
+        "display": "32%"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Indica",
+        "THC: 32%"
+      ]
+    },
+    {
+      "id": "belgium-chocolate-bar",
+      "slug": "belgium-chocolate-bar",
+      "name": "Belgium Chocolate Bar",
+      "category": "Edibles",
+      "strainType": null,
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/f1022d11079ef567bdc107831edb20a2",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/belgium-chocolate-bar",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "belgium-chocolate-bar-almond",
+      "slug": "belgium-chocolate-bar-almond",
+      "name": "Belgium Chocolate Bar (Almond)",
+      "category": "Edibles",
+      "strainType": null,
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/86934ab717d3b621e768184c7d8d0f42",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/belgium-chocolate-bar-almond",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "belgium-chocolate-bar-cookies-and-cream",
+      "slug": "belgium-chocolate-bar-cookies-and-cream",
+      "name": "Belgium Chocolate Bar (Cookies and Cream)",
+      "category": "Edibles",
+      "strainType": null,
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/ce6a158087a9dc07467d68a32353df80",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/belgium-chocolate-bar-cookies-and-cream",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "belgium-chocolate-bar-krackle",
+      "slug": "belgium-chocolate-bar-krackle",
+      "name": "Belgium Chocolate Bar (Krackle)",
+      "category": "Edibles",
+      "strainType": null,
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/990affbc730d4a6fc5037137fae77a81",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/belgium-chocolate-bar-krackle",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "chocolate-chip-cookies",
+      "slug": "chocolate-chip-cookies",
+      "name": "Chocolate Chip Cookies",
+      "category": "Edibles",
+      "strainType": null,
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/6681d537fdb7119ec0bc7cd85c38bad3",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/chocolate-chip-cookies",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "dubai-chocolate-cake",
+      "slug": "dubai-chocolate-cake",
+      "name": "Dubai Chocolate Cake",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/1cb5a9bbbb9f68c7ff7b5bfdb8c2613c",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/dubai-chocolate-cake",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "dubai-chocolate-truffles",
+      "slug": "dubai-chocolate-truffles",
+      "name": "Dubai Chocolate Truffles",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis chocolates are popular because the dominant chocolate flavor overpowers the \"green\" taste you may find in other edibles. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/fccce68a69c983e2be7cc36d3aac9ea4",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/dubai-chocolate-truffles",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 450,
+        "unit": "mg",
+        "display": "450mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 450 mg"
+      ]
+    },
+    {
+      "id": "peach-rings-gummies",
+      "slug": "peach-rings-gummies",
+      "name": "Peach Rings Gummies",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis infused gummies evenly dosed commonly sold in multi-packs, which makes controlling your intake easy and reliable. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/551930080c3874ed44356584a4a8693b",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/peach-rings-gummies",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 1000,
+        "unit": "mg",
+        "display": "1000mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Hybrid",
+        "THC: 1000 mg"
+      ]
+    },
+    {
+      "id": "peanut-butter-cups",
+      "slug": "peanut-butter-cups",
+      "name": "Peanut Butter Cups",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Edibles are created either by infusing cooking oil or butter with cannabis extract, or by mixing extract directly into other ingredients. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/52e04295bc621cafe6888f3cf0e4cba1",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/peanut-butter-cups",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 200,
+        "unit": "mg",
+        "display": "200mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 200 mg"
+      ]
+    },
+    {
+      "id": "rainbow-cookies-cake",
+      "slug": "rainbow-cookies-cake",
+      "name": "Rainbow Cookies Cake",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis cookies are generally made with cannabis-infused butter and are available in a wide variety of flavors. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/cb2fb071e87544a53cd016054bad4014",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/rainbow-cookies-cake",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "red-velvet-cake",
+      "slug": "red-velvet-cake",
+      "name": "Red Velvet Cake",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Edibles are created either by infusing cooking oil or butter with cannabis extract, or by mixing extract directly into other ingredients. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/1adc9911b10a93318607ec1ea540c31e",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/red-velvet-cake",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "rice-krispy-treats",
+      "slug": "rice-krispy-treats",
+      "name": "Rice Krispy Treats",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Edibles are created either by infusing cooking oil or butter with cannabis extract, or by mixing extract directly into other ingredients. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/f4304fd562b6134cbdecd7d3e4bcbf89",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/rice-krispy-treats",
+      "basePrice": 25,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 25
+        }
+      ],
+      "thc": {
+        "value": 200,
+        "unit": "mg",
+        "display": "200mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 200 mg"
+      ]
+    },
+    {
+      "id": "sour-patch-gummies",
+      "slug": "sour-patch-gummies",
+      "name": "Sour Patch Gummies",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis infused gummies evenly dosed commonly sold in multi-packs, which makes controlling your intake easy and reliable. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/d35493a8c9c09d993fca57ffa9c48e70",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/sour-patch-gummies",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 1000,
+        "unit": "mg",
+        "display": "1000mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Hybrid",
+        "THC: 1000 mg"
+      ]
+    },
+    {
+      "id": "strawberry-banana-gummies",
+      "slug": "strawberry-banana-gummies",
+      "name": "Strawberry Banana Gummies",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis infused gummies evenly dosed commonly sold in multi-packs, which makes controlling your intake easy and reliable. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/2528bc2389da9a4b58d024cef38f50f3",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/strawberry-banana-gummies",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 1000,
+        "unit": "mg",
+        "display": "1000mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Hybrid",
+        "THC: 1000 mg"
+      ]
+    },
+    {
+      "id": "strawberry-shortcake",
+      "slug": "strawberry-shortcake",
+      "name": "Strawberry Shortcake",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Edibles are created either by infusing cooking oil or butter with cannabis extract, or by mixing extract directly into other ingredients. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/1b23c2ef865f86fd27f8f22142db31fa",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/strawberry-shortcake",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 400,
+        "unit": "mg",
+        "display": "400mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": false,
+      "tags": [
+        "Hybrid",
+        "THC: 400 mg"
+      ]
+    },
+    {
+      "id": "watermelon-gummies",
+      "slug": "watermelon-gummies",
+      "name": "Watermelon Gummies",
+      "category": "Edibles",
+      "strainType": "Hybrid",
+      "brand": "Raindrops Greenery",
+      "description": "Cannabis infused gummies evenly dosed commonly sold in multi-packs, which makes controlling your intake easy and reliable. Because edibles are digested and absorbed by your stomach and liver, the activation is often longer than other consumption methods, taking on average 45 minutes, and sometimes up to 2 hours. It is important to start low and slow when consuming edibles so you don't over do it. Take extra caution to ensure edibles are out of the reach of children.",
+      "image": "https://s3-us-west-2.amazonaws.com/dutchie-images/9964cb2a3d7a32f04a91954e60ed517e",
+      "orderUrl": "https://dutchie.com/stores/raindrops-greenery-retail/product/watermelon-gummies",
+      "basePrice": 30,
+      "variants": [
+        {
+          "label": "Default",
+          "price": 30
+        }
+      ],
+      "thc": {
+        "value": 1000,
+        "unit": "mg",
+        "display": "1000mg"
+      },
+      "cbd": {
+        "value": null,
+        "unit": null
+      },
+      "isSticky": true,
+      "tags": [
+        "Hybrid",
+        "THC: 1000 mg"
+      ]
+    }
+  ]
+}

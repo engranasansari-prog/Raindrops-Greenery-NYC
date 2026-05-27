@@ -96,7 +96,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   return (
     <section
-      className="rd-grain rd-vignette relative isolate -mt-[72px] w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]"
+      className="rd-grain rd-vignette relative isolate w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]"
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}
@@ -136,7 +136,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       <SmokeLayer />
 
       {/* Layer 3: slide content */}
-      <div className="luxury-shell relative z-10 grid min-h-[640px] items-center pt-[112px] pb-20 sm:min-h-[720px] sm:pt-[140px] sm:pb-24 lg:min-h-[92vh]">
+      <div className="luxury-shell relative z-10 grid min-h-[560px] items-center py-16 sm:min-h-[640px] sm:py-20 lg:min-h-[80vh]">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}

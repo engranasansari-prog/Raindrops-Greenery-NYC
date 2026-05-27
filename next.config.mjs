@@ -25,6 +25,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'origin.dispensary.shop'
+      },
+      // V8 — Dutchie product image CDN
+      {
+        protocol: 'https',
+        hostname: 's3-us-west-2.amazonaws.com',
+        pathname: '/dutchie-images/**'
       }
     ]
   },
