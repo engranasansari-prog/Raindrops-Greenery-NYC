@@ -68,9 +68,11 @@ export default function DeliveryPage() {
         </div>
       </section>
 
-      {/* Coverage map — full interactive component, two-way synced with the
-          cluster cards below via shared activeCluster state. */}
+      {/* Coverage map — compact so the inner heading + 7-tile summary
+          don't duplicate the page hero (above) or the cluster card grid
+          (below). Two-way synced with the cards via lifted activeCluster. */}
       <CoverageMap
+        compact
         externalActiveCluster={activeCluster}
         onClusterChange={setActiveCluster}
       />

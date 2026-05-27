@@ -293,9 +293,15 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
           </motion.div>
         )}
 
-        <div className={`grid gap-10 ${compact ? 'mt-0' : 'mt-10'} lg:grid-cols-[1.05fr_0.95fr] lg:items-start`}>
+        <div
+          className={`grid gap-10 ${compact ? 'mt-0' : 'mt-10'} ${
+            compact
+              ? 'lg:grid-cols-1'
+              : 'lg:grid-cols-[1.05fr_0.95fr] lg:items-start'
+          }`}
+        >
           {/* ZIP form + result + cluster cards */}
-          <div className="order-2 lg:order-1">
+          <div className={compact ? 'order-2 mx-auto w-full max-w-2xl' : 'order-2 lg:order-1'}>
             <ZipSearch
               value={zip}
               onChange={onChange}
@@ -411,7 +417,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
           </div>
 
           {/* The map column */}
-          <div className="order-1 lg:order-2">
+          <div className={compact ? 'order-1' : 'order-1 lg:order-2'}>
             {/* Map mode toggle + theme toggle */}
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 px-1">
               <div className="inline-flex items-center gap-1 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 p-1 [font-family:var(--font-mono)]">
@@ -817,46 +823,6 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
             );
           })()}
         </AnimatePresence>
-
-        {/* ZIP cloud */}
-        {!compact && (
-          <div className="mt-14">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Every covered ZIP</p>
-            <h3 className="mt-3 text-2xl text-[color:var(--rd-text)] sm:text-3xl" style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}>
-              31 ZIPs. <span className="italic">7 neighborhoods.</span>
-            </h3>
-            <div className="mt-6 grid gap-5 md:grid-cols-2">
-              {CLUSTERS.map((cluster) => (
-                <div key={cluster.id}>
-                  <p className="text-sm italic text-[color:var(--rd-text-dim)]" style={{ fontFamily: 'var(--font-display)' }}>
-                    {cluster.name}
-                  </p>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {cluster.zips.map((z) => (
-                      <button
-                        key={z}
-                        type="button"
-                        onClick={() => {
-                          setZip(z);
-                          setSubmitted(true);
-                          setActive(cluster.id);
-                        }}
-                        className="inline-flex items-center rounded-md border px-2.5 py-1 text-[11px] tracking-wider transition [font-family:var(--font-mono)]"
-                        style={{
-                          borderColor: `${cluster.fill}55`,
-                          background: `${cluster.fill}1A`,
-                          color: '#F5F1E8'
-                        }}
-                      >
-                        {z}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );
