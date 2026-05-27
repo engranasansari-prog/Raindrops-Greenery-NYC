@@ -30,13 +30,16 @@ import {
   type StrainTag
 } from '@/lib/menu-utils';
 
-// Brand-aligned per-strain palette. Text uses the LIGHT brand accents so
-// the badges stay readable on the dark ink-soft product cards.
+// Solid dark chip with brand-accent text + border. The badge sits on the
+// LIGHT cream product-image area (--rd-paper-soft), so a translucent
+// brand-tinted bg blends in. Switching to a near-solid ink chip with the
+// accent kept on the text/border gives unambiguous contrast against any
+// product photo while still reading on-brand.
 const STRAIN_BADGE: Record<StrainTag, string> = {
-  INDICA: 'border-[color:var(--rd-rain)]/45 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
-  SATIVA: 'border-[color:var(--rd-glow)]/45 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12',
-  HYBRID: 'border-[color:var(--rd-amber)]/45 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
-  BALANCED: 'border-[color:var(--rd-mint)]/45 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
+  INDICA: 'border-[color:var(--rd-rain)]/55 text-[color:var(--rd-rain)] bg-[color:var(--rd-ink)]/92',
+  SATIVA: 'border-[color:var(--rd-glow)]/55 text-[color:var(--rd-glow)] bg-[color:var(--rd-ink)]/92',
+  HYBRID: 'border-[color:var(--rd-amber)]/55 text-[color:var(--rd-amber)] bg-[color:var(--rd-ink)]/92',
+  BALANCED: 'border-[color:var(--rd-mint)]/55 text-[color:var(--rd-mint)] bg-[color:var(--rd-ink)]/92'
 };
 import { checkout } from '@/lib/site-data';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';

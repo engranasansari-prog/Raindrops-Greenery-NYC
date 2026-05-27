@@ -168,11 +168,12 @@ function ValueProps() {
 // =====================================================================
 // 4. Featured deals — 3 products MAX (V6 §4.3)
 // =====================================================================
+// Solid dark chip — see MenuExplorer comment. Same pattern.
 const strainTone: Record<StrainTag, string> = {
-  INDICA: 'bg-[color:var(--rd-rain)]/15 text-[color:var(--rd-rain)] border-[color:var(--rd-rain)]/30',
-  SATIVA: 'bg-[color:var(--rd-glow)]/15 text-[color:var(--rd-glow)] border-[color:var(--rd-glow)]/30',
-  HYBRID: 'bg-[color:var(--rd-amber)]/15 text-[color:var(--rd-amber)] border-[color:var(--rd-amber)]/30',
-  BALANCED: 'bg-[color:var(--rd-mint)]/15 text-[color:var(--rd-mint)] border-[color:var(--rd-mint)]/30'
+  INDICA: 'bg-[color:var(--rd-ink)]/92 text-[color:var(--rd-rain)] border-[color:var(--rd-rain)]/55',
+  SATIVA: 'bg-[color:var(--rd-ink)]/92 text-[color:var(--rd-glow)] border-[color:var(--rd-glow)]/55',
+  HYBRID: 'bg-[color:var(--rd-ink)]/92 text-[color:var(--rd-amber)] border-[color:var(--rd-amber)]/55',
+  BALANCED: 'bg-[color:var(--rd-ink)]/92 text-[color:var(--rd-mint)] border-[color:var(--rd-mint)]/55'
 };
 
 function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {

@@ -443,9 +443,14 @@ textarea:focus:not(:focus-visible) {
 }
 .animate-marquee {
   animation: marquee 10s linear infinite;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
+  /* will-change is a HINT to the browser to prep a GPU layer; it does
+     NOT set a value the way a static `transform` would. We previously
+     also set `transform: translate3d(0, 0, 0)` and `backface-visibility:
+     hidden` here, but the static transform conflicted with the
+     @keyframes animation on iOS Safari / older Android Chrome and
+     effectively froze the marquee on mobile. Hint-only is the safe
+     cross-browser pattern. */
+  will-change: transform;
 }
 .animate-marquee:hover {
   animation-play-state: paused;

@@ -22,11 +22,13 @@ export const metadata: Metadata = {
   }
 };
 
+// Solid dark ink chip + brand-accent text/border so the badge reads
+// cleanly against the LIGHT cream product-image area.
 const STRAIN_TINT: Record<string, string> = {
-  INDICA: 'border-[color:var(--rd-rain)]/40 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
-  SATIVA: 'border-[color:var(--rd-glow)]/40 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/10',
-  HYBRID: 'border-[color:var(--rd-amber)]/40 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
-  BALANCED: 'border-[color:var(--rd-mint)]/40 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
+  INDICA: 'border-[color:var(--rd-rain)]/55 text-[color:var(--rd-rain)] bg-[color:var(--rd-ink)]/92',
+  SATIVA: 'border-[color:var(--rd-glow)]/55 text-[color:var(--rd-glow)] bg-[color:var(--rd-ink)]/92',
+  HYBRID: 'border-[color:var(--rd-amber)]/55 text-[color:var(--rd-amber)] bg-[color:var(--rd-ink)]/92',
+  BALANCED: 'border-[color:var(--rd-mint)]/55 text-[color:var(--rd-mint)] bg-[color:var(--rd-ink)]/92'
 };
 
 function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eager?: boolean }) {

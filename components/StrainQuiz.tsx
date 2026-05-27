@@ -88,11 +88,13 @@ const QUESTIONS: Question[] = [
   }
 ];
 
+// Solid dark chip — matches MenuExplorer/deals/home for full readability
+// against the light cream product-image background.
 const STRAIN_BADGE: Record<StrainTag, string> = {
-  INDICA: 'border-[color:var(--rd-rain)]/40 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
-  SATIVA: 'border-[color:var(--rd-glow)]/40 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/10',
-  HYBRID: 'border-[color:var(--rd-amber)]/40 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
-  BALANCED: 'border-[color:var(--rd-mint)]/40 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
+  INDICA: 'border-[color:var(--rd-rain)]/55 text-[color:var(--rd-rain)] bg-[color:var(--rd-ink)]/92',
+  SATIVA: 'border-[color:var(--rd-glow)]/55 text-[color:var(--rd-glow)] bg-[color:var(--rd-ink)]/92',
+  HYBRID: 'border-[color:var(--rd-amber)]/55 text-[color:var(--rd-amber)] bg-[color:var(--rd-ink)]/92',
+  BALANCED: 'border-[color:var(--rd-mint)]/55 text-[color:var(--rd-mint)] bg-[color:var(--rd-ink)]/92'
 };
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
