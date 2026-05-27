@@ -27,7 +27,10 @@ function Diamond({ tone }: { tone: 'lime' | 'amber' }) {
   const color = tone === 'lime' ? 'var(--rd-glow)' : 'var(--rd-amber)';
   return (
     <span
-      className="mx-6 inline-flex shrink-0 items-center justify-center"
+      // Tighter margin on phones so the diamond doesn't eat into pip
+      // breathing room — `mx-4` mobile, `mx-6` tablet+ for the original
+      // generous luxury cadence.
+      className="mx-4 inline-flex shrink-0 items-center justify-center sm:mx-6"
       aria-hidden
     >
       <span
@@ -114,16 +117,21 @@ export default function AnnouncementBar() {
           </span>
         ))}
       </div>
-      {/* Edge fades — content melts into the gradient instead of cutting off */}
+      {/* Edge fades — content melts into the gradient instead of cutting off.
+          On mobile the fades were 96px each side = ~190px of a 375px viewport,
+          leaving < 50% of the bar readable. Slimmed to 32px on phones, 64px
+          on tablets+, 96px on desktop so the readable window scales with
+          screen width and a full pip ("Free delivery in Manhattan") is visible
+          at once on every viewport. */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-24"
+        className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(90deg, #0A1410 0%, rgba(10,20,16,0.9) 35%, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, #0A1410 0%, rgba(10,20,16,0.9) 40%, transparent)' }}
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-24"
+        className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(270deg, #0A1410 0%, rgba(10,20,16,0.9) 35%, transparent)' }}
+        style={{ background: 'linear-gradient(270deg, #0A1410 0%, rgba(10,20,16,0.9) 40%, transparent)' }}
       />
     </div>
   );
