@@ -9,7 +9,7 @@ const items = [
   { icon: Lock, label: 'Same-day NYC' },
   { icon: CheckCircle2, label: 'Shinnecock-licensed' },
   { icon: Sparkles, label: 'Sticky · icky · delivered' },
-  { icon: Star, label: '4.9★ from NYC' }
+  { icon: Star, label: '5.0★ from NYC' }
 ];
 
 /**

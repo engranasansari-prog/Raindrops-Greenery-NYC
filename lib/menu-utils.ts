@@ -54,6 +54,24 @@ export function inferProfile(product: LiveMenuProduct) {
   return 'Balanced';
 }
 
+// Strain-card badge classification — shared between /deals strip and /menu cards.
+export type StrainTag = 'INDICA' | 'SATIVA' | 'HYBRID' | 'BALANCED';
+
+export function getStrainTag(product: LiveMenuProduct): StrainTag {
+  const profile = inferProfile(product).toLowerCase();
+  if (profile.includes('indica')) return 'INDICA';
+  if (profile.includes('sativa')) return 'SATIVA';
+  if (profile.includes('hybrid')) return 'HYBRID';
+  return 'BALANCED';
+}
+
+/** STICKY-icky tier: parse THC% and flag if >= 30%. */
+export function isSticky(product: LiveMenuProduct): boolean {
+  const thcMatch = getPotencyLabel(product).match(/THC\s+([\d.]+)/i);
+  if (!thcMatch) return false;
+  return parseFloat(thcMatch[1]) >= 30;
+}
+
 const EFFECT_TAGS: Array<{ effect: string; profiles: string[]; categories?: string[] }> = [
   { effect: 'Energize', profiles: ['Sativa', 'Sativa dominant hybrid'] },
   { effect: 'Focus', profiles: ['Sativa', 'Sativa dominant hybrid', 'Hybrid'] },

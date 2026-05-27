@@ -14,10 +14,13 @@ export default function NotFound() {
         <div className="absolute inset-0 mesh-bg opacity-15" />
         <div className="luxury-shell relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">404</p>
-            <h1 className="mt-3 font-[var(--font-display)] text-5xl font-extrabold leading-tight sm:text-6xl md:text-8xl">Page not found.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/74">
-              The link you followed may be old, or the page may have moved. From here you can jump back to the menu, see delivery areas, or get a hand from support.
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Error 404</p>
+            <h1 className="mt-4 text-[color:var(--rd-text)]">
+              <span style={{ fontStyle: 'italic', fontWeight: 300 }}>This page is</span>{' '}
+              <span style={{ fontWeight: 600, color: 'var(--rd-glow)' }}>out of stock.</span>
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+              The link you followed is either old or got rolled up and smoked. Pick a destination below — your free weed gift is still waiting.
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:max-w-lg">
               <Link href="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] shadow-xl transition hover:-translate-y-0.5 hover:bg-[var(--champagne)]">

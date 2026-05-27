@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
+import { business } from '@/lib/site-data';
 
 export type Crumb = { label: string; href?: string };
 
+/**
+ * Visual breadcrumb trail + automatic Schema.org BreadcrumbList JSON-LD
+ * for SEO. Every page that uses <Breadcrumbs/> now emits structured data.
+ */
 export default function Breadcrumbs({ items, tone = 'light' }: { items: Crumb[]; tone?: 'light' | 'dark' }) {
   const base: Crumb = { label: 'Home', href: '/' };
   const trail = [base, ...items];
@@ -11,29 +16,48 @@ export default function Breadcrumbs({ items, tone = 'light' }: { items: Crumb[];
   const activeColor = tone === 'dark' ? 'text-white' : 'text-[var(--emerald-deep)]';
   const sepColor = tone === 'dark' ? 'text-white/32' : 'text-[var(--muted)]/50';
 
+  // BreadcrumbList JSON-LD — Google reads this to render the breadcrumb
+  // path in search results instead of a raw URL.
+  const breadcrumbLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.label,
+      ...(crumb.href ? { item: `${business.baseUrl}${crumb.href}` } : {})
+    }))
+  };
+
   return (
-    <nav aria-label="Breadcrumb" className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${baseColor}`}>
-      <ol className="flex flex-wrap items-center gap-1.5">
-        {trail.map((crumb, index) => {
-          const isLast = index === trail.length - 1;
-          return (
-            <li key={`${crumb.label}-${index}`} className="inline-flex items-center gap-1.5">
-              {crumb.href && !isLast ? (
-                <Link href={crumb.href} className={`inline-flex items-center gap-1.5 transition hover:${activeColor}`}>
-                  {index === 0 && <Home className="h-3 w-3" />}
-                  <span>{crumb.label}</span>
-                </Link>
-              ) : (
-                <span className={`inline-flex items-center gap-1.5 ${activeColor}`}>
-                  {index === 0 && <Home className="h-3 w-3" />}
-                  <span>{crumb.label}</span>
-                </span>
-              )}
-              {!isLast && <ChevronRight className={`h-3 w-3 ${sepColor}`} />}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <nav aria-label="Breadcrumb" className={`text-[11px] font-extrabold uppercase tracking-[0.18em] ${baseColor}`}>
+        <ol className="flex flex-wrap items-center gap-1.5">
+          {trail.map((crumb, index) => {
+            const isLast = index === trail.length - 1;
+            return (
+              <li key={`${crumb.label}-${index}`} className="inline-flex items-center gap-1.5">
+                {crumb.href && !isLast ? (
+                  <Link href={crumb.href} className={`inline-flex items-center gap-1.5 transition hover:${activeColor}`}>
+                    {index === 0 && <Home className="h-3 w-3" aria-hidden />}
+                    <span>{crumb.label}</span>
+                  </Link>
+                ) : (
+                  <span className={`inline-flex items-center gap-1.5 ${activeColor}`} aria-current={isLast ? 'page' : undefined}>
+                    {index === 0 && <Home className="h-3 w-3" aria-hidden />}
+                    <span>{crumb.label}</span>
+                  </span>
+                )}
+                {!isLast && <ChevronRight className={`h-3 w-3 ${sepColor}`} aria-hidden />}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </>
   );
 }

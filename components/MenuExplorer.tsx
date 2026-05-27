@@ -21,11 +21,22 @@ import {
   getPotencyLabel,
   getPrimaryPotency,
   getProductDescription,
+  getStrainTag,
   hasSale,
   inferEffects,
   inferProfile,
-  productCategories
+  isSticky,
+  productCategories,
+  type StrainTag
 } from '@/lib/menu-utils';
+
+// Brand-aligned per-strain palette (mirrors HomePage DealsSection).
+const STRAIN_BADGE: Record<StrainTag, string> = {
+  INDICA: 'bg-[color:var(--rd-rain)]/15 text-[color:var(--rd-moss)] border-[color:var(--rd-rain)]/40',
+  SATIVA: 'bg-[color:var(--rd-glow)]/22 text-[color:var(--rd-moss)] border-[color:var(--rd-moss)]/35',
+  HYBRID: 'bg-[color:var(--rd-amber)]/22 text-[color:var(--rd-amber-dark)] border-[color:var(--rd-amber)]/40',
+  BALANCED: 'bg-[color:var(--rd-mint)]/40 text-[color:var(--rd-moss)] border-[color:var(--rd-moss)]/35'
+};
 import { checkout } from '@/lib/site-data';
 
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
@@ -68,6 +79,8 @@ function ProductImage({ product }: { product: LiveMenuProduct }) {
 function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetails: (product: LiveMenuProduct) => void }) {
   const potency = getPotencyLabel(product);
   const deal = getDealLabel(product);
+  const strain = getStrainTag(product);
+  const sticky = isSticky(product);
 
   return (
     <motion.article
@@ -79,16 +92,21 @@ function ProductCard({ product, onDetails }: { product: LiveMenuProduct; onDetai
       <div className="relative aspect-[4/3] overflow-hidden bg-[#fbf7ee]">
         <ProductImage product={product} />
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-          <span className="rounded-full bg-white/90 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] shadow-sm backdrop-blur">
-            {product.category}
+          <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${STRAIN_BADGE[strain]}`}>
+            {strain}
           </span>
-          {deal && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--champagne)] px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--emerald-deep)] shadow-sm">
-              <BadgePercent className="h-3 w-3" />
-              Deal
+          {sticky && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] shadow-sm [font-family:var(--font-mono)]">
+              ✦ STICKY
             </span>
           )}
         </div>
+        {deal && (
+          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-sm [font-family:var(--font-mono)]">
+            <BadgePercent className="h-3 w-3" />
+            Deal
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">

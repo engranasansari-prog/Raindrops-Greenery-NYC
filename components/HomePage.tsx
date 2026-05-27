@@ -30,8 +30,11 @@ import {
   getBrandLabel,
   getDealLabel,
   getPotencyLabel,
+  getStrainTag,
   hasSale,
-  inferProfile
+  inferProfile,
+  isSticky,
+  type StrainTag
 } from '@/lib/menu-utils';
 import { faqs, steps, testimonials, valueProps } from '@/lib/site-data';
 
@@ -211,22 +214,14 @@ function Categories() {
 // =====================================================================
 // 3.5 Deals — product cards with strain badges, % off, hover Add
 // =====================================================================
-type Strain = 'INDICA' | 'SATIVA' | 'HYBRID' | 'BALANCED';
-function getStrain(profile: string): Strain {
-  const p = profile.toLowerCase();
-  if (p.includes('indica')) return 'INDICA';
-  if (p.includes('sativa')) return 'SATIVA';
-  if (p.includes('hybrid')) return 'HYBRID';
-  return 'BALANCED';
-}
-const strainTone: Record<Strain, string> = {
+const strainTone: Record<StrainTag, string> = {
   INDICA: 'bg-[color:var(--rd-rain)]/15 text-[color:var(--rd-rain)] border-[color:var(--rd-rain)]/30',
   SATIVA: 'bg-[color:var(--rd-glow)]/15 text-[color:var(--rd-glow)] border-[color:var(--rd-glow)]/30',
   HYBRID: 'bg-[color:var(--rd-amber)]/15 text-[color:var(--rd-amber)] border-[color:var(--rd-amber)]/30',
   BALANCED: 'bg-[color:var(--rd-mint)]/15 text-[color:var(--rd-mint)] border-[color:var(--rd-mint)]/30'
 };
 
-const STRAIN_FILTERS: Array<{ label: string; value: 'ALL' | Strain }> = [
+const STRAIN_FILTERS: Array<{ label: string; value: 'ALL' | StrainTag }> = [
   { label: 'All', value: 'ALL' },
   { label: 'Sativa', value: 'SATIVA' },
   { label: 'Indica', value: 'INDICA' },
@@ -239,12 +234,12 @@ function calculatePercentOff(price: number, salePrice: number) {
 }
 
 function DealsSection() {
-  const [strain, setStrain] = useState<'ALL' | Strain>('ALL');
+  const [strain, setStrain] = useState<'ALL' | StrainTag>('ALL');
 
   const deals = useMemo(() => {
     const onSale = menuProducts.filter(hasSale);
     if (strain === 'ALL') return onSale.slice(0, 8);
-    return onSale.filter((p) => getStrain(inferProfile(p)) === strain).slice(0, 8);
+    return onSale.filter((p) => getStrainTag(p) === strain).slice(0, 8);
   }, [strain]);
 
   if (deals.length === 0 && strain === 'ALL') return null;
@@ -303,12 +298,12 @@ function DealsSection() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {deals.map((product, i) => {
-              const profile = inferProfile(product);
-              const strainTag = getStrain(profile);
+              const strainTag = getStrainTag(product);
               const pctOff = calculatePercentOff(product.price, product.salePrice);
               const potency = getPotencyLabel(product);
               const thcMatch = potency.match(/THC\s+([\d.]+)/i);
               const thc = thcMatch ? thcMatch[1] : null;
+              const sticky = isSticky(product);
               return (
                 <Reveal key={product.id} delay={Math.min(i * 0.04, 0.24)}>
                   <Link
@@ -326,10 +321,17 @@ function DealsSection() {
                           className="object-contain p-6 transition-transform duration-[4000ms] [transition-timing-function:linear] group-hover:scale-[1.07]"
                         />
                       )}
-                      {/* Strain badge */}
-                      <span className={`absolute left-3 top-3 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[strainTag]}`}>
-                        {strainTag}
-                      </span>
+                      {/* Strain + STICKY badges */}
+                      <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+                        <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[strainTag]}`}>
+                          {strainTag}
+                        </span>
+                        {sticky && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                            ✦ STICKY
+                          </span>
+                        )}
+                      </div>
                       {/* % off badge */}
                       {pctOff > 0 && (
                         <span className="absolute right-3 top-3 inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
@@ -515,7 +517,7 @@ function Testimonials() {
                 ))}
               </div>
               <span className="text-sm text-[color:var(--rd-text-dim)]">
-                <span className="font-semibold text-[color:var(--rd-text)]">4.9</span> from 1,200+ NYC orders
+                <span className="font-semibold text-[color:var(--rd-text)]">5.0</span> from NYC customers
               </span>
             </div>
           </div>
