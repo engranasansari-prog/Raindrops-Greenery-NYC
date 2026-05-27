@@ -70,8 +70,12 @@ function Pip({ children }: { children: Item }) {
 }
 
 export default function AnnouncementBar() {
-  // Render three copies so the marquee never shows empty space mid-loop.
-  const repeated = [...ITEMS, ...ITEMS, ...ITEMS];
+  // Render exactly TWO identical copies. The CSS keyframe translates by
+  // -50% over one cycle, so the second copy lands precisely where the
+  // first started — the loop seam is invisible. (Previously we used
+  // three copies + -33.333% which left a sub-pixel rounding gap on some
+  // screens.)
+  const repeated = [...ITEMS, ...ITEMS];
 
   return (
     <div

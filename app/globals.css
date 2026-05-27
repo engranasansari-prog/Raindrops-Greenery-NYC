@@ -460,15 +460,21 @@ textarea:focus:not(:focus-visible) {
   to   { transform: translateX(0);     opacity: 1; }
 }
 
-/* AnnouncementBar marquee (V8 §1.5) — translate one-third so the next set
-   slides seamlessly into place. Pauses on hover; disabled by
-   prefers-reduced-motion (handled globally in this stylesheet). */
+/* AnnouncementBar marquee (V8 §1.5) — canonical seamless loop:
+   render TWO identical copies of the items, translate by exactly -50%
+   so the second copy lands precisely where the first one started.
+   translate3d kicks rendering onto the GPU layer for sub-pixel-stable
+   motion (no jitter at the loop boundary). Pauses on hover; disabled
+   by prefers-reduced-motion (handled globally in this stylesheet). */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.333%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 .animate-marquee {
-  animation: marquee 5s linear infinite;
+  animation: marquee 10s linear infinite;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 .animate-marquee:hover {
   animation-play-state: paused;
