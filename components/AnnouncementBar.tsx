@@ -17,7 +17,9 @@ const ITEMS: Item[] = [
   { lead: 'Free weed', accent: 'gift', tail: 'with every order' },
   { lead: 'Guaranteed best', accent: 'flowers', tail: 'on the market' },
   { lead: 'Tax-free under', accent: 'Shinnecock', tail: 'authority' },
-  { lead: 'Free delivery in', accent: 'Manhattan', tail: '+ East River' }
+  { lead: 'Free delivery in', accent: 'Manhattan', tail: '' },
+  { lead: 'Free delivery in', accent: 'Brooklyn', tail: '' },
+  { lead: 'Free delivery in', accent: 'Queens', tail: '' }
 ];
 
 /** Faceted diamond — alternates lime / amber to feel hand-set */
