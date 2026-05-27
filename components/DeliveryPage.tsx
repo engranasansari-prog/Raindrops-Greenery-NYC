@@ -42,7 +42,7 @@ export default function DeliveryPage() {
     <SiteChrome>
       {/* Hero — full-width pill with backdrop image + headline */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <Image src="/assets/storefront.webp" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.22]" />
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.22]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94),rgba(10,20,16,0.62),rgba(10,20,16,0.78))]" />
         <div className="luxury-shell relative py-16 sm:py-20">
           <div className="max-w-3xl">

@@ -5,8 +5,8 @@ category: "Delivery"
 publishedAt: "2026-05-25"
 readTime: "3 min read"
 author: "Raindrops Greenery"
-coverImage: "/assets/storefront.webp"
-coverAlt: "Delivery vehicle crossing East River bridge at night"
+coverImage: "/assets/DISPENSARYIMAGE.jpg"
+coverAlt: "Raindrops Greenery NYC dispensary"
 ---
 
 If you live in Long Island City, Williamsburg, or Greenpoint, you've probably been told by every other delivery service that you're "too far" or that you'll pay a premium for the crossing.

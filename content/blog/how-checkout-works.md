@@ -5,8 +5,8 @@ category: "Ordering"
 publishedAt: "2026-05-23"
 readTime: "3 min read"
 author: "Raindrops Greenery"
-coverImage: "/assets/storefront.webp"
-coverAlt: "Raindrops Greenery storefront image"
+coverImage: "/assets/DISPENSARYIMAGE.jpg"
+coverAlt: "Raindrops Greenery NYC dispensary"
 ---
 
 ## Start with the menu

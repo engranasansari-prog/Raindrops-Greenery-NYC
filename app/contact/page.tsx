@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Contact Raindrops Greenery',
     description: 'Reach Raindrops Greenery NY support, press, and business inquiries.',
     url: '/contact',
-    images: [{ url: '/assets/storefront.webp', width: 1200, height: 800, alt: 'Contact Raindrops Greenery' }]
+    images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
   }
 };
 

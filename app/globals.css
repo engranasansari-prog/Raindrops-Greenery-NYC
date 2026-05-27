@@ -209,13 +209,6 @@ textarea:focus:not(:focus-visible) {
 
 .luxe-border { border: 1px solid rgba(212, 165, 116, 0.38); }
 
-.mesh-bg {
-  background-image:
-    linear-gradient(rgba(91, 140, 110, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(91, 140, 110, 0.06) 1px, transparent 1px);
-  background-size: 42px 42px;
-}
-
 /* Film-grain overlay for hero / dark sections */
 .rd-grain::before {
   content: "";
@@ -415,24 +408,6 @@ textarea:focus:not(:focus-visible) {
   50%      { transform: translateY(8px); opacity: 1; }
 }
 
-/* Staggered fade-up on hero load */
-@keyframes rd-fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.rd-fade-up { animation: rd-fade-up 560ms var(--ease-out) both; }
-
-@keyframes rd-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Trust marquee — duplicated content; shift one full width to the left */
-@keyframes rd-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
 /* Lightweight scroll-reveal — replaces a framer-motion Reveal component.
    Driven by IntersectionObserver in <Reveal>. ~zero JS cost per instance
    vs framer-motion which costs ~50ms each. */
@@ -448,37 +423,6 @@ textarea:focus:not(:focus-visible) {
 }
 @media (prefers-reduced-motion: reduce) {
   .rd-reveal { opacity: 1; transform: none; transition: none; }
-}
-
-/* CoverageMap — breathing cluster polygons (staggered via inline animation-delay) */
-@keyframes rd-cluster-breathe {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.85; }
-}
-.rd-cluster {
-  animation: rd-cluster-breathe 4.6s var(--ease-out) infinite;
-  transform-origin: center;
-}
-
-/* CoverageMap — one-shot pulse ring when a ZIP match locks onto a cluster */
-@keyframes rd-cluster-pulse {
-  0%   { opacity: 0.9; stroke-width: 1.5; }
-  60%  { opacity: 0.5; stroke-width: 6; }
-  100% { opacity: 0; stroke-width: 9; }
-}
-
-/* CoverageMap — raindrops fall over covered zones */
-@keyframes rd-rainfall {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-  10% { opacity: 0.8; }
-  85% { opacity: 0.5; }
-  100% {
-    transform: translateY(var(--rd-rain-end, 600px));
-    opacity: 0;
-  }
 }
 
 /* Nav — mobile drawer slide-in (V7 §1.2) */
@@ -505,16 +449,6 @@ textarea:focus:not(:focus-visible) {
 }
 .animate-marquee:hover {
   animation-play-state: paused;
-}
-
-/* CoverageMap — flowing light along East River bridges */
-@keyframes rd-bridge-flow {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -94; }
-}
-.rd-bridge-flow {
-  animation: rd-bridge-flow 1.8s linear infinite;
-  filter: drop-shadow(0 0 4px rgba(200, 230, 110, 0.6));
 }
 
 /* =====================================================================

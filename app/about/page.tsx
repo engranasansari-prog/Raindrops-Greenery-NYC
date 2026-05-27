@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'About Raindrops Greenery',
     description: 'New York licensed cannabis delivery. Curated. Transparent. Professional.',
     url: '/about',
-    images: [{ url: '/assets/storefront.webp', width: 1200, height: 800, alt: 'Raindrops Greenery delivery operations' }]
+    images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
   }
 };
 
