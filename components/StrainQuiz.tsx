@@ -223,12 +223,12 @@ export default function StrainQuiz() {
         <div className="luxury-shell relative py-16 sm:py-20 lg:py-24">
           <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
 
-          {/* Two-column hero: text left, hero image right.
-              Image first on mobile DOM via order-1/order-2 so it sits
-              right under the breadcrumbs on small screens — keeps the
-              quiz CTA above the fold. */}
-          <div className="mt-6 grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-            <div className="order-2 max-w-2xl lg:order-1">
+          {/* Two-column hero — text left, hero image right.
+              Same vertical footprint as the original text-only hero:
+              image is constrained to the natural height of the headline
+              block so the section never grows taller than it used to. */}
+          <div className="mt-6 grid items-end gap-8 sm:grid-cols-[1.1fr_0.9fr] sm:items-center sm:gap-10">
+            <div className="max-w-2xl">
               <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                 <Sparkles className="h-3.5 w-3.5" />
                 4 questions · 30 seconds
@@ -246,20 +246,21 @@ export default function StrainQuiz() {
               )}
             </div>
 
-            {/* Hero artwork — premium framed image, full-bleed on mobile,
-                fixed aspect, lazy-aware but priority for above-the-fold LCP. */}
-            <div className="order-1 lg:order-2">
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] shadow-[0_30px_90px_rgba(0,0,0,0.45)] sm:max-w-md lg:ml-auto lg:max-w-none lg:aspect-[5/6]">
+            {/* Hero artwork — landscape framed image so the hero stays the
+                same height as before. Mobile: 16:10 banner under the
+                text. Desktop: 4:3 card to the right of the text. */}
+            <div className="w-full">
+              <div className="relative ml-auto aspect-[16/10] w-full max-w-md overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:aspect-[4/3] sm:max-w-sm md:max-w-md">
                 <Image
                   src="/assets/STRAIN.jpg"
                   alt="Premium cannabis strain — Raindrops Greenery NY"
                   fill
                   priority
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 480px"
+                  quality={80}
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 420px"
                   className="object-cover"
                 />
-                {/* Soft ink scrim so any embedded text in the photo
-                    blends into the dark hero palette */}
+                {/* Soft ink scrim so the photo blends into the dark hero */}
                 <div
                   className="pointer-events-none absolute inset-0"
                   aria-hidden
@@ -268,9 +269,9 @@ export default function StrainQuiz() {
                       'linear-gradient(180deg, transparent 55%, rgba(10,20,16,0.55) 100%)'
                   }}
                 />
-                {/* Lime accent corner — ties the artwork to the brand */}
+                {/* Lime accent corner — ties artwork to brand */}
                 <span
-                  className="pointer-events-none absolute -bottom-px -right-px h-16 w-16 rounded-tl-3xl border-l border-t border-[color:var(--rd-glow)]/40"
+                  className="pointer-events-none absolute -bottom-px -right-px h-12 w-12 rounded-tl-2xl border-l border-t border-[color:var(--rd-glow)]/40"
                   aria-hidden
                 />
               </div>
