@@ -222,12 +222,7 @@ export default function StrainQuiz() {
 
         <div className="luxury-shell relative py-16 sm:py-20 lg:py-24">
           <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
-
-          {/* Two-column hero — text left, hero image right.
-              Same vertical footprint as the original text-only hero:
-              image is constrained to the natural height of the headline
-              block so the section never grows taller than it used to. */}
-          <div className="mt-6 grid items-end gap-8 sm:grid-cols-[1.1fr_0.9fr] sm:items-center sm:gap-10">
+          <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -239,48 +234,17 @@ export default function StrainQuiz() {
               <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
                 Tell us how you want to feel — we’ll pull three drops from the live menu that fit. Not medical advice, just a smart starting point.
               </p>
-              {!finished && (
-                <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
-                  Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
-                </span>
-              )}
             </div>
-
-            {/* Hero artwork — landscape framed image so the hero stays the
-                same height as before. Mobile: 16:10 banner under the
-                text. Desktop: 4:3 card to the right of the text. */}
-            <div className="w-full">
-              <div className="relative ml-auto aspect-[16/10] w-full max-w-md overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:aspect-[4/3] sm:max-w-sm md:max-w-md">
-                <Image
-                  src="/assets/STRAIN.jpg"
-                  alt="Premium cannabis strain — Raindrops Greenery NY"
-                  fill
-                  priority
-                  quality={80}
-                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 420px"
-                  className="object-cover"
-                />
-                {/* Soft ink scrim so the photo blends into the dark hero */}
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  aria-hidden
-                  style={{
-                    background:
-                      'linear-gradient(180deg, transparent 55%, rgba(10,20,16,0.55) 100%)'
-                  }}
-                />
-                {/* Lime accent corner — ties artwork to brand */}
-                <span
-                  className="pointer-events-none absolute -bottom-px -right-px h-12 w-12 rounded-tl-2xl border-l border-t border-[color:var(--rd-glow)]/40"
-                  aria-hidden
-                />
-              </div>
-            </div>
+            {!finished && (
+              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)] sm:self-auto">
+                Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
+              </span>
+            )}
           </div>
 
           {/* Progress rail */}
           {!finished && (
-            <div className="mt-10 h-px w-full bg-[color:var(--rd-paper)]/8">
+            <div className="mt-8 h-px w-full bg-[color:var(--rd-paper)]/8">
               <motion.div
                 initial={false}
                 animate={{ width: `${progress}%` }}
