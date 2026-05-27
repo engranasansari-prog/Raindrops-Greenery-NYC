@@ -16,7 +16,7 @@ import {
   Star
 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import SiteChrome, { TextLink } from '@/components/SiteChrome';
+import SiteChrome from '@/components/SiteChrome';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import ClaimOfferModal from '@/components/ClaimOfferModal';
 import HookPills from '@/components/HookPills';
@@ -320,37 +320,66 @@ function TestimonialFeature() {
     <section className="bg-[color:var(--rd-paper-soft)] py-20 sm:py-24">
       <div className="luxury-shell">
         <Reveal>
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber)]">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-current" />
-              ))}
-            </div>
-            <p className="rd-eyebrow mt-4 text-[color:var(--rd-moss)]">
-              5.0★ from NYC · Verified order
-            </p>
+          {/* Solid dark ink card on the paper-soft section — unambiguous
+              contrast: light text on dark surface, with explicit colors
+              on every element so nothing inherits a near-white text
+              token from the body. */}
+          <div
+            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center shadow-[0_30px_90px_rgba(10,20,16,0.22)] sm:px-12 sm:py-16"
+            style={{ color: 'var(--rd-text)' }}
+          >
+            {/* Soft brand glow well behind the quote */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              aria-hidden
+              style={{
+                background:
+                  'radial-gradient(ellipse at top, rgba(200,230,110,0.10), transparent 60%)'
+              }}
+            />
 
-            <blockquote
-              className="mt-6 text-2xl leading-tight text-[color:var(--rd-ink)] sm:text-3xl md:text-4xl"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', letterSpacing: '-0.02em' }}
-            >
-              “{t.quote}”
-            </blockquote>
+            <div className="relative">
+              <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber)]">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
+                ))}
+              </div>
+              <p
+                className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+              >
+                5.0★ from NYC · Verified order
+              </p>
 
-            <figcaption className="mt-10 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-moss)]/20 bg-[color:var(--rd-paper)]/85 px-5 py-3 shadow-[0_12px_36px_rgba(45,74,58,0.10)]">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-base font-semibold text-[color:var(--rd-glow)] shadow-inner [font-family:var(--font-mono)]">
-                {t.author.charAt(0)}
-              </span>
-              <span className="text-left leading-tight">
-                <span className="block text-[15px] font-semibold text-[color:var(--rd-ink)]">{t.author}</span>
-                <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
-                  {t.location}
+              <blockquote
+                className="mt-6 text-2xl leading-tight text-[color:var(--rd-text)] sm:text-3xl md:text-4xl"
+                style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', letterSpacing: '-0.02em' }}
+              >
+                “{t.quote}”
+              </blockquote>
+
+              <figcaption className="mt-10 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink-soft)] px-5 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.32)]">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-base font-bold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                  {t.author.charAt(0)}
                 </span>
-              </span>
-            </figcaption>
+                <span className="text-left leading-tight">
+                  <span className="block text-[15px] font-semibold text-[color:var(--rd-text)]">{t.author}</span>
+                  <span
+                    className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+                  >
+                    {t.location}
+                  </span>
+                </span>
+              </figcaption>
 
-            <div className="mt-8 inline-flex">
-              <TextLink href="/about">Read more customer stories</TextLink>
+              <div className="mt-8 inline-flex">
+                <Link
+                  href="/about"
+                  className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-text-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-glow)]"
+                >
+                  <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Read more customer stories</span>
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+                </Link>
+              </div>
             </div>
           </div>
         </Reveal>
