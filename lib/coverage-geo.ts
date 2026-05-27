@@ -87,6 +87,18 @@ const CLUSTER_CENTROIDS: Record<CoverageCluster['id'], [number, number]> = {
 export const MAP_CENTER: [number, number] = [-73.97, 40.745];
 export const MAP_ZOOM = 11.2;
 
+/**
+ * Bounding box that contains every covered cluster polygon, with
+ * generous padding so the map shows Manhattan + LIC + Williamsburg +
+ * Greenpoint without anything clipped. Used with map.fitBounds() for
+ * the initial view so the customer immediately understands the whole
+ * delivery footprint.
+ */
+export const MAP_BOUNDS: [[number, number], [number, number]] = [
+  [-74.025, 40.695], // SW corner — below Battery Park
+  [-73.92, 40.815]   // NE corner — above the Upper East/West sides + east of Greenpoint
+];
+
 // Brand tints per cluster — match the SVG colors so both maps feel
 // like the same brand voice.
 const CLUSTER_COLORS: Record<CoverageCluster['id'], string> = {

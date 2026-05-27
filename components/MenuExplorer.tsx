@@ -30,12 +30,13 @@ import {
   type StrainTag
 } from '@/lib/menu-utils';
 
-// Brand-aligned per-strain palette (mirrors HomePage DealsSection).
+// Brand-aligned per-strain palette. Text uses the LIGHT brand accents so
+// the badges stay readable on the dark ink-soft product cards.
 const STRAIN_BADGE: Record<StrainTag, string> = {
-  INDICA: 'bg-[color:var(--rd-rain)]/15 text-[color:var(--rd-moss)] border-[color:var(--rd-rain)]/40',
-  SATIVA: 'bg-[color:var(--rd-glow)]/22 text-[color:var(--rd-moss)] border-[color:var(--rd-moss)]/35',
-  HYBRID: 'bg-[color:var(--rd-amber)]/22 text-[color:var(--rd-amber-dark)] border-[color:var(--rd-amber)]/40',
-  BALANCED: 'bg-[color:var(--rd-mint)]/40 text-[color:var(--rd-moss)] border-[color:var(--rd-moss)]/35'
+  INDICA: 'border-[color:var(--rd-rain)]/45 text-[color:var(--rd-rain)] bg-[color:var(--rd-rain)]/12',
+  SATIVA: 'border-[color:var(--rd-glow)]/45 text-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12',
+  HYBRID: 'border-[color:var(--rd-amber)]/45 text-[color:var(--rd-amber)] bg-[color:var(--rd-amber)]/12',
+  BALANCED: 'border-[color:var(--rd-mint)]/45 text-[color:var(--rd-mint)] bg-[color:var(--rd-mint)]/12'
 };
 import { checkout } from '@/lib/site-data';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
@@ -407,6 +408,27 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
     window.history.replaceState(null, '', url.toString());
   }, [selectedProduct]);
 
+  // Auto-reset filters that don't apply to the active category so a
+  // hidden control can't silently constrain results.
+  // - Edibles  → no Profile, no Size, no Min THC
+  // - Pre-Rolls → no Size, no Min THC
+  // - Flower   → all apply
+  useEffect(() => {
+    if (category === 'Edibles') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setProfile('All');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setWeight('All');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMinThc(0);
+    } else if (category === 'Pre-Rolls') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setWeight('All');
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setMinThc(0);
+    }
+  }, [category]);
+
   const filteredProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
@@ -548,21 +570,42 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               </div>
             </div>
 
-            {/* V8 §4.5 — trimmed filter set. Brand/Effect/DealsOnly/InMenu
-                removed (single brand, no sale data, all products in menu). */}
-            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-              <SelectField label="Profile" value={profile} onChange={(value) => setFilter(setProfile, value)}>
-                <option>All</option>
-                {profiles.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </SelectField>
-              <SelectField label="Size" value={weight} onChange={(value) => setFilter(setWeight, value)}>
-                <option>All</option>
-                {weights.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
-              </SelectField>
+            {/* Contextual filter set — per client review (V9). Each filter
+                only renders for the categories where it actually narrows the
+                catalog. Keeps the UX clean and avoids dead controls.
+                  All       → Profile · Size · Sort · Price · (THC hidden)
+                  Flower    → Profile · Size · Sort · Price · Min THC
+                  Pre-Rolls → Profile · Sort · Price
+                  Edibles   → Sort · Price                                 */}
+            {(() => {
+              const showProfile = category !== 'Edibles';
+              const showSize = category === 'Flower' || category === 'All';
+              const showMinThc = category === 'Flower';
+              // Count visible filters to keep grid columns sensible.
+              const slots = 2 + Number(showProfile) + Number(showSize) + Number(showMinThc); // sort + price always
+              const cols =
+                slots <= 2 ? 'md:grid-cols-2' :
+                slots === 3 ? 'md:grid-cols-3' :
+                slots === 4 ? 'md:grid-cols-2 xl:grid-cols-4' :
+                'md:grid-cols-2 xl:grid-cols-5';
+              return (
+            <div className={`mt-5 grid gap-4 ${cols}`}>
+              {showProfile && (
+                <SelectField label="Profile" value={profile} onChange={(value) => setFilter(setProfile, value)}>
+                  <option>All</option>
+                  {profiles.map((item) => (
+                    <option key={item}>{item}</option>
+                  ))}
+                </SelectField>
+              )}
+              {showSize && (
+                <SelectField label="Size" value={weight} onChange={(value) => setFilter(setWeight, value)}>
+                  <option>All</option>
+                  {weights.map((item) => (
+                    <option key={item}>{item}</option>
+                  ))}
+                </SelectField>
+              )}
               <SelectField label="Sort" value={sort} onChange={(value) => setFilter(setSort, value as SortMode)}>
                 {(Object.keys(sortLabels) as SortMode[]).map((item) => (
                   <option key={item} value={item}>{sortLabels[item]}</option>
@@ -581,8 +624,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   className="h-12 accent-[color:var(--rd-glow)]"
                 />
               </label>
-              {/* Min-THC slider — client request: Flower only. */}
-              {category === 'Flower' && (
+              {showMinThc && (
                 <label className="grid gap-2">
                   <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
                     Min THC <span className="text-[color:var(--rd-glow)]">{minThc}%</span>
@@ -598,6 +640,8 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                 </label>
               )}
             </div>
+              );
+            })()}
 
             <div className="mt-5 flex flex-col gap-3 border-t border-[color:var(--rd-paper)]/8 pt-5 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-wrap gap-2">

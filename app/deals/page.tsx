@@ -257,9 +257,11 @@ export default function DealsPage() {
             </div>
           </div>
 
-          <div className="mt-10 rounded-2xl border border-[var(--line)] bg-white/60 p-5 text-xs leading-6 text-[color:var(--rd-on-paper-mute)] shadow-sm md:p-6">
-            <p className="rd-eyebrow text-[color:var(--rd-on-paper-dim)]">Fine print</p>
-            <p className="mt-2">
+          {/* Fine-print card — solid paper-soft surface with full-strength
+              ink-tone text so legal copy is unambiguously readable. */}
+          <div className="mt-10 rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] p-6 text-sm leading-7 text-[color:var(--rd-on-paper-dim)] shadow-[0_8px_30px_rgba(45,74,58,0.06)] sm:text-[15px]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Fine print</p>
+            <p className="mt-3 text-[color:var(--rd-ink)]">
               Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll per first-time order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
             </p>
           </div>

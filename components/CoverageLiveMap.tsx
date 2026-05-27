@@ -6,24 +6,24 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CENTROID_GEOJSON,
   CLUSTER_GEOJSON,
-  MAP_CENTER,
-  MAP_ZOOM,
+  MAP_BOUNDS,
   TILE_ATTRIBUTION,
   TILE_URL
 } from '@/lib/coverage-geo';
 
 /**
- * V9 §3 — Real interactive map (MapLibre GL JS).
+ * V9 — Single, clean interactive map (MapLibre GL JS, no API key).
  *
- * Branded NYC view styled in Raindrops palette:
- *   - Dark Carto raster tiles as the basemap
- *   - 7 cluster polygons drawn as semi-transparent green fills, each
- *     bordered in lime
- *   - Centroid pins with cluster shortName labels — animated lime ring
- *   - Hover highlight + click → fly-to + parent callback
+ * Design goals (per client review):
+ *   • One map — no Illustrated / Live toggle. This IS the map.
+ *   • Full preview of Manhattan + LIC + Williamsburg + Greenpoint
+ *     visible on first paint via fitBounds.
+ *   • Branded styling — dark Carto basemap + lime cluster strokes +
+ *     subtle lime centroid markers + neighborhood + ETA labels.
+ *   • Click any cluster → fly-to + parent callback opens detail panel.
  *
- * Lazy-loaded via next/dynamic so the ~250KB MapLibre bundle only ships
- * when a user actually toggles the live map view.
+ * Lazy-loaded via next/dynamic from CoverageMap; only ships when the
+ * coverage section actually scrolls into view.
  */
 
 type Props = {
@@ -54,15 +54,21 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         },
         layers: [{ id: 'carto-dark', type: 'raster', source: 'carto-dark' }]
       },
-      center: MAP_CENTER,
-      zoom: MAP_ZOOM,
+      // Use bounds instead of fixed center/zoom so the entire delivery
+      // footprint is visible on first paint regardless of viewport size.
+      bounds: MAP_BOUNDS,
+      fitBoundsOptions: { padding: { top: 28, right: 24, bottom: 40, left: 24 } },
       pitch: 0,
       bearing: 0,
-      attributionControl: { compact: true }
+      attributionControl: { compact: true },
+      // No rotation — the orientation is fixed so neighborhoods stay
+      // in their familiar positions.
+      dragRotate: false,
+      touchZoomRotate: false
     });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    map.scrollZoom.disable(); // Don't hijack page scroll on desktop
+    map.scrollZoom.disable(); // don't hijack page scroll on desktop
     // ⌘ / ctrl + scroll re-enables zoom — feels native
     map.on('wheel', (e) => {
       if (e.originalEvent.ctrlKey || e.originalEvent.metaKey) {
@@ -73,7 +79,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     });
 
     map.on('load', () => {
-      // Cluster polygons
+      // Cluster polygon fills — soft green tint
       map.addSource('clusters', { type: 'geojson', data: CLUSTER_GEOJSON });
       map.addLayer({
         id: 'cluster-fill',
@@ -84,11 +90,12 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'fill-opacity': [
             'case',
             ['==', ['get', 'id'], activeCluster ?? ''],
-            0.55,
-            0.32
+            0.58,
+            0.34
           ]
         }
       });
+      // Lime outlines (brand)
       map.addLayer({
         id: 'cluster-outline',
         type: 'line',
@@ -98,14 +105,14 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'line-width': [
             'case',
             ['==', ['get', 'id'], activeCluster ?? ''],
-            2.4,
-            1.2
+            2.6,
+            1.4
           ],
-          'line-opacity': 0.85
+          'line-opacity': 0.9
         }
       });
 
-      // Centroid pins
+      // Centroid markers — lime ring + dot
       map.addSource('centroids', { type: 'geojson', data: CENTROID_GEOJSON });
       map.addLayer({
         id: 'centroid-ring',
@@ -115,8 +122,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'circle-radius': [
             'case',
             ['==', ['get', 'id'], activeCluster ?? ''],
-            14,
-            10
+            16,
+            11
           ],
           'circle-color': 'rgba(200,230,110,0.18)',
           'circle-stroke-color': '#C8E66E',
@@ -132,6 +139,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'circle-color': '#C8E66E'
         }
       });
+      // Neighborhood + ETA labels
       map.addLayer({
         id: 'centroid-label',
         type: 'symbol',
@@ -146,19 +154,19 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
             ['concat', '~', ['get', 'etaMinutes'], ' min'],
             { 'font-scale': 0.85 }
           ],
-          'text-offset': [0, 1.4],
+          'text-offset': [0, 1.5],
           'text-anchor': 'top',
           'text-allow-overlap': false,
           'text-size': 12
         },
         paint: {
           'text-color': '#F5F1E8',
-          'text-halo-color': 'rgba(10,20,16,0.85)',
+          'text-halo-color': 'rgba(10,20,16,0.9)',
           'text-halo-width': 1.4
         }
       });
 
-      // Interactions
+      // Interactions — pointer cursor + click handler
       const cursor = (e: maplibregl.MapMouseEvent) => {
         e.target.getCanvas().style.cursor = 'pointer';
       };
@@ -204,24 +212,24 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       map.setPaintProperty('cluster-fill', 'fill-opacity', [
         'case',
         ['==', ['get', 'id'], activeCluster ?? ''],
-        0.55,
-        0.32
+        0.58,
+        0.34
       ]);
     }
     if (map.getLayer('cluster-outline')) {
       map.setPaintProperty('cluster-outline', 'line-width', [
         'case',
         ['==', ['get', 'id'], activeCluster ?? ''],
-        2.4,
-        1.2
+        2.6,
+        1.4
       ]);
     }
     if (map.getLayer('centroid-ring')) {
       map.setPaintProperty('centroid-ring', 'circle-radius', [
         'case',
         ['==', ['get', 'id'], activeCluster ?? ''],
-        14,
-        10
+        16,
+        11
       ]);
     }
 
@@ -231,15 +239,19 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         map.flyTo({ center: f.geometry.coordinates, zoom: 12.6, speed: 0.8, curve: 1.4 });
       }
     } else {
-      map.flyTo({ center: MAP_CENTER, zoom: MAP_ZOOM, speed: 0.6 });
+      // Fly back to the full coverage view when nothing is selected
+      map.fitBounds(MAP_BOUNDS, {
+        padding: { top: 28, right: 24, bottom: 40, left: 24 },
+        duration: 900
+      });
     }
   }, [activeCluster]);
 
   return (
     <div
       ref={containerRef}
-      className="h-[480px] w-full overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 sm:h-[540px] lg:h-[600px]"
-      aria-label="Live map of Raindrops Greenery NYC delivery coverage"
+      className="h-[480px] w-full overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 sm:h-[560px] lg:h-[620px]"
+      aria-label="Live map of Raindrops Greenery NYC delivery coverage — Manhattan, LIC, Williamsburg, Greenpoint"
       role="application"
     />
   );
