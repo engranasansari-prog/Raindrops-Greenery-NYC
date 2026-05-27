@@ -1,8 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Mail } from 'lucide-react';
+import { ArrowRight, Check, Mail } from 'lucide-react';
 
+/**
+ * Footer / inline newsletter form.
+ *
+ * Production wiring TODO: POST to /api/subscribe or hand off to Mailchimp /
+ * Klaviyo. Currently a client-side placeholder that validates email format
+ * and shows a success state.
+ */
 export default function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -16,24 +23,25 @@ export default function NewsletterForm({ compact = false }: { compact?: boolean 
       return;
     }
     setError(null);
-    // Production wiring: POST to /api/subscribe or a Mailchimp/Klaviyo endpoint.
     setSubmitted(true);
     setEmail('');
   };
 
   if (submitted) {
     return (
-      <div className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/10 px-4 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-white">
-        <Check className="h-4 w-4 text-[var(--champagne)]" />
+      <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-4 py-3 text-xs uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+        <Check className="h-4 w-4" />
         Thanks — we’ll be in touch.
       </div>
     );
   }
 
   return (
-    <form onSubmit={submit} className={`grid gap-2 ${compact ? '' : 'sm:grid-cols-[1fr_auto]'}`} aria-label="Email signup">
-      <label className="flex min-w-0 items-center gap-2 rounded-full border border-white/16 bg-white/10 px-4 py-2 text-sm text-white">
-        <Mail className="h-4 w-4 text-[var(--champagne)]" />
+    <form onSubmit={submit} className="grid gap-3" aria-label="Email signup">
+      <div className={`flex items-stretch overflow-hidden rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 transition focus-within:border-[color:var(--rd-glow)] focus-within:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] ${compact ? '' : ''}`}>
+        <span className="flex items-center pl-4 text-[color:var(--rd-text-mute)]">
+          <Mail className="h-4 w-4" />
+        </span>
         <input
           type="email"
           inputMode="email"
@@ -41,18 +49,24 @@ export default function NewsletterForm({ compact = false }: { compact?: boolean 
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="Email for deal drops"
-          className="min-w-0 flex-1 bg-transparent text-sm font-bold text-white outline-none placeholder:text-white/52"
+          placeholder="your@email.com"
           aria-label="Email address"
+          className="min-w-0 flex-1 bg-transparent px-3 py-3 text-base text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text-mute)]"
         />
-      </label>
-      <button
-        type="submit"
-        className="rounded-full bg-[var(--champagne)] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--emerald-deep)] transition hover:bg-white"
-      >
-        Subscribe
-      </button>
-      {error && <p className="text-xs font-bold text-[var(--champagne)]">{error}</p>}
+        <button
+          type="submit"
+          className="group inline-flex shrink-0 items-center gap-1.5 bg-[color:var(--rd-glow)] px-5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] transition hover:brightness-105 [font-family:var(--font-mono)]"
+        >
+          Subscribe
+          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
+        </button>
+      </div>
+      <p className="text-[11px] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+        SMS opt-in coming soon · Unsubscribe anytime
+      </p>
+      {error && (
+        <p className="rd-eyebrow text-[color:var(--rd-amber)]">{error}</p>
+      )}
     </form>
   );
 }

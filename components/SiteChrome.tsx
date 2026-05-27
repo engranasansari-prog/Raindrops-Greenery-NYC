@@ -244,7 +244,27 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+    <footer className="bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      {/* Newsletter — full-width feature row */}
+      <div className="border-y border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)]/40 py-14 sm:py-16">
+        <div className="luxury-shell grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+          <div>
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Weekly drops</p>
+            <h3
+              className="mt-4 text-3xl text-[color:var(--rd-text)] sm:text-4xl"
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.025em' }}
+            >
+              Get drops weekly — <span className="italic">new strains, deals, NYC events.</span>
+            </h3>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-[color:var(--rd-text-dim)] sm:text-base">
+              No spam. Unsubscribe anytime. 21+ only.
+            </p>
+          </div>
+          <NewsletterForm />
+        </div>
+      </div>
+
+      {/* Main footer grid */}
       <div className="luxury-shell grid gap-10 py-14 lg:grid-cols-[1.2fr_2fr]">
         <div>
           <Link href="/" className="flex items-center gap-3">
@@ -263,11 +283,15 @@ function Footer() {
           <ul className="mt-6 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              <a href={business.phoneHref} className="hover:text-[color:var(--rd-text)]">{business.phone}</a>
+              <a href={business.phoneHref} className="transition-colors hover:text-[color:var(--rd-text)]">
+                {business.phone}
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              <a href={business.emailHref} className="hover:text-[color:var(--rd-text)]">{business.email}</a>
+              <a href={business.emailHref} className="transition-colors hover:text-[color:var(--rd-text)]">
+                {business.email}
+              </a>
             </li>
             <li className="flex items-center gap-3">
               <Clock className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
@@ -278,13 +302,6 @@ function Footer() {
           <div className="mt-5">
             <OpenStatus tone="dark" />
           </div>
-
-          <div className="mt-6">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Get drops by email</p>
-            <div className="mt-3 max-w-sm">
-              <NewsletterForm />
-            </div>
-          </div>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-3">
@@ -294,8 +311,12 @@ function Footer() {
               <ul className="mt-4 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">
                 {group.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-text)]">
-                      {link.label}
+                    <Link
+                      href={link.href}
+                      className="group inline-block relative transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-text)]"
+                    >
+                      <span>{link.label}</span>
+                      <span className="pointer-events-none absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--rd-glow)] transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:scale-x-100" />
                     </Link>
                   </li>
                 ))}
@@ -305,6 +326,7 @@ function Footer() {
         </div>
       </div>
 
+      {/* Compliance row */}
       <div className="border-t border-[color:var(--rd-paper)]/8">
         <div className="luxury-shell flex flex-col gap-5 py-6 text-xs text-[color:var(--rd-text-mute)] lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -321,9 +343,12 @@ function Footer() {
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[color:var(--rd-paper)]/14 px-3 py-1 font-medium text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+                aria-label={item.label}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
               >
-                {item.label}
+                <span className="text-[10px] font-semibold uppercase tracking-[0.16em]">
+                  {item.label.slice(0, 2)}
+                </span>
               </a>
             ))}
           </div>
