@@ -32,36 +32,74 @@ export function OrderButton({ label = 'Order now', className = '' }: { label?: s
 }
 
 function AgeGate() {
-  const [show, setShow] = useState(false);
+  // Three-phase modal: 'age' (21+ challenge) → 'subscribe' (optional welcome
+  // signup) → closed. Skipping the subscribe step still dismisses the modal.
+  const [phase, setPhase] = useState<'hidden' | 'age' | 'subscribe'>('hidden');
   const [declined, setDeclined] = useState(false);
+
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeMessage, setSubscribeMessage] = useState('');
 
   // sessionStorage per the brief (§4.1) — re-prompt each new session
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setShow(sessionStorage.getItem('rd_age_confirmed') !== 'yes');
+    setPhase(sessionStorage.getItem('rd_age_confirmed') === 'yes' ? 'hidden' : 'age');
   }, []);
+
+  const showing = phase !== 'hidden';
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
-    if (show) {
+    if (showing) {
       const previousOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
         document.body.style.overflow = previousOverflow;
       };
     }
-  }, [show]);
+  }, [showing]);
 
   const confirmAge = () => {
     sessionStorage.setItem('rd_age_confirmed', 'yes');
-    setShow(false);
+    setPhase('subscribe');
   };
 
   const declineAge = () => setDeclined(true);
 
+  const close = () => setPhase('hidden');
+
+  const subscribe = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (subscribeStatus === 'loading' || subscribeStatus === 'success') return;
+    setSubscribeStatus('loading');
+    setSubscribeMessage('');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, phone: phone || undefined, source: 'age-gate-welcome' })
+      });
+      const data = (await res.json()) as { ok: boolean; message?: string; error?: string };
+      if (data.ok) {
+        setSubscribeStatus('success');
+        setSubscribeMessage(data.message ?? "You’re in. Drops incoming.");
+        // Auto-close after a beat so the customer can see the success state.
+        window.setTimeout(close, 1600);
+      } else {
+        setSubscribeStatus('error');
+        setSubscribeMessage(data.error ?? 'Something went wrong.');
+      }
+    } catch {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Network error — try again.');
+    }
+  };
+
   return (
     <AnimatePresence>
-      {show && (
+      {showing && (
         <motion.div
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[color:var(--rd-ink)] p-5 text-[color:var(--rd-text)]"
           initial={{ opacity: 0 }}
@@ -90,59 +128,154 @@ function AgeGate() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-lg text-center"
+            className="relative max-h-[92dvh] w-full max-w-lg overflow-y-auto text-center"
           >
             <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <Image src="/assets/logo.jpg" width={80} height={80} alt="Raindrops Greenery logo" className="h-full w-full object-cover" />
             </div>
 
-            <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
-              <span className="rd-pulse" aria-hidden />
-              21+ only · NYC delivery
-            </p>
-
-            <h2
-              id="agegate-title"
-              className="mt-5 text-[color:var(--rd-text)]"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
-            >
-              Welcome to <span className="italic" style={{ fontWeight: 500 }}>Raindrops NY.</span>
-            </h2>
-
-            {declined ? (
+            {phase === 'age' ? (
               <>
-                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
-                  This website and delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
+                <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+                  <span className="rd-pulse" aria-hidden />
+                  21+ only · NYC delivery
                 </p>
-                <div className="mt-7 flex justify-center">
-                  <button
-                    onClick={() => setDeclined(false)}
-                    className="btn-luxe btn-luxe-ghost"
-                  >
-                    Back
-                  </button>
-                </div>
+
+                <h2
+                  id="agegate-title"
+                  className="mt-5 text-[color:var(--rd-text)]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+                >
+                  Welcome to <span className="italic" style={{ fontWeight: 500 }}>Raindrops NY.</span>
+                </h2>
+
+                {declined ? (
+                  <>
+                    <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                      This website and delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
+                    </p>
+                    <div className="mt-7 flex justify-center">
+                      <button
+                        onClick={() => setDeclined(false)}
+                        className="btn-luxe btn-luxe-ghost"
+                      >
+                        Back
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                      This site is intended for adults 21 and older. By entering you confirm that you are 21+ and accept our{' '}
+                      <Link href="/legal/terms" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Terms</Link> and{' '}
+                      <Link href="/legal/privacy" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Privacy Policy</Link>.
+                    </p>
+                    <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                      <button onClick={confirmAge} className="btn-luxe btn-luxe-gold">
+                        I am 21 or older
+                      </button>
+                      <button onClick={declineAge} className="btn-luxe btn-luxe-ghost">
+                        I am under 21
+                      </button>
+                    </div>
+                  </>
+                )}
+                <p className="mt-8 rd-eyebrow text-[color:var(--rd-text-mute)]">
+                  Keep cannabis out of reach of children and pets.
+                </p>
               </>
             ) : (
+              // Phase 2 — optional welcome subscribe
               <>
-                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
-                  This site is intended for adults 21 and older. By entering you confirm that you are 21+ and accept our{' '}
-                  <Link href="/legal/terms" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Terms</Link> and{' '}
-                  <Link href="/legal/privacy" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Privacy Policy</Link>.
+                <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+                  <span className="rd-pulse" aria-hidden />
+                  Welcome aboard
                 </p>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  <button onClick={confirmAge} className="btn-luxe btn-luxe-gold">
-                    I am 21 or older
+
+                <h2
+                  id="agegate-title"
+                  className="mt-5 text-[color:var(--rd-text)]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+                >
+                  Be first to know <span className="italic" style={{ fontWeight: 500 }}>about new drops.</span>
+                </h2>
+                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                  Exclusive deals, sticky strain drops, and members-only previews. Phone optional — we’ll text major restocks only.
+                </p>
+
+                <form
+                  onSubmit={subscribe}
+                  className="mx-auto mt-7 grid w-full max-w-md gap-3 text-left"
+                  aria-label="Welcome newsletter signup"
+                >
+                  <label className="grid gap-1.5">
+                    <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Email</span>
+                    <input
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      required
+                      disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder="your@email.com"
+                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
+                    />
+                  </label>
+                  <label className="grid gap-1.5">
+                    <span className="rd-eyebrow flex items-center justify-between text-[color:var(--rd-text-mute)]">
+                      Phone <span className="text-[10px] tracking-[0.16em] text-[color:var(--rd-text-mute)]/80">Optional</span>
+                    </span>
+                    <input
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}
+                      value={phone}
+                      onChange={(event) => setPhone(event.target.value)}
+                      placeholder="(555) 123-4567"
+                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
+                    />
+                  </label>
+
+                  <button
+                    type="submit"
+                    disabled={subscribeStatus === 'loading' || subscribeStatus === 'success'}
+                    className="btn-luxe btn-luxe-gold mt-2 w-full justify-center disabled:opacity-70"
+                  >
+                    {subscribeStatus === 'loading'
+                      ? 'Sending…'
+                      : subscribeStatus === 'success'
+                        ? '✓ Subscribed'
+                        : 'Subscribe & enter site'}
                   </button>
-                  <button onClick={declineAge} className="btn-luxe btn-luxe-ghost">
-                    I am under 21
-                  </button>
-                </div>
+
+                  {subscribeMessage && (
+                    <p
+                      role={subscribeStatus === 'error' ? 'alert' : 'status'}
+                      className={`text-sm ${
+                        subscribeStatus === 'success'
+                          ? 'text-[color:var(--rd-glow)]'
+                          : 'text-[color:var(--rd-amber)]'
+                      }`}
+                    >
+                      {subscribeMessage}
+                    </p>
+                  )}
+                </form>
+
+                <button
+                  onClick={close}
+                  className="mt-5 rd-eyebrow text-[color:var(--rd-text-mute)] underline-offset-4 transition hover:text-[color:var(--rd-text-dim)] hover:underline"
+                >
+                  Skip for now
+                </button>
+
+                <p className="mt-6 rd-eyebrow text-[color:var(--rd-text-mute)]">
+                  Unsubscribe anytime · 21+ only
+                </p>
               </>
             )}
-            <p className="mt-8 rd-eyebrow text-[color:var(--rd-text-mute)]">
-              Keep cannabis out of reach of children and pets.
-            </p>
           </motion.div>
         </motion.div>
       )}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { ArrowRight, Check, Clock, Mail, MessageSquare, Phone, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Check, Clock, Copy, Mail, MessageSquare, Phone, ShieldCheck } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { business, social } from '@/lib/site-data';
@@ -30,6 +30,7 @@ function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; l
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [topic, setTopic] = useState(topics[0]);
@@ -38,11 +39,26 @@ export default function ContactPage() {
   const send = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const subject = encodeURIComponent(`[${topic}] Raindrops NY — ${name}`);
-    const body = encodeURIComponent(`${message}\n\nFrom: ${name} (${email})`);
+    const body = encodeURIComponent(
+      `${message}\n\n— — —\nFrom: ${name} <${email}>\nTopic: ${topic}\nSent via raindropsgreeneryny.com contact form`
+    );
     if (typeof window !== 'undefined') {
+      // Opens the customer's default email client with a pre-filled message
+      // addressed to nycraindrops@gmail.com.
       window.location.href = `${business.emailHref}?subject=${subject}&body=${body}`;
     }
     setSent(true);
+  };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(business.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // Clipboard unavailable — silent fallback (the address is still
+      // displayed inline so the customer can long-press to copy).
+    }
   };
 
   const inputClass =
@@ -129,19 +145,58 @@ export default function ContactPage() {
                 type="submit"
                 className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
               >
-                Send message
+                Send to {business.email}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
               </button>
-              {sent && (
-                <span className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
-                  <Check className="h-4 w-4" />
-                  Your email app opened.
-                </span>
-              )}
+              <button
+                type="button"
+                onClick={copyEmail}
+                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
+                aria-label={`Copy ${business.email} to clipboard`}
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-4 w-4 text-[color:var(--rd-glow)]" />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-4 w-4" />
+                    Copy email
+                  </>
+                )}
+              </button>
             </div>
 
+            {sent && (
+              <div className="mt-5 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
+                <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
+                  <Check className="h-4 w-4" />
+                  Your email app should open
+                </p>
+                <p className="mt-2 text-[color:var(--rd-text-dim)]">
+                  If nothing opened, email us directly at{' '}
+                  <a
+                    href={business.emailHref}
+                    className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4"
+                  >
+                    {business.email}
+                  </a>{' '}
+                  or tap <span className="font-medium text-[color:var(--rd-text)]">Copy email</span> above.
+                </p>
+              </div>
+            )}
+
             <p className="mt-5 text-xs leading-6 text-[color:var(--rd-text-mute)]">
-              Please do not include payment information. For order issues, call {business.phone} or email {business.email}.
+              Please do not include payment information. For order issues, call{' '}
+              <a href={business.phoneHref} className="underline underline-offset-4 hover:text-[color:var(--rd-text-dim)]">
+                {business.phone}
+              </a>{' '}
+              or email{' '}
+              <a href={business.emailHref} className="underline underline-offset-4 hover:text-[color:var(--rd-text-dim)]">
+                {business.email}
+              </a>
+              .
             </p>
           </form>
 

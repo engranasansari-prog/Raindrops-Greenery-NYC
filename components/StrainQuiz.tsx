@@ -104,10 +104,19 @@ const THC_CEILING: Record<LevelTag, number> = {
 };
 
 /**
- * V8.1 — Map the four quiz answers to a scored shortlist of three real
- * products from the live menu. Scoring is intentionally lightweight; it
- * favors strain profile first, then format, then a THC fit against the
- * customer's experience level. Works against the 44-product V8 dataset.
+ * V8.2 — Map the four quiz answers to a scored shortlist of three real
+ * products from the live menu.
+ *
+ * Hard constraints:
+ *   - If format !== 'Any', only products in that category are eligible.
+ *     (The customer explicitly said "Edibles" — don't hand them Flower.)
+ *
+ * Soft scoring (within the eligible pool):
+ *   - Strain target (sativa/indica/hybrid) from feel + window
+ *   - THC sweet-spot against the experience-level ceiling
+ *   - ✦ STICKY bonus / penalty depending on experience
+ *
+ * Works against the 44-product V8 dataset.
  */
 function recommend(answers: Answers): LiveMenuProduct[] {
   if (!answers.feel || !answers.window || !answers.format || !answers.level) return [];
@@ -121,6 +130,16 @@ function recommend(answers: Answers): LiveMenuProduct[] {
 
   const ceiling = THC_CEILING[answers.level];
 
+  // Hard format filter — never violate the customer's explicit pick.
+  const pool =
+    answers.format === 'Any'
+      ? menuProducts
+      : menuProducts.filter((product) => product.category === answers.format);
+
+  // Safety: if the pool is empty (shouldn't happen with the V8 catalog,
+  // but be defensive), fall back to the full menu so we still show three.
+  const eligible = pool.length > 0 ? pool : menuProducts;
+
   const score = (product: LiveMenuProduct): number => {
     let s = 0;
     const profile = inferProfile(product).toLowerCase();
@@ -130,10 +149,6 @@ function recommend(answers: Answers): LiveMenuProduct[] {
     if (tag.includes(target)) s += 5;
     else if (profile.includes(target)) s += 4;
     else if (profile.includes('hybrid')) s += 2;
-
-    // Format fit (0–4) — "Any" still rewards the matched profile.
-    if (answers.format === 'Any') s += 1;
-    else if (product.category === answers.format) s += 4;
 
     // THC fit vs. experience level
     const thc = getPrimaryPotency(product);
@@ -152,7 +167,7 @@ function recommend(answers: Answers): LiveMenuProduct[] {
     return s;
   };
 
-  return menuProducts
+  return eligible
     .map((product) => ({ product, s: score(product) }))
     .sort((a, b) => b.s - a.s || a.product.name.localeCompare(b.product.name))
     .slice(0, 3)
@@ -242,7 +257,7 @@ export default function StrainQuiz() {
       </section>
 
       {/* Quiz body */}
-      <section className="bg-[color:var(--rd-ink)] pb-20 text-[color:var(--rd-text)] sm:pb-24">
+      <section className="overflow-hidden bg-[color:var(--rd-ink)] pb-20 text-[color:var(--rd-text)] sm:pb-24">
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
             {!finished && current ? (
@@ -319,24 +334,27 @@ export default function StrainQuiz() {
                 transition={{ duration: 0.6, ease: easeOut }}
               >
                 <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-                  <div>
+                  <div className="min-w-0">
                     <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                       <Check className="h-3.5 w-3.5" />
                       Matched
                     </p>
-                    <h2 className="mt-3 text-[color:var(--rd-text)]">
+                    <h2 className="mt-3 break-words text-[color:var(--rd-text)]">
                       Three drops <span className="italic">picked for you.</span>
                     </h2>
-                    <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
-                      Based on{' '}
-                      <span className="text-[color:var(--rd-glow)]">{answers.feel?.toLowerCase()}</span>
-                      {' · '}
-                      <span className="text-[color:var(--rd-glow)]">{answers.window?.toLowerCase()}</span>
-                      {' · '}
-                      <span className="text-[color:var(--rd-glow)]">{answers.format?.toLowerCase()}</span>
-                      {' · '}
-                      <span className="text-[color:var(--rd-glow)]">{answers.level?.toLowerCase()}</span>.
-                    </p>
+                    {/* Chip row instead of inline sentence — wraps cleanly on mobile */}
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {[answers.feel, answers.window, answers.format, answers.level]
+                        .filter(Boolean)
+                        .map((value) => (
+                          <span
+                            key={value as string}
+                            className="inline-flex items-center rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+                          >
+                            {value}
+                          </span>
+                        ))}
+                    </div>
                   </div>
                   <button
                     type="button"
@@ -353,7 +371,7 @@ export default function StrainQuiz() {
                     No exact matches in stock right now — open the full menu to keep browsing.
                   </div>
                 ) : (
-                  <div className="mt-10 grid gap-5 md:grid-cols-3">
+                  <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {results.map((product, i) => {
                       const strain = getStrainTag(product);
                       const tint = STRAIN_BADGE[strain];
@@ -369,25 +387,28 @@ export default function StrainQuiz() {
                         >
                           <Link
                             href={`/menu?product=${encodeURIComponent(product.id)}`}
-                            className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.20)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
+                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.20)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
                           >
-                            <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
+                            <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--rd-paper-soft)]">
                               {product.image && (
                                 <Image
                                   src={product.image}
                                   alt={product.name}
                                   fill
                                   unoptimized
-                                  sizes="(max-width: 768px) 100vw, 33vw"
+                                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                   className="object-contain p-6 transition-transform duration-[1400ms] [transition-timing-function:var(--ease-out)] group-hover:scale-[1.05]"
                                 />
                               )}
-                              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] shadow-sm [font-family:var(--font-mono)]">
-                                #{i + 1} match
-                              </span>
-                              <span className={`absolute right-3 top-3 inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${tint}`}>
-                                {strain}
-                              </span>
+                              {/* Badges stacked in one column to avoid mobile collision */}
+                              <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+                                <span className="inline-flex w-fit items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] shadow-sm [font-family:var(--font-mono)]">
+                                  #{i + 1} match
+                                </span>
+                                <span className={`inline-flex w-fit items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${tint}`}>
+                                  {strain}
+                                </span>
+                              </div>
                             </div>
                             <div className="flex flex-1 flex-col p-5">
                               <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
