@@ -467,6 +467,18 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery on orders over $25.',
       primary: { label: 'Check coverage', href: '#coverage' },
       secondary: { label: 'Shop deals', href: '/deals' }
+    },
+    {
+      // V14 — Edibles hero (client request, May 2026). Pure image, no
+      // overlay copy. Client wanted the product photography to speak for
+      // itself; HeroSlider.tsx renders imageOnly slides with only a thin
+      // top/bottom fade so the photo reads clean while nav + dots stay
+      // legible.
+      id: 'edibles',
+      image: '/assets/heroimageedibles.png',
+      imageAlt: 'Raindrops Greenery premium edibles — gummies and chocolates from our NYC delivery menu',
+      imagePosition: 'center',
+      imageOnly: true
     }
   ];
 

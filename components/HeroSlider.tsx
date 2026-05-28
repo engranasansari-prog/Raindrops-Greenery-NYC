@@ -13,12 +13,20 @@ export type HeroSlide = {
   imageAlt: string;
   /** Object-position tuned per-slide so the subject stays visible on phones */
   imagePosition?: string;
-  eyebrow: string;
+  /**
+   * "Pure image" slides — when true, the content layer (eyebrow / headline /
+   * subtext / CTAs / compliance line) is skipped entirely and the heavy
+   * gradient overlay is replaced with a feather-light bottom-only fade so
+   * the image reads clean (client request for the edibles slide). Dots +
+   * arrows still navigate.
+   */
+  imageOnly?: boolean;
   /** Plain headline text; if `headlineAccent` is set, that substring is styled in --rd-glow */
-  headline: string;
+  eyebrow?: string;
+  headline?: string;
   /** Optional substring of `headline` to emphasize with the glow accent + heavier weight */
   headlineAccent?: string;
-  subtext: string;
+  subtext?: string;
   primary?: { label: string; href?: string; onClick?: () => void };
   secondary?: { label: string; href?: string; onClick?: () => void };
 };
@@ -141,10 +149,26 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               Desktop overlay (sm and up) preserves the original cinematic
               horizontal gradient so the right-side image art remains
               visible in the wider desktop layout. */}
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.88)_0%,rgba(19,36,29,0.78)_55%,rgba(19,36,29,0.92)_100%)] sm:hidden" />
-            <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
-            {/* Bottom fade for nav-content seam */}
-            <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
+            {/*
+              Two overlay tracks:
+              • Default slide → heavy gradient so the headline + CTAs read.
+              • imageOnly slide → near-transparent, just enough fade at the
+                top/bottom for nav + dots to stay legible without dimming
+                the photo (client wanted the edibles image clean).
+            */}
+            {slide.imageOnly ? (
+              <>
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[color:var(--rd-ink)]/55 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[color:var(--rd-ink)]/65 to-transparent" />
+              </>
+            ) : (
+              <>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.88)_0%,rgba(19,36,29,0.78)_55%,rgba(19,36,29,0.92)_100%)] sm:hidden" />
+                <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
+                {/* Bottom fade for nav-content seam */}
+                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
+              </>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -152,73 +176,90 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       {/* Layer 2: drifting smoke (lightweight, respects reduced motion) */}
       <SmokeLayer />
 
-      {/* Layer 3: slide content */}
-      <div className="luxury-shell relative z-10 grid min-h-[440px] items-center py-12 sm:min-h-[560px] sm:py-16 md:min-h-[640px] md:py-20 lg:min-h-[80vh]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.65, ease: easeOut }}
-            className="max-w-3xl"
-          >
-            {/* Eyebrow with live pulse */}
+      {/* Layer 3: slide content — skipped for imageOnly slides. The empty
+          spacer div preserves the section's min-height so the slider doesn't
+          collapse between a content slide and an image-only slide. */}
+      {slide.imageOnly ? (
+        <div
+          className="relative z-10 min-h-[440px] sm:min-h-[560px] md:min-h-[640px] lg:min-h-[80vh]"
+          aria-label={slide.imageAlt}
+        />
+      ) : (
+        <div className="luxury-shell relative z-10 grid min-h-[440px] items-center py-12 sm:min-h-[560px] sm:py-16 md:min-h-[640px] md:py-20 lg:min-h-[80vh]">
+          <AnimatePresence mode="wait">
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
+              key={slide.id}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
-              className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-3.5 py-1.5 backdrop-blur-sm"
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.65, ease: easeOut }}
+              className="max-w-3xl"
             >
-              <span className="rd-pulse motion-safe:[animation-play-state:running]" aria-hidden />
-              <span className="rd-eyebrow text-[color:var(--rd-text)]">{slide.eyebrow}</span>
+              {/* Eyebrow with live pulse */}
+              {slide.eyebrow && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
+                  className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-3.5 py-1.5 backdrop-blur-sm"
+                >
+                  <span className="rd-pulse motion-safe:[animation-play-state:running]" aria-hidden />
+                  <span className="rd-eyebrow text-[color:var(--rd-text)]">{slide.eyebrow}</span>
+                </motion.div>
+              )}
+
+              {/* Headline — Fraunces with mixed weight per brief */}
+              {slide.headline && (
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
+                  className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[5.5rem]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+                >
+                  {renderHeadline(slide.headline, slide.headlineAccent)}
+                </motion.h1>
+              )}
+
+              {/* Subtext */}
+              {slide.subtext && (
+                <motion.p
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.21, ease: easeOut }}
+                  className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8 md:text-xl"
+                >
+                  {slide.subtext}
+                </motion.p>
+              )}
+
+              {/* CTAs */}
+              {(slide.primary || slide.secondary) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.29, ease: easeOut }}
+                  className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+                >
+                  {slide.primary && <SlideCta {...slide.primary} variant="gold" />}
+                  {slide.secondary && <SlideCta {...slide.secondary} variant="ghost" />}
+                </motion.div>
+              )}
+
+              {/* Compliance footer line */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
+                className="mt-10 flex items-center gap-3"
+              >
+                <span className="h-px w-12 bg-[color:var(--rd-paper)]/24" />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">21+ · NYC only · While supplies last</span>
+              </motion.div>
             </motion.div>
-
-            {/* Headline — Fraunces with mixed weight per brief */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
-              className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[5.5rem]"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
-            >
-              {renderHeadline(slide.headline, slide.headlineAccent)}
-            </motion.h1>
-
-            {/* Subtext */}
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.21, ease: easeOut }}
-              className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8 md:text-xl"
-            >
-              {slide.subtext}
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.29, ease: easeOut }}
-              className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
-            >
-              {slide.primary && <SlideCta {...slide.primary} variant="gold" />}
-              {slide.secondary && <SlideCta {...slide.secondary} variant="ghost" />}
-            </motion.div>
-
-            {/* Compliance footer line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
-              className="mt-10 flex items-center gap-3"
-            >
-              <span className="h-px w-12 bg-[color:var(--rd-paper)]/24" />
-              <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">21+ · NYC only · While supplies last</span>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          </AnimatePresence>
+        </div>
+      )}
 
       {/* Layer 4: controls */}
       {slides.length > 1 && (

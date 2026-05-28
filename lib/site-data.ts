@@ -146,7 +146,7 @@ export const steps = [
 export const valueProps = [
   {
     title: 'Tax-free',
-    body: 'Sovereign Shinnecock authority — no NY State cannabis excise or sales tax. The price on the card is the price at the door.'
+    body: 'At Shinnecock Indian Nation sovereign tribal laws allow us to operate independently on tribal land, which means New York State cannabis retail taxes are not applied the same way they are at state-licensed dispensaries. That allows us to offer legally regulated, lab-tested cannabis products without the additional state cannabis taxes customers typically pay elsewhere.'
   },
   {
     title: 'Free delivery',
@@ -154,11 +154,15 @@ export const valueProps = [
   },
   {
     title: 'Sticky icky',
-    body: 'Top-shelf flower hand-picked for resin. We carry strains we’d order ourselves — and we tell you the truth about them.'
+    body: 'Sticky Icky (noun) — The loudest flower in the room. Extra sticky, extra frosty, extra funky cannabis that clings to your fingers, fills the air instantly, and lets everyone know exactly what time it is. 🌿🔥'
   },
   {
-    title: 'Discreet & professional',
-    body: '21+ ID verified at the door. Courteous drivers, short and clean hand-offs.'
+    // V14 — client renamed the "Discreet & professional" card to "Premium"
+    // and supplied this boutique-cultivation copy. Keeps the 2×2 card grid
+    // intact while shifting the fourth value prop from a service-promise to
+    // a craft-cultivation message that matches their brand voice.
+    title: 'Premium',
+    body: 'At Raindrops we take a boutique cultivation approach focused on craftsmanship, terpene preservation, and small-batch quality rather than large-scale commercial output. Our cannabis is carefully grown in-house with close attention to every stage of the plant’s life cycle. Unlike many mass commercial grows built around volume and speed, our focus is on quality, consistency, and growing cannabis with real character.'
   }
 ];
 

@@ -236,16 +236,32 @@ export const CENTROID_GEOJSON = {
   }))
 };
 
-// Tile source — Carto's Dark Matter basemap with labels disabled, so we
-// can render our own typography on top in the brand voice.
-// Previously this used `dark_all` which baked in OSM labels in a muted
-// gray that competed with the polygon overlays. With 7 cluster polygons
-// stacked on Manhattan at 30%+ opacity, the underlying neighborhood and
-// landmark labels were unreadable — the client correctly read this as
-// "I can't see Manhattan." We use `dark_nolabels` and overlay our own
-// stronger, brand-colored labels in CoverageLiveMap.
-// No API key required.
+// Tile source — Carto's Voyager basemap (V14, May 2026).
+//
+// History:
+// • V9  → `dark_all`       (dark, baked-in gray labels that fought polygons)
+// • V11 → `dark_nolabels`  (cleaner, but read as "very dark" to the client
+//                           and required shipping custom borough labels)
+// • V14 → `voyager`        ← current
+//
+// Voyager is Carto's premium reference basemap — soft cream land, muted
+// sage parks, tinted water, and crisp built-in typography for boroughs,
+// neighborhoods, and major streets. The result feels closer to a polished
+// Google-Maps-style preview than the previous cinematic dark look. Our
+// per-ZIP polygons read as a coverage overlay on top of a real map
+// instead of dominating a flat dark canvas, which fixes the "crowded
+// squares" complaint without redrawing 32 hand-tuned polygons.
+//
+// Side effects handled in CoverageLiveMap:
+// • Custom borough labels (MANHATTAN/BROOKLYN/…) are removed — Voyager
+//   already ships them.
+// • Cluster/ZIP label text colors flip from cream-on-dark to ink-on-cream
+//   so they read against the lighter basemap.
+// • Polygon fills + outlines are softened so they tint the map rather
+//   than blanket it.
+//
+// No API key required. © OpenStreetMap, © CARTO.
 export const TILE_URL =
-  'https://basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}@2x.png';
+  'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png';
 export const TILE_ATTRIBUTION =
   '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>';

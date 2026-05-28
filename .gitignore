@@ -25,3 +25,5 @@ Thumbs.db
 exports/
 
 .next-start.log
+
+.vercel

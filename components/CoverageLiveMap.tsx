@@ -47,14 +47,17 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       style: {
         version: 8,
         sources: {
-          'carto-dark': {
+          // V14 — Carto Voyager basemap. Source/layer id kept as
+          // `carto-base` (renamed from the legacy `carto-dark`) so future
+          // greps land somewhere sensible.
+          'carto-base': {
             type: 'raster',
             tiles: [TILE_URL],
             tileSize: 256,
             attribution: TILE_ATTRIBUTION
           }
         },
-        layers: [{ id: 'carto-dark', type: 'raster', source: 'carto-dark' }]
+        layers: [{ id: 'carto-base', type: 'raster', source: 'carto-base' }]
       },
       // Use bounds instead of fixed center/zoom so the entire delivery
       // footprint is visible on first paint regardless of viewport size.
@@ -88,6 +91,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       // 0.22 default → 0.50 active (when the parent cluster is selected)
       // that we tuned for the cluster blobs.
       map.addSource('zips', { type: 'geojson', data: ZIP_FILL_GEOJSON });
+      // V14 — Polygon fills are tuned down (0.22→0.16 default, 0.50→0.38
+      // active) so the Voyager basemap reads clearly through them.
+      // Polygons now feel like coverage hints, not blanket fills.
       map.addLayer({
         id: 'cluster-fill',
         type: 'fill',
@@ -97,31 +103,35 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'fill-opacity': [
             'case',
             ['==', ['get', 'clusterId'], activeCluster ?? ''],
-            0.50,
-            0.22
+            0.38,
+            0.16
           ]
         }
       });
-      // Lime outlines per ZIP — slightly thinner than the old cluster
-      // outline since each ZIP polygon is smaller. Active cluster's ZIPs
-      // get the heavier line.
+      // V14 — Polygon outlines use the brand sage rather than full lime
+      // so they tie back to the cluster fill colors instead of stamping a
+      // neon ring on a soft basemap. Widths also dropped (0.8 default,
+      // 1.8 active) to feel finer against Voyager's typography.
       map.addLayer({
         id: 'cluster-outline',
         type: 'line',
         source: 'zips',
         paint: {
-          'line-color': '#C8E66E',
+          'line-color': '#5B8C6E',
           'line-width': [
             'case',
             ['==', ['get', 'clusterId'], activeCluster ?? ''],
-            2.2,
-            1.1
+            1.8,
+            0.8
           ],
-          'line-opacity': 0.85
+          'line-opacity': 0.7
         }
       });
 
-      // Centroid markers — lime ring + dot
+      // V14 — Centroid pins re-tuned for the light Voyager basemap.
+      // Ring fill drops to a near-white tint so the lime stroke reads
+      // crisp, dot picks up the brand-ink center for a tighter "drop pin"
+      // silhouette against cream land.
       map.addSource('centroids', { type: 'geojson', data: CENTROID_GEOJSON });
       map.addLayer({
         id: 'centroid-ring',
@@ -134,9 +144,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
             16,
             11
           ],
-          'circle-color': 'rgba(200,230,110,0.18)',
-          'circle-stroke-color': '#C8E66E',
-          'circle-stroke-width': 1.5
+          'circle-color': 'rgba(255,255,255,0.85)',
+          'circle-stroke-color': '#4A7A5C',
+          'circle-stroke-width': 2
         }
       });
       map.addLayer({
@@ -145,58 +155,25 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         source: 'centroids',
         paint: {
           'circle-radius': 4,
-          'circle-color': '#C8E66E'
+          'circle-color': '#13241D'
         }
       });
-      // Borough labels — large, dim, set well below the cluster pins so
-      // they orient the viewer ("oh, that's Manhattan") without competing
-      // with the neighborhood pin labels. Rendered first (bottom of the
-      // stack visually) and at a tracked uppercase mono treatment so they
-      // read as a geographic anchor, not interactive content. This is the
-      // "I can't see Manhattan" fix — the dark basemap with no built-in
-      // labels needs our own borough markers to be legible.
-      map.addSource('boroughs', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            { type: 'Feature', properties: { name: 'MANHATTAN' }, geometry: { type: 'Point', coordinates: [-73.998, 40.785] } },
-            { type: 'Feature', properties: { name: 'BROOKLYN' }, geometry: { type: 'Point', coordinates: [-73.944, 40.708] } },
-            { type: 'Feature', properties: { name: 'QUEENS' }, geometry: { type: 'Point', coordinates: [-73.870, 40.755] } },
-            { type: 'Feature', properties: { name: 'NEW JERSEY' }, geometry: { type: 'Point', coordinates: [-74.060, 40.738] } }
-          ]
-        }
-      });
-      map.addLayer({
-        id: 'borough-label',
-        type: 'symbol',
-        source: 'boroughs',
-        layout: {
-          'text-field': ['get', 'name'],
-          'text-font': ['literal', ['Open Sans Bold', 'Arial Unicode MS Bold']],
-          'text-size': 16,
-          'text-letter-spacing': 0.22,
-          'text-allow-overlap': true,
-          'text-ignore-placement': true
-        },
-        paint: {
-          'text-color': 'rgba(240, 232, 210, 0.42)',
-          'text-halo-color': 'rgba(19, 36, 29, 0.85)',
-          'text-halo-width': 1.6
-        }
-      });
+      // V14 — Custom borough labels removed. Voyager ships its own
+      // typography for MANHATTAN / BROOKLYN / QUEENS / NEW JERSEY, so
+      // stamping our own on top would have produced duplicate labels.
+      // (Legacy borough source/layer lived here under the dark_nolabels
+      // tileset — see git history if you need the coords.)
 
-      // Per-ZIP labels — small lime mono text at each ZIP's centroid.
-      // Zoom-gated via the layout filter so labels only appear when
-      // the customer has zoomed in close enough to see neighborhoods
-      // clearly (≥ zoom 11.5). At wider zooms they auto-hide so the
-      // map doesn't feel cluttered.
+      // V14 — Per-ZIP labels are bumped a level higher (minzoom 11.5 →
+      // 12) so they only show once the user has zoomed in past the
+      // neighborhood view. Text shifts from lime-on-dark to deep ink
+      // with a cream halo to read against Voyager's light land tiles.
       map.addSource('zip-labels', { type: 'geojson', data: ZIP_LABEL_GEOJSON });
       map.addLayer({
         id: 'zip-label',
         type: 'symbol',
         source: 'zip-labels',
-        minzoom: 11.5,
+        minzoom: 12,
         layout: {
           'text-field': ['get', 'zip'],
           'text-font': ['literal', ['Open Sans Semibold', 'Arial Unicode MS Bold']],
@@ -206,13 +183,14 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'text-ignore-placement': false
         },
         paint: {
-          'text-color': 'rgba(200, 230, 110, 0.70)',
-          'text-halo-color': 'rgba(19, 36, 29, 0.88)',
-          'text-halo-width': 1.3
+          'text-color': 'rgba(19, 36, 29, 0.82)',
+          'text-halo-color': 'rgba(240, 232, 210, 0.95)',
+          'text-halo-width': 1.5
         }
       });
 
-      // Neighborhood + ETA labels for each cluster pin.
+      // V14 — Neighborhood + ETA pin labels flip from cream-on-dark to
+      // ink-on-cream so they pop against Voyager's land color.
       map.addLayer({
         id: 'centroid-label',
         type: 'symbol',
@@ -233,9 +211,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'text-size': 12
         },
         paint: {
-          'text-color': '#F0E8D2',
-          'text-halo-color': 'rgba(19,36,29,0.92)',
-          'text-halo-width': 1.6
+          'text-color': '#13241D',
+          'text-halo-color': 'rgba(240, 232, 210, 0.96)',
+          'text-halo-width': 1.8
         }
       });
 
@@ -250,19 +228,20 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       // self-hosted OSRM instance to do correctly; out of scope
       // for v1 launch.
 
-      // Subtle soft-glow outline on each ZIP — fakes a feathered
-      // edge so the polygons feel less rigidly geometric. Drawn
-      // ABOVE the polygon fills but BELOW the labels so labels stay
-      // crisp on top.
+      // V14 — Soft-glow outline tuned for the lighter basemap. The blur
+      // is widened (6 → 8) and the color shifts from lime to the brand
+      // sage so the feathered edge harmonizes with the cluster fills and
+      // Voyager's cream/sage palette instead of stamping a neon halo on
+      // a soft basemap.
       map.addLayer({
         id: 'zip-glow',
         type: 'line',
         source: 'zips',
         paint: {
-          'line-color': '#C8E66E',
-          'line-width': 5,
-          'line-opacity': 0.10,
-          'line-blur': 6
+          'line-color': '#5B8C6E',
+          'line-width': 6,
+          'line-opacity': 0.18,
+          'line-blur': 8
         }
       });
 
@@ -315,22 +294,21 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     if (!map || !ready.current) return;
 
     if (map.getLayer('cluster-fill')) {
-      // V11 — the fill layer now reads from the per-ZIP source; key on
-      // `clusterId` not `id`. Active cluster's ZIPs pop at 0.50; the
-      // rest stay at the calm 0.22 default so the basemap reads through.
+      // V14 — Tuned to the lighter Voyager basemap: 0.16 default → 0.38
+      // active so the brand fills tint the map without blanketing it.
       map.setPaintProperty('cluster-fill', 'fill-opacity', [
         'case',
         ['==', ['get', 'clusterId'], activeCluster ?? ''],
-        0.50,
-        0.22
+        0.38,
+        0.16
       ]);
     }
     if (map.getLayer('cluster-outline')) {
       map.setPaintProperty('cluster-outline', 'line-width', [
         'case',
         ['==', ['get', 'clusterId'], activeCluster ?? ''],
-        2.2,
-        1.1
+        1.8,
+        0.8
       ]);
     }
     if (map.getLayer('centroid-ring')) {
