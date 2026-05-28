@@ -177,9 +177,16 @@ export const CENTROID_GEOJSON = {
   }))
 };
 
-// Tile source — Carto's free dark basemap. No API key required.
-// Attribution is rendered by MapLibre's default control.
+// Tile source — Carto's Dark Matter basemap with labels disabled, so we
+// can render our own typography on top in the brand voice.
+// Previously this used `dark_all` which baked in OSM labels in a muted
+// gray that competed with the polygon overlays. With 7 cluster polygons
+// stacked on Manhattan at 30%+ opacity, the underlying neighborhood and
+// landmark labels were unreadable — the client correctly read this as
+// "I can't see Manhattan." We use `dark_nolabels` and overlay our own
+// stronger, brand-colored labels in CoverageLiveMap.
+// No API key required.
 export const TILE_URL =
-  'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}@2x.png';
+  'https://basemaps.cartocdn.com/rastertiles/dark_nolabels/{z}/{x}/{y}@2x.png';
 export const TILE_ATTRIBUTION =
   '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>';

@@ -565,34 +565,40 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
-        <div className="luxury-shell relative grid gap-10 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
+          {/*
+            Brand logo loop — promoted to the TOP of the hero, horizontally
+            centered, spanning the full width above the 2-column grid.
+            Sits like a wax-seal stamp at the head of the page — the
+            canonical luxury menu pattern (Eleven Madison Park, Le Bernardin,
+            high-end boutique sites). Originally placed in the left column
+            beside the heading, which made the right column's 3 category
+            buttons feel light by comparison; this hierarchy balances the
+            composition: ceremonial logo at the top, two equal columns
+            (text + categories) below.
+
+            Square 368×368 source displayed at 112px (mobile) / 128px
+            (desktop) — pixel-sharp on retina, soft circular frame with
+            faint lime ring + drop shadow.
+          */}
+          <div className="mb-8 flex justify-center sm:mb-10">
+            <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(200,230,110,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src="/assets/brand/raindrops-logo.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
-            {/*
-              Brand logo loop — a 6-second seal that sits above the heading
-              and gives the menu hero a touch of motion identity without
-              competing with the headline. Square 368×368 source displayed
-              at 112px (mobile) / 128px (desktop) so it's pixel-sharp on
-              retina, and contained in a soft circular frame with a faint
-              glow ring matching the lime accent used elsewhere in the
-              section. Respects prefers-reduced-motion via the global
-              rule in globals.css (animations-disabled fallback shows
-              the static first frame).
-            */}
-            <div className="mt-6 inline-flex items-center justify-center sm:mt-7">
-              <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(200,230,110,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
-                  src="/assets/brand/raindrops-logo.mp4"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-hidden="true"
-                />
-              </div>
-            </div>
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops NY menu</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
               Flower Strains, Pre-Rolls, <span className="italic">and Edibles.</span>
@@ -635,6 +641,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               );
             })}
           </div>
+          </div>
         </div>
       </section>
 
@@ -676,16 +683,25 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               </div>
             </div>
 
-            {/* Contextual filter set — per client review (V9). Each filter
-                only renders for the categories where it actually narrows the
-                catalog. Keeps the UX clean and avoids dead controls.
-                  All       → Profile · Size · Sort · Price · (THC hidden)
+            {/* Contextual filter set — per client review (V9 + V10). Each
+                filter only renders for the categories where it actually
+                narrows the catalog. Keeps the UX clean and avoids dead
+                controls.
+                  All       → Profile · Sort · Price · (Size & THC hidden)
                   Flower    → Profile · Size · Sort · Price · Min THC
                   Pre-Rolls → Profile · Sort · Price
-                  Edibles   → Sort · Price                                 */}
+                  Edibles   → Sort · Price
+
+                V10 (client request, May 2026): Size is now Flower-only.
+                Previously visible under "All" too, but in mixed mode
+                only flowers carry meaningful sizes (1.5g pre-rolls are
+                suppressed per V9, edibles all use "Default"). The Size
+                control then narrowed only one of three categories — a
+                dead filter from the customer's point of view. Hiding it
+                in "All" mode makes the filter rail self-consistent. */}
             {(() => {
               const showProfile = category !== 'Edibles';
-              const showSize = category === 'Flower' || category === 'All';
+              const showSize = category === 'Flower';
               const showMinThc = category === 'Flower';
               // Count visible filters to keep grid columns sensible.
               const slots = 2 + Number(showProfile) + Number(showSize) + Number(showMinThc); // sort + price always

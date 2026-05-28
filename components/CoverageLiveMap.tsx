@@ -79,7 +79,12 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     });
 
     map.on('load', () => {
-      // Cluster polygon fills — soft green tint
+      // Cluster polygon fills — soft green tint.
+      // Opacity lowered from 0.34 → 0.22 (default) so the underlying
+      // street network reads through, especially in Manhattan where 5+
+      // adjacent polygons used to stack and obscure the basemap. Active
+      // cluster still pops at 0.50 so the customer's selected zone is
+      // visually unmissable.
       map.addSource('clusters', { type: 'geojson', data: CLUSTER_GEOJSON });
       map.addLayer({
         id: 'cluster-fill',
@@ -90,8 +95,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'fill-opacity': [
             'case',
             ['==', ['get', 'id'], activeCluster ?? ''],
-            0.58,
-            0.34
+            0.50,
+            0.22
           ]
         }
       });
@@ -139,7 +144,45 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'circle-color': '#C8E66E'
         }
       });
-      // Neighborhood + ETA labels
+      // Borough labels — large, dim, set well below the cluster pins so
+      // they orient the viewer ("oh, that's Manhattan") without competing
+      // with the neighborhood pin labels. Rendered first (bottom of the
+      // stack visually) and at a tracked uppercase mono treatment so they
+      // read as a geographic anchor, not interactive content. This is the
+      // "I can't see Manhattan" fix — the dark basemap with no built-in
+      // labels needs our own borough markers to be legible.
+      map.addSource('boroughs', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            { type: 'Feature', properties: { name: 'MANHATTAN' }, geometry: { type: 'Point', coordinates: [-73.998, 40.785] } },
+            { type: 'Feature', properties: { name: 'BROOKLYN' }, geometry: { type: 'Point', coordinates: [-73.944, 40.708] } },
+            { type: 'Feature', properties: { name: 'QUEENS' }, geometry: { type: 'Point', coordinates: [-73.870, 40.755] } },
+            { type: 'Feature', properties: { name: 'NEW JERSEY' }, geometry: { type: 'Point', coordinates: [-74.060, 40.738] } }
+          ]
+        }
+      });
+      map.addLayer({
+        id: 'borough-label',
+        type: 'symbol',
+        source: 'boroughs',
+        layout: {
+          'text-field': ['get', 'name'],
+          'text-font': ['literal', ['Open Sans Bold', 'Arial Unicode MS Bold']],
+          'text-size': 16,
+          'text-letter-spacing': 0.22,
+          'text-allow-overlap': true,
+          'text-ignore-placement': true
+        },
+        paint: {
+          'text-color': 'rgba(240, 232, 210, 0.42)',
+          'text-halo-color': 'rgba(19, 36, 29, 0.85)',
+          'text-halo-width': 1.6
+        }
+      });
+
+      // Neighborhood + ETA labels for each cluster pin.
       map.addLayer({
         id: 'centroid-label',
         type: 'symbol',
@@ -161,8 +204,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         },
         paint: {
           'text-color': '#F0E8D2',
-          'text-halo-color': 'rgba(19,36,29,0.9)',
-          'text-halo-width': 1.4
+          'text-halo-color': 'rgba(19,36,29,0.92)',
+          'text-halo-width': 1.6
         }
       });
 
@@ -209,11 +252,13 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     if (!map || !ready.current) return;
 
     if (map.getLayer('cluster-fill')) {
+      // Keep parity with the initial paint values above — V10 lowered the
+      // defaults so the basemap reads through better in Manhattan.
       map.setPaintProperty('cluster-fill', 'fill-opacity', [
         'case',
         ['==', ['get', 'id'], activeCluster ?? ''],
-        0.58,
-        0.34
+        0.50,
+        0.22
       ]);
     }
     if (map.getLayer('cluster-outline')) {
