@@ -568,6 +568,31 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
         <div className="luxury-shell relative grid gap-10 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
+            {/*
+              Brand logo loop — a 6-second seal that sits above the heading
+              and gives the menu hero a touch of motion identity without
+              competing with the headline. Square 368×368 source displayed
+              at 112px (mobile) / 128px (desktop) so it's pixel-sharp on
+              retina, and contained in a soft circular frame with a faint
+              glow ring matching the lime accent used elsewhere in the
+              section. Respects prefers-reduced-motion via the global
+              rule in globals.css (animations-disabled fallback shows
+              the static first frame).
+            */}
+            <div className="mt-6 inline-flex items-center justify-center sm:mt-7">
+              <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(200,230,110,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src="/assets/brand/raindrops-logo.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops NY menu</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
               Flower Strains, Pre-Rolls, <span className="italic">and Edibles.</span>
