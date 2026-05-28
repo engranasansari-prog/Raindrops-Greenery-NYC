@@ -11,27 +11,7 @@ import {
   ZIP_FILL_GEOJSON,
   ZIP_LABEL_GEOJSON
 } from '@/lib/coverage-geo';
-import { DELIVERY_ROUTES, DRIVER_SPEEDS, TRAIL_LENGTH } from '@/lib/delivery-routes';
-
-type DriverState = {
-  routeIndex: number;
-  segmentIndex: number;
-  progress: number;
-  speed: number;
-  trail: Array<[number, number]>;
-};
-
-/** Build initial driver states staggered across each route so they
- *  don't all start from waypoint 0. */
-function initialDriverStates(): DriverState[] {
-  return DELIVERY_ROUTES.map((route, i) => ({
-    routeIndex: i,
-    segmentIndex: Math.floor(Math.random() * Math.max(1, route.waypoints.length - 1)),
-    progress: Math.random(),
-    speed: DRIVER_SPEEDS[i % DRIVER_SPEEDS.length],
-    trail: []
-  }));
-}
+import { ALL_ZIPS } from '@/lib/coverage';
 
 /**
  * V9 — Single, clean interactive map (MapLibre GL JS, no API key).
@@ -57,7 +37,6 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const ready = useRef(false);
-  const rafRef = useRef<number | null>(null);
 
   // Initialize the map once
   useEffect(() => {
@@ -260,115 +239,32 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         }
       });
 
-      // V11 — Live driver dots animating along predefined NYC routes.
-      // Two layers per driver: a "trail" of the last N positions in
-      // decreasing opacity (motion blur) + the active "dot" with pulse
-      // glow. Sources are empty FeatureCollections at init; the RAF
-      // loop below sets the data each frame.
-      map.addSource('driver-trail', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-      map.addSource('driver-dot',   { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-      // Trails — small lime dots fading back, painted UNDER the active dot.
+      // V13 — Live driver dots removed (May 2026).
+      // The animated dots interpolated in straight lines between
+      // waypoints, which meant they visibly crossed the East River
+      // without a bridge underneath. That broke the "feels real"
+      // illusion and signalled "this is fake animation" — net
+      // negative on credibility. The RAF loop was also the single
+      // highest-CPU thing on the page. Removed both. Road-snapped
+      // drivers would need a paid Mapbox Directions API key OR a
+      // self-hosted OSRM instance to do correctly; out of scope
+      // for v1 launch.
+
+      // Subtle soft-glow outline on each ZIP — fakes a feathered
+      // edge so the polygons feel less rigidly geometric. Drawn
+      // ABOVE the polygon fills but BELOW the labels so labels stay
+      // crisp on top.
       map.addLayer({
-        id: 'driver-trail',
-        type: 'circle',
-        source: 'driver-trail',
+        id: 'zip-glow',
+        type: 'line',
+        source: 'zips',
         paint: {
-          'circle-radius': 2.5,
-          'circle-color': '#C8E66E',
-          'circle-opacity': ['get', 'opacity'],
-          'circle-blur': 0.3
+          'line-color': '#C8E66E',
+          'line-width': 5,
+          'line-opacity': 0.10,
+          'line-blur': 6
         }
       });
-      // Glow halo behind the active dot — slight pulse via paint.
-      map.addLayer({
-        id: 'driver-glow',
-        type: 'circle',
-        source: 'driver-dot',
-        paint: {
-          'circle-radius': 10,
-          'circle-color': 'rgba(200, 230, 110, 0.18)',
-          'circle-blur': 0.7
-        }
-      });
-      // The active driver dot itself — bright lime, sharp.
-      map.addLayer({
-        id: 'driver-dot',
-        type: 'circle',
-        source: 'driver-dot',
-        paint: {
-          'circle-radius': 4.5,
-          'circle-color': '#C8E66E',
-          'circle-stroke-color': 'rgba(19, 36, 29, 0.85)',
-          'circle-stroke-width': 1.4
-        }
-      });
-
-      // Animation loop — interpolates each driver between waypoints,
-      // keeps a short trail, updates both GeoJSON sources every frame.
-      // Respects prefers-reduced-motion: if reduced motion is set,
-      // we render a single static frame and skip the RAF loop.
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const drivers = initialDriverStates();
-      const trailSrc = map.getSource('driver-trail') as maplibregl.GeoJSONSource;
-      const dotSrc = map.getSource('driver-dot') as maplibregl.GeoJSONSource;
-
-      const step = () => {
-        const dotFeatures: GeoJSON.Feature[] = [];
-        const trailFeatures: GeoJSON.Feature[] = [];
-
-        drivers.forEach((d, i) => {
-          const route = DELIVERY_ROUTES[d.routeIndex];
-          const a = route.waypoints[d.segmentIndex];
-          const b = route.waypoints[d.segmentIndex + 1] ?? route.waypoints[0];
-          const lng = a[0] + (b[0] - a[0]) * d.progress;
-          const lat = a[1] + (b[1] - a[1]) * d.progress;
-
-          // Push current position into the trail buffer (oldest drops off).
-          d.trail.push([lng, lat]);
-          if (d.trail.length > TRAIL_LENGTH) d.trail.shift();
-
-          // Emit the active dot feature.
-          dotFeatures.push({
-            type: 'Feature',
-            properties: { id: i },
-            geometry: { type: 'Point', coordinates: [lng, lat] }
-          });
-
-          // Emit the trail features (skip the most recent — that IS the
-          // dot — so the trail starts visually behind the dot).
-          d.trail.slice(0, -1).forEach((pos, t) => {
-            // Older positions are fainter. Opacity decays from 0.35 → 0.05.
-            const opacity = 0.05 + (t / TRAIL_LENGTH) * 0.30;
-            trailFeatures.push({
-              type: 'Feature',
-              properties: { opacity },
-              geometry: { type: 'Point', coordinates: pos }
-            });
-          });
-
-          // Advance progress; wrap to next segment / next route as needed.
-          if (!reducedMotion) {
-            d.progress += d.speed;
-            if (d.progress >= 1) {
-              d.progress = 0;
-              d.segmentIndex += 1;
-              if (d.segmentIndex >= route.waypoints.length - 1) {
-                // Restart at the beginning of the route for a smooth loop.
-                d.segmentIndex = 0;
-                d.trail = [];
-              }
-            }
-          }
-        });
-
-        dotSrc.setData({ type: 'FeatureCollection', features: dotFeatures });
-        trailSrc.setData({ type: 'FeatureCollection', features: trailFeatures });
-
-        if (!reducedMotion) {
-          rafRef.current = requestAnimationFrame(step);
-        }
-      };
-      step();
 
       // Interactions — pointer cursor + click handler
       const cursor = (e: maplibregl.MapMouseEvent) => {
@@ -406,10 +302,6 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
 
     mapRef.current = map;
     return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
       map.remove();
       mapRef.current = null;
       ready.current = false;
@@ -473,13 +365,12 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         role="application"
       />
       {/*
-        Subtle "drops in motion" counter — positioned over the top-left
-        corner of the map. Uses the same eyebrow treatment as the rest
-        of the dark sections so it feels like part of the design system
-        not a tacked-on widget. Pure decoration — the count is fixed at
-        the number of animated routes (5), matching DELIVERY_ROUTES.
-        When real driver telemetry is wired up, this will pull from
-        live state.
+        Coverage stat eyebrow — static, accurate, on-brand chrome at the
+        top-left of the map. Replaces the previous "5 drops in motion"
+        copy that was tied to the (now-removed) animated driver dots.
+        States a true fact about the service: 32 covered ZIPs delivered
+        same-day. Pure decoration; coverage data already lives in the
+        cluster cards + ZIP labels for screen readers.
       */}
       <div
         aria-hidden
@@ -487,7 +378,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       >
         <span className="rd-pulse" aria-hidden />
         <span className="rd-eyebrow text-[color:var(--rd-glow)]">
-          {DELIVERY_ROUTES.length} drops in motion
+          {ALL_ZIPS.length} ZIPs · Same-day NYC
         </span>
       </div>
     </div>
