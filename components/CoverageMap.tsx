@@ -89,7 +89,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
   };
 
   return (
-    <section className={`relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] ${compact ? 'py-12 sm:py-16' : 'py-20 sm:py-24 lg:py-28'}`}>
+    <section className={`relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] ${compact ? 'py-10 sm:py-14' : 'py-14 sm:py-20 lg:py-28'}`}>
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden

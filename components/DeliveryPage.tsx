@@ -44,7 +44,7 @@ export default function DeliveryPage() {
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.22]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.62),rgba(19,36,29,0.78))]" />
-        <div className="luxury-shell relative py-16 sm:py-20">
+        <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
           <div className="max-w-3xl">
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Same-day NYC delivery</p>
@@ -82,7 +82,7 @@ export default function DeliveryPage() {
       />
 
       {/* 7 cluster cards — synced with map */}
-      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+      <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -125,7 +125,7 @@ export default function DeliveryPage() {
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                   }}
-                  className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-6 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-7 ${
+                  className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-6 lg:p-7 ${
                     isActive
                       ? 'border-[color:var(--rd-moss)] bg-[color:var(--rd-paper-bright)] shadow-[0_24px_60px_rgba(46,82,64,0.18)]'
                       : 'border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 hover:border-[color:var(--rd-moss)]/30'
@@ -205,7 +205,7 @@ export default function DeliveryPage() {
             {PILLARS.map((p) => {
               const Icon = p.icon;
               return (
-                <div key={p.title} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-6">
+                <div key={p.title} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-5 sm:p-6">
                   <Icon className="h-7 w-7 text-[color:var(--rd-glow)]" />
                   <h3 className="mt-4 text-xl text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-display)', fontWeight: 500, letterSpacing: '-0.02em' }}>
                     {p.title}

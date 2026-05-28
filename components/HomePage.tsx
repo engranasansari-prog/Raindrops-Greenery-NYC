@@ -37,7 +37,7 @@ import { type StrainTag } from '@/lib/menu-utils';
 const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
   ssr: false,
   loading: () => (
-    <section className="bg-[color:var(--rd-ink)] py-20 sm:py-24 lg:py-28">
+    <section className="bg-[color:var(--rd-ink)] py-14 sm:py-20 lg:py-28">
       <div className="luxury-shell">
         <div className="h-3 w-32 animate-pulse rounded-full bg-[color:var(--rd-paper)]/10" />
         <div className="mt-4 h-10 w-60 animate-pulse rounded-md bg-[color:var(--rd-paper)]/10" />
@@ -123,7 +123,7 @@ const VALUE_ICONS = [Droplet, ShieldCheck, Box, RotateCcw];
 
 function ValueProps() {
   return (
-    <section className="bg-[color:var(--rd-paper)] py-20 sm:py-24">
+    <section className="bg-[color:var(--rd-paper)] py-14 sm:py-20 lg:py-24">
       <div className="luxury-shell">
         <Reveal>
           <div className="mb-10 max-w-2xl">
@@ -138,23 +138,23 @@ function ValueProps() {
             const Icon = VALUE_ICONS[index] ?? Droplet;
             return (
               <Reveal key={item.title} delay={index * 0.05}>
-                <div className="group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-7 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/30 sm:p-9">
-                  <div className="flex items-start justify-between gap-5">
-                    <Icon className="h-10 w-10 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-12 sm:w-12" />
+                <div className="group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/30 sm:p-8 lg:p-9">
+                  <div className="flex items-start justify-between gap-4">
+                    <Icon className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
                     <span
-                      className="text-5xl text-[color:var(--rd-moss)]/22 sm:text-6xl"
+                      className="text-4xl text-[color:var(--rd-moss)]/22 sm:text-5xl lg:text-6xl"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.05em' }}
                     >
                       0{index + 1}
                     </span>
                   </div>
                   <h3
-                    className="mt-7 text-2xl text-[color:var(--rd-ink)] sm:text-3xl"
+                    className="mt-5 text-xl text-[color:var(--rd-ink)] sm:mt-7 sm:text-2xl lg:text-3xl"
                     style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}
                   >
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-base leading-7 text-[color:var(--rd-on-paper-dim)]">{item.body}</p>
+                  <p className="mt-3 text-[15px] leading-[1.55] text-[color:var(--rd-on-paper-dim)] sm:text-base sm:leading-7">{item.body}</p>
                 </div>
               </Reveal>
             );
@@ -361,7 +361,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
 function TestimonialFeature() {
   const t = testimonials[0];
   return (
-    <section className="bg-[color:var(--rd-paper-soft)] py-20 sm:py-24">
+    <section className="bg-[color:var(--rd-paper-soft)] py-14 sm:py-20 lg:py-24">
       <div className="luxury-shell">
         <Reveal>
           {/* Solid dark ink card on the paper-soft section — unambiguous

@@ -37,7 +37,7 @@ export default function LegalLayout({
               'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
-        <div className="luxury-shell relative max-w-4xl py-16 sm:py-20">
+        <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
           <Breadcrumbs items={[{ label: 'Legal', href: '/legal/privacy' }, { label: title }]} tone="dark" />
           <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">{eyebrow}</p>
           <h1 className="mt-4 text-[color:var(--rd-text)]">{title}</h1>
@@ -47,7 +47,7 @@ export default function LegalLayout({
       </section>
 
       {/* Sidebar + article on light surface */}
-      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+      <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell grid gap-8 lg:grid-cols-[260px_1fr]">
           <aside className="h-fit rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 shadow-[0_18px_54px_rgba(45,74,58,0.08)]">
             <p className="rd-eyebrow text-[color:var(--rd-moss)]">Legal documents</p>

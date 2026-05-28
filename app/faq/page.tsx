@@ -49,7 +49,7 @@ export default function FaqPage() {
               'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
-        <div className="luxury-shell relative max-w-4xl py-16 sm:py-20">
+        <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
           <Breadcrumbs items={[{ label: 'FAQ' }]} tone="dark" />
           <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Frequently asked</p>
           <h1 className="mt-4 text-[color:var(--rd-text)]">
@@ -69,7 +69,7 @@ export default function FaqPage() {
               <details
                 key={faq.q}
                 open={index === 0}
-                className="group rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_18px_54px_rgba(0,0,0,0.22)] transition hover:border-[color:var(--rd-glow)]/30"
+                className="group rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_18px_54px_rgba(0,0,0,0.22)] transition hover:border-[color:var(--rd-glow)]/30 sm:p-6"
               >
                 <summary
                   className="cursor-pointer list-none text-[color:var(--rd-text)]"
@@ -85,7 +85,7 @@ export default function FaqPage() {
             ))}
           </div>
 
-          <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+          <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Need the menu?</p>
             <h2
               className="mt-3 text-[color:var(--rd-text)]"

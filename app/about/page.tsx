@@ -33,7 +33,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/heroPhoto.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.28]" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.55))]" />
-        <div className="luxury-shell relative grid gap-8 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
+        <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'About' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">About Raindrops</p>
@@ -71,7 +71,7 @@ export default function AboutPage() {
       </section>
 
       {/* Why we built this */}
-      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+      <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-start">
           <div>
             <p className="rd-eyebrow text-[color:var(--rd-moss)]">Why we built this</p>
@@ -141,7 +141,7 @@ export default function AboutPage() {
       </section>
 
       {/* Customer voices */}
-      <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+      <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell">
           <div className="max-w-3xl">
             <p className="rd-eyebrow text-[color:var(--rd-moss)]">Customer voices</p>

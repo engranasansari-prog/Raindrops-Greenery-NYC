@@ -141,7 +141,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       <SmokeLayer />
 
       {/* Layer 3: slide content */}
-      <div className="luxury-shell relative z-10 grid min-h-[560px] items-center py-16 sm:min-h-[640px] sm:py-20 lg:min-h-[80vh]">
+      <div className="luxury-shell relative z-10 grid min-h-[440px] items-center py-12 sm:min-h-[560px] sm:py-16 md:min-h-[640px] md:py-20 lg:min-h-[80vh]">
         <AnimatePresence mode="wait">
           <motion.div
             key={slide.id}
@@ -167,7 +167,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
-              className="mt-6 text-[2.75rem] leading-[1] text-[color:var(--rd-text)] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+              className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[5.5rem]"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
             >
               {renderHeadline(slide.headline, slide.headlineAccent)}

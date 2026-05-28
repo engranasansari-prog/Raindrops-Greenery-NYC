@@ -223,7 +223,7 @@ export default function StrainQuiz() {
           }}
         />
 
-        <div className="luxury-shell relative py-16 sm:py-20 lg:py-24">
+        <div className="luxury-shell relative py-12 sm:py-16 lg:py-24">
           <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
           <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">

@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <Image src={post.coverImage} alt="" fill priority sizes="100vw" className="object-cover opacity-[0.30]" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.55),rgba(19,36,29,0.85))]" />
           </div>
-          <div className="luxury-shell relative py-16 sm:py-20">
+          <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
             <Link
               href="/blog"
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
@@ -182,7 +182,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
 
         {/* Article body + sidebar on light surface */}
-        <section className="bg-[color:var(--rd-paper)] py-16 sm:py-20">
+        <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
           <div className="luxury-shell grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_280px]">
             <div className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 shadow-[0_18px_54px_rgba(45,74,58,0.08)] sm:p-10">
               <div className="blog-prose">

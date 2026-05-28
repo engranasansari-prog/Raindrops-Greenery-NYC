@@ -38,7 +38,7 @@ export default function BlogPage() {
               'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
-        <div className="luxury-shell relative max-w-4xl py-16 sm:py-20">
+        <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
           <Breadcrumbs items={[{ label: 'Journal' }]} tone="dark" />
           <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops Journal</p>
           <h1 className="mt-4 text-[color:var(--rd-text)]">
