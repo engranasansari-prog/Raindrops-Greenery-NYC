@@ -135,10 +135,16 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             // immediately (Lighthouse was clocking LCP at 5.1s because
             // the initial fade delayed the browser's largest-element pick).
             // Subsequent slides still cross-fade for the slideshow effect.
-            initial={index === 0 ? false : { opacity: 0, scale: 1.05 }}
+            // V3 — premium calm cross-fade. The old effect started slides at
+            // scale 1.05 and EXITED to 1.05, so on every transition the image
+            // lunged toward the viewer ("coming towards face"). Now: a barely
+            // perceptible 1.5% settle on entry, pure fade on exit (no lunge),
+            // and a slower curve. At rest scale is exactly 1 — no enlargement
+            // stacked on top of object-cover.
+            initial={index === 0 ? false : { opacity: 0, scale: 1.015 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ opacity: { duration: 1.1, ease: easeOut }, scale: { duration: 7, ease: 'easeOut' } }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.2, ease: easeOut }, scale: { duration: 9, ease: 'easeOut' } }}
             className="absolute inset-0"
           >
             <Image
@@ -177,8 +183,8 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               </>
             ) : (
               <>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.88)_0%,rgba(19,36,29,0.78)_55%,rgba(19,36,29,0.92)_100%)] sm:hidden" />
-                <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.88)_0%,rgba(27,51,40,0.78)_55%,rgba(27,51,40,0.92)_100%)] sm:hidden" />
+                <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27,51,40,0.94)_0%,rgba(27,51,40,0.78)_38%,rgba(27,51,40,0.32)_72%,rgba(27,51,40,0.58)_100%)]" />
                 {/* Bottom fade for nav-content seam */}
                 <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
               </>

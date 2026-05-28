@@ -14,10 +14,16 @@
    ===================================================================== */
 :root {
   /* Foundation — 80% of the canvas */
-  --rd-ink:        #13241D;   /* was #0A1410 — true deep forest, less black */
-  --rd-ink-soft:   #1A2D24;   /* was #11201A — 7→13 hex gap from ink = real depth */
-  --rd-paper:      #F0E8D2;   /* was #F5F1E8 — warmer, richer cream */
-  --rd-paper-soft: #E6DCC2;   /* was #EBE5D6 — deeper cream layer */
+  /* Palette v3 — "premium emerald" (May 2026 client refresh). The client read
+     v2 as still "a bit dark" / heavy. v3 lifts the dark backgrounds from a
+     near-black forest (#13241D) to a richer, warmer DEEP EMERALD (#1B3328) so
+     the dark sections feel like velvet, not void — more luxury, less weight —
+     while keeping text/borders strong-dark for readability. Paper unchanged
+     (already a warm cream). */
+  --rd-ink:        #1B3328;   /* was #13241D — deep emerald, clearly green not black */
+  --rd-ink-soft:   #243F31;   /* elevated cards on ink — keeps a real depth gap */
+  --rd-paper:      #F0E8D2;   /* warm, rich cream */
+  --rd-paper-soft: #E6DCC2;   /* deeper cream layer */
   --rd-paper-bright: #FAF5E5; /* elevated cards on paper — replaces "bg-white" */
 
   /* Greenery — 15%, signature */
