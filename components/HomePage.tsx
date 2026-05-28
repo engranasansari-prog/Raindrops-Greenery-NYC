@@ -459,7 +459,11 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
       headline: 'Manhattan + Brooklyn + Queens. Same-day.',
-      headlineAccent: 'Brooklyn + Queens',
+      // Accent spans all three boroughs so they get visual parity in the
+      // lime-glow treatment — the client wanted equal focus on every
+      // borough we serve, not Manhattan italic + Brooklyn/Queens hero-lime.
+      // ". Same-day." remains in the italic light treatment as the tail.
+      headlineAccent: 'Manhattan + Brooklyn + Queens',
       subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery on orders over $25.',
       primary: { label: 'Check coverage', href: '#coverage' },
       secondary: { label: 'Shop deals', href: '/deals' }
