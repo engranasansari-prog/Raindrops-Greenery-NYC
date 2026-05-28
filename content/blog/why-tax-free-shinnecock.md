@@ -48,7 +48,7 @@ For full clarity on what that means in practice:
 
 - Customers must still be **21 or older** with a valid government ID — verified at the door, no exceptions
 - Products are still subject to **Shinnecock cannabis program testing and tracking** rules — every product is regulated, just by a different agency
-- We can only deliver inside our **licensed service area** — Manhattan plus the East River neighborhoods of Long Island City, Williamsburg, and Greenpoint
+- We can only deliver inside our **licensed service area** — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City)
 
 The phrase "tax-free cannabis" gets thrown around loosely. We use it for one reason: the New York State cannabis excise tax and state sales tax are not applied to your order. That's the specific, verifiable, documented benefit.
 

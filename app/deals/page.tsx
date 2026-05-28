@@ -13,7 +13,7 @@ import { business } from '@/lib/site-data';
 export const metadata: Metadata = {
   title: 'Deals',
   description:
-    'Tax-free Shinnecock-licensed cannabis picks — Heavy Hitters, Top Shelf, and Under $25. Free delivery across Manhattan + East River neighborhoods.',
+    'Tax-free Shinnecock-licensed cannabis picks — Heavy Hitters, Top Shelf, and Under $25. Free delivery across Manhattan, Brooklyn, and Queens.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Raindrops Greenery NY Deals',

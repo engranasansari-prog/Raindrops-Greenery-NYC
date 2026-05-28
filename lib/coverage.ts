@@ -1,9 +1,10 @@
 /**
  * Coverage data — V4 brief §3. Single source of truth.
  *
- * 32 ZIPs across 7 clusters spanning Manhattan + East River neighborhoods
- * (LIC, Williamsburg, Greenpoint). Every coverage check, neighborhood card,
- * map polygon, and FAQ answer must derive from this file.
+ * ZIPs across 7 clusters spanning Manhattan plus parts of Brooklyn
+ * (Williamsburg, Greenpoint) and Queens (Long Island City). Every
+ * coverage check, neighborhood card, map polygon, and FAQ answer
+ * must derive from this file.
  *
  * Free delivery on orders over $25.
  */
@@ -18,7 +19,7 @@ export type CoverageCluster = {
 };
 
 export const COVERAGE = {
-  area: 'Manhattan + East River',
+  area: 'Manhattan + Brooklyn + Queens',
   freeDelivery: true,
   clusters: [
     {
@@ -73,9 +74,13 @@ export const COVERAGE = {
       zips: ['10038']
     },
     {
+      // Internal id stays stable ('east-river') so polygon lookups in
+      // lib/coverage-geo.ts keep matching. User-visible labels swap to
+      // Brooklyn + Queens per client brand voice. Cluster spans both
+      // boroughs: 11101 is Queens (LIC), 11211 + 11222 are Brooklyn.
       id: 'east-river',
-      name: 'East River Extensions — LIC / Williamsburg / Greenpoint',
-      shortName: 'East River',
+      name: 'Brooklyn + Queens — LIC / Williamsburg / Greenpoint',
+      shortName: 'Brooklyn + Queens',
       borough: 'Brooklyn',
       etaMinutes: 55,
       zips: ['11101', '11211', '11222']

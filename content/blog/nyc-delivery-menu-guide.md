@@ -153,4 +153,4 @@ Yes. The menu is built mobile-first; every filter works on small screens. The fi
 - [Flower, Pre-Rolls, or Edibles?](/blog/flower-prerolls-edibles-guide) — choosing the right format
 - [How checkout works](/blog/how-checkout-works) — step by step
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan + East River neighborhoods.
+21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.

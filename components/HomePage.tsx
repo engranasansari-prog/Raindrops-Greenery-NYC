@@ -453,13 +453,13 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       secondary: { label: 'Check coverage', href: '#coverage' }
     },
     {
-      id: 'manhattan-east-river',
+      id: 'manhattan-brooklyn-queens',
       image: '/assets/banner-drops.png',
-      imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan and the East River',
+      imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan, Brooklyn, and Queens',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
-      headline: 'Manhattan + East River. Same-day.',
-      headlineAccent: 'East River',
+      headline: 'Manhattan + Brooklyn + Queens. Same-day.',
+      headlineAccent: 'Brooklyn + Queens',
       subtext: 'Curated drops across Manhattan plus Long Island City, Williamsburg, and Greenpoint. Free delivery on orders over $25.',
       primary: { label: 'Check coverage', href: '#coverage' },
       secondary: { label: 'Shop deals', href: '/deals' }

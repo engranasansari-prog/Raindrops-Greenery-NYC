@@ -18,7 +18,7 @@ export function GET() {
   const allZips = COVERAGE.clusters.flatMap((c) => c.zips);
   const body = `# Raindrops Greenery — New York City
 
-> Tax-free, Shinnecock-licensed cannabis delivery for Manhattan + East River neighborhoods (LIC, Williamsburg, Greenpoint). Same-day. Free delivery on orders over $25. 21+ only.
+> Tax-free, Shinnecock-licensed cannabis delivery for Manhattan, Brooklyn (Williamsburg, Greenpoint), and Queens (Long Island City). Same-day. Free delivery on orders over $25. 21+ only.
 
 ## Facts
 

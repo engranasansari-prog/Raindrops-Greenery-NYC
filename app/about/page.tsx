@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const pillars = [
   { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
   { icon: Shield, title: 'Compliant', body: 'New York licensed, age-verified at the door, fully tax-aware checkout.' },
-  { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus the East River neighborhoods of LIC, Williamsburg, and Greenpoint — with windows that fit the way the city moves.' },
+  { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) — with windows that fit the way the city moves.' },
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
 ];
 

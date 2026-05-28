@@ -1,6 +1,6 @@
 ---
-title: "How we cross the East River in 50 minutes — NYC cannabis delivery to LIC, Williamsburg, Greenpoint"
-excerpt: "Our delivery window across the bridges to LIC, Williamsburg, and Greenpoint averages 50–55 minutes door-to-door. Here's why that's hard, how the routing works, and what to expect at the door."
+title: "Brooklyn and Queens cannabis delivery in 50 minutes — how the routing works"
+excerpt: "Our delivery window to Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) averages 50–55 minutes door-to-door. Here's why that's hard, how the routing works, and what to expect at the door."
 category: "Delivery"
 publishedAt: "2026-05-25"
 readTime: "6 min read"
@@ -9,9 +9,9 @@ coverImage: "/assets/DISPENSARYIMAGE.jpg"
 coverAlt: "Raindrops Greenery NYC dispensary"
 ---
 
-If you live in Long Island City, Williamsburg, or Greenpoint, you've probably been told by every other delivery service that you're "too far" or that you'll pay a premium for the crossing.
+If you live in Long Island City, Williamsburg, or Greenpoint, you've probably been told by every other delivery service that you're "too far" or that you'll pay a premium for the bridge crossing.
 
-Not us. Our average drop-off window across the East River is **50 to 55 minutes** door-to-door — same speed as a downtown Manhattan order, same free delivery on orders over $25, no surcharge. Here's how the logistics actually work.
+Not us. Our average drop-off window for **Brooklyn and Queens deliveries** is **50 to 55 minutes** door-to-door — same speed as a downtown Manhattan order, same free delivery on orders over $25, no surcharge. Here's how the logistics actually work.
 
 ## Why most NYC cannabis delivery is slow
 
@@ -19,11 +19,11 @@ Most cannabis delivery in New York is operated by third-party apps that aggregat
 
 We're not a marketplace. We dispatch directly from our own delivery hub. Every order has its own ETA — no batching, no waiting for a fuller manifest before the driver leaves.
 
-The second reason most delivery is slow: the East River. Brooklyn and Queens are physically close to Manhattan but separated by water and constrained by a handful of bridge crossings. A delivery service that hasn't done the routing work treats all of "Brooklyn" as one zone and adds 30 minutes of slack. We treat the crossing as a routing problem with a known solution.
+The second reason most delivery is slow: the river crossing. Brooklyn and Queens are physically close to Manhattan but separated by water and constrained by a handful of bridges. A delivery service that hasn't done the routing work treats all of "Brooklyn" as one zone and adds 30 minutes of slack. We treat the crossing as a routing problem with a known solution.
 
 ## The route
 
-We pre-stage inventory near both river crossings. When an East River order comes in, the closest crossing handles it — usually one of:
+We pre-stage inventory near both river crossings. When a Brooklyn or Queens order comes in, the closest bridge handles it — usually one of:
 
 - **Queensboro Bridge** → Long Island City (10s of seconds across the span itself; most LIC orders touch this route)
 - **Pulaski Bridge** → connects LIC and Greenpoint at the top of Newtown Creek; the fastest LIC-to-Greenpoint shortcut
@@ -40,7 +40,7 @@ The system picks the fast one automatically. You don't have to know which bridge
 
 ## Why we don't charge a crossing fee
 
-We're not a third-party app. We don't have to pay 30% of every order to a marketplace. That means our economics don't fall apart on the bridge crossings. Free delivery on orders over $25, every order, across all covered ZIPs — including the [East River extensions](/delivery).
+We're not a third-party app. We don't have to pay 30% of every order to a marketplace. That means our economics don't fall apart on the bridge crossings. Free delivery on orders over $25, every order, across all covered ZIPs — including our [Brooklyn and Queens zones](/delivery).
 
 If you've used a marketplace-style cannabis delivery in NYC, you know the math:
 
@@ -61,7 +61,7 @@ Door-to-door times we hit consistently in good traffic:
 - **Bushwick** — we don't cover Bushwick; coverage stops at Williamsburg's eastern edge
 - **DUMBO + Brooklyn Heights** — not in current coverage; check our [delivery page](/delivery) for live ZIP eligibility
 
-If you live in one of these neighborhoods and your ZIP isn't on our list yet, [drop your ZIP on the coverage map](/#coverage) — we're expanding the East River zones as routing capacity grows.
+If you live in one of these neighborhoods and your ZIP isn't on our list yet, [drop your ZIP on the coverage map](/#coverage) — we're expanding our Brooklyn and Queens zones as routing capacity grows.
 
 ## When 50 minutes becomes 70
 
@@ -87,7 +87,7 @@ What you won't see: the driver inside your building. We meet you at the lobby, s
 
 ## The bridges on our map
 
-If you've looked at our [coverage map](/delivery), you might have noticed the bridges between Manhattan and the East River cluster glow when you hover that zone. That's not just visual flourish — it's the actual route flow. Coverage doesn't stop at the river. It crosses with it.
+If you've looked at our [coverage map](/delivery), you might have noticed the bridges between Manhattan and the Brooklyn + Queens cluster glow when you hover that zone. That's not just visual flourish — it's the actual route flow. Coverage doesn't stop at the river. It crosses with it.
 
 ## Common questions
 
@@ -101,7 +101,7 @@ The driver will try to reach you by the phone number on the order. If they can't
 You can — drivers appreciate it — but it's never expected and it's never pre-charged on the checkout screen.
 
 **Why isn't [my Brooklyn or Queens neighborhood] covered?**
-Coverage expands as routing capacity grows. The East River extensions — LIC, Williamsburg, Greenpoint — are our current Brooklyn-and-Queens scope. We'll add more zones as the operation scales.
+Coverage expands as routing capacity grows. LIC, Williamsburg, and Greenpoint are our current Brooklyn-and-Queens scope. We'll add more zones as the operation scales.
 
 ## Where we go
 

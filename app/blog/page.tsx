@@ -9,7 +9,7 @@ import { getBlogPosts } from '@/lib/blog-posts';
 export const metadata: Metadata = {
   title: 'Journal',
   description:
-    'Raindrops Greenery NY delivery articles, product education, and ordering guides for Manhattan + East River neighborhoods.',
+    'Raindrops Greenery NY delivery articles, product education, and ordering guides for Manhattan, Brooklyn, and Queens.',
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Raindrops Greenery NY Journal',

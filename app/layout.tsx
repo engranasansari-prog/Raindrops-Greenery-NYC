@@ -102,7 +102,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'NYC Cannabis Delivery — Tax-Free | Raindrops Greenery',
-    description: 'Same-day cannabis delivery, free over $25, 21+. Manhattan + East River neighborhoods.',
+    description: 'Same-day cannabis delivery, free over $25, 21+. Manhattan + Brooklyn + Queens.',
     images: [`${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`]
   },
   robots: {
@@ -213,7 +213,7 @@ const organizationLd = {
     `${business.baseUrl}/assets/heroPhoto.jpg`
   ],
   description:
-    'Premium Shinnecock-licensed cannabis delivery for Manhattan plus the East River neighborhoods of LIC, Williamsburg, and Greenpoint. Tax-free, free delivery on orders over $25, same-day.',
+    'Premium Shinnecock-licensed cannabis delivery across Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free, free delivery on orders over $25, same-day.',
   foundingDate: `${business.yearFounded}-01-01`,
   email: business.email,
   telephone: business.phone,
@@ -262,7 +262,7 @@ const localBusinessLd = {
   paymentAccepted: 'Cash, Debit Card',
   slogan: business.tagline,
   description:
-    'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus the East River neighborhoods of Long Island City, Williamsburg, and Greenpoint. Tax-free under sovereign authority. Free delivery on orders over $25.',
+    'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free under sovereign authority. Free delivery on orders over $25.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'New York',

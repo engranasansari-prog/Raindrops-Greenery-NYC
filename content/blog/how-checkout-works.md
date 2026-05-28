@@ -15,7 +15,7 @@ If you've never ordered cannabis delivery in New York City, the process can look
 
 Before you fall in love with a product, check that we deliver to you. Drop your ZIP on the [coverage map](/#coverage) on the home page. The map will pulse to your neighborhood and confirm we serve you — or tell you we don't (yet).
 
-We cover Manhattan plus the East River neighborhoods of Long Island City, Williamsburg, and Greenpoint. If your ZIP isn't on the list, our [delivery page](/delivery) lists every covered ZIP and the average ETA for each cluster.
+We cover Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). If your ZIP isn't on the list, our [delivery page](/delivery) lists every covered ZIP and the average ETA for each cluster.
 
 ## Step 2 — Browse the menu
 
@@ -70,7 +70,7 @@ Final pricing and availability are confirmed at this step. If something on the m
 Once your order is placed, you'll get a confirmation with:
 
 - Order summary and total
-- A delivery window (typically 50–60 minutes for Manhattan, 50–55 minutes for the East River extensions)
+- A delivery window (typically 50–60 minutes for Manhattan, 50–55 minutes for Brooklyn and Queens deliveries)
 - The driver's contact number for the inbound handoff
 
 If anything changes — weather, route delays, sold-out items — we'll text you proactively. No surprises at the door.
@@ -125,7 +125,7 @@ Your address is used to fulfill the delivery and is handled per our [privacy pol
 
 - [Browse the menu now](/menu)
 - [Why we're tax-free under Shinnecock authority](/blog/why-tax-free-shinnecock)
-- [How we cross the East River in 50 minutes](/blog/east-river-50-minutes)
+- [How we deliver to Brooklyn and Queens in 50 minutes](/blog/east-river-50-minutes)
 - [Full FAQ](/faq) — every common question, answered
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan + East River neighborhoods.
+21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.

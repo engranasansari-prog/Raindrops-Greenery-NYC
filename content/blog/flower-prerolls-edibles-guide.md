@@ -139,4 +139,4 @@ Yes. No New York State cannabis excise tax and no state sales tax apply to order
 - [How checkout works](/blog/how-checkout-works) — what to expect after you tap order
 - [What 'sticky icky' actually means](/blog/what-sticky-icky-means) — flower quality, plain English
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan + East River neighborhoods.
+21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.

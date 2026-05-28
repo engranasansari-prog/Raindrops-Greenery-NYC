@@ -49,7 +49,7 @@ export default function DeliveryPage() {
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Same-day NYC delivery</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
-              Manhattan. <span className="italic">East River.</span> Same-day.
+              Manhattan. <span className="italic">Brooklyn + Queens.</span> Same-day.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               33 ZIPs across 7 neighborhoods. Free delivery on orders over $25, tax-free. Average drop-off in under an hour.
