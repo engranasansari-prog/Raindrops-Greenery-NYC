@@ -433,7 +433,7 @@ export default function StrainQuiz() {
                               <p className="mt-2 text-xs text-[color:var(--rd-text-dim)]">{inferProfile(product)}</p>
                               <div className="mt-auto flex items-end justify-between pt-5">
                                 <div className="[font-family:var(--font-mono)]">
-                                  <span className="block text-xl font-semibold text-[color:var(--rd-amber)]">{formatPrice(product.salePrice)}</span>
+                                  <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
                                 </div>
                                 {thc && (
                                   <span className="text-right [font-family:var(--font-mono)]">

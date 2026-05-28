@@ -185,10 +185,7 @@ function ProductCard({
         )}
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-6">
-          <button
-            onClick={() => onDetails(product)}
-            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
-          >
+          <button onClick={() => onDetails(product)} className="btn-luxe btn-luxe-ghost btn-luxe-sm">
             Details
           </button>
           <Link
@@ -196,10 +193,10 @@ function ProductCard({
             target="_blank"
             rel="noreferrer"
             aria-label={`Order ${product.name} — secure checkout`}
-            className="group/cta inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+            className="btn-luxe btn-luxe-gold btn-luxe-sm"
           >
             Order
-            <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover/cta:translate-x-0.5" />
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
@@ -357,22 +354,16 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Order ${product.name} — secure checkout`}
-                className="group inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+                className="btn-luxe btn-luxe-gold"
               >
                 Secure checkout
-                <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
+                <ArrowRight className="h-3.5 w-3.5" />
               </Link>
-              <button
-                onClick={share}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
-              >
+              <button onClick={share} className="btn-luxe btn-luxe-ghost">
                 <Share2 className="h-4 w-4" />
                 {copied ? 'Link copied' : 'Share'}
               </button>
-              <button
-                onClick={onClose}
-                className="inline-flex items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-transparent px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] transition hover:border-[color:var(--rd-glow)]/30 hover:text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]"
-              >
+              <button onClick={onClose} className="btn-luxe btn-luxe-ghost">
                 Keep browsing
               </button>
             </div>

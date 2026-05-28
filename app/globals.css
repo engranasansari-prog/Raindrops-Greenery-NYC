@@ -600,3 +600,17 @@ textarea:focus:not(:focus-visible) {
   background: rgba(19, 36, 29, 0.04);
   transform: translateY(-1px);
 }
+
+/* Size modifier — smaller, denser variant for product-card CTAs and
+   inline form actions where the full 48px primary-CTA height would
+   overwhelm the row. Compose like:
+       <button class="btn-luxe btn-luxe-gold btn-luxe-sm">Order</button>
+   Same color/font/tracking specs as the base; only padding + min-height
+   change. This is the one design-system addition that lets every CTA
+   on the site (including in product cards and the newsletter form) use
+   the canonical button system instead of hand-rolled inline Tailwind. */
+.btn-luxe-sm {
+  min-height: 36px;
+  padding: 0.5rem 1rem;
+  font-size: 0.6875rem;       /* 11px */
+}

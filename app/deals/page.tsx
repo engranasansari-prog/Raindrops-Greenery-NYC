@@ -82,7 +82,7 @@ function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eag
           {product.name}
         </h3>
         <div className="mt-auto flex items-end justify-between gap-3 pt-4">
-          <p className="text-lg font-semibold text-[color:var(--rd-amber)] [font-family:var(--font-mono)]">
+          <p className="text-xl font-semibold text-[color:var(--rd-amber)] [font-family:var(--font-mono)] sm:text-2xl">
             {formatPrice(product.salePrice)}
           </p>
           <span className="inline-flex shrink-0 items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
