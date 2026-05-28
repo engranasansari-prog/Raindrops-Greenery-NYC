@@ -35,7 +35,7 @@ export default function FaqPage() {
           snippets in Perplexity / ChatGPT Search. */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
 

@@ -125,12 +125,12 @@ export default async function MenuPage({ searchParams }: { searchParams?: Promis
           BreadcrumbList → search breadcrumb display. */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{ __html: JSON.stringify(menuBreadcrumbLd) }}
       />
       <MenuExplorer

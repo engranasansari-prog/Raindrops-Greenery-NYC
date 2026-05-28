@@ -1,6 +1,6 @@
 // LiveMenuProduct shape lives in ./menu.ts (the V8 adapter). We re-import
 // here as type-only to avoid pulling the data array into menu-utils builds.
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+ 
 import type { LiveMenuProduct } from './menu';
 
 export type { LiveMenuProduct };

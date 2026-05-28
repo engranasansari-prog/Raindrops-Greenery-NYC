@@ -187,6 +187,7 @@ export default function ZipSearch({
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded={showDropdown}
+          aria-controls={listId}
           aria-owns={listId}
         >
           <Search className="h-4 w-4 text-[color:var(--rd-text-mute)]" />

@@ -160,20 +160,21 @@ function Section({
   );
 }
 
-export default function DealsPage() {
-  // V8 §4 — re-organized into 3 curated sections (no sale-pricing in the
-  // current dataset; "deals" = curated picks).
-  const heavyHitters = menuProducts.filter((p) => p.isSticky);
-  const topShelf = menuProducts.filter((p) => p.category === 'Flower' && p.salePrice >= 4000); // $40+
-  const underTwentyFive = menuProducts.filter((p) => p.salePrice <= 2500);
-  const totalCurated = heavyHitters.length + topShelf.length + underTwentyFive.length;
+// Pre-compute the curated lists + ItemList JSON-LD ONCE at module init
+// rather than inside DealsPage()'s render. menuProducts is static, so
+// this is a pure derivation; SSG only evaluates it at build time and the
+// page becomes a single deterministic prerender. Also hoists the
+// priceValidUntil out of an inline `new Date()` per product (the prior
+// shape called Date.now() ~20 times per build), which the Next 16 React
+// compiler flagged as an impure render.
+const PRICE_VALID_UNTIL = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-  // Curated picks as an ItemList — surfaces this page as a discrete
-  // "best of" listing in Google's rich product results and gives AI
-  // engines a clean answer for "best NYC weed deals." Capped at the top
-  // 20 across all three sections to keep payload tight.
-  const curatedFeed = [...heavyHitters, ...topShelf, ...underTwentyFive].slice(0, 20);
-  const dealsListLd = {
+const heavyHittersInit = menuProducts.filter((p) => p.isSticky);
+const topShelfInit = menuProducts.filter((p) => p.category === 'Flower' && p.salePrice >= 4000); // $40+
+const underTwentyFiveInit = menuProducts.filter((p) => p.salePrice <= 2500);
+const curatedFeed = [...heavyHittersInit, ...topShelfInit, ...underTwentyFiveInit].slice(0, 20);
+
+const dealsListLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     '@id': `${business.baseUrl}/deals#deals-list`,
@@ -203,11 +204,18 @@ export default function DealsPage() {
           availability: 'https://schema.org/InStock',
           url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
           seller: { '@id': `${business.baseUrl}#business` },
-          priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+          priceValidUntil: PRICE_VALID_UNTIL
         }
       }
     }))
-  };
+};
+
+export default function DealsPage() {
+  // Pure render — all data derivation happens at module init above.
+  const heavyHitters = heavyHittersInit;
+  const topShelf = topShelfInit;
+  const underTwentyFive = underTwentyFiveInit;
+  const totalCurated = heavyHitters.length + topShelf.length + underTwentyFive.length;
 
   return (
     <SiteChrome>
@@ -216,7 +224,7 @@ export default function DealsPage() {
           "best NYC cannabis deals" with our actual product cards. */}
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
+         
         dangerouslySetInnerHTML={{ __html: JSON.stringify(dealsListLd) }}
       />
       {/* Hero */}

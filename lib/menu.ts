@@ -151,7 +151,7 @@ export const menuSyncedAt: string = (() => {
   try {
     // PRODUCT_META lives in products.json — read directly to avoid coupling.
     // Fall back to "now" if unavailable.
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+     
     const meta = require('../data/products.json').meta as { exportedAt?: string };
     return meta.exportedAt ?? new Date().toISOString();
   } catch {

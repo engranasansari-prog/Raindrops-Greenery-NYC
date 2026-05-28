@@ -483,14 +483,14 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
     if (category === 'Edibles') {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfile('All');
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setWeight('All');
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMinThc(0);
     } else if (category === 'Pre-Rolls') {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setWeight('All');
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMinThc(0);
     }
   }, [category]);

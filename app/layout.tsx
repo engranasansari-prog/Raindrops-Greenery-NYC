@@ -408,22 +408,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         */}
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(brandLd) }}
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
         />
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
         />
       </head>
