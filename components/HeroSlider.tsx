@@ -129,8 +129,20 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               className="object-cover"
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
             />
-            {/* Cinematic side gradient — keeps text on left readable */}
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
+            {/*
+              Mobile overlay — heavy near-opaque dark wash that hides the
+              decorative typography baked into the banner image (the "From
+              seed to shelf" italic + giant "RAINDROPS" wordmark). Those
+              were designed to sit beside the desktop headline; on mobile
+              the image compresses and that art crashes into the CTAs.
+              Easy fix: darken the mobile overlay until the image reads as
+              a subtle textured background, not competing content.
+
+              Desktop overlay (sm and up) preserves the original cinematic
+              horizontal gradient so the right-side image art remains
+              visible in the wider desktop layout. */}
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.88)_0%,rgba(19,36,29,0.78)_55%,rgba(19,36,29,0.92)_100%)] sm:hidden" />
+            <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
             {/* Bottom fade for nav-content seam */}
             <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
           </motion.div>
