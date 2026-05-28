@@ -39,12 +39,23 @@ export const COVERAGE = {
       zips: ['10001', '10016', '10017', '10018', '10019', '10022', '10036']
     },
     {
-      // Client correction: 10009 is East Village (not Chelsea). Cluster
-      // re-led with East Village to match local usage. 10002 added per
-      // client request (Lower East Side, borders 10009/10003).
+      // Client correction (round 2): 10009 is East Village (not Chelsea),
+      // confirmed. The cluster spans 5 East Side ZIPs (10003 EV/Gramercy,
+      // 10009 EV, 10002 LES, 10010 Gramercy/Flatiron) and one West Side
+      // outlier (10011 Chelsea). When a customer entered 10009 and saw
+      // the previous shortName "East Village & Chelsea" they reasonably
+      // assumed their ZIP related to Chelsea, which is geographically
+      // wrong. Renamed the shortName to lead with the dominant East Side
+      // character — "East Village & Flatiron" — Flatiron sits at the
+      // geographic centroid of the four East Side ZIPs and accurately
+      // represents the cluster's spine. Chelsea is preserved in the full
+      // `name` since 10011 is genuinely in the cluster for delivery
+      // logistics, but the shortName no longer implies the misleading
+      // 10009↔Chelsea pairing. The internal cluster id `chelsea-flatiron-ev`
+      // is kept stable to avoid breaking the polygon lookup in coverage-geo.ts.
       id: 'chelsea-flatiron-ev',
       name: 'East Village / Lower East Side / Gramercy / Chelsea',
-      shortName: 'East Village & Chelsea',
+      shortName: 'East Village & Flatiron',
       borough: 'Manhattan',
       etaMinutes: 35,
       zips: ['10003', '10009', '10002', '10010', '10011']
