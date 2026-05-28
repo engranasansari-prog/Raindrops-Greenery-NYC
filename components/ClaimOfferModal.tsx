@@ -73,7 +73,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
     setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
-  const submit = (event: React.FormEvent) => {
+  const submit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const next: Partial<Record<keyof FormState, string>> = {};
@@ -89,8 +89,25 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
     setErrors(next);
     if (Object.values(next).some(Boolean)) return;
 
-    // PRODUCTION TODO: POST to your /api/claim endpoint or a CRM / ESP webhook.
-    // For now we just acknowledge the submission client-side.
+    // Capture the claim into the same Mailchimp audience the footer + age-gate
+    // newsletter use. Tagged "claim-modal" + the customer's ZIP so the client
+    // can segment leads by intent (free-gift claim) and by neighborhood.
+    // Fire-and-forget: even if Mailchimp errors, the customer sees the
+    // "Drops incoming" confirmation. Errors are still logged server-side.
+    try {
+      await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          source: `claim-modal:${form.zip.trim()}`
+        })
+      });
+    } catch {
+      // Network drop shouldn't block the celebration screen — the client can
+      // re-engage via the footer form. Silent here is intentional.
+    }
     setSubmitted(true);
   };
 
