@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
@@ -170,27 +170,34 @@ function ProductCard({
             </h3>
           </div>
           {/*
-            Price column — multi-variant aware. For flowers (which all carry
-            both 3.5g and 7g sizes in the Dutchie data), render a two-tier
-            block: the entry-tier price is the primary visual (large amber)
-            and the larger size sits below it as a secondary line. For
-            single-variant products (pre-rolls, edibles) the column collapses
-            back to one price exactly as before.
-            Previously only product.salePrice was shown — that was the
-            adapter dropping the 7g variant before it ever reached the UI.
+            Price column — luxury-bar-menu style. Sizes left-aligned in
+            uppercase mono, prices right-aligned in mono numerals, like
+            a high-end wine list. Same information density as the prior
+            two-tier divider treatment but reads more refined.
+
+            For flowers (multi-variant): two rows aligned in a 2-col grid
+            so size labels and prices form clean vertical columns.
+            For single-variant products: collapses back to the simple
+            single-price treatment.
           */}
-          <div className="shrink-0 text-right [font-family:var(--font-mono)]">
+          <div className="shrink-0 [font-family:var(--font-mono)]">
             {product.variants.length > 1 ? (
-              <>
-                <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.variants[0].price)}</p>
-                <p className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[0].label}</p>
-                <div className="mt-2 border-t border-[color:var(--rd-paper)]/10 pt-2">
-                  <p className="text-base font-semibold text-[color:var(--rd-amber)]/85 sm:text-lg">{formatPrice(product.variants[1].price)}</p>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[1].label}</p>
-                </div>
-              </>
+              <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-1 text-right">
+                {product.variants.map((variant, i) => (
+                  <Fragment key={variant.label}>
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                      {variant.label}
+                    </span>
+                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                      {formatPrice(variant.price)}
+                    </span>
+                  </Fragment>
+                ))}
+              </div>
             ) : (
-              <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</p>
+              <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl text-right">
+                {formatPrice(product.salePrice)}
+              </p>
             )}
           </div>
         </div>
@@ -494,8 +501,23 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
     return menuProducts
       .filter((product) => category === 'All' || product.category === category)
       .filter((product) => profile === 'All' || inferProfile(product) === profile)
-      .filter((product) => weight === 'All' || product.weight === weight)
-      .filter((product) => product.salePrice / 100 <= priceMax)
+      // Match the size against ANY variant the product carries, not just
+      // product.weight (which only reflects the first variant). Otherwise
+      // filtering by "7g" returned zero matches even though every flower
+      // has a 7g variant in the data.
+      .filter((product) => {
+        if (weight === 'All') return true;
+        if (product.variants.length > 0) return product.variants.some((v) => v.label === weight);
+        return product.weight === weight;
+      })
+      // Price filter — the product matches if ANY of its variants falls
+      // within the slider range. Customers dragging the slider to $75
+      // see the flower whose 7g variant is $75 even though its 3.5g is $40.
+      .filter((product) => {
+        const cap = priceMax * 100;
+        if (product.variants.length > 0) return product.variants.some((v) => v.price <= cap);
+        return product.salePrice <= cap;
+      })
       // Min-THC slider applies ONLY to Flower (client request — Pre-Rolls
       // are pre-made products where the % varies less, and Edibles use mg).
       .filter((product) => category !== 'Flower' || getPrimaryPotency(product) >= minThc)

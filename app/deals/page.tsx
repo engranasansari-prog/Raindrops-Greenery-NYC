@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgePercent } from 'lucide-react';
@@ -82,20 +83,22 @@ function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eag
           {product.name}
         </h3>
         <div className="mt-auto flex items-end justify-between gap-3 pt-4">
-          {/* Multi-variant aware price column. Flowers show 3.5g/7g pricing
-              stacked; pre-rolls + edibles show their single price. */}
+          {/* Luxury bar-menu style — size labels left, prices right, like
+              a curated wine list. Same pattern as the MenuExplorer cards
+              for cross-page visual consistency. */}
           <div className="[font-family:var(--font-mono)]">
             {product.variants.length > 1 ? (
-              <div className="flex flex-col">
-                <span className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl leading-none">
-                  {formatPrice(product.variants[0].price)}
-                </span>
-                <span className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">
-                  {product.variants[0].label}
-                </span>
-                <span className="mt-2 text-sm font-semibold text-[color:var(--rd-amber)]/85">
-                  {formatPrice(product.variants[1].price)} · {product.variants[1].label}
-                </span>
+              <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-0.5">
+                {product.variants.map((variant, i) => (
+                  <Fragment key={variant.label}>
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                      {variant.label}
+                    </span>
+                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                      {formatPrice(variant.price)}
+                    </span>
+                  </Fragment>
+                ))}
               </div>
             ) : (
               <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">
@@ -327,11 +330,25 @@ export default function DealsPage() {
             </div>
           </div>
 
-          {/* Fine-print card — solid paper-soft surface with full-strength
-              ink-tone text so legal copy is unambiguously readable. */}
-          <div className="mt-10 rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] p-6 text-sm leading-7 text-[color:var(--rd-on-paper-dim)] shadow-[0_8px_30px_rgba(45,74,58,0.06)] sm:text-[15px]">
-            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Fine print</p>
-            <p className="mt-3 text-[color:var(--rd-ink)]">
+          {/*
+            Fine-print card.
+
+            Previous treatment: bg-paper-soft with the eyebrow in rd-moss
+            (#2E5240) at 11px — technically passed WCAG AA but felt
+            washed-out on phones with auto-dimming. Client correctly
+            flagged the eyebrow as "mixing with the background."
+
+            Refresh: card now sits on the brand's ink color (deep forest)
+            with a soft inner gold-ring frame, which gives the legal copy
+            its own visual moment instead of blending into the surrounding
+            cream wash. Body copy uses --rd-text-dim (74% alpha on ink =
+            ~8.5:1 contrast) and the "Fine print" eyebrow gets the lime
+            glow accent — same treatment used on every other dark-section
+            eyebrow across the site for consistency.
+          */}
+          <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(19,36,29,0.18)] sm:p-7 sm:text-[15px]">
+            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Fine print</p>
+            <p className="mt-3 text-[color:var(--rd-text)]">
               Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll per first-time order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
             </p>
           </div>

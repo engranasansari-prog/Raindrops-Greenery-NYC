@@ -126,7 +126,26 @@ export function getAvailableBrands(products: LiveMenuProduct[]) {
 }
 
 export function getAvailableWeights(products: LiveMenuProduct[]) {
-  return Array.from(new Set(products.map((product) => product.weight).filter(Boolean) as string[])).sort((a, b) => a.localeCompare(b));
+  // Read sizes from the FULL variants array so flowers contribute both
+  // 3.5g and 7g to the filter. Previously this only looked at
+  // product.weight (= first variant only) which meant the Size dropdown
+  // could never offer 7g even though 13 of 14 flower SKUs carry it.
+  // Sort numerically by gram value, falling back to localeCompare for
+  // non-numeric labels (e.g. "10mg gummy" should sort apart).
+  const all = new Set<string>();
+  for (const p of products) {
+    if (p.variants.length > 0) {
+      for (const v of p.variants) all.add(v.label);
+    } else if (p.weight) {
+      all.add(p.weight);
+    }
+  }
+  return Array.from(all).sort((a, b) => {
+    const an = parseFloat(a);
+    const bn = parseFloat(b);
+    if (!Number.isNaN(an) && !Number.isNaN(bn)) return an - bn;
+    return a.localeCompare(b);
+  });
 }
 
 export function getAvailableProfiles(products: LiveMenuProduct[]) {
@@ -134,7 +153,19 @@ export function getAvailableProfiles(products: LiveMenuProduct[]) {
 }
 
 export function getMaxPrice(products: LiveMenuProduct[]) {
-  return Math.ceil(Math.max(...products.map((product) => product.salePrice), 0) / 100);
+  // Consider every variant's price, not just the entry-tier salePrice,
+  // so the slider ceiling actually reaches the 7g top prices (~$75) for
+  // flowers. Previously this only looked at salePrice (= 3.5g price)
+  // which capped the slider at ~$40 — customers couldn't even drag the
+  // range to include 7g products.
+  let max = 0;
+  for (const p of products) {
+    if (p.variants.length > 0) {
+      for (const v of p.variants) max = Math.max(max, v.price);
+    }
+    max = Math.max(max, p.salePrice);
+  }
+  return Math.ceil(max / 100);
 }
 
 export function getMenuSearchText(product: LiveMenuProduct) {

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
@@ -434,11 +434,18 @@ export default function StrainQuiz() {
                               <div className="mt-auto flex items-end justify-between pt-5">
                                 <div className="[font-family:var(--font-mono)]">
                                   {product.variants.length > 1 ? (
-                                    <>
-                                      <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl leading-none">{formatPrice(product.variants[0].price)}</span>
-                                      <span className="mt-1 block text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[0].label}</span>
-                                      <span className="mt-2 block text-sm font-semibold text-[color:var(--rd-amber)]/85">{formatPrice(product.variants[1].price)} · {product.variants[1].label}</span>
-                                    </>
+                                    <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-0.5">
+                                      {product.variants.map((variant, i) => (
+                                        <Fragment key={variant.label}>
+                                          <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                                            {variant.label}
+                                          </span>
+                                          <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                                            {formatPrice(variant.price)}
+                                          </span>
+                                        </Fragment>
+                                      ))}
+                                    </div>
                                   ) : (
                                     <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
                                   )}
