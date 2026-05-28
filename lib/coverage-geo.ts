@@ -141,6 +141,65 @@ export type CentroidFeature = {
   };
 };
 
+// V11 — per-ZIP feature shapes for the new "realistic" coverage map.
+// Replaces the old 7 cluster polygons with 32 individual ZIP-code
+// polygons, each colored by its cluster. The cluster-level features
+// are still computed below for legacy callers (delivery-page cluster
+// cards) but the MAP itself now reads from the per-ZIP layers.
+
+import { ZIP_SHAPES } from './coverage-zips';
+
+const CLUSTER_BY_ID = Object.fromEntries(COVERAGE.clusters.map((c) => [c.id, c]));
+
+export type ZipFillFeature = {
+  type: 'Feature';
+  properties: {
+    zip: string;
+    clusterId: string;
+    clusterShortName: string;
+    etaMinutes: number;
+    color: string;
+  };
+  geometry: { type: 'Polygon'; coordinates: Ring[] };
+};
+
+export type ZipLabelFeature = {
+  type: 'Feature';
+  properties: { zip: string; color: string };
+  geometry: { type: 'Point'; coordinates: [number, number] };
+};
+
+export const ZIP_FILL_GEOJSON = {
+  type: 'FeatureCollection' as const,
+  features: ZIP_SHAPES.map<ZipFillFeature>((z) => {
+    const cluster = CLUSTER_BY_ID[z.clusterId];
+    return {
+      type: 'Feature',
+      properties: {
+        zip: z.zip,
+        clusterId: z.clusterId,
+        clusterShortName: cluster.shortName,
+        etaMinutes: cluster.etaMinutes,
+        color: CLUSTER_COLORS[z.clusterId]
+      },
+      geometry: { type: 'Polygon', coordinates: [z.polygon] }
+    };
+  })
+};
+
+export const ZIP_LABEL_GEOJSON = {
+  type: 'FeatureCollection' as const,
+  features: ZIP_SHAPES.map<ZipLabelFeature>((z) => ({
+    type: 'Feature',
+    properties: { zip: z.zip, color: CLUSTER_COLORS[z.clusterId] },
+    geometry: { type: 'Point', coordinates: z.centroid }
+  }))
+};
+
+// Cluster-level GeoJSON — kept for back-compat with any legacy consumer
+// that still expects per-cluster shapes (delivery page cluster cards
+// don't actually use the map polygons directly, so this is mostly here
+// for type-safety + future-proofing).
 export const CLUSTER_GEOJSON = {
   type: 'FeatureCollection' as const,
   features: COVERAGE.clusters.map<ClusterFeature>((c) => ({

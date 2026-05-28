@@ -5,10 +5,11 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CENTROID_GEOJSON,
-  CLUSTER_GEOJSON,
   MAP_BOUNDS,
   TILE_ATTRIBUTION,
-  TILE_URL
+  TILE_URL,
+  ZIP_FILL_GEOJSON,
+  ZIP_LABEL_GEOJSON
 } from '@/lib/coverage-geo';
 
 /**
@@ -79,41 +80,43 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     });
 
     map.on('load', () => {
-      // Cluster polygon fills — soft green tint.
-      // Opacity lowered from 0.34 → 0.22 (default) so the underlying
-      // street network reads through, especially in Manhattan where 5+
-      // adjacent polygons used to stack and obscure the basemap. Active
-      // cluster still pops at 0.50 so the customer's selected zone is
-      // visually unmissable.
-      map.addSource('clusters', { type: 'geojson', data: CLUSTER_GEOJSON });
+      // V11 — Per-ZIP polygon fills replacing the old 7 cluster blobs.
+      // Each of the 32 covered ZIPs gets its own polygon colored by its
+      // cluster's brand tint. Reads as a real ZIP-code coverage map
+      // instead of generic neighborhood shading. Opacity is the same
+      // 0.22 default → 0.50 active (when the parent cluster is selected)
+      // that we tuned for the cluster blobs.
+      map.addSource('zips', { type: 'geojson', data: ZIP_FILL_GEOJSON });
       map.addLayer({
         id: 'cluster-fill',
         type: 'fill',
-        source: 'clusters',
+        source: 'zips',
         paint: {
           'fill-color': ['get', 'color'],
           'fill-opacity': [
             'case',
-            ['==', ['get', 'id'], activeCluster ?? ''],
+            ['==', ['get', 'clusterId'], activeCluster ?? ''],
             0.50,
             0.22
           ]
         }
       });
-      // Lime outlines (brand)
+      // Lime outlines per ZIP — slightly thinner than the old cluster
+      // outline since each ZIP polygon is smaller. Active cluster's ZIPs
+      // get the heavier line.
       map.addLayer({
         id: 'cluster-outline',
         type: 'line',
-        source: 'clusters',
+        source: 'zips',
         paint: {
           'line-color': '#C8E66E',
           'line-width': [
             'case',
-            ['==', ['get', 'id'], activeCluster ?? ''],
-            2.6,
-            1.4
+            ['==', ['get', 'clusterId'], activeCluster ?? ''],
+            2.2,
+            1.1
           ],
-          'line-opacity': 0.9
+          'line-opacity': 0.85
         }
       });
 
@@ -182,6 +185,32 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         }
       });
 
+      // Per-ZIP labels — small lime mono text at each ZIP's centroid.
+      // Zoom-gated via the layout filter so labels only appear when
+      // the customer has zoomed in close enough to see neighborhoods
+      // clearly (≥ zoom 11.5). At wider zooms they auto-hide so the
+      // map doesn't feel cluttered.
+      map.addSource('zip-labels', { type: 'geojson', data: ZIP_LABEL_GEOJSON });
+      map.addLayer({
+        id: 'zip-label',
+        type: 'symbol',
+        source: 'zip-labels',
+        minzoom: 11.5,
+        layout: {
+          'text-field': ['get', 'zip'],
+          'text-font': ['literal', ['Open Sans Semibold', 'Arial Unicode MS Bold']],
+          'text-size': 11,
+          'text-letter-spacing': 0.08,
+          'text-allow-overlap': false,
+          'text-ignore-placement': false
+        },
+        paint: {
+          'text-color': 'rgba(200, 230, 110, 0.70)',
+          'text-halo-color': 'rgba(19, 36, 29, 0.88)',
+          'text-halo-width': 1.3
+        }
+      });
+
       // Neighborhood + ETA labels for each cluster pin.
       map.addLayer({
         id: 'centroid-label',
@@ -222,10 +251,16 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       map.on('mouseleave', 'centroid-ring', unCursor);
 
       const handleClick = (e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
-        const id = e.features?.[0]?.properties?.id as string | undefined;
-        if (id) {
-          onSelect(id);
-          const f = CENTROID_GEOJSON.features.find((x) => x.properties.id === id);
+        // Each layer reports a different property shape:
+        //   • cluster-fill (per-ZIP) → properties.clusterId
+        //   • centroid-ring + centroid-dot (per-cluster pin) → properties.id
+        // Resolve to a single clusterId then trigger the standard
+        // select-and-fly behavior.
+        const props = e.features?.[0]?.properties ?? {};
+        const clusterId = (props.clusterId ?? props.id) as string | undefined;
+        if (clusterId) {
+          onSelect(clusterId);
+          const f = CENTROID_GEOJSON.features.find((x) => x.properties.id === clusterId);
           if (f) {
             map.flyTo({ center: f.geometry.coordinates, zoom: 12.6, speed: 0.8 });
           }
@@ -252,11 +287,12 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     if (!map || !ready.current) return;
 
     if (map.getLayer('cluster-fill')) {
-      // Keep parity with the initial paint values above — V10 lowered the
-      // defaults so the basemap reads through better in Manhattan.
+      // V11 — the fill layer now reads from the per-ZIP source; key on
+      // `clusterId` not `id`. Active cluster's ZIPs pop at 0.50; the
+      // rest stay at the calm 0.22 default so the basemap reads through.
       map.setPaintProperty('cluster-fill', 'fill-opacity', [
         'case',
-        ['==', ['get', 'id'], activeCluster ?? ''],
+        ['==', ['get', 'clusterId'], activeCluster ?? ''],
         0.50,
         0.22
       ]);
@@ -264,9 +300,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     if (map.getLayer('cluster-outline')) {
       map.setPaintProperty('cluster-outline', 'line-width', [
         'case',
-        ['==', ['get', 'id'], activeCluster ?? ''],
-        2.6,
-        1.4
+        ['==', ['get', 'clusterId'], activeCluster ?? ''],
+        2.2,
+        1.1
       ]);
     }
     if (map.getLayer('centroid-ring')) {
