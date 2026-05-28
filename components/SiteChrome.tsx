@@ -21,8 +21,38 @@ import { business, checkout, footerLinkGroups, social } from '@/lib/site-data';
  * component had its own inline Tailwind that mirrored the .btn-luxe-gold
  * spec — that drift was the cause of the "buttons look different from
  * each other" inconsistency the client flagged.
+ *
+ * `responsive` mode — when true, the button shows as an icon-only pill
+ * on mobile (just the shopping bag) and expands to the full text version
+ * at md: and up. Used in the site header where a full-width "ORDER NOW"
+ * button would crowd the logo and create a visually unbalanced chrome on
+ * 360–420px Android screens. Everywhere else (drawer footer, page CTAs,
+ * mobile sticky bar) keeps the default full-text version.
  */
-export function OrderButton({ label = 'Order now', className = '' }: { label?: string; className?: string }) {
+export function OrderButton({
+  label = 'Order now',
+  className = '',
+  responsive = false
+}: {
+  label?: string;
+  className?: string;
+  responsive?: boolean;
+}) {
+  if (responsive) {
+    return (
+      <Link
+        href={checkout.dutchieUrl}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={label}
+        className={`btn-luxe btn-luxe-gold inline-flex h-11 w-11 min-h-0 items-center justify-center !px-0 md:h-auto md:w-auto md:!px-6 ${className}`}
+      >
+        <ShoppingBag className="h-4 w-4" />
+        <span className="hidden md:inline">{label}</span>
+        <ArrowRight className="hidden h-4 w-4 md:inline" />
+      </Link>
+    );
+  }
   return (
     <Link
       href={checkout.dutchieUrl}

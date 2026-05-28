@@ -168,13 +168,19 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Right cluster: live delivery ETA + 21+ pill + Order CTA */}
+          {/* Right cluster: live delivery ETA + 21+ pill + Order CTA.
+              The OrderButton here uses `responsive` so on mobile it
+              renders as an icon-only 44px pill (matching the hamburger's
+              footprint on the left) — balanced chrome, centered logo,
+              and the icon still communicates "place an order" without
+              a 220px-wide pill dominating the right half. At md: and up
+              the button expands to its full "ORDER NOW →" form. */}
           <div className="flex items-center gap-2 md:gap-3">
             <DeliveryEta variant="desktop" />
             <span className="hidden items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[color:var(--rd-ink)] [font-family:var(--font-mono)] sm:inline-flex">
               21+
             </span>
-            <OrderButton />
+            <OrderButton responsive />
           </div>
         </div>
       </header>
