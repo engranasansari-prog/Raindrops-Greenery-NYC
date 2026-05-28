@@ -19,7 +19,7 @@ export default function NotFound() {
               'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
-        <div className="luxury-shell relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="luxury-shell relative grid gap-10 py-14 sm:py-20 lg:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Error 404</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
