@@ -169,13 +169,38 @@ function ProductCard({
               {product.name}
             </h3>
           </div>
+          {/*
+            Price column — multi-variant aware. For flowers (which all carry
+            both 3.5g and 7g sizes in the Dutchie data), render a two-tier
+            block: the entry-tier price is the primary visual (large amber)
+            and the larger size sits below it as a secondary line. For
+            single-variant products (pre-rolls, edibles) the column collapses
+            back to one price exactly as before.
+            Previously only product.salePrice was shown — that was the
+            adapter dropping the 7g variant before it ever reached the UI.
+          */}
           <div className="shrink-0 text-right [font-family:var(--font-mono)]">
-            <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</p>
+            {product.variants.length > 1 ? (
+              <>
+                <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.variants[0].price)}</p>
+                <p className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[0].label}</p>
+                <div className="mt-2 border-t border-[color:var(--rd-paper)]/10 pt-2">
+                  <p className="text-base font-semibold text-[color:var(--rd-amber)]/85 sm:text-lg">{formatPrice(product.variants[1].price)}</p>
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[1].label}</p>
+                </div>
+              </>
+            ) : (
+              <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</p>
+            )}
           </div>
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {product.weight && <span className="rounded-full border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink)]/55 px-3 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">{product.weight}</span>}
+          {/* Hide the standalone weight chip when the price column already
+              shows each variant's size — keeps the card from repeating "3.5g"
+              twice. Pre-rolls and edibles (single-variant) still render the
+              weight chip when present. */}
+          {product.weight && product.variants.length <= 1 && <span className="rounded-full border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink)]/55 px-3 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">{product.weight}</span>}
           <span className="rounded-full border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink)]/55 px-3 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">{inferProfile(product)}</span>
           {potency && <span className="rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 px-3 py-1 text-[11px] tracking-wider text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">{potency}</span>}
         </div>
@@ -220,7 +245,10 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
   if (product.category !== 'Edibles') {
     detailRows.push(['Profile', inferProfile(product)]);
   }
-  if (product.weight) {
+  // Hide the Size row when the modal already shows variant pricing above
+  // (flowers with 3.5g + 7g). For single-variant products keep it as before
+  // so customers see the size next to brand/profile/potency.
+  if (product.weight && product.variants.length <= 1) {
     detailRows.push(['Size', product.weight]);
   }
   if (potency) {
@@ -302,11 +330,35 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               </button>
             </div>
 
-            <div className="mt-5 flex items-end gap-3 sm:mt-6 [font-family:var(--font-mono)]">
-              {product.salePrice < product.price && (
-                <p className="pb-1 text-sm font-medium text-[color:var(--rd-text-mute)] line-through">{formatPrice(product.price)}</p>
+            {/* Price block — multi-variant aware. Flowers show both 3.5g and
+                7g side-by-side so customers see all sizes at a glance.
+                Single-variant products (pre-rolls, edibles) collapse back
+                to the original single-price treatment. */}
+            <div className="mt-5 sm:mt-6 [font-family:var(--font-mono)]">
+              {product.variants.length > 1 ? (
+                <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
+                  {product.variants.map((variant, i) => (
+                    <div key={variant.label} className="flex flex-col">
+                      <p className={`font-semibold text-[color:var(--rd-amber)] ${i === 0 ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl opacity-80'}`}>
+                        {formatPrice(variant.price)}
+                      </p>
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">
+                        {variant.label}
+                      </p>
+                    </div>
+                  ))}
+                  <p className="ml-auto pb-1 text-[11px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">
+                    Pick size at checkout
+                  </p>
+                </div>
+              ) : (
+                <div className="flex items-end gap-3">
+                  {product.salePrice < product.price && (
+                    <p className="pb-1 text-sm font-medium text-[color:var(--rd-text-mute)] line-through">{formatPrice(product.price)}</p>
+                  )}
+                  <p className="text-4xl font-semibold text-[color:var(--rd-amber)] sm:text-5xl">{formatPrice(product.salePrice)}</p>
+                </div>
               )}
-              <p className="text-4xl font-semibold text-[color:var(--rd-amber)] sm:text-5xl">{formatPrice(product.salePrice)}</p>
             </div>
 
             {getProductDescription(product) && (

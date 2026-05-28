@@ -30,37 +30,69 @@ type MenuSearchParams = { category?: string; product?: string; deals?: string; e
  * links.
  */
 function buildProductSchema() {
-  const items = menuProducts.slice(0, 30).map((product, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    item: {
-      '@type': 'Product',
-      '@id': `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}#product`,
-      name: product.name,
-      image: product.image ?? undefined,
-      brand: { '@type': 'Brand', name: getBrandLabel(product) },
-      manufacturer: { '@type': 'Organization', name: getBrandLabel(product) },
-      category: product.category,
-      productID: product.id,
-      sku: product.id,
+  const priceValidUntil = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const items = menuProducts.slice(0, 30).map((product, index) => {
+    // Multi-variant products (flowers with 3.5g + 7g) get an AggregateOffer
+    // covering the price range; single-variant products keep a flat Offer.
+    // This is the canonical schema.org pattern for sized goods (Google
+    // explicitly recommends AggregateOffer when multiple SKU prices exist).
+    const variantOffers = product.variants.map((v) => ({
+      '@type': 'Offer',
+      sku: `${product.id}__${v.label}`,
+      name: `${product.name} (${v.label})`,
+      price: (v.price / 100).toFixed(2),
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
-      description:
-        product.description?.trim() ||
-        `${inferProfile(product)} ${product.category.toLowerCase()} from ${getBrandLabel(product)}.`,
-      offers: {
-        '@type': 'Offer',
-        price: (product.salePrice / 100).toFixed(2),
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
+      url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
+      seller: { '@id': `${business.baseUrl}#business` },
+      priceValidUntil
+    }));
+
+    const offers = product.variants.length > 1
+      ? {
+          '@type': 'AggregateOffer',
+          priceCurrency: 'USD',
+          lowPrice: (Math.min(...product.variants.map((v) => v.price)) / 100).toFixed(2),
+          highPrice: (Math.max(...product.variants.map((v) => v.price)) / 100).toFixed(2),
+          offerCount: product.variants.length,
+          availability: 'https://schema.org/InStock',
+          offers: variantOffers,
+          seller: { '@id': `${business.baseUrl}#business` },
+          priceValidUntil
+        }
+      : (variantOffers[0] ?? {
+          '@type': 'Offer',
+          price: (product.salePrice / 100).toFixed(2),
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          itemCondition: 'https://schema.org/NewCondition',
+          url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
+          seller: { '@id': `${business.baseUrl}#business` },
+          priceValidUntil
+        });
+
+    return {
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        '@id': `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}#product`,
+        name: product.name,
+        image: product.image ?? undefined,
+        brand: { '@type': 'Brand', name: getBrandLabel(product) },
+        manufacturer: { '@type': 'Organization', name: getBrandLabel(product) },
+        category: product.category,
+        productID: product.id,
+        sku: product.id,
         itemCondition: 'https://schema.org/NewCondition',
-        url: `${business.baseUrl}/menu?product=${encodeURIComponent(product.id)}`,
-        seller: { '@id': `${business.baseUrl}#business` },
-        // Price valid for at least 7 days from build — Google requires a
-        // priceValidUntil to surface the offer in rich results.
-        priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+        description:
+          product.description?.trim() ||
+          `${inferProfile(product)} ${product.category.toLowerCase()} from ${getBrandLabel(product)}.`,
+        offers
       }
-    }
-  }));
+    };
+  });
 
   return {
     '@context': 'https://schema.org',

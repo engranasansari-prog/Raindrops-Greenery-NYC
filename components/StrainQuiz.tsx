@@ -433,7 +433,15 @@ export default function StrainQuiz() {
                               <p className="mt-2 text-xs text-[color:var(--rd-text-dim)]">{inferProfile(product)}</p>
                               <div className="mt-auto flex items-end justify-between pt-5">
                                 <div className="[font-family:var(--font-mono)]">
-                                  <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
+                                  {product.variants.length > 1 ? (
+                                    <>
+                                      <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl leading-none">{formatPrice(product.variants[0].price)}</span>
+                                      <span className="mt-1 block text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">{product.variants[0].label}</span>
+                                      <span className="mt-2 block text-sm font-semibold text-[color:var(--rd-amber)]/85">{formatPrice(product.variants[1].price)} · {product.variants[1].label}</span>
+                                    </>
+                                  ) : (
+                                    <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
+                                  )}
                                 </div>
                                 {thc && (
                                   <span className="text-right [font-family:var(--font-mono)]">

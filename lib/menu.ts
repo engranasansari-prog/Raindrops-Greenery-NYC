@@ -23,10 +23,18 @@ export type LiveMenuProduct = {
   imageMobile: string | null;
   imageTablet: string | null;
   imageThumbnail: string | null;
+  /** Primary weight label (first/entry-tier variant) — kept for filter chips,
+   *  back-compat with featured-deals, and single-variant products. */
   weight: string | null;
   /** All prices stored in cents to match the legacy shape. */
   price: number;
   salePrice: number;
+  /** ALL purchasable variants for this product, prices in cents. For flowers
+   *  this is typically [3.5g, 7g]; for pre-rolls and edibles a single entry.
+   *  Added Feb 2026 — the Dutchie dataset always had multi-size variants,
+   *  but the original adapter only forwarded the first one which meant the
+   *  whole UI rendered just 3.5g prices for every flower strain. */
+  variants: Array<{ label: string; price: number }>;
   quantity: number;
   potencies: Array<{ name: string; value: string }>;
   deals: Array<{ name: string; description: string; discountType: string | null; discountAmount: number | null }>;
@@ -88,6 +96,14 @@ function adapt(product: Product): LiveMenuProduct {
     }
   })();
 
+  // Forward every purchasable variant to the UI, in cents. Filter out
+  // the legacy "Default" label (Dutchie's placeholder when a product
+  // has no real variants) and the 1.5g pre-roll label that the client
+  // asked us to suppress (V9 rule).
+  const variants = product.variants
+    .filter((v) => v.label !== 'Default' && v.label !== '1.5g')
+    .map((v) => ({ label: v.label, price: v.price * 100 }));
+
   return {
     id: product.id,
     productId: product.id,
@@ -106,6 +122,7 @@ function adapt(product: Product): LiveMenuProduct {
     price: priceCents,
     // No discounted pricing in the V8 dataset — salePrice mirrors price.
     salePrice: priceCents,
+    variants,
     quantity: 1,
     potencies: buildPotencies(product),
     deals: [],

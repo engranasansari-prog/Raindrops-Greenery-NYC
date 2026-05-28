@@ -82,9 +82,27 @@ function ProductCard({ product, eager = false }: { product: LiveMenuProduct; eag
           {product.name}
         </h3>
         <div className="mt-auto flex items-end justify-between gap-3 pt-4">
-          <p className="text-xl font-semibold text-[color:var(--rd-amber)] [font-family:var(--font-mono)] sm:text-2xl">
-            {formatPrice(product.salePrice)}
-          </p>
+          {/* Multi-variant aware price column. Flowers show 3.5g/7g pricing
+              stacked; pre-rolls + edibles show their single price. */}
+          <div className="[font-family:var(--font-mono)]">
+            {product.variants.length > 1 ? (
+              <div className="flex flex-col">
+                <span className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl leading-none">
+                  {formatPrice(product.variants[0].price)}
+                </span>
+                <span className="mt-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">
+                  {product.variants[0].label}
+                </span>
+                <span className="mt-2 text-sm font-semibold text-[color:var(--rd-amber)]/85">
+                  {formatPrice(product.variants[1].price)} · {product.variants[1].label}
+                </span>
+              </div>
+            ) : (
+              <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">
+                {formatPrice(product.salePrice)}
+              </p>
+            )}
+          </div>
           <span className="inline-flex shrink-0 items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
             View
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
