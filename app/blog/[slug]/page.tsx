@@ -153,7 +153,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
           <div className="absolute inset-0">
             <Image src={post.coverImage} alt="" fill priority sizes="100vw" className="object-cover opacity-[0.30]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,20,16,0.55),rgba(10,20,16,0.85))]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.55),rgba(19,36,29,0.85))]" />
           </div>
           <div className="luxury-shell relative py-16 sm:py-20">
             <Link

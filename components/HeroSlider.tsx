@@ -130,7 +130,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
             />
             {/* Cinematic side gradient — keeps text on left readable */}
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94)_0%,rgba(10,20,16,0.78)_38%,rgba(10,20,16,0.32)_72%,rgba(10,20,16,0.58)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94)_0%,rgba(19,36,29,0.78)_38%,rgba(19,36,29,0.32)_72%,rgba(19,36,29,0.58)_100%)]" />
             {/* Bottom fade for nav-content seam */}
             <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
           </motion.div>

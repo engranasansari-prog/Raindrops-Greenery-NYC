@@ -134,8 +134,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F5F1E8' },
-    { media: '(prefers-color-scheme: dark)', color: '#0A1410' }
+    { media: '(prefers-color-scheme: light)', color: '#F0E8D2' },
+    { media: '(prefers-color-scheme: dark)', color: '#13241D' }
   ]
 };
 
@@ -429,7 +429,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="font-[var(--font-sans)] antialiased">
         <noscript>
-          <div style={{ background: '#0A1410', color: '#F5F1E8', padding: '16px 24px', textAlign: 'center', fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: 14, lineHeight: 1.6 }}>
+          <div style={{ background: '#13241D', color: '#F0E8D2', padding: '16px 24px', textAlign: 'center', fontFamily: 'system-ui, -apple-system, sans-serif', fontSize: 14, lineHeight: 1.6 }}>
             This site uses JavaScript for the interactive menu, ZIP checker, and age verification. Please enable JavaScript, or call us at <strong style={{ color: '#C8E66E' }}>(888) 448-4717</strong> to order. 21+ only.
           </div>
         </noscript>

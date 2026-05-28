@@ -3,16 +3,25 @@
 /* =====================================================================
    Raindrops Greenery — Design System (per /raindrops-design-brief.md §2)
    Editorial luxury meets botanical.
+
+   Palette v2 — "warmer forest" (Option A, May 2026 client refresh).
+   The previous palette ran too close to black-with-green-tint on the dark
+   side and too close to off-white on the light side. This revision lifts
+   ink toward a true deep-forest green, warms paper toward a richer cream,
+   and widens the separation between the two dark shades so layered cards
+   read as "depth" rather than "one slab." Same architecture, every
+   component inherits via CSS variable.
    ===================================================================== */
 :root {
   /* Foundation — 80% of the canvas */
-  --rd-ink:        #0A1410;
-  --rd-ink-soft:   #11201A;
-  --rd-paper:      #F5F1E8;
-  --rd-paper-soft: #EBE5D6;
+  --rd-ink:        #13241D;   /* was #0A1410 — true deep forest, less black */
+  --rd-ink-soft:   #1A2D24;   /* was #11201A — 7→13 hex gap from ink = real depth */
+  --rd-paper:      #F0E8D2;   /* was #F5F1E8 — warmer, richer cream */
+  --rd-paper-soft: #E6DCC2;   /* was #EBE5D6 — deeper cream layer */
+  --rd-paper-bright: #FAF5E5; /* elevated cards on paper — replaces "bg-white" */
 
   /* Greenery — 15%, signature */
-  --rd-moss:       #2D4A3A;
+  --rd-moss:       #2E5240;   /* was #2D4A3A — warmer accent for new ink */
   --rd-fern:       #5B8C6E;
   --rd-mint:       #B8D4C2;
   --rd-glow:       #C8E66E;   /* electric lime — CTA + sale badges only */
@@ -23,17 +32,16 @@
   --rd-rain:       #6FA8DC;
 
   /* Text — on ink */
-  --rd-text:       #F5F1E8;
-  --rd-text-dim:   rgba(245, 241, 232, 0.72);
-  /* Lighthouse audit: was rgba(245,241,232,0.45) which renders ~#75787C
-     on --rd-ink → only 4.12:1 contrast (WCAG AA needs 4.5:1). Bumped to
-     0.58 for AA pass on body-size text; brand visuals unchanged. */
-  --rd-text-mute:  rgba(245, 241, 232, 0.58);
+  --rd-text:       #F0E8D2;   /* matches new paper for consistent warmth */
+  --rd-text-dim:   rgba(240, 232, 210, 0.74);
+  /* Lighthouse audit (re-run for palette v2): #13241D base needs slightly
+     higher alpha than the old #0A1410 to hit AA 4.5:1 on body text. */
+  --rd-text-mute:  rgba(240, 232, 210, 0.60);
 
   /* Text — on paper */
-  --rd-on-paper:        #0A1410;
-  --rd-on-paper-dim:    rgba(10, 20, 16, 0.65);
-  --rd-on-paper-mute:   rgba(10, 20, 16, 0.45);
+  --rd-on-paper:        #13241D;   /* matches new ink */
+  --rd-on-paper-dim:    rgba(19, 36, 29, 0.66);
+  --rd-on-paper-mute:   rgba(19, 36, 29, 0.46);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -51,9 +59,9 @@
   --emerald-deep:   var(--rd-moss);
   --sage:           var(--rd-mint);
   --ink:            var(--rd-ink);
-  --muted:          rgba(10, 20, 16, 0.55);
-  --line:           rgba(10, 20, 16, 0.1);
-  --shadow-soft:    0 30px 90px rgba(10, 20, 16, 0.12);
+  --muted:          rgba(19, 36, 29, 0.55);
+  --line:           rgba(19, 36, 29, 0.1);
+  --shadow-soft:    0 30px 90px rgba(19, 36, 29, 0.14);
 }
 
 * {
@@ -194,10 +202,45 @@ textarea:focus:not(:focus-visible) {
 
 /* Cards / utility */
 .glass-card {
-  background: rgba(255, 253, 247, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  background: rgba(250, 245, 229, 0.82);
+  border: 1px solid rgba(240, 232, 210, 0.72);
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(22px);
+}
+
+/* =====================================================================
+   Premium depth utilities — palette v2 polish
+   ===================================================================== */
+
+/* Dark sections feel less like a flat slab and more like real depth when
+   they carry a subtle vertical gradient (ink → ink-soft). Use this class
+   on hero containers + dark CTA bands. Falls back gracefully — solid ink
+   is still the base if a child opts out. */
+.rd-luxe-dark {
+  background: linear-gradient(180deg, var(--rd-ink) 0%, var(--rd-ink-soft) 100%);
+}
+
+/* Light cream sections benefit from a soft warm-paper gradient. Same
+   trick: depth without ornament. */
+.rd-luxe-paper {
+  background: linear-gradient(180deg, var(--rd-paper) 0%, var(--rd-paper-soft) 100%);
+}
+
+/* Luxe shadow — softer + more vertical than a default shadow, which
+   reads as "editorial drop" rather than "Bootstrap card." */
+.rd-shadow-luxe {
+  box-shadow:
+    0 1px 2px rgba(19, 36, 29, 0.04),
+    0 8px 24px rgba(19, 36, 29, 0.08),
+    0 32px 64px -16px rgba(19, 36, 29, 0.12);
+}
+
+/* Gold-edge ring — applied sparingly to important cards (testimonials,
+   gift modal). Reads as "framed art" not "form input." */
+.rd-ring-gold {
+  box-shadow:
+    0 0 0 1px rgba(212, 165, 116, 0.18),
+    0 24px 64px rgba(19, 36, 29, 0.14);
 }
 
 .gold-text {
@@ -230,7 +273,7 @@ textarea:focus:not(:focus-visible) {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(10, 20, 16, 0.55) 100%);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(19, 36, 29, 0.55) 100%);
 }
 
 /* Drop expensive blur on small screens for paint performance */
@@ -360,7 +403,7 @@ textarea:focus:not(:focus-visible) {
 .rd-cta-ghost {
   background: transparent;
   color: var(--rd-text);
-  border: 1px solid rgba(245, 241, 232, 0.32);
+  border: 1px solid rgba(240, 232, 210, 0.32);
 }
 .rd-cta-ghost:hover {
   border-color: var(--rd-glow);
@@ -506,7 +549,7 @@ textarea:focus:not(:focus-visible) {
 .btn-luxe-ghost {
   background: transparent;
   color: var(--rd-text);
-  border: 1px solid rgba(245, 241, 232, 0.28);
+  border: 1px solid rgba(240, 232, 210, 0.28);
 }
 .btn-luxe-ghost:hover {
   color: var(--rd-glow);

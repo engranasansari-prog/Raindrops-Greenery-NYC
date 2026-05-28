@@ -62,7 +62,7 @@ export default function LegalLayout({
                       className={`block rounded-full px-4 py-2 text-[13px] font-medium transition ${
                         active
                           ? 'bg-[color:var(--rd-moss)] text-[color:var(--rd-paper)]'
-                          : 'text-[color:var(--rd-ink)] hover:bg-white/70'
+                          : 'text-[color:var(--rd-ink)] hover:bg-[color:var(--rd-paper-bright)]/70'
                       }`}
                     >
                       {item.label}

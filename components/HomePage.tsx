@@ -369,7 +369,7 @@ function TestimonialFeature() {
               on every element so nothing inherits a near-white text
               token from the body. */}
           <div
-            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center shadow-[0_30px_90px_rgba(10,20,16,0.22)] sm:px-12 sm:py-16"
+            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center shadow-[0_30px_90px_rgba(19,36,29,0.22)] sm:px-12 sm:py-16"
             style={{ color: 'var(--rd-text)' }}
           >
             {/* Soft brand glow well behind the quote */}

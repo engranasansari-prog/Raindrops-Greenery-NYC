@@ -28,8 +28,8 @@ export default async function OpengraphImage() {
           justifyContent: 'space-between',
           padding: 80,
           background:
-            'radial-gradient(ellipse at top right, rgba(200,230,110,0.18), transparent 55%), radial-gradient(ellipse at bottom left, rgba(91,140,110,0.22), transparent 60%), #0A1410',
-          color: '#F5F1E8',
+            'radial-gradient(ellipse at top right, rgba(200,230,110,0.18), transparent 55%), radial-gradient(ellipse at bottom left, rgba(91,140,110,0.22), transparent 60%), #13241D',
+          color: '#F0E8D2',
           fontFamily: 'serif'
         }}
       >
@@ -42,7 +42,7 @@ export default async function OpengraphImage() {
             letterSpacing: 6,
             textTransform: 'uppercase',
             fontSize: 18,
-            color: 'rgba(245,241,232,0.65)',
+            color: 'rgba(240,232,210,0.65)',
             fontFamily: 'monospace'
           }}
         >
@@ -69,7 +69,7 @@ export default async function OpengraphImage() {
               margin: 0,
               fontWeight: 300,
               fontStyle: 'italic',
-              color: '#F5F1E8'
+              color: '#F0E8D2'
             }}
           >
             Premium drops.
@@ -92,7 +92,7 @@ export default async function OpengraphImage() {
               maxWidth: 820,
               fontSize: 26,
               lineHeight: 1.4,
-              color: 'rgba(245,241,232,0.72)',
+              color: 'rgba(240,232,210,0.72)',
               fontFamily: 'sans-serif'
             }}
           >
@@ -108,7 +108,7 @@ export default async function OpengraphImage() {
                 fontSize: 38,
                 letterSpacing: -1.5,
                 fontWeight: 500,
-                color: '#F5F1E8'
+                color: '#F0E8D2'
               }}
             >
               Raindrops Greenery
@@ -132,11 +132,11 @@ export default async function OpengraphImage() {
               gap: 10,
               padding: '10px 18px',
               borderRadius: 999,
-              border: '1px solid rgba(245,241,232,0.18)',
+              border: '1px solid rgba(240,232,210,0.18)',
               fontSize: 16,
               letterSpacing: 3,
               textTransform: 'uppercase',
-              color: 'rgba(245,241,232,0.65)',
+              color: 'rgba(240,232,210,0.65)',
               fontFamily: 'monospace'
             }}
           >

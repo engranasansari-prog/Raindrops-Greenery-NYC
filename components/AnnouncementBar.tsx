@@ -92,7 +92,7 @@ export default function AnnouncementBar() {
       aria-label="Site announcements"
       style={{
         background:
-          'linear-gradient(90deg, #0A1410 0%, #11201A 18%, #2D4A3A 50%, #11201A 82%, #0A1410 100%)',
+          'linear-gradient(90deg, #13241D 0%, #1A2D24 18%, #2E5240 50%, #1A2D24 82%, #13241D 100%)',
         borderBottom: '1px solid rgba(200,230,110,0.22)',
         boxShadow: '0 1px 0 rgba(0,0,0,0.45), inset 0 -1px 0 rgba(200,230,110,0.05)'
       }}
@@ -110,7 +110,7 @@ export default function AnnouncementBar() {
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px"
         aria-hidden
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(245,241,232,0.08) 18%, rgba(245,241,232,0.14) 50%, rgba(245,241,232,0.08) 82%, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(240,232,210,0.08) 18%, rgba(240,232,210,0.14) 50%, rgba(240,232,210,0.08) 82%, transparent)' }}
       />
       <div className="relative flex h-full items-center whitespace-nowrap animate-marquee will-change-transform">
         {repeated.map((item, i) => (
@@ -129,12 +129,12 @@ export default function AnnouncementBar() {
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(90deg, #0A1410 0%, rgba(10,20,16,0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, #13241D 0%, rgba(19,36,29,0.9) 40%, transparent)' }}
       />
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(270deg, #0A1410 0%, rgba(10,20,16,0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(270deg, #13241D 0%, rgba(19,36,29,0.9) 40%, transparent)' }}
       />
     </div>
   );

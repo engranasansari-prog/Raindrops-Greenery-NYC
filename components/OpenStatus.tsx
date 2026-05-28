@@ -66,7 +66,7 @@ export default function OpenStatus({ tone = 'light' }: { tone?: 'light' | 'dark'
       : 'border-white/14 bg-white/8 text-white/70'
     : status.open
       ? 'border-[color:var(--rd-fern)] bg-[color:var(--rd-fern)]/8 text-[color:var(--rd-moss)]'
-      : 'border-[color:var(--line)] bg-white/70 text-[color:var(--muted)]';
+      : 'border-[color:var(--line)] bg-[color:var(--rd-paper-bright)]/70 text-[color:var(--muted)]';
 
   return (
     <span className={`${baseClasses} ${toneClasses}`} aria-live="polite">

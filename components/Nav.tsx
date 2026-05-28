@@ -90,7 +90,7 @@ export default function Nav() {
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
                    bg-[color:var(--rd-ink)]
                    border-b border-[rgba(200,230,110,0.08)]
-                   data-[scrolled=true]:bg-[rgba(10,20,16,0.88)]
+                   data-[scrolled=true]:bg-[rgba(19,36,29,0.88)]
                    data-[scrolled=true]:backdrop-blur-xl
                    data-[scrolled=true]:backdrop-saturate-150
                    data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
@@ -190,7 +190,7 @@ export default function Nav() {
             aria-modal="true"
             aria-label="Navigation menu"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-[rgba(245,241,232,0.06)] p-4">
+            <div className="flex items-center justify-between gap-3 border-b border-[rgba(240,232,210,0.06)] p-4">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                   21+
@@ -218,7 +218,7 @@ export default function Nav() {
                     className={`flex h-14 items-center gap-3 border-l-2 px-5 transition ${
                       active
                         ? 'border-[color:var(--rd-glow)] bg-[rgba(200,230,110,0.04)] text-[color:var(--rd-glow)]'
-                        : 'border-transparent text-[color:var(--rd-text-dim)] hover:bg-[rgba(245,241,232,0.03)] hover:text-[color:var(--rd-text)]'
+                        : 'border-transparent text-[color:var(--rd-text-dim)] hover:bg-[rgba(240,232,210,0.03)] hover:text-[color:var(--rd-text)]'
                     }`}
                   >
                     <Icon size={20} strokeWidth={1.75} />
@@ -228,7 +228,7 @@ export default function Nav() {
               })}
             </nav>
 
-            <div className="space-y-4 border-t border-[rgba(245,241,232,0.06)] p-4">
+            <div className="space-y-4 border-t border-[rgba(240,232,210,0.06)] p-4">
               <a
                 href={checkout.dutchieUrl}
                 target="_blank"

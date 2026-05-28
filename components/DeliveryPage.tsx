@@ -43,7 +43,7 @@ export default function DeliveryPage() {
       {/* Hero — full-width pill with backdrop image + headline */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.22]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,16,0.94),rgba(10,20,16,0.62),rgba(10,20,16,0.78))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.62),rgba(19,36,29,0.78))]" />
         <div className="luxury-shell relative py-16 sm:py-20">
           <div className="max-w-3xl">
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
@@ -127,7 +127,7 @@ export default function DeliveryPage() {
                   }}
                   className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-6 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-7 ${
                     isActive
-                      ? 'border-[color:var(--rd-moss)] bg-white shadow-[0_24px_60px_rgba(45,74,58,0.18)]'
+                      ? 'border-[color:var(--rd-moss)] bg-[color:var(--rd-paper-bright)] shadow-[0_24px_60px_rgba(46,82,64,0.18)]'
                       : 'border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 hover:border-[color:var(--rd-moss)]/30'
                   }`}
                   role="button"
@@ -164,7 +164,7 @@ export default function DeliveryPage() {
                     {cluster.zips.map((z) => (
                       <span
                         key={z}
-                        className="inline-flex items-center rounded-md border border-[color:var(--rd-ink)]/10 bg-white px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-ink)] [font-family:var(--font-mono)]"
+                        className="inline-flex items-center rounded-md border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-ink)] [font-family:var(--font-mono)]"
                       >
                         {z}
                       </span>

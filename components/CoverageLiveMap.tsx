@@ -160,8 +160,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           'text-size': 12
         },
         paint: {
-          'text-color': '#F5F1E8',
-          'text-halo-color': 'rgba(10,20,16,0.9)',
+          'text-color': '#F0E8D2',
+          'text-halo-color': 'rgba(19,36,29,0.9)',
           'text-halo-width': 1.4
         }
       });
