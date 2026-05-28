@@ -13,8 +13,14 @@ import { business, checkout, footerLinkGroups, social } from '@/lib/site-data';
 
 
 /**
- * Primary CTA — pill in --rd-glow with ink text. Matches design brief §3.1.
- * Use this for the highest-priority action on a page.
+ * Primary CTA — the single canonical "Order now" button used in the Nav,
+ * footer, hero sliders, and any high-priority call-to-action position.
+ *
+ * Uses the .btn-luxe + .btn-luxe-gold design-system classes so it stays
+ * in lock-step with every other primary CTA on the site. Earlier this
+ * component had its own inline Tailwind that mirrored the .btn-luxe-gold
+ * spec — that drift was the cause of the "buttons look different from
+ * each other" inconsistency the client flagged.
  */
 export function OrderButton({ label = 'Order now', className = '' }: { label?: string; className?: string }) {
   return (
@@ -22,11 +28,11 @@ export function OrderButton({ label = 'Order now', className = '' }: { label?: s
       href={checkout.dutchieUrl}
       target="_blank"
       rel="noreferrer"
-      className={`group inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow,background] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)] ${className}`}
+      className={`btn-luxe btn-luxe-gold ${className}`}
     >
-      <ShoppingBag className="h-3.5 w-3.5" />
+      <ShoppingBag className="h-4 w-4" />
       {label}
-      <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
+      <ArrowRight className="h-4 w-4" />
     </Link>
   );
 }

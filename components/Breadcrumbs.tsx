@@ -12,9 +12,11 @@ export default function Breadcrumbs({ items, tone = 'light' }: { items: Crumb[];
   const base: Crumb = { label: 'Home', href: '/' };
   const trail = [base, ...items];
 
-  const baseColor = tone === 'dark' ? 'text-white/64' : 'text-[var(--muted)]';
-  const activeColor = tone === 'dark' ? 'text-white' : 'text-[var(--emerald-deep)]';
-  const sepColor = tone === 'dark' ? 'text-white/32' : 'text-[var(--muted)]/50';
+  // All colors flow through design tokens — no raw text-white. Dark-tone
+  // breadcrumbs sit on --rd-ink hero sections; light-tone ones on cream.
+  const baseColor = tone === 'dark' ? 'text-[color:var(--rd-text-dim)]' : 'text-[color:var(--rd-on-paper-dim)]';
+  const activeColor = tone === 'dark' ? 'text-[color:var(--rd-glow)]' : 'text-[color:var(--rd-moss)]';
+  const sepColor = tone === 'dark' ? 'text-[color:var(--rd-text-mute)]' : 'text-[color:var(--rd-on-paper-mute)]';
 
   // BreadcrumbList JSON-LD — Google reads this to render the breadcrumb
   // path in search results instead of a raw URL.

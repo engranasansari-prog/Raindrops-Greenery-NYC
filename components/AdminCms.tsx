@@ -67,11 +67,11 @@ export default function AdminCms() {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#06130f] p-6 text-center text-white">
+    <div className="flex min-h-screen items-center justify-center bg-[color:var(--rd-ink)] p-6 text-center text-[color:var(--rd-text)]">
       <div>
-        <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[var(--champagne)]">Raindrops Greenery</p>
+        <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[color:var(--rd-amber)]">Raindrops Greenery</p>
         <h1 className="mt-3 font-[var(--font-display)] text-5xl font-bold">Loading blog editor</h1>
-        <p className="mt-4 max-w-md text-sm leading-7 text-white/62">
+        <p className="mt-4 max-w-md text-sm leading-7 text-[color:var(--rd-text-dim)]">
           Use this private editor to add blog text, upload cover images, and publish Markdown posts to the repository.
         </p>
       </div>

@@ -89,7 +89,7 @@ export default function AboutPage() {
                 Browse the menu
                 <ArrowRight />
               </Link>
-              <Link href="/delivery" className="btn-luxe btn-luxe-ghost text-[color:var(--rd-ink)] border-[color:var(--rd-moss)]/30 hover:border-[color:var(--rd-moss)]">
+              <Link href="/delivery" className="btn-luxe btn-luxe-outline">
                 See delivery areas
                 <ArrowRight />
               </Link>
@@ -191,7 +191,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <OrderButton label="Start an order" />
-              <Link href="/contact" className="btn-luxe btn-luxe-ghost text-[color:var(--rd-ink)] border-[color:var(--rd-moss)]/30 hover:border-[color:var(--rd-moss)]">
+              <Link href="/contact" className="btn-luxe btn-luxe-outline">
                 Talk to support
                 <ArrowRight />
               </Link>

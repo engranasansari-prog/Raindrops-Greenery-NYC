@@ -63,10 +63,10 @@ export default function OpenStatus({ tone = 'light' }: { tone?: 'light' | 'dark'
   const toneClasses = tone === 'dark'
     ? status.open
       ? 'border-[color:var(--rd-glow)]/40 bg-[color:var(--rd-glow)]/10 text-[color:var(--rd-glow)]'
-      : 'border-white/14 bg-white/8 text-white/70'
+      : 'border-[color:var(--rd-text)]/14 bg-[color:var(--rd-text)]/8 text-[color:var(--rd-text-dim)]'
     : status.open
       ? 'border-[color:var(--rd-fern)] bg-[color:var(--rd-fern)]/8 text-[color:var(--rd-moss)]'
-      : 'border-[color:var(--line)] bg-[color:var(--rd-paper-bright)]/70 text-[color:var(--muted)]';
+      : 'border-[color:var(--line)] bg-[color:var(--rd-paper-bright)]/70 text-[color:var(--rd-on-paper-dim)]';
 
   return (
     <span className={`${baseClasses} ${toneClasses}`} aria-live="polite">

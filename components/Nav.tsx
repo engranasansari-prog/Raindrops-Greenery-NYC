@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { InstagramIcon } from '@/components/SocialIcons';
 import DeliveryEta from '@/components/DeliveryEta';
-import { checkout } from '@/lib/site-data';
+import { OrderButton } from '@/components/SiteChrome';
 
 /**
  * V7 §1 drop-in nav.
@@ -163,14 +163,7 @@ export default function Nav() {
             <span className="hidden items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[color:var(--rd-ink)] [font-family:var(--font-mono)] sm:inline-flex">
               21+
             </span>
-            <a
-              href={checkout.dutchieUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-4 py-2 text-[13px] font-semibold text-[color:var(--rd-ink)] shadow-[0_4px_14px_-4px_rgba(200,230,110,0.4)] transition hover:scale-[1.03] hover:shadow-[0_8px_22px_-6px_rgba(200,230,110,0.55)] active:scale-[0.98] md:px-5 md:py-2.5 md:text-[14px]"
-            >
-              Order now
-            </a>
+            <OrderButton />
           </div>
         </div>
       </header>
@@ -229,14 +222,7 @@ export default function Nav() {
             </nav>
 
             <div className="space-y-4 border-t border-[rgba(240,232,210,0.06)] p-4">
-              <a
-                href={checkout.dutchieUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full rounded-full bg-[color:var(--rd-glow)] px-5 py-3.5 text-center text-[15px] font-semibold text-[color:var(--rd-ink)] shadow-[0_4px_14px_-4px_rgba(200,230,110,0.4)]"
-              >
-                Order now
-              </a>
+              <OrderButton className="w-full" />
               <a
                 href="https://www.instagram.com/raindropsgreenery/"
                 target="_blank"

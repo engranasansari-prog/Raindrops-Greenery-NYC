@@ -112,26 +112,26 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.97 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="luxe-dark relative max-h-[100dvh] w-full max-w-2xl overflow-y-auto border border-white/8 shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[92vh] sm:rounded-2xl"
+            className="luxe-dark relative max-h-[100dvh] w-full max-w-2xl overflow-y-auto border border-[color:var(--rd-text)]/8 shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[92vh] sm:rounded-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <button
               onClick={onClose}
               aria-label="Close claim form"
-              className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/14 bg-white/8 text-white/80 transition hover:border-[var(--champagne)] hover:text-white"
+              className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-text)]/14 bg-[color:var(--rd-text)]/8 text-[color:var(--rd-text-dim)] transition hover:border-[var(--rd-amber)] hover:text-[color:var(--rd-text)]"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div className="relative p-6 sm:p-8 md:p-10">
-              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--champagne)] sm:text-xs">
+              <p className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[var(--rd-amber)] sm:text-xs">
                 <Sparkles className="h-3.5 w-3.5" />
                 Free gift · NYC only
               </p>
-              <h2 id="claim-title" className="mt-3 font-[var(--font-display)] text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-5xl">
+              <h2 id="claim-title" className="mt-3 font-[var(--font-display)] text-3xl font-extrabold leading-tight text-[color:var(--rd-text)] sm:text-4xl md:text-5xl">
                 Claim your offer.
               </h2>
-              <p className="mt-3 max-w-lg text-sm leading-7 text-white/68 sm:text-base">
+              <p className="mt-3 max-w-lg text-sm leading-7 text-[color:var(--rd-text-dim)] sm:text-base">
                 Adults 21+ in Manhattan, Brooklyn, or Queens — fill in your details and we’ll confirm eligibility. If approved, delivery within 24 hours.
               </p>
 
@@ -140,13 +140,13 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                   <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-200">
                     <Check className="h-6 w-6" />
                   </span>
-                  <h3 className="mt-4 font-[var(--font-display)] text-2xl font-bold text-white sm:text-3xl">
+                  <h3 className="mt-4 font-[var(--font-display)] text-2xl font-bold text-[color:var(--rd-text)] sm:text-3xl">
                     Your request has been received.
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-white/72 sm:text-base">
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)] sm:text-base">
                     If eligible, your package will be delivered within 24 hours. Keep an eye on your phone — a Raindrops Greenery dispatcher may text to confirm the drop window.
                   </p>
-                  <p className="mt-4 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/52 sm:text-xs">
+                  <p className="mt-4 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] sm:text-xs">
                     21+ only · NYC only · While supplies last
                   </p>
                   <button
@@ -165,7 +165,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                       value={form.name}
                       onChange={(event) => set('name', event.target.value)}
                       placeholder="Your name"
-                      className="w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40"
+                      className="w-full bg-transparent text-base font-bold text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text)]/40"
                     />
                   </Field>
 
@@ -178,7 +178,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                         value={form.email}
                         onChange={(event) => set('email', event.target.value)}
                         placeholder="you@email.com"
-                        className="w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40"
+                        className="w-full bg-transparent text-base font-bold text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text)]/40"
                       />
                     </Field>
 
@@ -191,7 +191,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                         value={form.phone}
                         onChange={(event) => set('phone', event.target.value)}
                         placeholder="(555) 555-5555"
-                        className="w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40"
+                        className="w-full bg-transparent text-base font-bold text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text)]/40"
                       />
                     </Field>
                   </div>
@@ -201,7 +201,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                       <select
                         value={form.borough}
                         onChange={(event) => set('borough', event.target.value)}
-                        className="w-full bg-transparent text-base font-bold text-white outline-none"
+                        className="w-full bg-transparent text-base font-bold text-[color:var(--rd-text)] outline-none"
                       >
                         {serviceAreas.map((area) => (
                           <option key={area} value={area} className="bg-[#06130f]">{area}</option>
@@ -218,7 +218,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                         maxLength={5}
                         onChange={(event) => set('zip', event.target.value)}
                         placeholder="10001"
-                        className="w-full bg-transparent text-base font-bold text-white outline-none placeholder:text-white/40"
+                        className="w-full bg-transparent text-base font-bold text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text)]/40"
                       />
                     </Field>
                   </div>
@@ -240,7 +240,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                     Claim this offer
                   </button>
 
-                  <p className="text-center text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/48 sm:text-xs">
+                  <p className="text-center text-[10px] font-extrabold uppercase tracking-[0.18em] text-[color:var(--rd-text)]/48 sm:text-xs">
                     21+ only · NYC only · While supplies last
                   </p>
                 </form>
@@ -266,9 +266,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--champagne)] sm:text-xs">{label}</span>
-      <span className={`mt-2 flex items-center gap-2 rounded-xl border bg-white/4 px-3 py-3 transition focus-within:bg-white/8 ${error ? 'border-rose-400/60' : 'border-white/14 focus-within:border-[var(--champagne)]'}`}>
-        <span className="text-white/60">{icon}</span>
+      <span className="block text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--rd-amber)] sm:text-xs">{label}</span>
+      <span className={`mt-2 flex items-center gap-2 rounded-xl border bg-[color:var(--rd-text)]/4 px-3 py-3 transition focus-within:bg-[color:var(--rd-text)]/8 ${error ? 'border-rose-400/60' : 'border-[color:var(--rd-text)]/14 focus-within:border-[var(--rd-amber)]'}`}>
+        <span className="text-[color:var(--rd-text-mute)]">{icon}</span>
         {children}
       </span>
       {error && <span className="mt-2 block text-xs font-bold text-rose-200">{error}</span>}
@@ -289,14 +289,14 @@ function Checkbox({
 }) {
   return (
     <div>
-      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/12 bg-white/4 p-4 transition hover:border-white/22">
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[color:var(--rd-text)]/12 bg-[color:var(--rd-text)]/4 p-4 transition hover:border-[color:var(--rd-text)]/22">
         <input
           type="checkbox"
           checked={checked}
           onChange={(event) => onChange(event.target.checked)}
-          className="mt-1 h-4 w-4 shrink-0 rounded border-white/30 bg-transparent text-[var(--champagne)] accent-[var(--champagne)]"
+          className="mt-1 h-4 w-4 shrink-0 rounded border-[color:var(--rd-text)]/30 bg-transparent text-[var(--rd-amber)] accent-[var(--rd-amber)]"
         />
-        <span className="text-sm leading-6 text-white/82">{label}</span>
+        <span className="text-sm leading-6 text-[color:var(--rd-text-dim)]">{label}</span>
       </label>
       {error && <p className="mt-2 text-xs font-bold text-rose-200">{error}</p>}
     </div>
