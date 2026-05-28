@@ -98,8 +98,15 @@ body {
   max-width: 100vw;
   font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
   font-size: 16px;
-  line-height: 1.6;
+  /* Editorial body rhythm: a hair airier (1.6→1.66) and very slightly
+     tightened tracking — reads calmer and more "expensive," which is how an
+     upper-class audience reads quality. `text-wrap: pretty` removes widows
+     and orphans from body copy (headings override with `balance` below). */
+  line-height: 1.66;
+  letter-spacing: -0.006em;
+  text-wrap: pretty;
   font-feature-settings: 'ss01', 'cv11';
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
@@ -118,6 +125,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   line-height: 1.05;
   font-variation-settings: 'SOFT' 70, 'opsz' 144;
+  /* Balance multi-line headlines so the last line never dangles a single
+     orphan word — the single biggest "editorial polish" tell on luxury sites.
+     Falls back gracefully on browsers that don't support it. */
+  text-wrap: balance;
 }
 
 /* Type scale — mobile-first floor.
