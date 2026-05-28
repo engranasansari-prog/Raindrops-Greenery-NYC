@@ -454,7 +454,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
     },
     {
       id: 'manhattan-brooklyn-queens',
-      image: '/assets/banner-drops.png',
+      image: '/assets/banner-drops1.png',
       imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan, Brooklyn, and Queens',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
