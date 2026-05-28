@@ -481,13 +481,26 @@ textarea:focus:not(:focus-visible) {
    so the second copy lands precisely where the first one started.
    translate3d kicks rendering onto the GPU layer for sub-pixel-stable
    motion (no jitter at the loop boundary). Pauses on hover; disabled
-   by prefers-reduced-motion (handled globally in this stylesheet). */
+   by prefers-reduced-motion (handled globally in this stylesheet).
+
+   CRITICAL — `width: max-content` is the line that makes mobile work.
+   The .animate-marquee div has `display: flex` from its className.
+   Without `width: max-content`, block-flex inherits parent width
+   (100vw — 375px on iPhone) regardless of how much content overflows.
+   `translate3d(-50%, …)` resolves against the ELEMENT'S OWN WIDTH,
+   so on mobile it would only travel ~187px before looping — the user
+   sees a tiny window cycling repeatedly, which is exactly what
+   "marquee feels stuck / repetitive on mobile" looked like.
+   With `width: max-content` the container sizes to its content
+   (~1800–2400px = 12 items wide), so -50% travels exactly one set
+   of items and the seam is perfectly aligned on every viewport. */
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
 }
 .animate-marquee {
-  animation: marquee 10s linear infinite;
+  width: max-content;
+  animation: marquee 28s linear infinite;
   /* will-change is a HINT to the browser to prep a GPU layer; it does
      NOT set a value the way a static `transform` would. We previously
      also set `transform: translate3d(0, 0, 0)` and `backface-visibility:
@@ -497,13 +510,13 @@ textarea:focus:not(:focus-visible) {
      cross-browser pattern. */
   will-change: transform;
 }
-/* Mobile gets a slightly slower cadence (13s vs 10s desktop) — gives
-   each pip enough on-screen time between the slim edge fades but doesn't
-   feel sluggish. Combined with interleaved item ordering, the bar reads
-   as six distinct rotating messages, not a stuck loop. */
+/* Mobile cadence — content is the same size as desktop but the viewport
+   window is narrower, so each pip needs more on-screen time to read.
+   36s mobile vs 28s desktop preserves the "slow, luxurious" feel
+   without crawling.  */
 @media (max-width: 768px) {
   .animate-marquee {
-    animation-duration: 13s;
+    animation-duration: 36s;
   }
 }
 .animate-marquee:hover {
