@@ -119,7 +119,7 @@ A short checklist:
 4. **What's your tolerance?** Lower tolerance → start low on the THC% / mg.
 5. **Mood you're going for?** Relaxed → Indica or Indica-Hybrid. Social or active → Sativa or Sativa-Hybrid. Balanced → Hybrid.
 
-Still unsure? The [strain finder quiz](/quiz) does this conversation for you in 60 seconds and returns three matched picks from our menu.
+Still unsure? The [strain finder quiz](/quiz) does this conversation for you in 30 seconds and returns three matched picks from our menu.
 
 ## Common questions
 
@@ -135,7 +135,7 @@ Yes. No New York State cannabis excise tax and no state sales tax apply to order
 ## More on this
 
 - [Browse the full menu](/menu) — Flower, Pre-Rolls, Edibles
-- [Take the strain finder quiz](/quiz) — 60 seconds, three matched picks
+- [Take the strain finder quiz](/quiz) — 30 seconds, three matched picks
 - [How checkout works](/blog/how-checkout-works) — what to expect after you tap order
 - [What 'sticky icky' actually means](/blog/what-sticky-icky-means) — flower quality, plain English
 

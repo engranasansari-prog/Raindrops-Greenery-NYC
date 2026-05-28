@@ -108,7 +108,7 @@ Coverage expands as routing capacity grows. LIC, Williamsburg, and Greenpoint ar
 - [Long Island City — 11101](/delivery)
 - [Williamsburg — 11211](/delivery)
 - [Greenpoint — 11222](/delivery)
-- [Plus 28 more ZIPs across Manhattan](/delivery)
+- [Plus 29 more ZIPs across Manhattan](/delivery)
 
 Drop your ZIP on the [coverage map](/#coverage) — if you're in, your bag's on the way.
 

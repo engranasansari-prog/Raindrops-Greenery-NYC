@@ -12,7 +12,7 @@ import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Deals',
+  title: 'NYC Cannabis Deals',
   description:
     'Tax-free Shinnecock-licensed cannabis picks — Heavy Hitters, Top Shelf, and Under $25. Free delivery across Manhattan, Brooklyn, and Queens.',
   alternates: { canonical: '/deals' },
@@ -180,7 +180,7 @@ const dealsListLd = {
     '@id': `${business.baseUrl}/deals#deals-list`,
     name: 'Tonight’s curated cannabis picks — Raindrops Greenery NY',
     description:
-      'Heavy Hitters (highest THC), Top Shelf ($40+ flower), and Under-$25 entry picks for tax-free NYC delivery. Free delivery on orders over $25.',
+      'Heavy Hitters (the premium ✦ STICKY $40+ tier), Top Shelf ($40+ flower), and Under-$25 entry picks for tax-free NYC delivery. Free delivery on orders over $25.',
     numberOfItems: curatedFeed.length,
     itemListElement: curatedFeed.map((product, index) => ({
       '@type': 'ListItem',
@@ -284,12 +284,12 @@ export default function DealsPage() {
         </section>
       ) : (
         <>
-          {/* Heavy Hitters — sticky / 30%+ flower + 1000mg gummies */}
+          {/* Heavy Hitters — the ✦ STICKY tier (premium $40+ products) */}
           <Section
             eyebrow="Heavy hitters"
-            title="Highest THC"
-            italic="in the shop."
-            body="The seven products that wear the ✦ STICKY badge — 30%+ flower and 1000mg gummies. Strong stuff."
+            title="The ✦ STICKY tier"
+            italic="top of the shop."
+            body="Every product that earns the ✦ STICKY badge — our premium $40-and-up tier of the strongest, most-wanted flower and high-dose edibles. Strong stuff."
             products={heavyHitters}
           />
 

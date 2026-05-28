@@ -79,8 +79,22 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      // Don't hijack arrow keys while the user is typing or interacting with a
+      // form control / editable region — that fought text-field caret movement
+      // and surprised keyboard users (WCAG 2.1.1 predictability).
+      const el = document.activeElement as HTMLElement | null;
+      if (
+        el &&
+        (el.tagName === 'INPUT' ||
+          el.tagName === 'TEXTAREA' ||
+          el.tagName === 'SELECT' ||
+          el.isContentEditable)
+      ) {
+        return;
+      }
       if (event.key === 'ArrowLeft') prev();
-      if (event.key === 'ArrowRight') next();
+      else next();
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);

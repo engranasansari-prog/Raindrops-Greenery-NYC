@@ -14,7 +14,7 @@ import HookPills from '@/components/HookPills';
 const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
   ssr: false
 });
-import { COVERAGE } from '@/lib/coverage';
+import { COVERAGE, ALL_ZIPS } from '@/lib/coverage';
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -52,7 +52,7 @@ export default function DeliveryPage() {
               Manhattan. <span className="italic">Brooklyn + Queens.</span> Same-day.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              33 ZIPs across 7 neighborhoods. Free delivery on orders over $25, tax-free. Average drop-off in under an hour.
+              {ALL_ZIPS.length} ZIPs across {COVERAGE.clusters.length} neighborhoods. Free delivery on orders over $25, tax-free. Average drop-off in under an hour.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/menu" className="btn-luxe btn-luxe-gold">
@@ -94,7 +94,7 @@ export default function DeliveryPage() {
             <div className="max-w-2xl">
               <p className="rd-eyebrow text-[color:var(--rd-moss)]">Where we go</p>
               <h2 className="mt-3 text-[color:var(--rd-ink)]">
-                7 neighborhoods. <span className="italic">32 ZIPs.</span>
+                {COVERAGE.clusters.length} neighborhoods. <span className="italic">{ALL_ZIPS.length} ZIPs.</span>
               </h2>
               <p className="mt-3 text-sm text-[color:var(--rd-on-paper-dim)] sm:text-base">
                 Hover a card to highlight its zone on the map above. Tap to focus.
@@ -121,8 +121,23 @@ export default function DeliveryPage() {
                     setActiveCluster(cluster.id);
                     // Scroll the map back into view so the customer sees the highlight
                     if (typeof window !== 'undefined') {
-                      const el = document.querySelector('[aria-label*="Raindrops Greenery NYC delivery coverage"]');
+                      const el = document.querySelector('[aria-label*="delivery coverage"]');
                       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    // role="button" must be operable by keyboard (WCAG 2.1.1).
+                    // Enter/Space activate the card the same as a click; the
+                    // inner "Order in this area" link keeps its own Enter via
+                    // stopPropagation so the two don't collide.
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      if (e.target !== e.currentTarget) return;
+                      e.preventDefault();
+                      setActiveCluster(cluster.id);
+                      if (typeof window !== 'undefined') {
+                        const el = document.querySelector('[aria-label*="delivery coverage"]');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
                     }
                   }}
                   className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-6 lg:p-7 ${

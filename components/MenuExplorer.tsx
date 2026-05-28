@@ -789,14 +789,15 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
           <AnimatePresence mode="popLayout">
             {visibleProducts.length > 0 ? (
               <motion.div layout className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {visibleProducts.map((product) => (
+                {visibleProducts.map((product, i) => (
                   <ProductCard
                     key={product.id}
                     product={product}
                     onDetails={setSelectedProduct}
                     /* First 6 cards above the fold are hinted eager so they render
-                       without waiting for IntersectionObserver. */
-                    eager={visibleProducts.indexOf(product) < 6}
+                       without waiting for IntersectionObserver. Use the map index
+                       (was indexOf — an O(n²) scan per render). */
+                    eager={i < 6}
                   />
                 ))}
               </motion.div>

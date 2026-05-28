@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     canonical: business.baseUrl,
     languages: { 'en-US': business.baseUrl }
   },
-  manifest: '/manifest.json',
+  // manifest is auto-linked by app/manifest.ts (basePath-aware) — no explicit URL.
   icons: {
     icon: [{ url: '/assets/logo.jpg', type: 'image/jpeg' }],
     apple: [{ url: '/assets/logo.jpg' }],

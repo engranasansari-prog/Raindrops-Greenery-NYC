@@ -40,7 +40,7 @@ export default function ContactPage() {
     event.preventDefault();
     const subject = encodeURIComponent(`[${topic}] Raindrops NY — ${name}`);
     const body = encodeURIComponent(
-      `${message}\n\n— — —\nFrom: ${name} <${email}>\nTopic: ${topic}\nSent via raindropsgreeneryny.com contact form`
+      `${message}\n\n— — —\nFrom: ${name} <${email}>\nTopic: ${topic}\nSent via ${business.domain} contact form`
     );
     if (typeof window !== 'undefined') {
       // Opens the customer's default email client with a pre-filled message
@@ -169,7 +169,7 @@ export default function ContactPage() {
             </div>
 
             {sent && (
-              <div className="mt-5 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
+              <div role="status" aria-live="polite" className="mt-5 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
                 <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
                   <Check className="h-4 w-4" />
                   Your email app should open

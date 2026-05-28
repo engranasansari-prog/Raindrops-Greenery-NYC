@@ -5,7 +5,7 @@ import { getBrandLabel, inferProfile } from '@/lib/menu-utils';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Menu',
+  title: 'Cannabis Delivery Menu',
   description:
     'Browse Raindrops Greenery NY Flower, Pre-Rolls, and Edibles with filters for price, potency, size, brand, effect, deals, and availability.',
   alternates: { canonical: '/menu' },

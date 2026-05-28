@@ -129,7 +129,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.97 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="luxe-dark relative max-h-[100dvh] w-full max-w-2xl overflow-y-auto border border-[color:var(--rd-text)]/8 shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[92vh] sm:rounded-2xl"
+            className="rd-luxe-dark relative max-h-[100dvh] w-full max-w-2xl overflow-y-auto border border-[color:var(--rd-text)]/8 shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[92vh] sm:rounded-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -149,7 +149,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                 Claim your offer.
               </h2>
               <p className="mt-3 max-w-lg text-sm leading-7 text-[color:var(--rd-text-dim)] sm:text-base">
-                Adults 21+ in Manhattan, Brooklyn, or Queens — fill in your details and we’ll confirm eligibility. If approved, delivery within 24 hours.
+                Adults 21+ in Manhattan plus Williamsburg, Greenpoint, and Long Island City — fill in your details and we’ll confirm eligibility. If approved, same-day delivery.
               </p>
 
               {submitted ? (
@@ -161,7 +161,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                     Your request has been received.
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)] sm:text-base">
-                    If eligible, your package will be delivered within 24 hours. Keep an eye on your phone — a Raindrops Greenery dispatcher may text to confirm the drop window.
+                    If eligible, your package will be delivered same-day. Keep an eye on your phone — a Raindrops Greenery dispatcher may text to confirm the drop window.
                   </p>
                   <p className="mt-4 text-[10px] font-extrabold uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] sm:text-xs">
                     21+ only · NYC only · While supplies last
@@ -214,7 +214,7 @@ export default function ClaimOfferModal({ open, onClose }: Props) {
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <Field label="Borough" icon={<MapPin className="h-4 w-4" />}>
+                    <Field label="Area" icon={<MapPin className="h-4 w-4" />}>
                       <select
                         value={form.borough}
                         onChange={(event) => set('borough', event.target.value)}
@@ -288,7 +288,11 @@ function Field({
         <span className="text-[color:var(--rd-text-mute)]">{icon}</span>
         {children}
       </span>
-      {error && <span className="mt-2 block text-xs font-bold text-rose-200">{error}</span>}
+      {error && (
+        <span role="alert" className="mt-2 block text-xs font-bold text-rose-200">
+          {error}
+        </span>
+      )}
     </label>
   );
 }

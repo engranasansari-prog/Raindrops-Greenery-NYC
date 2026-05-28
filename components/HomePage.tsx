@@ -449,8 +449,11 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       headline: 'Guaranteed best flower on the market.',
       headlineAccent: 'best flower',
       subtext: 'Free weed gift with every order. Tax-free under Shinnecock authority. Same-day delivery.',
-      primary: { label: 'Claim free weed gift', href: '/menu' },
-      secondary: { label: 'Check coverage', href: '#coverage' }
+      // Opens the claim modal (lead capture → Mailchimp) rather than jumping
+      // straight to /menu — the button literally promises a "claim" flow, and
+      // this makes the form reachable instead of dead.
+      primary: { label: 'Claim free weed gift', onClick: () => setClaimOpen(true) },
+      secondary: { label: 'Shop the menu', href: '/menu' }
     },
     {
       id: 'manhattan-brooklyn-queens',

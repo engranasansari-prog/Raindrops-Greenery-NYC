@@ -7,6 +7,7 @@ import {
   getBrandLabel,
   getDealLabel,
   getPotencyLabel,
+  getPrimaryPotency,
   getStrainTag,
   hasSale,
   isSticky,
@@ -38,17 +39,42 @@ function calculatePercentOff(price: number, salePrice: number) {
 }
 
 /**
- * Returns the top N deals by % off, with everything pre-formatted so
- * the client component receives a small JSON payload (no menu-utils logic
- * shipped to the browser).
+ * Returns N featured products, pre-formatted so the client component
+ * receives a small JSON payload (no menu-utils logic shipped to the browser).
+ *
+ * Selection: real discounts first (highest % off), then — because the live
+ * Dutchie dataset currently carries no markdowns (salePrice === price for
+ * every item) — fall back to a curated "best of the menu" set so the home
+ * "Tonight's drops" section is never empty. The curated picks are the
+ * premium ✦ STICKY tier ($40+) ranked by THC potency, with a final fill of
+ * the strongest remaining products. This guarantees exactly `limit` cards.
  */
 export function getFeaturedDeals(limit = 3): FeaturedDeal[] {
-  return menuProducts
+  const onSale = menuProducts
     .filter(hasSale)
     .sort(
       (a, b) =>
         calculatePercentOff(b.price, b.salePrice) - calculatePercentOff(a.price, a.salePrice)
-    )
+    );
+
+  const selected = [...onSale];
+  if (selected.length < limit) {
+    const chosen = new Set(selected.map((p) => p.id));
+    const curated = menuProducts
+      .filter((p) => !chosen.has(p.id) && Boolean(p.image))
+      // Premium tier first, then by raw THC potency — "picks moving fast."
+      .sort((a, b) => {
+        const stickyDelta = Number(isSticky(b)) - Number(isSticky(a));
+        if (stickyDelta !== 0) return stickyDelta;
+        return getPrimaryPotency(b) - getPrimaryPotency(a);
+      });
+    for (const product of curated) {
+      if (selected.length >= limit) break;
+      selected.push(product);
+    }
+  }
+
+  return selected
     .slice(0, limit)
     .map((product) => {
       const potency = getPotencyLabel(product);

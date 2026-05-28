@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
-  CENTROID_GEOJSON,
+  CLUSTER_LABEL_GEOJSON,
   MAP_BOUNDS,
   TILE_ATTRIBUTION,
   TILE_URL,
@@ -14,18 +14,22 @@ import {
 import { ALL_ZIPS } from '@/lib/coverage';
 
 /**
- * V9 — Single, clean interactive map (MapLibre GL JS, no API key).
+ * V15 — Real-boundary coverage map (MapLibre GL JS, no API key).
  *
- * Design goals (per client review):
- *   • One map — no Illustrated / Live toggle. This IS the map.
- *   • Full preview of Manhattan + LIC + Williamsburg + Greenpoint
- *     visible on first paint via fitBounds.
- *   • Branded styling — dark Carto basemap + lime cluster strokes +
- *     subtle lime centroid markers + neighborhood + ETA labels.
- *   • Click any cluster → fly-to + parent callback opens detail panel.
+ * What changed from V14:
+ *  • Polygons are now REAL US Census ZCTA boundaries for the 32 covered ZIPs
+ *    (see lib/coverage-zip-boundaries.ts) — they follow streets and the
+ *    waterfront, so the map reads as a precise coverage inset, not "squares."
+ *  • Decluttered labels: the default view shows 7 CLUSTER labels (neighborhood
+ *    + ETA). Individual ZIP numbers fade in only when you zoom into a
+ *    neighborhood (minzoom gate) — clicking a cluster flies in and reveals
+ *    them automatically. No more 32 numbers stacked on one view.
+ *  • Premium finish: white casing under each colored boundary (a "cut from
+ *    paper" inset look), soft cluster pin halos, feature-state hover glow,
+ *    and a subtle brand vignette over the basemap.
  *
- * Lazy-loaded via next/dynamic from CoverageMap; only ships when the
- * coverage section actually scrolls into view.
+ * Lazy-loaded via next/dynamic from CoverageMap; only ships when the coverage
+ * section scrolls into view.
  */
 
 type Props = {
@@ -33,12 +37,48 @@ type Props = {
   onSelect: (clusterId: string | null) => void;
 };
 
+const FLY_ZOOM = 13.4;
+
+// Fill opacity as a data-driven expression. `active` dims everything except
+// the selected cluster so the choice reads instantly; hovered ZIPs always pop.
+function fillOpacity(active: string | null): maplibregl.ExpressionSpecification {
+  const base: maplibregl.ExpressionSpecification = active
+    ? ([
+        'case',
+        ['==', ['get', 'clusterId'], active],
+        0.58,
+        0.12
+      ] as unknown as maplibregl.ExpressionSpecification)
+    : (0.32 as unknown as maplibregl.ExpressionSpecification);
+  return [
+    'case',
+    ['boolean', ['feature-state', 'hover'], false],
+    0.62,
+    base
+  ] as unknown as maplibregl.ExpressionSpecification;
+}
+
+function lineWidth(active: string | null): maplibregl.ExpressionSpecification {
+  return [
+    'case',
+    ['==', ['get', 'clusterId'], active ?? ''],
+    1.8,
+    0.9
+  ] as unknown as maplibregl.ExpressionSpecification;
+}
+
 export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const ready = useRef(false);
+  const hoveredId = useRef<number | string | null>(null);
+  // Keep onSelect fresh without re-binding the map click handler (which is
+  // bound once at load). Fixes the stale-closure risk on /delivery.
+  const onSelectRef = useRef(onSelect);
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
 
-  // Initialize the map once
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
@@ -47,9 +87,6 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       style: {
         version: 8,
         sources: {
-          // V14 — Carto Voyager basemap. Source/layer id kept as
-          // `carto-base` (renamed from the legacy `carto-dark`) so future
-          // greps land somewhere sensible.
           'carto-base': {
             type: 'raster',
             tiles: [TILE_URL],
@@ -59,22 +96,17 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         },
         layers: [{ id: 'carto-base', type: 'raster', source: 'carto-base' }]
       },
-      // Use bounds instead of fixed center/zoom so the entire delivery
-      // footprint is visible on first paint regardless of viewport size.
       bounds: MAP_BOUNDS,
-      fitBoundsOptions: { padding: { top: 28, right: 24, bottom: 40, left: 24 } },
+      fitBoundsOptions: { padding: { top: 36, right: 28, bottom: 44, left: 28 } },
       pitch: 0,
       bearing: 0,
       attributionControl: { compact: true },
-      // No rotation — the orientation is fixed so neighborhoods stay
-      // in their familiar positions.
       dragRotate: false,
       touchZoomRotate: false
     });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    map.scrollZoom.disable(); // don't hijack page scroll on desktop
-    // ⌘ / ctrl + scroll re-enables zoom — feels native
+    map.scrollZoom.disable();
     map.on('wheel', (e) => {
       if (e.originalEvent.ctrlKey || e.originalEvent.metaKey) {
         e.originalEvent.preventDefault();
@@ -84,197 +116,172 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     });
 
     map.on('load', () => {
-      // V11 — Per-ZIP polygon fills replacing the old 7 cluster blobs.
-      // Each of the 32 covered ZIPs gets its own polygon colored by its
-      // cluster's brand tint. Reads as a real ZIP-code coverage map
-      // instead of generic neighborhood shading. Opacity is the same
-      // 0.22 default → 0.50 active (when the parent cluster is selected)
-      // that we tuned for the cluster blobs.
-      map.addSource('zips', { type: 'geojson', data: ZIP_FILL_GEOJSON });
-      // V14 — Polygon fills are tuned down (0.22→0.16 default, 0.50→0.38
-      // active) so the Voyager basemap reads clearly through them.
-      // Polygons now feel like coverage hints, not blanket fills.
+      // ── ZIP polygons (real ZCTA boundaries) ──────────────────────────
+      map.addSource('zips', {
+        type: 'geojson',
+        data: ZIP_FILL_GEOJSON,
+        generateId: true // enables feature-state hover
+      });
+
+      // Fill — brand sage gradient per cluster, dimmed/boosted by selection.
       map.addLayer({
-        id: 'cluster-fill',
+        id: 'zip-fill',
         type: 'fill',
         source: 'zips',
         paint: {
           'fill-color': ['get', 'color'],
-          'fill-opacity': [
-            'case',
-            ['==', ['get', 'clusterId'], activeCluster ?? ''],
-            0.38,
-            0.16
-          ]
+          'fill-opacity': fillOpacity(activeCluster)
         }
       });
-      // V14 — Polygon outlines use the brand sage rather than full lime
-      // so they tie back to the cluster fill colors instead of stamping a
-      // neon ring on a soft basemap. Widths also dropped (0.8 default,
-      // 1.8 active) to feel finer against Voyager's typography.
+
+      // White casing UNDER the colored line — the premium "inset" halo that
+      // makes each neighborhood read as cleanly cut from the map.
       map.addLayer({
-        id: 'cluster-outline',
+        id: 'zip-casing',
         type: 'line',
         source: 'zips',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
         paint: {
-          'line-color': '#5B8C6E',
-          'line-width': [
-            'case',
-            ['==', ['get', 'clusterId'], activeCluster ?? ''],
-            1.8,
-            0.8
-          ],
-          'line-opacity': 0.7
+          'line-color': '#FFFFFF',
+          'line-width': 2.6,
+          'line-opacity': 0.55
         }
       });
 
-      // V14 — Centroid pins re-tuned for the light Voyager basemap.
-      // Ring fill drops to a near-white tint so the lime stroke reads
-      // crisp, dot picks up the brand-ink center for a tighter "drop pin"
-      // silhouette against cream land.
-      map.addSource('centroids', { type: 'geojson', data: CENTROID_GEOJSON });
+      // Colored boundary line on top of the casing.
       map.addLayer({
-        id: 'centroid-ring',
-        type: 'circle',
-        source: 'centroids',
+        id: 'zip-line',
+        type: 'line',
+        source: 'zips',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
         paint: {
-          'circle-radius': [
-            'case',
-            ['==', ['get', 'id'], activeCluster ?? ''],
-            16,
-            11
-          ],
-          'circle-color': 'rgba(255,255,255,0.85)',
-          'circle-stroke-color': '#4A7A5C',
-          'circle-stroke-width': 2
+          'line-color': ['get', 'color'],
+          'line-width': lineWidth(activeCluster),
+          'line-opacity': 0.9
         }
       });
-      map.addLayer({
-        id: 'centroid-dot',
-        type: 'circle',
-        source: 'centroids',
-        paint: {
-          'circle-radius': 4,
-          'circle-color': '#13241D'
-        }
-      });
-      // V14 — Custom borough labels removed. Voyager ships its own
-      // typography for MANHATTAN / BROOKLYN / QUEENS / NEW JERSEY, so
-      // stamping our own on top would have produced duplicate labels.
-      // (Legacy borough source/layer lived here under the dark_nolabels
-      // tileset — see git history if you need the coords.)
 
-      // V14 — Per-ZIP labels are bumped a level higher (minzoom 11.5 →
-      // 12) so they only show once the user has zoomed in past the
-      // neighborhood view. Text shifts from lime-on-dark to deep ink
-      // with a cream halo to read against Voyager's light land tiles.
+      // ── Cluster pins (7) ─────────────────────────────────────────────
+      map.addSource('cluster-labels', { type: 'geojson', data: CLUSTER_LABEL_GEOJSON });
+
+      // Soft halo behind each pin.
+      map.addLayer({
+        id: 'cluster-halo',
+        type: 'circle',
+        source: 'cluster-labels',
+        paint: {
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 9, 13, 16],
+          'circle-color': ['get', 'color'],
+          'circle-opacity': 0.18,
+          'circle-blur': 0.6
+        }
+      });
+      // Pin: white fill, colored ring, ink center dot via a second layer.
+      map.addLayer({
+        id: 'cluster-pin',
+        type: 'circle',
+        source: 'cluster-labels',
+        paint: {
+          'circle-radius': 5.5,
+          'circle-color': '#FFFFFF',
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-width': 2.5
+        }
+      });
+
+      // ── Cluster labels — DEFAULT decluttered layer (7 names + ETA) ────
+      // Visible when zoomed out; hands off to ZIP numbers past zoom 13.
+      map.addLayer({
+        id: 'cluster-label',
+        type: 'symbol',
+        source: 'cluster-labels',
+        maxzoom: 13.2,
+        layout: {
+          'text-field': [
+            'format',
+            ['get', 'shortName'],
+            { 'font-scale': 1.0, 'text-font': ['literal', ['Open Sans Bold', 'Arial Unicode MS Bold']] },
+            '\n',
+            {},
+            ['concat', '~', ['get', 'etaMinutes'], ' min · ', ['to-string', ['get', 'zipCount']], ' ZIPs'],
+            { 'font-scale': 0.82, 'text-font': ['literal', ['Open Sans Semibold', 'Arial Unicode MS Bold']] }
+          ],
+          'text-offset': [0, 1.4],
+          'text-anchor': 'top',
+          'text-size': 13,
+          'text-allow-overlap': false,
+          'text-optional': true
+        },
+        paint: {
+          'text-color': '#16271F',
+          'text-halo-color': 'rgba(255,255,255,0.96)',
+          'text-halo-width': 2
+        }
+      });
+
+      // ── ZIP number labels — appear only when zoomed in (≥13) ──────────
       map.addSource('zip-labels', { type: 'geojson', data: ZIP_LABEL_GEOJSON });
       map.addLayer({
         id: 'zip-label',
         type: 'symbol',
         source: 'zip-labels',
-        minzoom: 12,
+        minzoom: 13,
         layout: {
           'text-field': ['get', 'zip'],
           'text-font': ['literal', ['Open Sans Semibold', 'Arial Unicode MS Bold']],
-          'text-size': 11,
-          'text-letter-spacing': 0.08,
+          'text-size': 12,
+          'text-letter-spacing': 0.04,
           'text-allow-overlap': false,
-          'text-ignore-placement': false
+          'text-optional': true
         },
         paint: {
-          'text-color': 'rgba(19, 36, 29, 0.82)',
-          'text-halo-color': 'rgba(240, 232, 210, 0.95)',
-          'text-halo-width': 1.5
+          'text-color': 'rgba(22,39,31,0.9)',
+          'text-halo-color': 'rgba(255,255,255,0.95)',
+          'text-halo-width': 1.6
         }
       });
 
-      // V14 — Neighborhood + ETA pin labels flip from cream-on-dark to
-      // ink-on-cream so they pop against Voyager's land color.
-      map.addLayer({
-        id: 'centroid-label',
-        type: 'symbol',
-        source: 'centroids',
-        layout: {
-          'text-field': [
-            'format',
-            ['get', 'shortName'],
-            { 'font-scale': 1.0, 'text-font': ['literal', ['Open Sans Semibold', 'Arial Unicode MS Bold']] },
-            '\n',
-            {},
-            ['concat', '~', ['get', 'etaMinutes'], ' min'],
-            { 'font-scale': 0.85 }
-          ],
-          'text-offset': [0, 1.5],
-          'text-anchor': 'top',
-          'text-allow-overlap': false,
-          'text-size': 12
-        },
-        paint: {
-          'text-color': '#13241D',
-          'text-halo-color': 'rgba(240, 232, 210, 0.96)',
-          'text-halo-width': 1.8
+      // ── Interactions ─────────────────────────────────────────────────
+      const setHover = (id: number | string | null) => {
+        if (hoveredId.current !== null) {
+          map.setFeatureState({ source: 'zips', id: hoveredId.current }, { hover: false });
         }
-      });
-
-      // V13 — Live driver dots removed (May 2026).
-      // The animated dots interpolated in straight lines between
-      // waypoints, which meant they visibly crossed the East River
-      // without a bridge underneath. That broke the "feels real"
-      // illusion and signalled "this is fake animation" — net
-      // negative on credibility. The RAF loop was also the single
-      // highest-CPU thing on the page. Removed both. Road-snapped
-      // drivers would need a paid Mapbox Directions API key OR a
-      // self-hosted OSRM instance to do correctly; out of scope
-      // for v1 launch.
-
-      // V14 — Soft-glow outline tuned for the lighter basemap. The blur
-      // is widened (6 → 8) and the color shifts from lime to the brand
-      // sage so the feathered edge harmonizes with the cluster fills and
-      // Voyager's cream/sage palette instead of stamping a neon halo on
-      // a soft basemap.
-      map.addLayer({
-        id: 'zip-glow',
-        type: 'line',
-        source: 'zips',
-        paint: {
-          'line-color': '#5B8C6E',
-          'line-width': 6,
-          'line-opacity': 0.18,
-          'line-blur': 8
+        hoveredId.current = id;
+        if (id !== null) {
+          map.setFeatureState({ source: 'zips', id }, { hover: true });
         }
-      });
+      };
 
-      // Interactions — pointer cursor + click handler
-      const cursor = (e: maplibregl.MapMouseEvent) => {
+      map.on('mousemove', 'zip-fill', (e) => {
         e.target.getCanvas().style.cursor = 'pointer';
-      };
-      const unCursor = (e: maplibregl.MapMouseEvent) => {
+        const f = e.features?.[0];
+        if (f && f.id != null) setHover(f.id);
+      });
+      map.on('mouseleave', 'zip-fill', (e) => {
         e.target.getCanvas().style.cursor = '';
-      };
-      map.on('mouseenter', 'cluster-fill', cursor);
-      map.on('mouseleave', 'cluster-fill', unCursor);
-      map.on('mouseenter', 'centroid-ring', cursor);
-      map.on('mouseleave', 'centroid-ring', unCursor);
+        setHover(null);
+      });
+      map.on('mouseenter', 'cluster-pin', (e) => {
+        e.target.getCanvas().style.cursor = 'pointer';
+      });
+      map.on('mouseleave', 'cluster-pin', (e) => {
+        e.target.getCanvas().style.cursor = '';
+      });
 
-      const handleClick = (e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }) => {
-        // Each layer reports a different property shape:
-        //   • cluster-fill (per-ZIP) → properties.clusterId
-        //   • centroid-ring + centroid-dot (per-cluster pin) → properties.id
-        // Resolve to a single clusterId then trigger the standard
-        // select-and-fly behavior.
+      const handleClick = (
+        e: maplibregl.MapMouseEvent & { features?: maplibregl.MapGeoJSONFeature[] }
+      ) => {
         const props = e.features?.[0]?.properties ?? {};
         const clusterId = (props.clusterId ?? props.id) as string | undefined;
-        if (clusterId) {
-          onSelect(clusterId);
-          const f = CENTROID_GEOJSON.features.find((x) => x.properties.id === clusterId);
-          if (f) {
-            map.flyTo({ center: f.geometry.coordinates, zoom: 12.6, speed: 0.8 });
-          }
+        if (!clusterId) return;
+        onSelectRef.current(clusterId);
+        const f = CLUSTER_LABEL_GEOJSON.features.find((x) => x.properties.id === clusterId);
+        if (f) {
+          map.flyTo({ center: f.geometry.coordinates, zoom: FLY_ZOOM, speed: 0.8, curve: 1.4 });
         }
       };
-      map.on('click', 'cluster-fill', handleClick);
-      map.on('click', 'centroid-ring', handleClick);
+      map.on('click', 'zip-fill', handleClick);
+      map.on('click', 'cluster-pin', handleClick);
 
       ready.current = true;
     });
@@ -284,51 +291,31 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       map.remove();
       mapRef.current = null;
       ready.current = false;
+      hoveredId.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Reflect activeCluster changes — update paint expressions + fly-to
+  // Reflect activeCluster changes — repaint + fly.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !ready.current) return;
 
-    if (map.getLayer('cluster-fill')) {
-      // V14 — Tuned to the lighter Voyager basemap: 0.16 default → 0.38
-      // active so the brand fills tint the map without blanketing it.
-      map.setPaintProperty('cluster-fill', 'fill-opacity', [
-        'case',
-        ['==', ['get', 'clusterId'], activeCluster ?? ''],
-        0.38,
-        0.16
-      ]);
+    if (map.getLayer('zip-fill')) {
+      map.setPaintProperty('zip-fill', 'fill-opacity', fillOpacity(activeCluster));
     }
-    if (map.getLayer('cluster-outline')) {
-      map.setPaintProperty('cluster-outline', 'line-width', [
-        'case',
-        ['==', ['get', 'clusterId'], activeCluster ?? ''],
-        1.8,
-        0.8
-      ]);
-    }
-    if (map.getLayer('centroid-ring')) {
-      map.setPaintProperty('centroid-ring', 'circle-radius', [
-        'case',
-        ['==', ['get', 'id'], activeCluster ?? ''],
-        16,
-        11
-      ]);
+    if (map.getLayer('zip-line')) {
+      map.setPaintProperty('zip-line', 'line-width', lineWidth(activeCluster));
     }
 
     if (activeCluster) {
-      const f = CENTROID_GEOJSON.features.find((x) => x.properties.id === activeCluster);
+      const f = CLUSTER_LABEL_GEOJSON.features.find((x) => x.properties.id === activeCluster);
       if (f) {
-        map.flyTo({ center: f.geometry.coordinates, zoom: 12.6, speed: 0.8, curve: 1.4 });
+        map.flyTo({ center: f.geometry.coordinates, zoom: FLY_ZOOM, speed: 0.8, curve: 1.4 });
       }
     } else {
-      // Fly back to the full coverage view when nothing is selected
       map.fitBounds(MAP_BOUNDS, {
-        padding: { top: 28, right: 24, bottom: 40, left: 24 },
+        padding: { top: 36, right: 28, bottom: 44, left: 28 },
         duration: 900
       });
     }
@@ -339,17 +326,16 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       <div
         ref={containerRef}
         className="h-[480px] w-full overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 sm:h-[560px] lg:h-[620px]"
-        aria-label="Live map of Raindrops Greenery NYC delivery coverage — Manhattan, LIC, Williamsburg, Greenpoint"
+        aria-label="Map of Raindrops Greenery NYC delivery coverage — Manhattan, Long Island City, Williamsburg, and Greenpoint, shown as real ZIP-code boundaries"
         role="application"
       />
-      {/*
-        Coverage stat eyebrow — static, accurate, on-brand chrome at the
-        top-left of the map. Replaces the previous "5 drops in motion"
-        copy that was tied to the (now-removed) animated driver dots.
-        States a true fact about the service: 32 covered ZIPs delivered
-        same-day. Pure decoration; coverage data already lives in the
-        cluster cards + ZIP labels for screen readers.
-      */}
+      {/* Brand vignette — ties the generic basemap to the site without
+          dimming labels. Pure decoration, never intercepts pointer events. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_60px_rgba(19,36,29,0.18)]"
+      />
+      {/* Coverage stat eyebrow — true, on-brand chrome top-left. */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink)]/72 px-3 py-1.5 backdrop-blur-md sm:left-5 sm:top-5"

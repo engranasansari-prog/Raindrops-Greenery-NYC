@@ -39,9 +39,13 @@ export default function LiveOrderToasts() {
       }
     }
     const show = window.setTimeout(() => setVisible(true), FIRST_SHOW_DELAY_MS);
+    // The nested "advance" timeout (waits out the exit animation before
+    // swapping the event) is tracked so cleanup can clear it too — otherwise
+    // an unmount during that 420ms window fires setState on a dead component.
+    let swap: number | undefined;
     const rotate = window.setInterval(() => {
       setVisible(false);
-      window.setTimeout(() => {
+      swap = window.setTimeout(() => {
         setIndex((i) => (i + 1) % events.length);
         setVisible(true);
       }, 420); // wait for exit animation
@@ -49,6 +53,7 @@ export default function LiveOrderToasts() {
     return () => {
       window.clearTimeout(show);
       window.clearInterval(rotate);
+      if (swap) window.clearTimeout(swap);
     };
   }, [dismissed, events.length]);
 

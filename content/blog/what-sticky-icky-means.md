@@ -97,7 +97,7 @@ If the flower has lost its smell entirely, it's lost most of its terpenes — re
 
 We carry flower we'd order ourselves. The "Sticky · Icky" pill in our hero isn't marketing — it's the spec we use when we decide what goes on the menu. If a strain doesn't pass the resin test, it doesn't get listed.
 
-Everything in the Flower category on our [menu](/menu?category=Flower) is selected for trichome density and proper cure. That's why we put it in the headline. And the [✦ STICKY badge](/menu) on individual product cards marks the strongest pieces — 30%+ flower and 1000mg+ edibles — within that already-curated selection.
+Everything in the Flower category on our [menu](/menu?category=Flower) is selected for trichome density and proper cure. That's why we put it in the headline. And the [✦ STICKY badge](/menu) on individual product cards marks our premium tier — the $40-and-up flower and high-dose edibles — within that already-curated selection.
 
 ## Common questions
 

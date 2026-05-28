@@ -52,7 +52,7 @@ A slider for the menu price range. Helpful when you have a budget cap or when yo
 
 ### Potency (Flower only)
 
-Minimum THC percentage. Set this if you want to filter out lower-THC flower. Most quality flower today runs 18% to 30% — the [✦ STICKY badge](/blog/what-sticky-icky-means) on our menu marks 30%+ flower and 1000mg+ edibles.
+Minimum THC percentage. Set this if you want to filter out lower-THC flower. Most quality flower today runs 18% to 30% — and the [✦ STICKY badge](/blog/what-sticky-icky-means) on our menu marks our premium $40-and-up tier of top-shelf flower and high-dose edibles.
 
 This filter is intentionally Flower-only because edibles and pre-rolls have different potency conventions (mg vs %, dose vs concentration).
 
@@ -85,7 +85,7 @@ Set Category to Edibles. Look for 5–10mg per-piece doses if you're new; 25mg+ 
 Set Category to Pre-Rolls. Single 0.5g or 1g cones are the standard "one session" unit. Multi-packs are better value if you'll use them over a few days.
 
 **"I have no idea what to get."**
-Take the [strain finder quiz](/quiz). Answer 5 questions about how you want to feel and we'll match three products from the current menu.
+Take the [strain finder quiz](/quiz). Answer 4 questions about how you want to feel and we'll match three products from the current menu.
 
 ## The product detail dialog
 
@@ -117,9 +117,8 @@ If you're a new customer, the [quiz](/quiz) is the fastest path to a confident o
 2. What time of day you'll consume
 3. What format you prefer (Flower / Pre-Rolls / Edibles)
 4. How experienced you are
-5. Budget range
 
-In 60 seconds you'll see three matched products from current inventory. It's not a substitute for browsing — it's a substitute for analysis paralysis.
+In 30 seconds you'll see three matched products from current inventory. It's not a substitute for browsing — it's a substitute for analysis paralysis.
 
 ## Pricing — what you'll see vs. what you'll pay
 
@@ -149,7 +148,7 @@ Yes. The menu is built mobile-first; every filter works on small screens. The fi
 ## More on this
 
 - [Browse the menu now](/menu)
-- [Take the strain finder quiz](/quiz) — 60 seconds, three matched picks
+- [Take the strain finder quiz](/quiz) — 30 seconds, three matched picks
 - [Flower, Pre-Rolls, or Edibles?](/blog/flower-prerolls-edibles-guide) — choosing the right format
 - [How checkout works](/blog/how-checkout-works) — step by step
 

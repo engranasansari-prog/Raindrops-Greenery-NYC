@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Raindrops Greenery',
-    description: 'New York licensed cannabis delivery. Curated. Transparent. Professional.',
+    description: 'Shinnecock-licensed NYC cannabis delivery. Curated. Transparent. Professional.',
     url: '/about',
     images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
   }
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const pillars = [
   { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
-  { icon: Shield, title: 'Compliant', body: 'New York licensed, age-verified at the door, fully tax-aware checkout.' },
+  { icon: Shield, title: 'Compliant', body: 'Shinnecock-licensed, age-verified at the door, tax-free checkout under sovereign authority.' },
   { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) — with windows that fit the way the city moves.' },
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
 ];

@@ -191,7 +191,7 @@ export const faqs = [
   },
   {
     q: 'Is delivery really free?',
-    a: 'Yes — free delivery on every order over $25, across our Manhattan, Brooklyn, and Queens coverage area. No hidden fees.'
+    a: 'Yes — free delivery on every order over $25, across Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). No hidden fees.'
   },
   {
     q: 'Do I get a free gift?',
@@ -237,6 +237,6 @@ export const faqs = [
 
 export const promoStrip = {
   // Set message to null to hide the strip.
-  message: 'Free delivery in Manhattan + Brooklyn + Queens · Tax-free under Shinnecock · Open 10am–10pm',
+  message: 'Free delivery across Manhattan + LIC, Williamsburg & Greenpoint · Tax-free under Shinnecock · Open 10am–10pm',
   cta: { label: 'Check coverage', href: '#coverage' }
 };

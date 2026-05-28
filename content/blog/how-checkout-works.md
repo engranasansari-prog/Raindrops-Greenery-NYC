@@ -38,7 +38,7 @@ You can filter by:
 - **Brand** — search-as-you-type filter
 - **Deals only** — toggles to surface curated picks
 
-Not sure where to start? The [strain finder quiz](/quiz) takes 60 seconds and returns three matched picks based on how you want to feel.
+Not sure where to start? The [strain finder quiz](/quiz) takes 30 seconds and returns three matched picks based on how you want to feel.
 
 ## Step 3 — Open a product card
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import ContactPage from '@/components/ContactPage';
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact & Support',
   description:
     'Contact Raindrops Greenery NY for delivery questions, order support, business inquiries, and press. Manhattan + LIC, Williamsburg, Greenpoint.',
   alternates: { canonical: '/contact' },

@@ -17,6 +17,9 @@ export default function robots(): MetadataRoute.Robots {
       }
     ],
     sitemap: `${business.baseUrl}/sitemap.xml`,
-    host: business.baseUrl
+    // host must be a bare hostname per the robots spec — no scheme, no path.
+    // (business.baseUrl carries the /nyc-raindrops-greenery sub-path, which
+    // crawlers discard, so we use the canonical domain instead.)
+    host: business.domain
   };
 }

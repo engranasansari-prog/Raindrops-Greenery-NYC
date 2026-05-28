@@ -49,13 +49,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  // Clamp the SERP/OG description to ~155 chars at a word boundary so it
+  // isn't truncated mid-word by Google. The full excerpt can stay long for
+  // the on-page intro; this only trims the meta tag.
+  const metaDescription = clampDescription(post.excerpt, 155);
+
   return {
     title: post.title,
-    description: post.excerpt,
+    description: metaDescription,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description: metaDescription,
       url: `/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.publishedAt,
@@ -63,6 +68,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [{ url: post.coverImage, width: 1200, height: 800, alt: post.coverAlt }]
     }
   };
+}
+
+function clampDescription(text: string, max: number): string {
+  if (text.length <= max) return text;
+  const slice = text.slice(0, max);
+  const lastSpace = slice.lastIndexOf(' ');
+  return `${slice.slice(0, lastSpace > 0 ? lastSpace : max).trimEnd()}…`;
 }
 
 export default async function BlogPostPage({ params }: PageProps) {

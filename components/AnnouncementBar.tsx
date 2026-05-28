@@ -18,11 +18,14 @@ type Item = { lead: string; accent: string; tail: string };
 // like a single repeating phrase. Each pip now reads as its own line.
 const ITEMS: Item[] = [
   { lead: 'Free weed', accent: 'gift', tail: 'with every order' },
-  { lead: 'Free delivery in', accent: 'Manhattan', tail: '' },
+  { lead: 'Free delivery across', accent: 'Manhattan', tail: '' },
   { lead: 'Guaranteed best', accent: 'flowers', tail: 'on the market' },
-  { lead: 'Free delivery in', accent: 'Brooklyn', tail: '' },
+  // Borough pips are qualified with the served neighborhoods so the bar never
+  // implies full-borough coverage (we only cover Williamsburg + Greenpoint in
+  // Brooklyn and Long Island City in Queens).
+  { lead: 'Free delivery in', accent: 'Brooklyn', tail: '— Williamsburg + Greenpoint' },
   { lead: 'Tax-free under', accent: 'Shinnecock', tail: 'authority' },
-  { lead: 'Free delivery in', accent: 'Queens', tail: '' }
+  { lead: 'Free delivery in', accent: 'Queens', tail: '— Long Island City' }
 ];
 
 /** Faceted diamond — alternates lime / amber to feel hand-set */
@@ -68,7 +71,9 @@ function Pip({ children }: { children: Item }) {
         {children.accent}
       </span>{' '}
       <span
-        className="font-medium tracking-[-0.005em] text-[color:var(--rd-text-dim)]"
+        // Full --rd-text (not --rd-text-dim): the dim token dropped to ~4.3:1
+        // over the brightest moss gradient band — an AA miss at this size.
+        className="font-medium tracking-[-0.005em] text-[color:var(--rd-text)]"
         style={{ fontFamily: 'var(--font-sans)' }}
       >
         {children.tail}

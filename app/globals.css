@@ -43,7 +43,10 @@
   /* Text — on paper */
   --rd-on-paper:        #13241D;   /* matches new ink */
   --rd-on-paper-dim:    rgba(19, 36, 29, 0.66);
-  --rd-on-paper-mute:   rgba(19, 36, 29, 0.46);
+  /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
+     legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
+     clears ~4.6:1 while still reading as a muted tertiary tone. */
+  --rd-on-paper-mute:   rgba(19, 36, 29, 0.64);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -342,7 +345,8 @@ textarea:focus:not(:focus-visible) {
   text-decoration-color: var(--rd-glow);
   transition: color 240ms var(--ease-out);
 }
-.legal-prose a:hover { color: var(--rd-fern); }
+/* Hover darkens to ink (was --rd-fern ~3.2:1 on cream, an AA fail). */
+.legal-prose a:hover { color: var(--rd-ink); }
 
 .blog-prose { color: var(--rd-on-paper-dim); line-height: 1.85; font-size: 1rem; }
 .blog-prose > * + * { margin-top: 1.25rem; }
@@ -370,7 +374,7 @@ textarea:focus:not(:focus-visible) {
   text-underline-offset: 3px;
   text-decoration-color: var(--rd-glow);
 }
-.blog-prose a:hover { color: var(--rd-fern); }
+.blog-prose a:hover { color: var(--rd-ink); }
 .blog-prose blockquote {
   border-left: 3px solid var(--rd-glow);
   padding-left: 1rem;
@@ -624,4 +628,66 @@ textarea:focus:not(:focus-visible) {
   min-height: 36px;
   padding: 0.5rem 1rem;
   font-size: 0.6875rem;       /* 11px */
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SmokeLayer — three slow-drifting blurred gradients in the hero.
+   These classes were referenced by components/SmokeLayer.tsx but never
+   defined, so the effect silently did nothing. Restored as a subtle,
+   premium atmospheric drift: very low opacity, heavy blur, slow motion.
+   Hidden on small screens (saves paint) and fully disabled under
+   prefers-reduced-motion.
+   ───────────────────────────────────────────────────────────────── */
+.smoke-blob {
+  position: absolute;
+  display: none;
+  border-radius: 9999px;
+  filter: blur(48px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+@media (min-width: 768px) {
+  .smoke-blob {
+    display: block;
+    opacity: 0.5;
+  }
+  .smoke-blob-1 {
+    width: 46vw;
+    height: 46vw;
+    left: -8vw;
+    bottom: -14vw;
+    background: radial-gradient(circle at 50% 50%, rgba(200, 230, 110, 0.10), transparent 68%);
+    animation: smoke-drift-1 34s ease-in-out infinite;
+  }
+  .smoke-blob-2 {
+    width: 38vw;
+    height: 38vw;
+    right: -6vw;
+    top: -10vw;
+    background: radial-gradient(circle at 50% 50%, rgba(240, 232, 210, 0.08), transparent 70%);
+    animation: smoke-drift-2 42s ease-in-out infinite;
+  }
+  .smoke-blob-3 {
+    width: 30vw;
+    height: 30vw;
+    left: 42vw;
+    bottom: -8vw;
+    background: radial-gradient(circle at 50% 50%, rgba(127, 168, 176, 0.08), transparent 72%);
+    animation: smoke-drift-3 38s ease-in-out infinite;
+  }
+}
+@keyframes smoke-drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(6vw, -4vw, 0) scale(1.12); }
+}
+@keyframes smoke-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50%      { transform: translate3d(-5vw, 5vw, 0) scale(0.95); }
+}
+@keyframes smoke-drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.98); }
+  50%      { transform: translate3d(4vw, -6vw, 0) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .smoke-blob { animation: none !important; }
 }
