@@ -42,28 +42,31 @@ const FLY_ZOOM = 13.4;
 // Fill opacity as a data-driven expression. `active` dims everything except
 // the selected cluster so the choice reads instantly; hovered ZIPs always pop.
 function fillOpacity(active: string | null): maplibregl.ExpressionSpecification {
+  // V15.1 — bumped from 0.32 default so the (now more saturated) brand green
+  // reads as a clear delivery zone on the cream basemap instead of a faint wash.
   const base: maplibregl.ExpressionSpecification = active
     ? ([
         'case',
         ['==', ['get', 'clusterId'], active],
-        0.58,
-        0.12
+        0.6,
+        0.14
       ] as unknown as maplibregl.ExpressionSpecification)
-    : (0.32 as unknown as maplibregl.ExpressionSpecification);
+    : (0.42 as unknown as maplibregl.ExpressionSpecification);
   return [
     'case',
     ['boolean', ['feature-state', 'hover'], false],
-    0.62,
+    0.68,
     base
   ] as unknown as maplibregl.ExpressionSpecification;
 }
 
 function lineWidth(active: string | null): maplibregl.ExpressionSpecification {
+  // Crisper borders (was 0.9 / 1.8) so each zone reads as cleanly cut.
   return [
     'case',
     ['==', ['get', 'clusterId'], active ?? ''],
-    1.8,
-    0.9
+    2.2,
+    1.3
   ] as unknown as maplibregl.ExpressionSpecification;
 }
 
@@ -143,8 +146,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         layout: { 'line-join': 'round', 'line-cap': 'round' },
         paint: {
           'line-color': '#FFFFFF',
-          'line-width': 2.6,
-          'line-opacity': 0.55
+          'line-width': 2.8,
+          'line-opacity': 0.7
         }
       });
 

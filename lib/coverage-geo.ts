@@ -24,16 +24,19 @@ import {
 
 type Ring = Array<[number, number]>;
 
-// Brand tints per cluster — a deliberate deep→light sage gradient so the seven
-// neighborhoods read as one family while staying individually distinguishable.
+// Brand tints per cluster — a deliberate deep→light EMERALD gradient so the
+// seven neighborhoods read as one family while staying distinguishable. V15.1
+// saturated these up from the previous muted sage: on Voyager's cream land the
+// old tints sat too close to the basemap and the coverage area didn't pop. The
+// East River zone leans teal to read as the cross-water outlier.
 const CLUSTER_COLORS: Record<CoverageCluster['id'], string> = {
-  'ues-uws': '#3F6E54',
-  midtown: '#4F8268',
-  'chelsea-flatiron-ev': '#5F9678',
-  'gv-soho-tribeca': '#6FAB8A',
-  'fidi-battery': '#7FBF9C',
-  'south-street': '#8FD2AE',
-  'east-river': '#6BA6AE'
+  'ues-uws': '#1F7A4D',
+  midtown: '#2A8F5B',
+  'chelsea-flatiron-ev': '#36A368',
+  'gv-soho-tribeca': '#45B677',
+  'fidi-battery': '#57C888',
+  'south-street': '#6FD89C',
+  'east-river': '#2E9AA0'
 };
 
 export { CLUSTER_COLORS };
