@@ -24,3 +24,4 @@ Thumbs.db
 # Local scrape cache + Dutchie data exports — never commit
 exports/
 
+.next-start.log
