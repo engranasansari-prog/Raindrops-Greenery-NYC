@@ -8,6 +8,7 @@ import {
   getDealLabel,
   getPotencyLabel,
   getPrimaryPotency,
+  getProductDescription,
   getStrainTag,
   hasSale,
   isSticky,
@@ -31,6 +32,9 @@ export type FeaturedDeal = {
   salePriceLabel: string;
   isSale: boolean;
   dealLabel: string | null;
+  /** Short product description — mirrors the menu cards (clamped to 2 lines
+   *  on the home teaser so the card stays punchy). Empty string if none. */
+  description: string;
 };
 
 function calculatePercentOff(price: number, salePrice: number) {
@@ -94,7 +98,8 @@ export function getFeaturedDeals(limit = 3): FeaturedDeal[] {
         priceLabel: formatPrice(product.price),
         salePriceLabel: formatPrice(product.salePrice),
         isSale: product.salePrice < product.price,
-        dealLabel: getDealLabel(product)
+        dealLabel: getDealLabel(product),
+        description: getProductDescription(product)
       };
     });
 }

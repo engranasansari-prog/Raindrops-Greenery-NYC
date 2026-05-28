@@ -290,6 +290,11 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                 >
                   {deal.name}
                 </h3>
+                {deal.description && (
+                  <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-[color:var(--rd-text-dim)]">
+                    {deal.description}
+                  </p>
+                )}
                 <div className="mt-auto flex items-end justify-between pt-3">
                   <div className="[font-family:var(--font-mono)]">
                     {deal.isSale && (
