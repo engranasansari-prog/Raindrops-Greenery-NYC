@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { faqs } from '@/lib/site-data';
+import { faqs, business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Delivery FAQ',
@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Raindrops Greenery FAQ',
     description: 'Answers about delivery, ordering, checkout, and product browsing.',
-    url: '/faq'
+    url: '/faq',
+    images: [{ url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`, width: 1200, height: 800, alt: 'Raindrops Greenery NYC' }]
   }
 };
 

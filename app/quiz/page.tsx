@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import StrainQuiz from '@/components/StrainQuiz';
+import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Strain finder',
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Strain finder — Raindrops Greenery',
     description: 'Tell us how you want to feel; we’ll match you with the right drop.',
-    url: '/quiz'
+    url: '/quiz',
+    images: [{ url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`, width: 1200, height: 800, alt: 'Raindrops Greenery NYC' }]
   }
 };
 
