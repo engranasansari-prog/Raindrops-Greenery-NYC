@@ -96,7 +96,7 @@ export default function Nav() {
                    data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
                    data-[scrolled=true]:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)]"
       >
-        <div className="mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 md:px-6">
+        <div className="relative mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 md:px-6">
           {/* Mobile hamburger */}
           <button
             type="button"
@@ -109,10 +109,21 @@ export default function Nav() {
             <Menu size={24} strokeWidth={1.75} />
           </button>
 
-          {/* Logo */}
+          {/*
+            Logo — absolute-centered on mobile, static flex on desktop.
+            Previously the header used `flex justify-between` for three
+            children [hamburger, logo, order-button], but the order
+            button is ~220px wide vs the hamburger's 44px, so the flex
+            distribution placed the logo at ~30% from left rather than
+            at horizontal center. Absolute-positioning on mobile gives
+            the canonical luxury-brand mobile pattern (logo centered,
+            actions in the corners). On desktop the logo returns to
+            normal flow alongside the nav links via md:relative +
+            md:translate-x-0.
+          */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 text-[color:var(--rd-text)] transition hover:opacity-90"
+            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 text-[color:var(--rd-text)] transition hover:opacity-90 md:static md:translate-x-0 md:translate-y-0"
             aria-label="Raindrops Greenery home"
           >
             <Image
