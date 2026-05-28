@@ -457,7 +457,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
     },
     {
       id: 'manhattan-brooklyn-queens',
-      image: '/assets/banner-drops1.png',
+      image: '/assets/banner-drops1.jpg',
       imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan, Brooklyn, and Queens',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
@@ -478,7 +478,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       // top/bottom fade so the photo reads clean while nav + dots stay
       // legible.
       id: 'edibles',
-      image: '/assets/heroimageedibles.png',
+      image: '/assets/heroimageedibles.jpg',
       imageAlt: 'Raindrops Greenery premium edibles — gummies and chocolates from our NYC delivery menu',
       imagePosition: 'center',
       imageOnly: true

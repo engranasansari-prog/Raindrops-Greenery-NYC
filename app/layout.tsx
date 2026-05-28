@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
-import { business, serviceAreas, social, testimonials } from '@/lib/site-data';
+import { business, serviceAreas, social } from '@/lib/site-data';
 import { COVERAGE } from '@/lib/coverage';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
@@ -295,19 +295,15 @@ const localBusinessLd = {
     }
   ],
   sameAs: social.map((item) => item.href),
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5.0',
-    bestRating: '5',
-    reviewCount: `${testimonials.length}`
-  },
-  review: testimonials.map((t) => ({
-    '@type': 'Review',
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    author: { '@type': 'Person', name: t.author },
-    reviewBody: t.quote,
-    locationCreated: { '@type': 'Place', name: t.location }
-  })),
+  // NOTE: aggregateRating + review were intentionally removed from this
+  // LocalBusiness markup. Google's review-snippet policy prohibits
+  // self-authored reviews about your own business in structured data, and a
+  // perfect 5.0 from a handful of first-party testimonials is a classic
+  // structured-data manual-action trigger. The testimonials still render
+  // visually on the home page (components/HomePage.tsx → TestimonialFeature);
+  // only the rich-result markup is dropped. Re-add via a genuine,
+  // independently collected review pipeline (with datePublished) if/when one
+  // exists.
   // Service catalog: every delivery cluster surfaces as its own service.
   // Each becomes a discrete result for "weed delivery <neighborhood>".
   hasOfferCatalog: {
