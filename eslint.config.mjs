@@ -7,6 +7,7 @@ const config = [
       'node_modules/**',
       'out/**',
       'build/**',
+      'exports/**',
       'next-env.d.ts'
     ]
   },
