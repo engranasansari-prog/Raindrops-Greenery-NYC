@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Clock, Mail, Phone, ShieldCheck, ShoppingBag } from 'lucide-react';
 import { InstagramIcon } from '@/components/SocialIcons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useModalA11y } from '@/hooks/useModalA11y';
 import NewsletterForm from '@/components/NewsletterForm';
 import OpenStatus from '@/components/OpenStatus';
 import BackToTop from '@/components/BackToTop';
@@ -106,6 +107,16 @@ function AgeGate() {
 
   const close = () => setPhase('hidden');
 
+  // Modal a11y: focus into the gate, trap Tab, restore focus on close. Escape
+  // only applies on the optional subscribe step (= "skip"); the 21+ challenge
+  // itself must not be Escape-dismissable. Scroll lock is handled by the
+  // existing effect above, so lockScroll is off here to avoid double-locking.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useModalA11y(showing, dialogRef, {
+    onEscape: phase === 'subscribe' ? close : undefined,
+    lockScroll: false
+  });
+
   const subscribe = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (subscribeStatus === 'loading' || subscribeStatus === 'success') return;
@@ -152,7 +163,6 @@ function AgeGate() {
               src="/assets/heroPhoto.jpg"
               alt=""
               fill
-              priority
               sizes="100vw"
               className="object-cover opacity-40"
             />
@@ -160,11 +170,13 @@ function AgeGate() {
           </div>
 
           <motion.div
+            ref={dialogRef}
+            tabIndex={-1}
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative max-h-[92dvh] w-full max-w-lg overflow-y-auto text-center"
+            className="relative max-h-[92dvh] w-full max-w-lg overflow-y-auto text-center outline-none"
           >
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <Image src="/assets/logo.jpg" width={80} height={80} alt="Raindrops Greenery logo" className="h-full w-full object-cover" />

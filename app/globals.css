@@ -492,11 +492,13 @@ textarea:focus:not(:focus-visible) {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
-  will-change: opacity, transform;
 }
 .rd-reveal--in {
   opacity: 1;
   transform: translateY(0);
+  /* One-shot reveal is done — release the compositor layer so ~12 of these
+     on the home page don't sit pinned in GPU memory during scroll. */
+  will-change: auto;
 }
 @media (prefers-reduced-motion: reduce) {
   .rd-reveal { opacity: 1; transform: none; transition: none; }
@@ -746,3 +748,8 @@ textarea:focus:not(:focus-visible) {
 @media (prefers-reduced-motion: reduce) {
   .hero-kenburns { animation: none !important; transform: none !important; }
 }
+/* Pause the hero drift while the hero is scrolled off-screen (the .hero-paused
+   class is toggled by an IntersectionObserver in HeroSlider). Stops continuous
+   compositor work — and on mobile a permanently promoted full-viewport layer —
+   the moment the hero leaves the viewport. */
+.hero-paused .hero-kenburns { animation-play-state: paused !important; }

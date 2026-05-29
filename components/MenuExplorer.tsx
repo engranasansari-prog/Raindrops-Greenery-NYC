@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
@@ -43,6 +43,7 @@ const STRAIN_BADGE: Record<StrainTag, string> = {
 };
 import { checkout } from '@/lib/site-data';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
+import { useModalA11y } from '@/hooks/useModalA11y';
 
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
 type SortMode = 'featured' | 'price-low' | 'price-high' | 'potency-high' | 'name';
@@ -238,6 +239,10 @@ function ProductCard({
 
 function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
+  // Modal a11y: focus into the dialog, trap Tab, Escape to close, lock scroll,
+  // and restore focus to the product card on close (pre-launch QA finding).
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useModalA11y(true, dialogRef, { onEscape: onClose });
   const potency = getPotencyLabel(product);
   const effects = inferEffects(product);
   // Build detail rows conditionally so we only show fields the customer
@@ -296,10 +301,15 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
       onClick={onClose}
     >
       <motion.div
+        ref={dialogRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${product.name} — product details`}
         initial={{ opacity: 0, y: 24, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 24, scale: 0.97 }}
-        className="max-h-[100dvh] w-full max-w-5xl overflow-y-auto border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.5)] sm:max-h-[92vh] sm:rounded-3xl"
+        className="max-h-[100dvh] w-full max-w-5xl overflow-y-auto border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.5)] outline-none sm:max-h-[92vh] sm:rounded-3xl"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
@@ -609,9 +619,9 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             {/* Free-gift reinforcement — the hero "Claim free weed gift" CTA
                 lands here, so confirm the gift is automatic with any order
                 (no separate claim form needed). */}
-            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-4 py-2 text-sm font-medium text-[color:var(--rd-text)]">
-              <Sparkles className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              Free pre-roll gift auto-added to every order — just check out.
+            <p className="mt-5 inline-flex items-start gap-2 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-4 py-2 text-sm font-medium text-[color:var(--rd-text)]">
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
+              Free pre-roll gift added to every order.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-2 sm:gap-3">

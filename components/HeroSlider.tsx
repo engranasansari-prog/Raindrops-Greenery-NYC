@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import SmokeLayer from '@/components/SmokeLayer';
 
@@ -59,6 +59,14 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }: Props) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  // userPaused: explicit Pause button (WCAG 2.2.2). focused: keyboard focus is
+  // inside the carousel — pause so a slide can't swap out mid-interaction.
+  const [userPaused, setUserPaused] = useState(false);
+  const [focused, setFocused] = useState(false);
+  // inView: hero on-screen? Toggles .hero-paused to stop the Ken Burns drift
+  // (GPU compositor work) while the hero is scrolled out of view.
+  const [inView, setInView] = useState(true);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback((next: number) => {
@@ -69,13 +77,26 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
   const prev = useCallback(() => goTo(index - 1), [goTo, index]);
 
   useEffect(() => {
-    if (paused || slides.length <= 1) return;
+    if (paused || userPaused || focused || slides.length <= 1) return;
     if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     timerRef.current = setTimeout(next, autoplayMs);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [autoplayMs, index, next, paused, slides.length]);
+  }, [autoplayMs, index, next, paused, userPaused, focused, slides.length]);
+
+  // Pause the hero Ken Burns drift while the hero is off-screen (no compositor
+  // work when it can't be seen). Defaults to running if IO is unavailable.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      (entries) => setInView(entries.some((e) => e.isIntersecting)),
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -118,11 +139,16 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   return (
     <section
-      className="rd-grain rd-vignette relative isolate w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]"
+      ref={sectionRef}
+      className={`rd-grain rd-vignette relative isolate w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] ${inView ? '' : 'hero-paused'}`}
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
+      }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -315,6 +341,18 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
+
+          {/* Autoplay pause/play — always visible and keyboard-reachable so a
+              user can stop the auto-advancing hero (WCAG 2.2.2). */}
+          <button
+            type="button"
+            onClick={() => setUserPaused((value) => !value)}
+            aria-pressed={userPaused}
+            aria-label={userPaused ? 'Play slideshow' : 'Pause slideshow'}
+            className="absolute bottom-5 left-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] sm:bottom-9"
+          >
+            {userPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+          </button>
         </>
       )}
 

@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { COVERAGE } from '@/lib/coverage';
 import { checkZip } from '@/lib/zip-utils';
 import ZipSearch from '@/components/ZipSearch';
+import { useModalA11y } from '@/hooks/useModalA11y';
 
 /* =====================================================================
    Raindrops coverage — V9 simplification (per client review).
@@ -77,6 +78,10 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
   // the load ~400px early so it's ready by the time they arrive.
   const mapWrapRef = useRef<HTMLDivElement | null>(null);
   const [mapInView, setMapInView] = useState(false);
+  // Cluster detail modal a11y: focus trap, Escape-to-close, scroll lock, and
+  // focus restore on close (pre-launch QA finding).
+  const clusterModalRef = useRef<HTMLDivElement>(null);
+  useModalA11y(openCluster !== null, clusterModalRef, { onEscape: () => setOpenCluster(null) });
   useEffect(() => {
     const el = mapWrapRef.current;
     if (!el) return;
@@ -327,12 +332,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                 aria-label={`${c.name} delivery details`}
               >
                 <motion.div
+                  ref={clusterModalRef}
+                  tabIndex={-1}
                   initial={{ y: 40, opacity: 0, scale: 0.97 }}
                   animate={{ y: 0, opacity: 1, scale: 1 }}
                   exit={{ y: 40, opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.45, ease: easeOut }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] sm:max-h-[80vh] sm:rounded-3xl"
+                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80vh] sm:rounded-3xl"
                 >
                   {/* Sticky header — close button doesn't overlap text */}
                   <div className="relative flex items-start gap-3 px-5 pt-5 pb-3 sm:px-7 sm:pt-7">

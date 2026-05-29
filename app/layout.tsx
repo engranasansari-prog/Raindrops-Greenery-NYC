@@ -389,8 +389,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             but the explicit hint helps in some browsers and crawlers). */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* DNS-prefetch the Flowhub product image CDN so menu thumbs warm up. */}
-        <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+        {/* No product-image CDN preconnect needed: next/image proxies every
+            menu thumbnail through same-origin /_next/image, so the browser
+            never opens a direct connection to the upstream S3 host. (The prior
+            hint pointed at storage.googleapis.com, which isn't even the host
+            that serves product images — it was a no-op.) */}
         {/*
           AI-crawler discovery hints. /llms.txt + /llms-full.txt follow
           the llmstxt.org spec and are the highest-fidelity surface for
