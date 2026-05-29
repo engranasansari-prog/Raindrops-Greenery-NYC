@@ -30,6 +30,9 @@ const STARTER_CHIPS = [
   'How do I order?'
 ];
 
+// Shown after a free-form / AI answer so there's always an obvious next step.
+const DEFAULT_CHIPS = ['Shop the menu', 'Where do you deliver?', 'Talk to a human'];
+
 // Intents are scored by keyword hits against the lowercased query; the highest
 // scorer wins. Order matters only for ties.
 const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
@@ -177,6 +180,23 @@ function respond(raw: string): BotReply {
   return best ?? FALLBACK;
 }
 
+// Attach up to two relevant CTA buttons to a free-form / AI answer based on
+// what it mentions, so the chat always offers an obvious next step.
+function inferActions(text: string): Action[] {
+  const t = text.toLowerCase();
+  const actions: Action[] = [];
+  const add = (a: Action) => {
+    if (actions.length < 2 && !actions.some((x) => x.href === a.href)) actions.push(a);
+  };
+  if (/\b(menu|browse|shop|product|strain|flower|edible|pre-roll|preroll)\b/.test(t)) add({ label: 'Shop the menu', href: '/menu' });
+  if (t.includes('quiz')) add({ label: 'Take the quiz', href: '/quiz' });
+  if (/\b(deal|featured|budget)\b/.test(t)) add({ label: 'Featured picks', href: '/deals' });
+  if (/\b(deliver|zip|coverage|neighborhood)\b/.test(t)) add({ label: 'See delivery areas', href: '/delivery' });
+  if (/\b(contact|call|email|support|reach|text)\b/.test(t)) add({ label: 'Contact us', href: '/contact' });
+  if (t.includes('checkout')) add({ label: 'Go to checkout', href: checkout.dutchieUrl, external: true });
+  return actions;
+}
+
 export default function ChatAssistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -227,19 +247,51 @@ export default function ChatAssistant() {
     if (typingTimer.current) clearTimeout(typingTimer.current);
   }, []);
 
-  const send = (raw: string) => {
+  const pushBot = (reply: BotReply) => {
+    setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: reply.text, actions: reply.actions }]);
+    setChips(reply.chips && reply.chips.length > 0 ? reply.chips : DEFAULT_CHIPS);
+    setTyping(false);
+  };
+
+  const send = async (raw: string) => {
     const text = raw.trim();
     if (!text || typing) return;
-    setMessages((prev) => [...prev, { id: nextId(), role: 'user', text }]);
+    const userMsg: Message = { id: nextId(), role: 'user', text };
+    const history = messages;
+    setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setChips([]);
     setTyping(true);
-    const reply = respond(text);
-    typingTimer.current = setTimeout(() => {
-      setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: reply.text, actions: reply.actions }]);
-      setChips(reply.chips ?? []);
-      setTyping(false);
-    }, 480);
+
+    // Deterministic guardrails handled locally + instantly so they're always
+    // bulletproof, even when the AI is on: medical questions get a safe
+    // deflection, and a ZIP code gets an exact coverage answer.
+    const lower = text.toLowerCase();
+    if (MEDICAL_TERMS.some((t) => lower.includes(t)) || /\b\d{5}\b/.test(text)) {
+      typingTimer.current = setTimeout(() => pushBot(respond(text)), 420);
+      return;
+    }
+
+    // Everything else: try the Claude-powered /api/chat route, falling back to
+    // the built-in scripted brain on ANY failure (no key, error, offline).
+    try {
+      const payload = [...history, userMsg]
+        .map((m) => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.text }))
+        .slice(-10);
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: payload })
+      });
+      const data = (await res.json()) as { ok?: boolean; reply?: string };
+      if (res.ok && data.ok && data.reply) {
+        pushBot({ text: data.reply, actions: inferActions(data.reply) });
+        return;
+      }
+    } catch {
+      // fall through to the scripted brain
+    }
+    pushBot(respond(text));
   };
 
   return (
