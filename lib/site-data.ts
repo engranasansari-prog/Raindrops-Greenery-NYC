@@ -195,7 +195,7 @@ export const faqs = [
   },
   {
     q: 'Do I get a free gift?',
-    a: 'Every first-time customer in our coverage area gets a complimentary pre-roll added to their order. Spot a Raindrops sticker around the city for additional welcome drops. 21+ only, while supplies last.'
+    a: 'Every order in our coverage area comes with a complimentary pre-roll added to it. Spot a Raindrops sticker around the city for additional welcome drops. 21+ only, while supplies last.'
   },
   {
     q: 'Who licenses Raindrops Greenery?',
