@@ -2,10 +2,11 @@ import type { MetadataRoute } from 'next';
 
 /**
  * PWA manifest — generated (not a static public/manifest.json) so that
- * start_url, scope, and icon paths automatically pick up the deployment
- * base path. On the sub-path deploy (NEXT_PUBLIC_BASE_PATH=/nyc-raindrops-greenery)
- * a static manifest would point the PWA at the apex (wrong app); deriving
- * from the same env var next.config uses for basePath keeps them in lockstep.
+ * start_url, scope, and icon paths derive from the same NEXT_PUBLIC_BASE_PATH
+ * that next.config uses, keeping them in lockstep. Production serves at the
+ * subdomain root (https://nyc.raindropsgreenery.com) with BASE_PATH unset, so
+ * BASE is '' and everything resolves from '/'. The env hook remains only as an
+ * escape hatch for a future sub-path host.
  */
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 

@@ -151,8 +151,8 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               Manhattan + <span className="italic">Brooklyn + Queens.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              32 ZIPs across 7 neighborhoods. Tax-free, free same-day delivery on orders over $25.
-              Drop your ZIP — or tap any zone on the map.
+              32 ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free,
+              free same-day delivery on orders over $25. Drop your ZIP — or tap any zone on the map.
             </p>
           </motion.div>
         )}

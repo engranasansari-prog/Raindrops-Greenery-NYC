@@ -11,12 +11,12 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
-  // Production deploy path: the site lives at
-  // https://www.raindropsgreenery.com/nyc-raindrops-greenery
-  // basePath makes every internal Next.js route render under that prefix
-  // and ensures <Link>, next/image, and the asset pipeline all generate
-  // correctly prefixed URLs. Use BASE_PATH env var so we can still run
-  // local dev / preview without the prefix.
+  // Production deploy: the site is served at the ROOT of the subdomain
+  // https://nyc.raindropsgreenery.com, so basePath stays empty. The env
+  // override is kept only as an escape hatch for a future sub-path host —
+  // leave NEXT_PUBLIC_BASE_PATH UNSET in Vercel (setting it would prefix
+  // every route while canonicals / sitemap / JSON-LD still point at the bare
+  // subdomain, breaking links).
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
     formats: ['image/avif', 'image/webp'],

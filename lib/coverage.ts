@@ -19,7 +19,7 @@ export type CoverageCluster = {
 };
 
 export const COVERAGE = {
-  area: 'Manhattan + Brooklyn + Queens',
+  area: 'Manhattan + Williamsburg, Greenpoint & LIC',
   freeDelivery: true,
   clusters: [
     {
