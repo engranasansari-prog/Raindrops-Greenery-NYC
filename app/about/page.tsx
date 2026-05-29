@@ -26,6 +26,11 @@ const pillars = [
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
 ];
 
+// Icons for the "What we stand on" value cards, matched to valueProps order
+// (Tax-free, Free delivery, Sticky icky, Premium). Gives each card a visual
+// anchor so the shorter ones don't read as empty next to the long ones.
+const VALUE_ICONS = [Shield, Truck, Leaf, Sparkles];
+
 export default function AboutPage() {
   return (
     <SiteChrome>
@@ -124,18 +129,25 @@ export default function AboutPage() {
               Four commitments <span className="italic">to every adult New York customer.</span>
             </h2>
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {valueProps.map((value) => (
-              <div key={value.title} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-6">
-                <h3
-                  className="text-[color:var(--rd-text)]"
-                  style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(1.2rem, 1.6vw, 1.4rem)', letterSpacing: '-0.015em' }}
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {valueProps.map((value, i) => {
+              const Icon = VALUE_ICONS[i] ?? Leaf;
+              return (
+                <div
+                  key={value.title}
+                  className="flex h-full flex-col rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-6 sm:p-7"
                 >
-                  {value.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">{value.body}</p>
-              </div>
-            ))}
+                  <Icon className="h-7 w-7 text-[color:var(--rd-glow)]" />
+                  <h3
+                    className="mt-4 text-[color:var(--rd-text)]"
+                    style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(1.2rem, 1.6vw, 1.4rem)', letterSpacing: '-0.015em' }}
+                  >
+                    {value.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">{value.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
