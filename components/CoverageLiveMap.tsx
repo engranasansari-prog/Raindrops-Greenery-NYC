@@ -70,11 +70,82 @@ function lineWidth(active: string | null): maplibregl.ExpressionSpecification {
   ] as unknown as maplibregl.ExpressionSpecification;
 }
 
+// ── Live delivery couriers ────────────────────────────────────────────────
+// Short, LAND-ONLY routes that stay WITHIN a single neighborhood. This is the
+// hard lesson from the removed v12 dots: long straight lines between far points
+// cut across the East River with no bridge and looked fake. Each path here
+// follows the local street grid and never leaves its landmass, so the motion
+// reads as believable local deliveries. Coordinates are [lng, lat].
+const DELIVERY_ROUTES: Array<Array<[number, number]>> = [
+  // Midtown — east along a cross-street, then a jog
+  [[-73.9855, 40.758], [-73.982, 40.756], [-73.979, 40.7545], [-73.976, 40.756], [-73.974, 40.7585]],
+  // Upper East Side — up an avenue
+  [[-73.962, 40.7705], [-73.9585, 40.772], [-73.955, 40.7735], [-73.952, 40.7755]],
+  // Greenwich Village / Soho — a short local loop
+  [[-74.001, 40.73], [-73.9985, 40.7285], [-73.996, 40.727], [-73.999, 40.7255]],
+  // Williamsburg (Brooklyn — entirely east of the river, no crossing)
+  [[-73.958, 40.713], [-73.9545, 40.7145], [-73.951, 40.716], [-73.9475, 40.715]]
+];
+
+// Bike badge — deep-emerald disc, lime ring, cream Lucide "bike" glyph. Inlined
+// as an SVG data URI so there's no asset to ship or 404.
+const COURIER_SVG =
+  "<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>" +
+  "<circle cx='24' cy='24' r='21' fill='#1B3328' stroke='#C8E66E' stroke-width='2.5'/>" +
+  "<g transform='translate(11,12)' fill='none' stroke='#F0E8D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" +
+  "<circle cx='18.5' cy='17.5' r='3.5'/><circle cx='5.5' cy='17.5' r='3.5'/><circle cx='15' cy='5' r='1'/>" +
+  "<path d='M12 17.5V14l-3-3 4-3 2 3h2'/></g></svg>";
+
+function interpRoute(pts: Array<[number, number]>, t: number): [number, number] {
+  const segs: number[] = [];
+  let total = 0;
+  for (let i = 0; i < pts.length - 1; i++) {
+    segs.push(Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]));
+    total += segs[i];
+  }
+  let target = Math.max(0, Math.min(1, t)) * total;
+  for (let i = 0; i < segs.length; i++) {
+    if (target <= segs[i] || i === segs.length - 1) {
+      const f = segs[i] ? target / segs[i] : 0;
+      return [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * f, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * f];
+    }
+    target -= segs[i];
+  }
+  return pts[pts.length - 1];
+}
+
+function courierGeojson(progress: number[]) {
+  return {
+    type: 'FeatureCollection' as const,
+    features: progress.map((t, i) => ({
+      type: 'Feature' as const,
+      properties: { id: i },
+      geometry: { type: 'Point' as const, coordinates: interpRoute(DELIVERY_ROUTES[i], t) }
+    }))
+  };
+}
+
+function staticGeojson(kind: 'line' | 'dest') {
+  return {
+    type: 'FeatureCollection' as const,
+    features: DELIVERY_ROUTES.map((r, i) => ({
+      type: 'Feature' as const,
+      properties: { id: i },
+      geometry:
+        kind === 'line'
+          ? { type: 'LineString' as const, coordinates: r }
+          : { type: 'Point' as const, coordinates: r[r.length - 1] }
+    }))
+  };
+}
+
 export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const ready = useRef(false);
   const hoveredId = useRef<number | string | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const visRef = useRef<(() => void) | null>(null);
   // Keep onSelect fresh without re-binding the map click handler (which is
   // bound once at load). Fixes the stale-closure risk on /delivery.
   const onSelectRef = useRef(onSelect);
@@ -286,11 +357,104 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       map.on('click', 'zip-fill', handleClick);
       map.on('click', 'cluster-pin', handleClick);
 
+      // ── Live delivery couriers — the "deliveries in motion" layer ───────
+      // Faint dashed route, a pulsing destination pin, and a bike badge that
+      // rides the route. Routes are short + land-only (see DELIVERY_ROUTES).
+      map.addSource('routes', { type: 'geojson', data: staticGeojson('line') });
+      map.addLayer({
+        id: 'route-line',
+        type: 'line',
+        source: 'routes',
+        layout: { 'line-cap': 'round', 'line-join': 'round' },
+        paint: { 'line-color': '#C8E66E', 'line-width': 2, 'line-opacity': 0.45, 'line-dasharray': [1.5, 1.5] }
+      });
+
+      map.addSource('destinations', { type: 'geojson', data: staticGeojson('dest') });
+      map.addLayer({
+        id: 'dest-pulse',
+        type: 'circle',
+        source: 'destinations',
+        paint: { 'circle-radius': 7, 'circle-color': '#C8E66E', 'circle-opacity': 0.22 }
+      });
+      map.addLayer({
+        id: 'dest-dot',
+        type: 'circle',
+        source: 'destinations',
+        paint: { 'circle-radius': 3.5, 'circle-color': '#1B3328', 'circle-stroke-color': '#C8E66E', 'circle-stroke-width': 1.5 }
+      });
+
+      // Staggered start positions so the couriers aren't synchronized.
+      const progress = DELIVERY_ROUTES.map((_, i) => i / DELIVERY_ROUTES.length);
+      map.addSource('couriers', { type: 'geojson', data: courierGeojson(progress) });
+
+      const reduceMotion =
+        typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const img = new Image(48, 48);
+      img.onload = () => {
+        const m = mapRef.current;
+        if (!m) return;
+        if (!m.hasImage('courier')) m.addImage('courier', img, { pixelRatio: 2 });
+        if (!m.getLayer('courier')) {
+          m.addLayer({
+            id: 'courier',
+            type: 'symbol',
+            source: 'couriers',
+            layout: {
+              'icon-image': 'courier',
+              'icon-size': 0.62,
+              'icon-allow-overlap': true,
+              'icon-ignore-placement': true
+            }
+          });
+        }
+        if (reduceMotion) return; // honor reduced-motion: couriers sit still
+
+        const SPEED = 1 / 14000; // a full local route every ~14s
+        let last = performance.now();
+        const tick = (now: number) => {
+          const dt = now - last;
+          last = now;
+          for (let i = 0; i < progress.length; i++) {
+            progress[i] += SPEED * dt;
+            if (progress[i] > 1) progress[i] -= 1;
+          }
+          const src = m.getSource('couriers') as maplibregl.GeoJSONSource | undefined;
+          if (src) src.setData(courierGeojson(progress));
+          if (m.getLayer('dest-pulse')) {
+            m.setPaintProperty('dest-pulse', 'circle-radius', 7 + 3 * Math.sin(now / 600));
+          }
+          rafRef.current = requestAnimationFrame(tick);
+        };
+        const start = () => {
+          if (rafRef.current == null) {
+            last = performance.now();
+            rafRef.current = requestAnimationFrame(tick);
+          }
+        };
+        const stop = () => {
+          if (rafRef.current != null) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = null;
+          }
+        };
+        // Pause when the tab is hidden (saves battery on mobile), resume on return.
+        const onVis = () => (document.hidden ? stop() : start());
+        visRef.current = onVis;
+        document.addEventListener('visibilitychange', onVis);
+        start();
+      };
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(COURIER_SVG);
+
       ready.current = true;
     });
 
     mapRef.current = map;
     return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      if (visRef.current) document.removeEventListener('visibilitychange', visRef.current);
+      visRef.current = null;
       map.remove();
       mapRef.current = null;
       ready.current = false;
