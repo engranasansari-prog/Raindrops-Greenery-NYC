@@ -166,7 +166,7 @@ function AgeGate() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="relative max-h-[92dvh] w-full max-w-lg overflow-y-auto text-center"
           >
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-[color:var(--rd-amber)]/40 shadow-[0_18px_40px_rgba(0,0,0,0.45)]">
               <Image src="/assets/logo.jpg" width={80} height={80} alt="Raindrops Greenery logo" className="h-full w-full object-cover" />
             </div>
 
@@ -179,7 +179,7 @@ function AgeGate() {
 
                 <h2
                   id="agegate-title"
-                  className="mt-5 text-[color:var(--rd-text)]"
+                  className="mt-3 text-[1.7rem] leading-[1.1] text-[color:var(--rd-text)] sm:text-[2.1rem]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
                 >
                   Welcome to <span className="italic" style={{ fontWeight: 500 }}>Raindrops NY.</span>
@@ -187,7 +187,7 @@ function AgeGate() {
 
                 {declined ? (
                   <>
-                    <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                    <p className="mx-auto mt-4 max-w-md text-[15px] leading-6 text-[color:var(--rd-text-dim)] sm:text-base">
                       This website and delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
                     </p>
                     <div className="mt-7 flex justify-center">
@@ -201,12 +201,12 @@ function AgeGate() {
                   </>
                 ) : (
                   <>
-                    <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                    <p className="mx-auto mt-4 max-w-md text-[15px] leading-6 text-[color:var(--rd-text-dim)] sm:text-base">
                       This site is intended for adults 21 and older. By entering you confirm that you are 21+ and accept our{' '}
                       <Link href="/legal/terms" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Terms</Link> and{' '}
                       <Link href="/legal/privacy" className="underline decoration-[color:var(--rd-glow)] underline-offset-4 hover:text-[color:var(--rd-glow)]">Privacy Policy</Link>.
                     </p>
-                    <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
                       <button onClick={confirmAge} className="btn-luxe btn-luxe-gold">
                         I am 21 or older
                       </button>
@@ -216,7 +216,7 @@ function AgeGate() {
                     </div>
                   </>
                 )}
-                <p className="mt-8 rd-eyebrow text-[color:var(--rd-text-mute)]">
+                <p className="mt-6 rd-eyebrow text-[color:var(--rd-text-mute)]">
                   Keep cannabis out of reach of children and pets.
                 </p>
               </>
@@ -230,18 +230,18 @@ function AgeGate() {
 
                 <h2
                   id="agegate-title"
-                  className="mt-5 text-[color:var(--rd-text)]"
+                  className="mt-3 text-[1.7rem] leading-[1.1] text-[color:var(--rd-text)] sm:text-[2.1rem]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
                 >
                   Be first to know <span className="italic" style={{ fontWeight: 500 }}>about new drops.</span>
                 </h2>
-                <p className="mx-auto mt-5 max-w-md text-base leading-7 text-[color:var(--rd-text-dim)]">
+                <p className="mx-auto mt-4 max-w-md text-[15px] leading-6 text-[color:var(--rd-text-dim)] sm:text-base">
                   Exclusive deals, sticky strain drops, and members-only previews. Phone optional — we’ll text major restocks only.
                 </p>
 
                 <form
                   onSubmit={subscribe}
-                  className="mx-auto mt-7 grid w-full max-w-md gap-3 text-left"
+                  className="mx-auto mt-5 grid w-full max-w-md gap-2.5 text-left"
                   aria-label="Welcome newsletter signup"
                 >
                   <label className="grid gap-1.5">
@@ -302,12 +302,12 @@ function AgeGate() {
 
                 <button
                   onClick={close}
-                  className="mt-5 rd-eyebrow text-[color:var(--rd-text-mute)] underline-offset-4 transition hover:text-[color:var(--rd-text-dim)] hover:underline"
+                  className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)] underline-offset-4 transition hover:text-[color:var(--rd-text-dim)] hover:underline"
                 >
                   Skip for now
                 </button>
 
-                <p className="mt-6 rd-eyebrow text-[color:var(--rd-text-mute)]">
+                <p className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)]">
                   Unsubscribe anytime · 21+ only
                 </p>
               </>
