@@ -376,6 +376,11 @@ const websiteLd = {
   }
 };
 
+// GA4 Measurement ID. Public (it ships in the page HTML), so it's safe to keep
+// in source as the default. A NEXT_PUBLIC_GA_ID env var in Vercel still wins if
+// set — e.g. to point preview deploys at a separate property, or to blank it.
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-K36KHP6THQ';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
@@ -444,11 +449,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Loaded via next/script afterInteractive so they never block render.
           GA4 setup: https://support.google.com/analytics/answer/9304153
         */}
-        {process.env.NEXT_PUBLIC_GA_ID && (
+        {GA_ID && (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="afterInteractive" />
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
             <Script id="ga4" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');`}
+              {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GA_ID}');`}
             </Script>
           </>
         )}
