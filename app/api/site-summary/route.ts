@@ -106,7 +106,7 @@ export function GET() {
       currency: 'USD',
       taxFree: true,
       freeDeliveryMinimum: 25,
-      freeFirstOrderGift: 'Complimentary pre-roll on every first-time order while supplies last',
+      freeGift: 'Complimentary pre-roll with every order while supplies last',
       paymentAccepted: ['Cash', 'Debit Card']
     },
     catalog: {

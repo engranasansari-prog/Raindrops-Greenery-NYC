@@ -54,7 +54,7 @@ No vape carts, no concentrates, no tinctures — focused catalog of three catego
 
 - All listed prices are final — no New York State cannabis excise tax, no state sales tax.
 - Free delivery on every order over $25.
-- Free pre-roll added to every first-time customer's order while supplies last.
+- Free pre-roll added to every order while supplies last.
 
 ## Multi-location brand
 

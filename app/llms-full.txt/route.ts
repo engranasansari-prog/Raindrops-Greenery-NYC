@@ -89,9 +89,9 @@ availability is confirmed at checkout.
 
 All listed menu prices are final — no New York State cannabis excise tax,
 no state sales tax. Free delivery on every order over $25, every covered
-ZIP. No surge pricing, no hidden fees. Every first-time customer in the
-coverage area gets a complimentary pre-roll added to their order. 21+
-only, while supplies last.
+ZIP. No surge pricing, no hidden fees. Every order in the coverage area
+comes with a complimentary pre-roll added to it. 21+ only, while supplies
+last.
 
 ## Hours + contact
 

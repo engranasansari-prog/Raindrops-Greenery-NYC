@@ -382,7 +382,7 @@ export default function DealsPage() {
           <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(19,36,29,0.18)] sm:p-7 sm:text-[15px]">
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Fine print</p>
             <p className="mt-3 text-[color:var(--rd-text)]">
-              Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll per first-time order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
+              Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll with every order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
             </p>
           </div>
         </div>
