@@ -436,9 +436,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnnouncementBar />
         <Nav />
         {/*
-          Analytics placeholders. Replace ga_id / pixel_id with real IDs before launch.
-          GA4: https://support.google.com/analytics/answer/9304153
-          Meta Pixel: https://www.facebook.com/business/help/952192354843755
+          Analytics — fully wired, zero code changes needed to go live. The
+          scripts auto-load ONLY when their env var is set in Vercel:
+            • GA4:        set NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX  (Project Settings →
+              Environment Variables → Production → redeploy)
+            • Meta Pixel: set NEXT_PUBLIC_META_PIXEL_ID=...
+          Loaded via next/script afterInteractive so they never block render.
+          GA4 setup: https://support.google.com/analytics/answer/9304153
         */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
