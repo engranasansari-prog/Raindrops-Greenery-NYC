@@ -28,26 +28,75 @@ function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; l
   return <div className={className}>{content}</div>;
 }
 
+// Web3Forms access key — delivers each contact submission straight to the
+// company inbox (nycraindrops@gmail.com) with NO mail-client popup. The key is
+// public by design (it can only send to the address it was registered with).
+// Set it via NEXT_PUBLIC_WEB3FORMS_KEY in Vercel, or hardcode the default below
+// once issued. While it's unset, the form gracefully falls back to a mailto:
+// draft so it's never dead.
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '';
+
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [topic, setTopic] = useState(topics[0]);
   const [message, setMessage] = useState('');
 
-  const send = (event: React.FormEvent<HTMLFormElement>) => {
+  const send = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const subject = encodeURIComponent(`[${topic}] Raindrops NY — ${name}`);
-    const body = encodeURIComponent(
-      `${message}\n\n— — —\nFrom: ${name} <${email}>\nTopic: ${topic}\nSent via ${business.domain} contact form`
-    );
-    if (typeof window !== 'undefined') {
-      // Opens the customer's default email client with a pre-filled message
-      // addressed to nycraindrops@gmail.com.
-      window.location.href = `${business.emailHref}?subject=${subject}&body=${body}`;
+    if (sending) return;
+    setError(false);
+
+    // No delivery key configured yet → fall back to the visitor's mail client
+    // so the form still does something. (Auto-upgrades to real inbox delivery
+    // the moment NEXT_PUBLIC_WEB3FORMS_KEY is set.)
+    if (!WEB3FORMS_KEY) {
+      const subject = encodeURIComponent(`[${topic}] Raindrops NY — ${name}`);
+      const body = encodeURIComponent(
+        `${message}\n\n— — —\nFrom: ${name} <${email}>\nTopic: ${topic}\nSent via ${business.domain} contact form`
+      );
+      if (typeof window !== 'undefined') {
+        window.location.href = `${business.emailHref}?subject=${subject}&body=${body}`;
+      }
+      setSent(true);
+      return;
     }
-    setSent(true);
+
+    // Real delivery — POST to Web3Forms, which emails it to the company inbox.
+    setSending(true);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `[${topic}] Raindrops NY — ${name}`,
+          from_name: 'Raindrops Greenery — website contact',
+          name,
+          email,
+          topic,
+          message,
+          botcheck: '' // honeypot; genuine submissions leave this empty
+        })
+      });
+      const data = (await res.json()) as { success?: boolean };
+      if (data.success) {
+        setSent(true);
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   const copyEmail = async () => {
@@ -143,9 +192,10 @@ export default function ContactPage() {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+                disabled={sending}
+                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 [font-family:var(--font-mono)]"
               >
-                Send to {business.email}
+                {sending ? 'Sending…' : 'Send message'}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />
               </button>
               <button
@@ -172,18 +222,38 @@ export default function ContactPage() {
               <div role="status" aria-live="polite" className="mt-5 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
                 <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
                   <Check className="h-4 w-4" />
-                  Your email app should open
+                  {WEB3FORMS_KEY ? 'Message sent' : 'Your email app should open'}
                 </p>
                 <p className="mt-2 text-[color:var(--rd-text-dim)]">
-                  If nothing opened, email us directly at{' '}
-                  <a
-                    href={business.emailHref}
-                    className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4"
-                  >
-                    {business.email}
-                  </a>{' '}
-                  or tap <span className="font-medium text-[color:var(--rd-text)]">Copy email</span> above.
+                  {WEB3FORMS_KEY ? (
+                    <>
+                      Thanks — your message is on its way to our team. We reply within one business
+                      day. You can also reach us directly at{' '}
+                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                        {business.email}
+                      </a>
+                      .
+                    </>
+                  ) : (
+                    <>
+                      If nothing opened, email us directly at{' '}
+                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                        {business.email}
+                      </a>{' '}
+                      or tap <span className="font-medium text-[color:var(--rd-text)]">Copy email</span> above.
+                    </>
+                  )}
                 </p>
+              </div>
+            )}
+
+            {error && (
+              <div role="alert" className="mt-5 rounded-2xl border border-[color:var(--rd-amber)]/40 bg-[color:var(--rd-amber)]/10 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
+                Something went wrong sending your message. Please email us directly at{' '}
+                <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                  {business.email}
+                </a>
+                .
               </div>
             )}
 
