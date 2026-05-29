@@ -48,11 +48,38 @@ ${KNOWLEDGE}`;
 
 type IncomingMessage = { role?: unknown; content?: unknown };
 
+// Lightweight in-memory rate limit (per IP, per minute) so a single abuser
+// can't drain the Anthropic spend cap. NOTE: in-memory state is per-serverless
+// instance and resets on cold start — a first line of defense, not a global
+// limiter. The hard ceiling is the spend cap set in the Anthropic console;
+// move to Vercel KV / Upstash for a global limit if traffic ever warrants it.
+const RL_WINDOW_MS = 60_000;
+const RL_MAX = 12;
+const rlHits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (rlHits.get(ip) ?? []).filter((t) => now - t < RL_WINDOW_MS);
+  recent.push(now);
+  rlHits.set(ip, recent);
+  if (rlHits.size > 5000) {
+    for (const [key, times] of rlHits) {
+      if (times.every((t) => now - t >= RL_WINDOW_MS)) rlHits.delete(key);
+    }
+  }
+  return recent.length > RL_MAX;
+}
+
 export async function POST(request: Request) {
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     // No key configured → tell the client to use its built-in scripted brain.
     if (!apiKey) return NextResponse.json({ ok: false, reason: 'no-key' });
+
+    // Throttle per IP so abuse can't drain the spend cap. On limit we return
+    // ok:false → the widget gracefully falls back to a scripted answer.
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    if (isRateLimited(ip)) return NextResponse.json({ ok: false, reason: 'rate-limited' });
 
     const body = (await request.json()) as { messages?: IncomingMessage[] };
     const incoming = Array.isArray(body?.messages) ? body.messages : [];
