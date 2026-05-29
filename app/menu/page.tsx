@@ -5,9 +5,9 @@ import { getBrandLabel, inferProfile } from '@/lib/menu-utils';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Cannabis Delivery Menu',
+  title: 'Weed Delivery Menu NYC',
   description:
-    'Browse Raindrops Greenery NY Flower, Pre-Rolls, and Edibles with filters for price, potency, size, brand, effect, deals, and availability.',
+    'Order weed delivery in NYC — browse curated cannabis Flower Strains, Pre-Rolls, and Edibles by price, potency, size, and effect. Tax-free, free over $25.',
   alternates: { canonical: '/menu' },
   openGraph: {
     title: 'Raindrops Greenery NY Delivery Menu',

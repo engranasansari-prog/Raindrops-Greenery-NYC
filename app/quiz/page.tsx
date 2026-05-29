@@ -3,9 +3,9 @@ import StrainQuiz from '@/components/StrainQuiz';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Strain finder',
+  title: 'Weed Strain Finder Quiz',
   description:
-    'Answer four quick questions and Raindrops Greenery will recommend Flower, Pre-Rolls, or Edibles that match how you want to feel.',
+    'Not sure what to order? Answer 4 quick questions and our weed strain finder matches you with the right cannabis Flower, Pre-Rolls, or Edibles.',
   alternates: { canonical: '/quiz' },
   openGraph: {
     title: 'Strain finder — Raindrops Greenery',

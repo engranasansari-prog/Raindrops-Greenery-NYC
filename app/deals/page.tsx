@@ -12,9 +12,9 @@ import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'NYC Cannabis Deals',
+  title: 'NYC Weed Deals — Tax-Free',
   description:
-    'Tax-free Shinnecock-licensed cannabis picks — Heavy Hitters, Top Shelf, and Under $25. Free delivery across Manhattan, Brooklyn, and Queens.',
+    'Tax-free weed deals on NYC cannabis delivery — Heavy Hitters, Top Shelf, and Under-$25 picks. Free same-day delivery on orders over $25. 21+.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Raindrops Greenery NY Deals',

@@ -6,8 +6,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { faqs, business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Delivery FAQ',
-  description: 'Answers about Raindrops Greenery NYC delivery, tax-free Shinnecock authority, free delivery, free gift, and 21+ requirements.',
+  title: 'Weed Delivery FAQ — NYC',
+  description: 'Common questions about NYC weed delivery — tax-free Shinnecock authority, coverage areas, free delivery, the free gift, and 21+ ID requirements.',
   alternates: { canonical: '/faq' },
   openGraph: {
     title: 'Raindrops Greenery FAQ',

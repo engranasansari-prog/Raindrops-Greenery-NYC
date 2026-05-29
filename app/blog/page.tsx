@@ -7,9 +7,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { getBlogPosts } from '@/lib/blog-posts';
 
 export const metadata: Metadata = {
-  title: 'Journal',
+  title: 'NYC Cannabis Delivery Blog',
   description:
-    'Raindrops Greenery NY delivery articles, product education, and ordering guides for Manhattan, Brooklyn, and Queens.',
+    'Guides to NYC weed delivery — how tax-free Shinnecock cannabis works, neighborhood delivery ETAs, and how to order Flower, Pre-Rolls, and Edibles.',
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Raindrops Greenery NY Journal',

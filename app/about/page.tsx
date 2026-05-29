@@ -7,9 +7,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About Our NYC Weed Delivery',
   description:
-    'Shinnecock-licensed cannabis delivery for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated menu, transparent pricing, free delivery.',
+    'Shinnecock-licensed weed delivery for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated cannabis menu, transparent pricing, free delivery.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Raindrops Greenery',

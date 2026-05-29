@@ -36,13 +36,13 @@ export const metadata: Metadata = {
   // every interior page set its own primary-keyword title that auto-
   // appends the brand. SEO best practice: keyword first, brand last.
   title: {
-    default: 'NYC Cannabis Delivery — Tax-Free | Raindrops Greenery',
+    default: 'Tax-Free Weed Delivery NYC | Raindrops Greenery NY',
     template: '%s | Raindrops Greenery NY'
   },
-  // ~156-char meta description, primary KW in first 100 chars + CTA. Kept
-  // ampersand-free so the rendered length isn't inflated by &amp; entities.
+  // ~155-char meta description, primary KW ("weed delivery NYC") in first 100
+  // chars + CTA. Ampersand-free so the rendered length isn't inflated.
   description:
-    'Tax-free, same-day NYC cannabis delivery to Manhattan, LIC, Williamsburg, and Greenpoint. Curated Flower Strains, Pre-Rolls, and Edibles. Free over $25, 21+.',
+    'Tax-free, same-day weed delivery in NYC — Manhattan, LIC, Williamsburg, and Greenpoint. Curated cannabis flower, pre-rolls, and edibles. Free over $25, 21+.',
   applicationName: 'Raindrops Greenery',
   authors: [{ name: business.tradeName, url: business.baseUrl }],
   creator: business.tradeName,
@@ -84,9 +84,9 @@ export const metadata: Metadata = {
     shortcut: ['/assets/logo.jpg']
   },
   openGraph: {
-    title: 'NYC Cannabis Delivery — Tax-Free | Raindrops Greenery',
+    title: 'Tax-Free Weed Delivery NYC | Raindrops Greenery',
     description:
-      'Same-day tax-free cannabis delivery for Manhattan, LIC, Williamsburg, and Greenpoint. Curated Flower Strains, Pre-Rolls, Edibles. Free over $25.',
+      'Same-day tax-free weed delivery for Manhattan, LIC, Williamsburg, and Greenpoint. Curated cannabis flower, pre-rolls, and edibles. Free over $25.',
     url: business.baseUrl,
     siteName: 'Raindrops Greenery',
     locale: 'en_US',
@@ -102,8 +102,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NYC Cannabis Delivery — Tax-Free | Raindrops Greenery',
-    description: 'Same-day cannabis delivery, free over $25, 21+. Manhattan + Brooklyn + Queens.',
+    title: 'Tax-Free Weed Delivery NYC | Raindrops Greenery',
+    description: 'Same-day tax-free weed delivery, free over $25, 21+. Manhattan, Williamsburg, Greenpoint, and LIC.',
     images: [`${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`]
   },
   robots: {
