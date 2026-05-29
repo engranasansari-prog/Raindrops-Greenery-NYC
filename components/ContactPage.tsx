@@ -76,7 +76,7 @@ export default function ContactPage() {
           access_key: WEB3FORMS_KEY,
           // Clean, scannable subject line in the inbox.
           subject: `New website message — ${topic}`,
-          from_name: 'Raindrops Greenery Website',
+          from_name: 'Raindrops Greenery NYC Delivery',
           // Reply-To = the customer, so hitting "Reply" in Gmail goes straight
           // back to them — the touch that makes it feel professional.
           replyto: email,
