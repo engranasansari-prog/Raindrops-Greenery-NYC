@@ -34,7 +34,7 @@ function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; l
 // Set it via NEXT_PUBLIC_WEB3FORMS_KEY in Vercel, or hardcode the default below
 // once issued. While it's unset, the form gracefully falls back to a mailto:
 // draft so it's never dead.
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '';
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? 'cc3efb40-57a3-4e65-a324-2c313d9a19b6';
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -74,12 +74,18 @@ export default function ContactPage() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `[${topic}] Raindrops NY — ${name}`,
-          from_name: 'Raindrops Greenery — website contact',
-          name,
-          email,
-          topic,
-          message,
+          // Clean, scannable subject line in the inbox.
+          subject: `New website message — ${topic}`,
+          from_name: 'Raindrops Greenery Website',
+          // Reply-To = the customer, so hitting "Reply" in Gmail goes straight
+          // back to them — the touch that makes it feel professional.
+          replyto: email,
+          // Capitalized keys become the row labels in the formatted email,
+          // so it reads Name / Email / Topic / Message — not raw field names.
+          Name: name,
+          Email: email,
+          Topic: topic,
+          Message: message,
           botcheck: '' // honeypot; genuine submissions leave this empty
         })
       });
