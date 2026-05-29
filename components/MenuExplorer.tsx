@@ -604,7 +604,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               Flower Strains, Pre-Rolls, <span className="italic">and Edibles.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              Search and filter a focused menu — product images, pricing, potency, size, brand, and deal details. Tap any product to head to secure checkout.
+              Browse the Raindrops weed delivery menu — curated cannabis Flower Strains, Pre-Rolls, and Edibles. Filter by price, potency, size, brand, and deals, then tap any product for secure checkout.
             </p>
           </div>
           <div className="grid grid-cols-3 gap-2 sm:gap-3">

@@ -52,7 +52,7 @@ export default function DeliveryPage() {
               Manhattan. <span className="italic">Brooklyn + Queens.</span> Same-day.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              {ALL_ZIPS.length} ZIPs across {COVERAGE.clusters.length} neighborhoods. Free delivery on orders over $25, tax-free. Average drop-off in under an hour.
+              Same-day weed delivery to {ALL_ZIPS.length} ZIPs across {COVERAGE.clusters.length} neighborhoods. Tax-free under Shinnecock authority, free on orders over $25, with average drop-off in under an hour.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/menu" className="btn-luxe btn-luxe-gold">
