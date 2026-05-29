@@ -10,6 +10,55 @@ worth targeting vs. what to ignore.
 
 ---
 
+## 📋 Paste-ready list (copy → Google Keyword Planner)
+
+Filtered to areas we actually serve (no other-city noise, no competitor names):
+
+```
+tax free weed nyc
+tax free weed delivery nyc
+shinnecock cannabis
+shinnecock cannabis dispensary
+free weed delivery nyc
+weed delivery nyc
+cannabis delivery nyc
+same day weed delivery nyc
+same day cannabis delivery nyc
+weed delivery manhattan
+best weed delivery nyc
+best weed delivery manhattan
+cheap weed delivery nyc
+cheapest weed delivery nyc
+weed delivery app nyc
+online weed delivery nyc
+weed delivery service nyc
+weed delivery midtown manhattan
+weed delivery nyc east village
+weed delivery nyc upper east side
+weed delivery nyc upper west side
+weed delivery fidi nyc
+weed delivery williamsburg
+weed delivery greenpoint
+weed delivery long island city
+edibles delivery nyc
+weed edibles delivery nyc
+thc gummies nyc
+thc gummies nyc delivery
+pre rolls nyc
+pre rolls online delivery nyc
+weed strains nyc
+weed delivery nyc 24/7
+24 hour weed delivery manhattan
+late night weed delivery nyc
+weed delivery near me
+```
+
+**Workflow:** paste → Keyword Planner ("Get search volume and forecasts") →
+bring the avg. monthly-search numbers back → we re-prioritize and refine the
+on-page targeting by real volume.
+
+---
+
 ## ✅ TIER 1 — Target these first (match our coverage + our edge)
 
 ### Our unique differentiators (lowest competition, highest win-rate)
