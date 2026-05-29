@@ -146,6 +146,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   const hoveredId = useRef<number | string | null>(null);
   const rafRef = useRef<number | null>(null);
   const visRef = useRef<(() => void) | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
   // Keep onSelect fresh without re-binding the map click handler (which is
   // bound once at load). Fixes the stale-closure risk on /delivery.
   const onSelectRef = useRef(onSelect);
@@ -438,11 +439,36 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
             rafRef.current = null;
           }
         };
-        // Pause when the tab is hidden (saves battery on mobile), resume on return.
-        const onVis = () => (document.hidden ? stop() : start());
+
+        // Only animate while the map is BOTH on-screen and the tab is visible.
+        // Without this, the rAF kept repainting the GL canvas every frame even
+        // while the visitor sat at the top of the page or had scrolled past —
+        // pure wasted CPU/battery (worst on mobile). Now the cost is zero
+        // unless the customer is actually looking at the map.
+        let inView = false;
+        let tabVisible = typeof document === 'undefined' || !document.hidden;
+        const sync = () => (inView && tabVisible ? start() : stop());
+
+        const onVis = () => {
+          tabVisible = !document.hidden;
+          sync();
+        };
         visRef.current = onVis;
         document.addEventListener('visibilitychange', onVis);
-        start();
+
+        if (containerRef.current && 'IntersectionObserver' in window) {
+          observerRef.current = new IntersectionObserver(
+            (entries) => {
+              inView = entries.some((e) => e.isIntersecting);
+              sync();
+            },
+            { threshold: 0.05 }
+          );
+          observerRef.current.observe(containerRef.current);
+        } else {
+          inView = true;
+          sync();
+        }
       };
       img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(COURIER_SVG);
 
@@ -455,6 +481,8 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       rafRef.current = null;
       if (visRef.current) document.removeEventListener('visibilitychange', visRef.current);
       visRef.current = null;
+      if (observerRef.current) observerRef.current.disconnect();
+      observerRef.current = null;
       map.remove();
       mapRef.current = null;
       ready.current = false;

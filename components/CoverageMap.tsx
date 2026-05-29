@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight, Check, MapPin, Sparkles, X } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { COVERAGE } from '@/lib/coverage';
 import { checkZip } from '@/lib/zip-utils';
@@ -69,6 +69,35 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
     }
     onClusterChange?.(id);
   };
+
+  // Defer mounting the live map (and its ~1MB MapLibre chunk) until the
+  // section is near the viewport. Most home-page visitors read the hero first;
+  // this keeps MapLibre off the initial load entirely and only pays the cost
+  // for people who actually scroll toward the coverage map. rootMargin starts
+  // the load ~400px early so it's ready by the time they arrive.
+  const mapWrapRef = useRef<HTMLDivElement | null>(null);
+  const [mapInView, setMapInView] = useState(false);
+  useEffect(() => {
+    const el = mapWrapRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      // Ancient-browser fallback: mount on the next frame (deferred so it's not
+      // a synchronous setState inside the effect body).
+      const id = requestAnimationFrame(() => setMapInView(true));
+      return () => cancelAnimationFrame(id);
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setMapInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const result = useMemo(() => (submitted ? checkZip(zip) : checkZip('')), [submitted, zip]);
 
@@ -245,15 +274,24 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
           </div>
 
           {/* The map */}
-          <div className={compact ? 'order-1' : 'order-1 lg:order-2'}>
+          <div ref={mapWrapRef} className={compact ? 'order-1' : 'order-1 lg:order-2'}>
             <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)]/70 p-3 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur sm:p-4 lg:p-5">
-              <CoverageLiveMap
-                activeCluster={highlight}
-                onSelect={(id) => {
-                  setActive(id);
-                  if (id) setOpenCluster(id);
-                }}
-              />
+              {mapInView ? (
+                <CoverageLiveMap
+                  activeCluster={highlight}
+                  onSelect={(id) => {
+                    setActive(id);
+                    if (id) setOpenCluster(id);
+                  }}
+                />
+              ) : (
+                // Same-size placeholder so there's zero layout shift when the
+                // map mounts on scroll.
+                <div
+                  className="h-[480px] w-full rounded-2xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] sm:h-[560px] lg:h-[620px]"
+                  aria-hidden
+                />
+              )}
 
               {/* Legend / hint */}
               <div className="mt-3 flex flex-wrap items-center justify-between gap-3 px-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
