@@ -10,7 +10,12 @@ import { useModalA11y } from '@/hooks/useModalA11y';
 import NewsletterForm from '@/components/NewsletterForm';
 import OpenStatus from '@/components/OpenStatus';
 import BackToTop from '@/components/BackToTop';
+import dynamic from 'next/dynamic';
 import { business, checkout, footerLinkGroups, social } from '@/lib/site-data';
+
+// Chat concierge — load after hydration (client-only floating widget) so it
+// never competes with first paint / LCP.
+const ChatAssistant = dynamic(() => import('@/components/ChatAssistant'), { ssr: false });
 
 
 /**
@@ -493,6 +498,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <Footer />
       <StickyOrderBar />
       <BackToTop />
+      <ChatAssistant />
     </>
   );
 }
