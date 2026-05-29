@@ -556,8 +556,8 @@ textarea:focus:not(:focus-visible) {
 }
 
 /* =====================================================================
-   Legacy btn-luxe-* classes used by HeroSlider / ClaimOfferModal /
-   CoverageMap / HomePage. These were previously referenced without
+   Legacy btn-luxe-* classes used by HeroSlider / CoverageMap / HomePage
+   and page CTAs. These were previously referenced without
    definitions (latent bug). Map them to the new design tokens.
    ===================================================================== */
 .btn-luxe {

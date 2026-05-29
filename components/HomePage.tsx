@@ -7,7 +7,6 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
-  BadgePercent,
   Box,
   Droplet,
   Plus,
@@ -25,7 +24,6 @@ const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
 });
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
-import ClaimOfferModal from '@/components/ClaimOfferModal';
 import HookPills from '@/components/HookPills';
 import { testimonials, valueProps } from '@/lib/site-data';
 import { type FeaturedDeal } from '@/lib/featured-deals';
@@ -166,7 +164,10 @@ function ValueProps() {
 }
 
 // =====================================================================
-// 4. Featured deals — 3 products MAX (V6 §4.3)
+// 4. Featured picks — 3 curated products (no discounts; the real value is
+//    free gift + free delivery). Renamed from "Tonight's drops / deals"
+//    because the live menu carries no markdowns — these are staff picks,
+//    not sale items.
 // =====================================================================
 // Solid dark chip — see MenuExplorer comment. Same pattern.
 const strainTone: Record<StrainTag, string> = {
@@ -211,18 +212,18 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
-                <BadgePercent className="h-3.5 w-3.5" />
-                Tonight’s drops
+                <Star className="h-3.5 w-3.5" />
+                Featured picks
               </p>
               <h2 className="mt-4 text-[color:var(--rd-text)]">
-                Three picks <span className="italic">moving fast.</span>
+                Three picks <span className="italic">to start with.</span>
               </h2>
             </div>
             <Link
               href="/deals"
               className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
             >
-              <span className="border-b border-[color:var(--rd-glow)] pb-0.5">See all deals</span>
+              <span className="border-b border-[color:var(--rd-glow)] pb-0.5">See all picks</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
             </Link>
           </div>
@@ -441,9 +442,6 @@ function TestimonialFeature() {
 // Page composition — exactly 6 sections per V6 §4
 // =====================================================================
 export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
-  const [claimOpen, setClaimOpen] = useState(false);
-  const closeClaim = () => setClaimOpen(false);
-
   const slides: HeroSlide[] = [
     {
       id: 'best-flower',
@@ -454,11 +452,13 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       headline: 'Guaranteed best flower on the market.',
       headlineAccent: 'best flower',
       subtext: 'Free weed gift with every order. Tax-free under Shinnecock authority. Same-day delivery.',
-      // Opens the claim modal (lead capture → Mailchimp) rather than jumping
-      // straight to /menu — the button literally promises a "claim" flow, and
-      // this makes the form reachable instead of dead.
-      primary: { label: 'Claim free weed gift', onClick: () => setClaimOpen(true) },
-      secondary: { label: 'Shop the menu', href: '/menu' }
+      // The free pre-roll is automatic with every order — so "claim" simply
+      // means "start an order." The button goes straight to the menu (gift
+      // auto-applied at checkout), instead of a separate email/lead form that
+      // promised a delivery it couldn't place. One honest funnel: shop → check
+      // out → gift. Email capture still happens once at the age gate + footer.
+      primary: { label: 'Claim free weed gift', href: '/menu' },
+      secondary: { label: 'See featured picks', href: '/deals' }
     },
     {
       id: 'manhattan-brooklyn-queens',
@@ -510,7 +510,6 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
 
       <TestimonialFeature />
 
-      <ClaimOfferModal open={claimOpen} onClose={closeClaim} />
       <LiveOrderToasts />
     </SiteChrome>
   );

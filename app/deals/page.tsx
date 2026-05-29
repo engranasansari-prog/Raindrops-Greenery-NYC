@@ -7,18 +7,18 @@ import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import HookPills from '@/components/HookPills';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
-import { formatPrice, getBrandLabel, getStrainTag, inferProfile } from '@/lib/menu-utils';
+import { formatPrice, getBrandLabel, getPrimaryPotency, getStrainTag, inferProfile } from '@/lib/menu-utils';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'NYC Weed Deals — Tax-Free',
   description:
-    'Tax-free weed deals on NYC cannabis delivery — Heavy Hitters, Top Shelf, and Under-$25 picks. Free same-day delivery on orders over $25. 21+.',
+    'Tax-free NYC weed deals & featured picks — from Under $25 to premium $40+ flower. Free weed gift with every order, free same-day delivery over $25. 21+.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Raindrops Greenery NY Deals',
-    description: 'Tax-free cannabis picks for NYC delivery. Heavy Hitters, Top Shelf, Under $25.',
+    description: 'Tax-free cannabis picks for NYC delivery — from Under $25 to the premium $40+ ✦ STICKY tier.',
     url: '/deals',
     images: [{ url: '/assets/flower.avif', width: 1200, height: 800, alt: 'Raindrops Greenery deals' }]
   }
@@ -169,18 +169,42 @@ function Section({
 // compiler flagged as an impure render.
 const PRICE_VALID_UNTIL = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-const heavyHittersInit = menuProducts.filter((p) => p.isSticky);
-const topShelfInit = menuProducts.filter((p) => p.category === 'Flower' && p.salePrice >= 4000); // $40+
-const underTwentyFiveInit = menuProducts.filter((p) => p.salePrice <= 2500);
-const curatedFeed = [...heavyHittersInit, ...topShelfInit, ...underTwentyFiveInit].slice(0, 20);
+// --- Curated "Featured picks" buckets ----------------------------------
+// Mutually exclusive by PRICE BAND so a product never repeats across
+// sections (the old Heavy-Hitters-vs-Top-Shelf overlap — every sticky $40+
+// flower showed in both — is gone), and the page reads low → high the way
+// customers shop a curated shelf:
+//   1. Under $25   — entry-priced picks  (shown first)
+//   2. $25–$40     — everyday sweet spot
+//   3. $40+        — the premium ✦ STICKY tier (shown last)
+// Each band is capped + sorted "best first" (STICKY, then THC potency) so
+// the page stays a curated highlight reel — NOT a second copy of the full
+// menu, which is what made /deals feel redundant with /menu.
+const SECTION_CAP = 8;
+
+function curate(list: LiveMenuProduct[]): LiveMenuProduct[] {
+  return [...list]
+    .sort((a, b) => {
+      const stickyDelta = Number(b.isSticky) - Number(a.isSticky);
+      if (stickyDelta !== 0) return stickyDelta;
+      return getPrimaryPotency(b) - getPrimaryPotency(a);
+    })
+    .slice(0, SECTION_CAP);
+}
+
+const underTwentyFiveInit = curate(menuProducts.filter((p) => p.salePrice <= 2500));
+const everydayInit = curate(menuProducts.filter((p) => p.salePrice > 2500 && p.salePrice < 4000));
+const heavyHittersInit = curate(menuProducts.filter((p) => p.salePrice >= 4000));
+// Feed reads low → high, deduped by construction.
+const curatedFeed = [...underTwentyFiveInit, ...everydayInit, ...heavyHittersInit].slice(0, 20);
 
 const dealsListLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     '@id': `${business.baseUrl}/deals#deals-list`,
-    name: 'Tonight’s curated cannabis picks — Raindrops Greenery NY',
+    name: 'Featured cannabis picks — Raindrops Greenery NY',
     description:
-      'Heavy Hitters (the premium ✦ STICKY $40+ tier), Top Shelf ($40+ flower), and Under-$25 entry picks for tax-free NYC delivery. Free delivery on orders over $25.',
+      'Curated NYC weed picks from Under $25 to the premium $40+ ✦ STICKY tier — tax-free, with a free weed gift on every order and free delivery over $25.',
     numberOfItems: curatedFeed.length,
     itemListElement: curatedFeed.map((product, index) => ({
       '@type': 'ListItem',
@@ -212,10 +236,10 @@ const dealsListLd = {
 
 export default function DealsPage() {
   // Pure render — all data derivation happens at module init above.
-  const heavyHitters = heavyHittersInit;
-  const topShelf = topShelfInit;
   const underTwentyFive = underTwentyFiveInit;
-  const totalCurated = heavyHitters.length + topShelf.length + underTwentyFive.length;
+  const everyday = everydayInit;
+  const heavyHitters = heavyHittersInit;
+  const totalCurated = underTwentyFive.length + everyday.length + heavyHitters.length;
 
   return (
     <SiteChrome>
@@ -234,12 +258,12 @@ export default function DealsPage() {
         <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
-            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Tonight’s drops</p>
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Featured picks</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
               Curated picks. <span className="italic">No codes needed.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              Free weed gift with every order. Browse the picks below and tap any product to head to secure checkout — every card links straight through.
+              No discount codes, no gimmicks — just a curated shortlist, lowest-priced first. Free weed gift with every order, free delivery over $25, tax-free under Shinnecock. Tap any pick to head to secure checkout.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -284,31 +308,32 @@ export default function DealsPage() {
         </section>
       ) : (
         <>
-          {/* Heavy Hitters — the ✦ STICKY tier (premium $40+ products) */}
+          {/* Under $25 — entry-priced, shown FIRST (client request: lower
+              price bracket leads the page) */}
+          <Section
+            eyebrow="Under $25"
+            title="Easy entries"
+            italic="to start with."
+            body="Lower-priced picks for first-time customers and budget rounds — same quality bar, gentler on the wallet."
+            products={underTwentyFive}
+          />
+
+          {/* $25–$40 — the everyday sweet spot */}
+          <Section
+            eyebrow="Crowd favorites"
+            title="The everyday"
+            italic="sweet spot."
+            body="The $25–$40 range New Yorkers reorder most — dependable flower, pre-rolls, and edibles."
+            products={everyday}
+          />
+
+          {/* $40+ — the premium ✦ STICKY tier, shown LAST */}
           <Section
             eyebrow="Heavy hitters"
             title="The ✦ STICKY tier"
             italic="top of the shop."
-            body="Every product that earns the ✦ STICKY badge — our premium $40-and-up tier of the strongest, most-wanted flower and high-dose edibles. Strong stuff."
+            body="Our premium $40-and-up tier — the strongest, most-wanted flower and high-dose edibles. Every ✦ STICKY pick lives here."
             products={heavyHitters}
-          />
-
-          {/* Top Shelf — $40+ flower */}
-          <Section
-            eyebrow="Top shelf"
-            title="Premium picks"
-            italic="worth the splurge."
-            body="The flower we'd order ourselves. $40 and up — top-grade nugs that justify the price tag."
-            products={topShelf}
-          />
-
-          {/* Under $25 — entry-priced */}
-          <Section
-            eyebrow="Under $25"
-            title="Easy entries"
-            italic="without the splurge."
-            body="Lower-priced picks for first-time customers or budget rounds. Same quality bar."
-            products={underTwentyFive}
           />
         </>
       )}

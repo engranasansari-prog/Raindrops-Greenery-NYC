@@ -606,6 +606,13 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               Browse the Raindrops weed delivery menu — curated cannabis Flower Strains, Pre-Rolls, and Edibles. Filter by price, potency, size, brand, and deals, then tap any product for secure checkout.
             </p>
+            {/* Free-gift reinforcement — the hero "Claim free weed gift" CTA
+                lands here, so confirm the gift is automatic with any order
+                (no separate claim form needed). */}
+            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-4 py-2 text-sm font-medium text-[color:var(--rd-text)]">
+              <Sparkles className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
+              Free pre-roll gift auto-added to every order — just check out.
+            </p>
           </div>
           <div className="grid grid-cols-3 gap-2 sm:gap-3">
             {productCategories.map((item) => {
