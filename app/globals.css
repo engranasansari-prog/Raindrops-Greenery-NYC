@@ -710,23 +710,38 @@ textarea:focus:not(:focus-visible) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   Hero Ken Burns — a slow, ambient "living photograph" drift on the hero
-   image. Deliberately a gentle DIAGONAL PAN with only a tiny scale change
-   (not a zoom toward the viewer) so it adds life without the "coming at
-   your face" feel the client flagged. GPU-accelerated (transform only),
-   so it's effectively free on the compositor. Desktop/tablet only (the
-   mobile hero is heavily overlaid, and this avoids any edge-crop on small
-   screens). Fully disabled under prefers-reduced-motion.
+   Hero Ken Burns — an ambient "living photograph" motion on the hero
+   image. GPU-accelerated (transform only), so it's effectively free on
+   the compositor. Fully disabled under prefers-reduced-motion.
+
+   • Desktop/tablet (≥640px): a clearly-visible slow drift — a ~5% zoom
+     (1.06 → 1.11) plus a diagonal pan over 20s. Min scale stays ≥1.06 and
+     the pan distance is kept inside the scaled overflow at every frame, so
+     the image always fully covers the frame (no edge gap).
+   • Mobile (<640px): a PAN-ONLY version — scale is held CONSTANT at 1.06
+     (no zoom change at all), so it never feels like it's "coming toward
+     your face" or cropping further (the issue the client flagged); it just
+     glides gently side-to-side within the 6% scaled overflow.
    ───────────────────────────────────────────────────────────────── */
 @media (min-width: 640px) {
   .hero-kenburns {
     will-change: transform;
-    animation: hero-kenburns 26s ease-in-out infinite alternate;
+    animation: hero-kenburns 20s ease-in-out infinite alternate;
   }
 }
 @keyframes hero-kenburns {
-  from { transform: scale(1.05) translate3d(0, 0, 0); }
-  to   { transform: scale(1.07) translate3d(-1.4%, -1%, 0); }
+  from { transform: scale(1.06) translate3d(0, 0, 0); }
+  to   { transform: scale(1.11) translate3d(-2.5%, -1.5%, 0); }
+}
+@media (max-width: 639.98px) {
+  .hero-kenburns {
+    will-change: transform;
+    animation: hero-kenburns-pan 22s ease-in-out infinite alternate;
+  }
+}
+@keyframes hero-kenburns-pan {
+  from { transform: scale(1.06) translate3d(2.4%, 1.3%, 0); }
+  to   { transform: scale(1.06) translate3d(-2.4%, -1.3%, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-kenburns { animation: none !important; transform: none !important; }
