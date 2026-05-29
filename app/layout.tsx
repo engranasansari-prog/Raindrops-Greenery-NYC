@@ -39,9 +39,10 @@ export const metadata: Metadata = {
     default: 'NYC Cannabis Delivery — Tax-Free | Raindrops Greenery',
     template: '%s | Raindrops Greenery NY'
   },
-  // 158-char meta description with primary KW in first 100 chars + CTA.
+  // ~156-char meta description, primary KW in first 100 chars + CTA. Kept
+  // ampersand-free so the rendered length isn't inflated by &amp; entities.
   description:
-    'Tax-free NYC cannabis delivery — same-day to Manhattan, LIC, Williamsburg & Greenpoint. Shop curated Flower Strains, Pre-Rolls, and Edibles. Free over $25. 21+.',
+    'Tax-free, same-day NYC cannabis delivery to Manhattan, LIC, Williamsburg, and Greenpoint. Curated Flower Strains, Pre-Rolls, and Edibles. Free over $25, 21+.',
   applicationName: 'Raindrops Greenery',
   authors: [{ name: business.tradeName, url: business.baseUrl }],
   creator: business.tradeName,

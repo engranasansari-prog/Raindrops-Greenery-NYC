@@ -786,6 +786,11 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
 
       <section className="bg-[color:var(--rd-ink)] pb-20 text-[color:var(--rd-text)]">
         <div className="luxury-shell">
+          {/* Section heading for the product grid. Visually hidden (the hero H1
+              + filter rail already frame this area), but it gives screen readers
+              and crawlers the H2 level between the page H1 and the H3 product
+              titles — fixes the H1→H3 heading-order skip. */}
+          <h2 className="sr-only">Cannabis delivery menu — Flower Strains, Pre-Rolls, and Edibles</h2>
           <AnimatePresence mode="popLayout">
             {visibleProducts.length > 0 ? (
               <motion.div layout className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">

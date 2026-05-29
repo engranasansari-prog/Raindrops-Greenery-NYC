@@ -9,7 +9,7 @@ import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-dat
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Raindrops Greenery is a Shinnecock-licensed cannabis delivery operator for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated menu, transparent pricing, free delivery.',
+    'Shinnecock-licensed cannabis delivery for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated menu, transparent pricing, free delivery.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Raindrops Greenery',
