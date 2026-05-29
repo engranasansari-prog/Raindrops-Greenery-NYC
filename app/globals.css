@@ -708,3 +708,26 @@ textarea:focus:not(:focus-visible) {
 @media (prefers-reduced-motion: reduce) {
   .smoke-blob { animation: none !important; }
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   Hero Ken Burns — a slow, ambient "living photograph" drift on the hero
+   image. Deliberately a gentle DIAGONAL PAN with only a tiny scale change
+   (not a zoom toward the viewer) so it adds life without the "coming at
+   your face" feel the client flagged. GPU-accelerated (transform only),
+   so it's effectively free on the compositor. Desktop/tablet only (the
+   mobile hero is heavily overlaid, and this avoids any edge-crop on small
+   screens). Fully disabled under prefers-reduced-motion.
+   ───────────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .hero-kenburns {
+    will-change: transform;
+    animation: hero-kenburns 26s ease-in-out infinite alternate;
+  }
+}
+@keyframes hero-kenburns {
+  from { transform: scale(1.05) translate3d(0, 0, 0); }
+  to   { transform: scale(1.07) translate3d(-1.4%, -1%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-kenburns { animation: none !important; transform: none !important; }
+}

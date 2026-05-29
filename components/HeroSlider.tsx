@@ -135,16 +135,15 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             // immediately (Lighthouse was clocking LCP at 5.1s because
             // the initial fade delayed the browser's largest-element pick).
             // Subsequent slides still cross-fade for the slideshow effect.
-            // V3 — premium calm cross-fade. The old effect started slides at
-            // scale 1.05 and EXITED to 1.05, so on every transition the image
-            // lunged toward the viewer ("coming towards face"). Now: a barely
-            // perceptible 1.5% settle on entry, pure fade on exit (no lunge),
-            // and a slower curve. At rest scale is exactly 1 — no enlargement
-            // stacked on top of object-cover.
-            initial={index === 0 ? false : { opacity: 0, scale: 1.015 }}
-            animate={{ opacity: 1, scale: 1 }}
+            // V3 — pure opacity cross-fade on the wrapper (no scale lunge). The
+            // "lively" motion is a slow ambient Ken Burns DRIFT applied to the
+            // inner image via CSS (.hero-kenburns) — a gentle diagonal pan, not
+            // a zoom toward the viewer, so it reads as a living photograph
+            // without the "coming towards face" feel.
+            initial={index === 0 ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.2, ease: easeOut }, scale: { duration: 9, ease: 'easeOut' } }}
+            transition={{ opacity: { duration: 1.2, ease: easeOut } }}
             className="absolute inset-0"
           >
             <Image
@@ -154,7 +153,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               priority={index === 0}
               fetchPriority={index === 0 ? 'high' : 'auto'}
               sizes="100vw"
-              className="object-cover"
+              className="object-cover hero-kenburns"
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
             />
             {/*
