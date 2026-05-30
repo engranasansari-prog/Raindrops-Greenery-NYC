@@ -28,7 +28,7 @@ export const COVERAGE = {
       shortName: 'UES / UWS',
       borough: 'Manhattan',
       etaMinutes: 50,
-      zips: ['10024', '10025', '10028', '10128', '10021', '10075', '10065']
+      zips: ['10023', '10024', '10025', '10028', '10128', '10021', '10075', '10065']
     },
     {
       id: 'midtown',
