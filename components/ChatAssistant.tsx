@@ -33,6 +33,10 @@ const STARTER_CHIPS = [
 // Shown after a free-form / AI answer so there's always an obvious next step.
 const DEFAULT_CHIPS = ['Shop the menu', 'Where do you deliver?', 'Talk to a human'];
 
+// Web3Forms (same backend as the contact form) — used to email a transcript
+// of each real conversation to the client. Public key by design.
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? 'cc3efb40-57a3-4e65-a324-2c313d9a19b6';
+
 // Intents are scored by keyword hits against the lowercased query; the highest
 // scorer wins. Order matters only for ties.
 const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
@@ -208,6 +212,8 @@ export default function ChatAssistant() {
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevOpenRef = useRef(false);
+  const lastSentTurnsRef = useRef(0);
   const nextId = () => (idRef.current += 1);
 
   // Seed the welcome message the first time the panel opens.
@@ -217,7 +223,7 @@ export default function ChatAssistant() {
         {
           id: nextId(),
           role: 'bot',
-          text: 'Welcome to Raindrops 🌿 I’m your delivery concierge. Ask me anything — or tap below.'
+          text: 'Hi, I’m Rain — your Raindrops delivery concierge 🌿 Ask me anything, or tap below.'
         }
       ]);
     }
@@ -246,6 +252,33 @@ export default function ChatAssistant() {
   useEffect(() => () => {
     if (typingTimer.current) clearTimeout(typingTimer.current);
   }, []);
+
+  // When a REAL conversation (>= 2 customer messages) closes, email the
+  // transcript to the client (Web3Forms -> the contact inbox). Fires on the
+  // open -> closed transition; lastSentTurnsRef prevents duplicate sends.
+  useEffect(() => {
+    const wasOpen = prevOpenRef.current;
+    prevOpenRef.current = open;
+    if (!(wasOpen && !open)) return;
+    const convo = messages.filter((m) => m.role === 'user' || m.role === 'bot');
+    const userTurns = convo.filter((m) => m.role === 'user').length;
+    if (userTurns < 2 || userTurns <= lastSentTurnsRef.current) return;
+    lastSentTurnsRef.current = userTurns;
+    const transcript = convo
+      .map((m) => `${m.role === 'user' ? 'Customer' : 'Rain (concierge)'}: ${m.text}`)
+      .join('\n\n');
+    void fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: 'New website chat — Raindrops Greenery NY',
+        from_name: 'Raindrops Greenery — Site Concierge',
+        botcheck: '',
+        message: `New chat conversation from the Raindrops Greenery NY website:\n\n${transcript}`
+      })
+    }).catch(() => {});
+  }, [open, messages]);
 
   const pushBot = (reply: BotReply) => {
     setMessages((prev) => [...prev, { id: nextId(), role: 'bot', text: reply.text, actions: reply.actions }]);
@@ -338,10 +371,10 @@ export default function ChatAssistant() {
                   <Sparkles className="h-4 w-4" />
                 </span>
                 <span className="leading-tight">
-                  <span className="block text-sm font-semibold text-[color:var(--rd-text)]">Raindrops Concierge</span>
+                  <span className="block text-sm font-semibold text-[color:var(--rd-text)]">Rain</span>
                   <span className="flex items-center gap-1.5 text-[11px] text-[color:var(--rd-text-mute)]">
                     <span className="inline-block h-1.5 w-1.5 rounded-full bg-[color:var(--rd-glow)]" />
-                    Online · replies instantly
+                    Raindrops concierge · replies instantly
                   </span>
                 </span>
               </div>
