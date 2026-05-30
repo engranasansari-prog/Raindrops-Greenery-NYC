@@ -16,7 +16,9 @@ import { ALL_ZIPS } from '@/lib/coverage';
 
 export const runtime = 'nodejs';
 
-const MODEL = process.env.CHAT_MODEL || 'claude-3-5-haiku-latest';
+// Claude Haiku 4.5 — fast + cheap, ideal for a grounded concierge. Override
+// via CHAT_MODEL env if you ever want a stronger model (e.g. a Sonnet).
+const MODEL = process.env.CHAT_MODEL || 'claude-haiku-4-5-20251001';
 
 const KNOWLEDGE = `BUSINESS: ${business.tradeName} (${business.legalName}) — ${business.tagline}. Phone/text: ${business.phone}. Email: ${business.email}. Instagram: ${social[0]?.handle ?? '@raindropsgreenery'}.
 HOURS: every day, ${business.hours[0].open}–${business.hours[0].close}.
