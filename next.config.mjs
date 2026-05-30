@@ -11,6 +11,11 @@ const securityHeaders = [
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  // Tree-shake heavy barrel packages so each route ships only the icons and
+  // motion primitives it actually uses — smaller JS, faster on mobile/low-end.
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion']
+  },
   // Production deploy: the site is served at the ROOT of the subdomain
   // https://nyc.raindropsgreenery.com, so basePath stays empty. The env
   // override is kept only as an escape hatch for a future sub-path host —
