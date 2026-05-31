@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/menu`, lastModified: now, changeFrequency: 'daily', priority: 0.95, images: [flowerImg] },
     { url: `${baseUrl}/deals`, lastModified: now, changeFrequency: 'daily', priority: 0.9, images: [flowerImg] },
     { url: `${baseUrl}/delivery`, lastModified: now, changeFrequency: 'weekly', priority: 0.9, images: [dispensaryImg] },
+    { url: `${baseUrl}/tax-free-weed-delivery-nyc`, lastModified: now, changeFrequency: 'weekly', priority: 0.85, images: [dispensaryImg] },
     { url: `${baseUrl}/quiz`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.75 },
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, images: [dispensaryImg] },

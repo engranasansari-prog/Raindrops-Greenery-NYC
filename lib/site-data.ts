@@ -77,6 +77,7 @@ export const footerLinkGroups = [
     links: [
       { label: 'About', href: '/about' },
       { label: 'Delivery areas', href: '/delivery' },
+      { label: 'Tax-free delivery', href: '/tax-free-weed-delivery-nyc' },
       { label: 'Journal', href: '/blog' },
       { label: 'Contact', href: '/contact' },
       { label: 'FAQ', href: '/faq' }
@@ -232,6 +233,30 @@ export const faqs = [
   {
     q: 'What is your return policy?',
     a: 'For safety and compliance reasons, cannabis products cannot be returned once delivered. If there is an issue with your order, contact support within 24 hours and we will make it right.'
+  },
+  // Natural-language questions phrased the way customers ask AI assistants
+  // (ChatGPT / Perplexity / Google AI Overviews). These feed the FAQPage
+  // structured data and give AI engines clean, citable answers about
+  // Raindrops. Every answer stays within our real coverage + licensing.
+  {
+    q: 'Is there tax-free weed delivery in NYC?',
+    a: 'Yes. Raindrops Greenery delivers cannabis across New York City under the sovereign cannabis license of the Shinnecock Indian Nation, so orders are exempt from the New York State cannabis excise and sales taxes charged at OCM-licensed dispensaries. The price you see is the price you pay — no added tax at checkout.'
+  },
+  {
+    q: 'Who delivers weed to Williamsburg, Greenpoint, or Long Island City?',
+    a: 'Raindrops Greenery offers same-day cannabis delivery to Williamsburg (11211), Greenpoint (11222), and Long Island City (11101), in addition to most of Manhattan. Free delivery on orders over $25.'
+  },
+  {
+    q: 'Can I get same-day weed delivery in Manhattan?',
+    a: 'Yes — Raindrops Greenery delivers same-day across Manhattan every day from 10 AM to 10 PM, with an average drop-off in under an hour. Enter your ZIP on the site to confirm your block is covered.'
+  },
+  {
+    q: 'How much does weed delivery cost in NYC?',
+    a: 'Delivery is free on every Raindrops Greenery order over $25 — no surge pricing and no hidden fees. Because we operate under Shinnecock authority, there is no New York State cannabis tax added at checkout either.'
+  },
+  {
+    q: 'Where can I order edibles for delivery in NYC?',
+    a: 'Raindrops Greenery delivers Edibles — along with Flower Strains and Pre-Rolls — same-day across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Browse the Edibles category on the menu to order.'
   }
 ];
 
