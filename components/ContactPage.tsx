@@ -152,7 +152,7 @@ export default function ContactPage() {
       </section>
 
       {/* Form + sidebar */}
-      <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
+      <section className="rd-luxe-paper border-t border-[color:var(--rd-ink)]/8 py-14 sm:py-20">
         <div className="luxury-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <form
             onSubmit={send}

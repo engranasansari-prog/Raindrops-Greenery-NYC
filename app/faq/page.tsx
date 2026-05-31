@@ -63,25 +63,25 @@ export default function FaqPage() {
       </section>
 
       {/* Accordion + sidebar */}
-      <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
+      <section className="rd-luxe-paper border-t border-[color:var(--rd-ink)]/8 py-14 sm:py-20">
         <div className="luxury-shell grid gap-8 lg:grid-cols-[1fr_320px]">
           <div className="space-y-3">
             {faqs.map((faq, index) => (
               <details
                 key={faq.q}
                 open={index === 0}
-                className="group rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_18px_54px_rgba(0,0,0,0.22)] transition hover:border-[color:var(--rd-glow)]/30 sm:p-6"
+                className="rd-shadow-luxe group rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-5 transition hover:border-[color:var(--rd-moss)]/35 sm:p-6"
               >
                 <summary
-                  className="cursor-pointer list-none text-[color:var(--rd-text)]"
+                  className="cursor-pointer list-none text-[color:var(--rd-on-paper)]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.15rem, 1.8vw, 1.5rem)', letterSpacing: '-0.01em' }}
                 >
                   <span className="inline-flex w-full items-center justify-between gap-4">
                     {faq.q}
-                    <span className="shrink-0 text-xl font-light text-[color:var(--rd-glow)] transition-transform group-open:rotate-45">+</span>
+                    <span className="shrink-0 text-xl font-light text-[color:var(--rd-moss)] transition-transform group-open:rotate-45">+</span>
                   </span>
                 </summary>
-                <p className="mt-4 text-base leading-8 text-[color:var(--rd-text-dim)]">{faq.a}</p>
+                <p className="mt-4 text-base leading-8 text-[color:var(--rd-on-paper-dim)]">{faq.a}</p>
               </details>
             ))}
           </div>

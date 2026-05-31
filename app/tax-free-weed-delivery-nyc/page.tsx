@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, BadgeCheck, Clock, MapPin, Truck } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -85,12 +86,14 @@ export default function TaxFreeDeliveryPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.20]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,51,40,0.95),rgba(27,51,40,0.78),rgba(27,51,40,0.9))]" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
