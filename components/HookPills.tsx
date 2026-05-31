@@ -30,7 +30,7 @@ export default function HookPills({ tone = 'dark' }: { tone?: 'dark' | 'light' }
               className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${
                 dark
                   ? 'border-[color:var(--rd-glow)]/40 bg-[color:var(--rd-glow)]/8 text-[color:var(--rd-glow)]'
-                  : 'border-[color:var(--rd-moss)]/30 bg-[color:var(--rd-glow)]/14 text-[color:var(--rd-moss)]'
+                  : 'border-[color:var(--rd-moss)]/45 bg-[color:var(--rd-glow)]/24 text-[color:var(--rd-moss)]'
               }`}
             >
               <Icon className="h-3.5 w-3.5" />

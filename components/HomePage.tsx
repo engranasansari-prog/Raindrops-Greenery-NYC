@@ -121,7 +121,7 @@ const VALUE_ICONS = [Droplet, ShieldCheck, Box, RotateCcw];
 
 function ValueProps() {
   return (
-    <section className="bg-[color:var(--rd-paper)] py-14 sm:py-20 lg:py-24">
+    <section className="rd-luxe-paper py-14 sm:py-20 lg:py-24">
       <div className="luxury-shell">
         <Reveal>
           <div className="mb-10 max-w-2xl">
@@ -136,11 +136,11 @@ function ValueProps() {
             const Icon = VALUE_ICONS[index] ?? Droplet;
             return (
               <Reveal key={item.title} delay={index * 0.05}>
-                <div className="group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/30 sm:p-8 lg:p-9">
+                <div className="rd-shadow-luxe group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/35 sm:p-8 lg:p-9">
                   <div className="flex items-start justify-between gap-4">
                     <Icon className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
                     <span
-                      className="text-4xl text-[color:var(--rd-moss)]/22 sm:text-5xl lg:text-6xl"
+                      className="text-4xl text-[color:var(--rd-amber)]/35 sm:text-5xl lg:text-6xl"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.05em' }}
                     >
                       0{index + 1}
@@ -206,7 +206,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
   if (deals.length === 0) return null;
 
   return (
-    <section className="bg-[color:var(--rd-ink)] py-20 text-[color:var(--rd-text)] sm:py-24">
+    <section className="rd-luxe-dark py-20 text-[color:var(--rd-text)] sm:py-24">
       <div className="luxury-shell">
         <Reveal>
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -384,7 +384,7 @@ function TestimonialFeature() {
               aria-hidden
               style={{
                 background:
-                  'radial-gradient(ellipse at top, rgba(200,230,110,0.10), transparent 60%)'
+                  'radial-gradient(ellipse at top, rgba(200,230,110,0.16), transparent 60%)'
               }}
             />
 

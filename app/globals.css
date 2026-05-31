@@ -44,7 +44,7 @@
      higher alpha than the old #0A1410 to hit AA 4.5:1 on body text.
      Bumped to 0.66 (Feb 2026 contrast pass) for headroom on text-mute
      when overlaid on the new ink — previous 0.60 was right at the edge. */
-  --rd-text-mute:  rgba(240, 232, 210, 0.66);
+  --rd-text-mute:  rgba(240, 232, 210, 0.72);
 
   /* Text — on paper */
   --rd-on-paper:        #13241D;   /* matches new ink */
@@ -52,7 +52,7 @@
   /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
      legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
      clears ~4.6:1 while still reading as a muted tertiary tone. */
-  --rd-on-paper-mute:   rgba(19, 36, 29, 0.64);
+  --rd-on-paper-mute:   rgba(19, 36, 29, 0.68);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
