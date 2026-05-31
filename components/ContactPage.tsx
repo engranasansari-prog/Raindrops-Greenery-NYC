@@ -290,7 +290,7 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-glow)]/8 p-6 shadow-[0_24px_72px_rgba(0,0,0,0.20)]">
+            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
               <p className="rd-eyebrow text-[color:var(--rd-glow)]">Find us social</p>
               <ul className="mt-4 grid gap-2 text-sm">
                 {social.map((item) => (
