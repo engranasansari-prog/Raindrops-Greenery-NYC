@@ -132,8 +132,9 @@ export default function TaxFreeDeliveryPage() {
         </div>
       </section>
 
-      {/* Body */}
-      <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
+      {/* Body — cream/paper background so the .blog-prose styling (dark text,
+          ink headings, moss links) reads with proper contrast. */}
+      <section className="bg-[color:var(--rd-paper)] py-14 sm:py-20">
         <div className="luxury-shell grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="blog-prose max-w-2xl">
             <h2>What makes it tax-free?</h2>
