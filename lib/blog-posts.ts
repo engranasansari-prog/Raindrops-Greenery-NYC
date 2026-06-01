@@ -17,6 +17,10 @@ export type BlogBlock =
 export type BlogPostMeta = {
   slug: string;
   title: string;
+  /** Optional shorter SEO <title> (≤~46 chars so the brand suffix keeps it
+   *  under Google's ~70-char limit). Falls back to `title` when absent. The
+   *  full `title` still drives the visible H1, card, and OG title. */
+  seoTitle?: string;
   excerpt: string;
   category: string;
   publishedAt: string;
@@ -185,6 +189,7 @@ function postFromFile(fileName: string): BlogPost {
   return {
     slug,
     title: data.title ?? slug.replace(/-/g, ' '),
+    seoTitle: data.seoTitle,
     excerpt: data.excerpt ?? '',
     category: data.category ?? 'Guide',
     publishedAt: data.publishedAt ?? new Date().toISOString(),

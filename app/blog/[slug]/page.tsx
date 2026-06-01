@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const metaDescription = clampDescription(post.excerpt, 155);
 
   return {
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: metaDescription,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -100,7 +100,8 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   // Related articles — pick up to 3 from the same category first, falling
   // back to most-recent posts. Powers the in-page "Continue reading" rail
-  // AND surfaces as `relatedLink` in the Article schema for AI engines.
+  // (real internal links Google follows). The old `relatedLink` schema field
+  // was removed — it isn't a valid schema.org property for Article/BlogPosting.
   const allPosts = getBlogPosts();
   const related = [
     ...allPosts.filter((p) => p.slug !== post.slug && p.category === post.category),
@@ -129,8 +130,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
     image: post.coverImage.startsWith('http') ? post.coverImage : `${business.baseUrl}${post.coverImage}`,
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${business.baseUrl}/blog/${post.slug}` },
-    isPartOf: { '@type': 'Blog', '@id': `${business.baseUrl}/blog#blog`, name: 'Raindrops Greenery Journal' },
-    relatedLink: related.map((p) => `${business.baseUrl}/blog/${p.slug}`)
+    isPartOf: { '@type': 'Blog', '@id': `${business.baseUrl}/blog#blog`, name: 'Raindrops Greenery Journal' }
   };
 
   // BreadcrumbList — gives Google a clean Home > Journal > Post trail to

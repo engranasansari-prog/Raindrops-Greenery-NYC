@@ -1,5 +1,6 @@
 ---
 title: "Brooklyn and Queens cannabis delivery in 50 minutes — how the routing works"
+seoTitle: "Brooklyn & Queens Delivery in 50 Minutes"
 excerpt: "Our delivery window to Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) averages 50–55 minutes door-to-door. Here's why that's hard, how the routing works, and what to expect at the door."
 category: "Delivery"
 publishedAt: "2026-05-25"

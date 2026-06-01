@@ -1,5 +1,6 @@
 ---
 title: "Flower, Pre-Rolls, or Edibles: How to choose the right format"
+seoTitle: "Flower vs Pre-Rolls vs Edibles: A Guide"
 excerpt: "A plain-English guide to the three product categories on the Raindrops menu — when to choose each, how to read labels, and what new customers get wrong most often."
 category: "Education"
 publishedAt: "2026-05-23"

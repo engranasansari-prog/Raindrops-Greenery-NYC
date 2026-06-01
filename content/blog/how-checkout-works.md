@@ -1,5 +1,6 @@
 ---
 title: "How checkout works at Raindrops Greenery — step by step"
+seoTitle: "How Checkout Works, Step by Step"
 excerpt: "Exactly what to expect from menu browse to order placed to delivery confirmed. No surprise fees, no upsells, no friction."
 category: "Ordering"
 publishedAt: "2026-05-23"

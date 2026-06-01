@@ -1,5 +1,6 @@
 ---
 title: "Raindrops Greenery NYC delivery menu — a navigation guide"
+seoTitle: "How to Use the NYC Weed Delivery Menu"
 excerpt: "How to browse our menu efficiently — filters, strain types, potency, deals, and how to find the right product in under a minute."
 category: "Delivery"
 publishedAt: "2026-05-23"

@@ -1,5 +1,6 @@
 ---
 title: "What 'sticky icky' actually means — flower quality, plain English"
+seoTitle: "What 'Sticky Icky' Actually Means"
 excerpt: "The phrase is older than half our customers. Here's what flower-shop pros mean when they say it — and why it's a quality signal, not a slang flex."
 category: "Product Guide"
 publishedAt: "2026-05-26"

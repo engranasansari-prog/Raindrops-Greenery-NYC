@@ -74,8 +74,7 @@ export const metadata: Metadata = {
     'Raindrops Greenery delivery'
   ],
   alternates: {
-    canonical: business.baseUrl,
-    languages: { 'en-US': business.baseUrl }
+    canonical: business.baseUrl
   },
   // manifest is auto-linked by app/manifest.ts (basePath-aware) — no explicit URL.
   icons: {

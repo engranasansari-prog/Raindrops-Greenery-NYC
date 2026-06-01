@@ -1,5 +1,6 @@
 ---
 title: "Why Raindrops Greenery is tax-free under Shinnecock authority"
+seoTitle: "How Tax-Free Shinnecock Delivery Works"
 excerpt: "We sell cannabis without the New York State excise and sales taxes — and it's not a loophole. Here's how sovereign tribal authority works, what you actually save, and why it's been legal since the founding of the country."
 category: "Education"
 publishedAt: "2026-05-27"
