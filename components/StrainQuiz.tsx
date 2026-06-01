@@ -260,7 +260,7 @@ export default function StrainQuiz() {
       </section>
 
       {/* Quiz body */}
-      <section className="overflow-hidden bg-[color:var(--rd-ink)] pb-20 text-[color:var(--rd-text)] sm:pb-24">
+      <section className="rd-luxe-dark overflow-hidden pb-20 text-[color:var(--rd-text)] sm:pb-24">
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
             {!finished && current ? (

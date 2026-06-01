@@ -50,8 +50,9 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Posts grid */}
-      <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
+      {/* Posts grid — on cream so the photo cards pop like a magazine spread
+          (dark cards on a warm cream field), instead of dark-on-dark. */}
+      <section className="rd-luxe-paper border-t border-[color:var(--rd-ink)]/8 py-14 sm:py-20">
         <div className="luxury-shell grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => (
             <Link
