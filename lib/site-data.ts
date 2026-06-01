@@ -84,6 +84,15 @@ export const footerLinkGroups = [
     ]
   },
   {
+    heading: 'Neighborhoods',
+    links: [
+      { label: 'Williamsburg', href: '/delivery/williamsburg' },
+      { label: 'Greenpoint', href: '/delivery/greenpoint' },
+      { label: 'Long Island City', href: '/delivery/long-island-city' },
+      { label: 'Manhattan', href: '/delivery/manhattan' }
+    ]
+  },
+  {
     heading: 'Legal',
     links: [
       { label: 'Privacy policy', href: '/legal/privacy' },

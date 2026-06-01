@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/blog-posts';
 import { business } from '@/lib/site-data';
+import { NEIGHBORHOODS } from '@/lib/neighborhoods';
 
 /**
  * XML sitemap — Google + Bing crawl index.
@@ -48,5 +49,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: post.coverImage ? [`${baseUrl}${post.coverImage}`] : []
     }));
 
-  return [...staticRoutes, ...blogRoutes];
+  // Neighborhood delivery landing pages — high-priority local-SEO targets.
+  const neighborhoodRoutes: MetadataRoute.Sitemap = NEIGHBORHOODS.map((n) => ({
+    url: `${baseUrl}/delivery/${n.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+    images: [dispensaryImg]
+  }));
+
+  return [...staticRoutes, ...neighborhoodRoutes, ...blogRoutes];
 }

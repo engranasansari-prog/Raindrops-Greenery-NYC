@@ -15,6 +15,7 @@ const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
   ssr: false
 });
 import { COVERAGE, ALL_ZIPS } from '@/lib/coverage';
+import { NEIGHBORHOODS } from '@/lib/neighborhoods';
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -197,6 +198,49 @@ export default function DeliveryPage() {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Neighborhood guides — internal links to the per-area landing pages.
+          High-value local-SEO cluster: the /delivery hub links out to each
+          spoke, and each spoke cross-links back. */}
+      <section className="bg-[color:var(--rd-paper)] pb-12 sm:pb-16">
+        <div className="luxury-shell">
+          <div className="rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 sm:p-8 lg:p-10">
+            <div className="max-w-2xl">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">Neighborhood guides</p>
+              <h2 className="mt-3 text-[color:var(--rd-ink)]">
+                Delivery, <span className="italic">by neighborhood.</span>
+              </h2>
+              <p className="mt-3 text-sm text-[color:var(--rd-on-paper-dim)] sm:text-base">
+                Local guides with coverage, ETAs, and FAQs for the areas we serve most.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {NEIGHBORHOODS.map((n) => (
+                <Link
+                  key={n.slug}
+                  href={`/delivery/${n.slug}`}
+                  className="group flex flex-col rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)]/70 p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/40"
+                >
+                  <p className="rd-eyebrow text-[color:var(--rd-moss)]">{n.borough}</p>
+                  <h3
+                    className="mt-2 text-[color:var(--rd-ink)]"
+                    style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: '1.25rem', letterSpacing: '-0.015em' }}
+                  >
+                    {n.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-[color:var(--rd-on-paper-dim)] [font-family:var(--font-mono)]">
+                    {n.zips.length === 1 ? n.zips[0] : `${n.zips.length} ZIPs`} · {n.etaLabel}
+                  </p>
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[color:var(--rd-moss)] transition-colors group-hover:text-[color:var(--rd-ink)]">
+                    <span className="border-b border-[color:var(--rd-glow)] pb-0.5">View guide</span>
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
