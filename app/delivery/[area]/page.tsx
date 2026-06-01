@@ -7,7 +7,7 @@ import { ArrowRight, BadgeCheck, Clock, MapPin, Truck } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { business } from '@/lib/site-data';
-import { getNeighborhood, NEIGHBORHOODS } from '@/lib/neighborhoods';
+import { getNeighborhood, NEIGHBORHOODS, type Neighborhood } from '@/lib/neighborhoods';
 import { getBlogPosts } from '@/lib/blog-posts';
 
 /**
@@ -61,8 +61,22 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
     .map((slug) => posts.find((p) => p.slug === slug))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
-  // Other neighborhoods, for the cross-link cluster.
-  const others = NEIGHBORHOODS.filter((o) => o.slug !== n.slug);
+  // Cross-link cluster (hub→spoke): a hub page (Manhattan) links to its
+  // sub-areas first; a sub-area links to its siblings + parent; then fill
+  // with the other primary areas. Deduped, capped at 6.
+  const relatedAreas = new Map<string, Neighborhood>();
+  const addRel = (arr: Neighborhood[]) =>
+    arr.forEach((o) => {
+      if (o.slug !== n.slug && !relatedAreas.has(o.slug)) relatedAreas.set(o.slug, o);
+    });
+  addRel(NEIGHBORHOODS.filter((o) => o.parent === n.slug)); // children (hub → sub-areas)
+  if (n.parent) {
+    addRel(NEIGHBORHOODS.filter((o) => o.parent === n.parent)); // siblings
+    const parentN = getNeighborhood(n.parent);
+    if (parentN) addRel([parentN]); // parent hub
+  }
+  addRel(NEIGHBORHOODS.filter((o) => !o.parent)); // the primary areas
+  const others = Array.from(relatedAreas.values()).slice(0, 6);
 
   const faqLd = {
     '@context': 'https://schema.org',

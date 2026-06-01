@@ -218,7 +218,7 @@ export default function DeliveryPage() {
               </p>
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {NEIGHBORHOODS.map((n) => (
+              {NEIGHBORHOODS.filter((n) => !n.parent).map((n) => (
                 <Link
                   key={n.slug}
                   href={`/delivery/${n.slug}`}

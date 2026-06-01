@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getBlogPosts } from '@/lib/blog-posts';
 import { business } from '@/lib/site-data';
 import { NEIGHBORHOODS } from '@/lib/neighborhoods';
+import { MENU_CATEGORIES } from '@/lib/menu-categories';
 
 /**
  * XML sitemap — Google + Bing crawl index.
@@ -58,5 +59,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     images: [dispensaryImg]
   }));
 
-  return [...staticRoutes, ...neighborhoodRoutes, ...blogRoutes];
+  // Category landing pages — product-type search targets.
+  const categoryRoutes: MetadataRoute.Sitemap = MENU_CATEGORIES.map((c) => ({
+    url: `${baseUrl}/menu/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+    images: [flowerImg]
+  }));
+
+  return [...staticRoutes, ...neighborhoodRoutes, ...categoryRoutes, ...blogRoutes];
 }

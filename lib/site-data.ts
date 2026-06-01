@@ -65,9 +65,9 @@ export const footerLinkGroups = [
     heading: 'Shop',
     links: [
       { label: 'Full menu', href: '/menu' },
-      { label: 'Flower Strains', href: '/menu?category=Flower' },
-      { label: 'Pre-Rolls', href: '/menu?category=Pre-Rolls' },
-      { label: 'Edibles', href: '/menu?category=Edibles' },
+      { label: 'Flower Strains', href: '/menu/flower' },
+      { label: 'Pre-Rolls', href: '/menu/pre-rolls' },
+      { label: 'Edibles', href: '/menu/edibles' },
       { label: 'Today’s deals', href: '/deals' },
       { label: 'Strain finder quiz', href: '/quiz' }
     ]
