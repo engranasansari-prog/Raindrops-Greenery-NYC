@@ -372,7 +372,7 @@ function Footer() {
             </span>
           </Link>
           <p className="mt-5 max-w-md text-sm leading-7 text-[color:var(--rd-text-dim)]">
-            Premium 21+ cannabis delivery across Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Free delivery, tax-free under Shinnecock authority.
+            Premium 21+ cannabis delivery across Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Free delivery, tax-free.
           </p>
 
           <ul className="mt-6 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">

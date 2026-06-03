@@ -120,4 +120,4 @@ Cost. Properly cured top-shelf flower takes 4–8 weeks longer to produce than r
 - [Take the strain finder quiz](/quiz) — we'll match you with a sticky-icky pick based on how you want to feel
 - [Flower, Pre-Rolls, or Edibles?](/blog/flower-prerolls-edibles-guide) — choosing the right format
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.
+21+ only. Free delivery on orders over $25. Tax-free. Same-day across Manhattan, Williamsburg, Greenpoint, and Long Island City.

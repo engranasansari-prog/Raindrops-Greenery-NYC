@@ -96,7 +96,7 @@ export default async function OpengraphImage() {
               fontFamily: 'sans-serif'
             }}
           >
-            Flower, Pre-Rolls, and Edibles delivered across Manhattan, Brooklyn, and Queens.
+            Flower, Pre-Rolls, and Edibles delivered across Manhattan, Williamsburg, Greenpoint, and Long Island City.
           </p>
         </div>
 

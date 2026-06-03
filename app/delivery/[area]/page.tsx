@@ -210,8 +210,8 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
               <strong>Pre-Rolls</strong>, and <strong>Edibles</strong> — filterable by price, potency, size, brand, and
               effect. Browse the full <Link href="/menu">weed delivery menu</Link>, check{' '}
               <Link href="/deals">today’s deals</Link>, or take the 2-minute{' '}
-              <Link href="/quiz">strain finder quiz</Link> for a recommendation. Every order is tax-free under{' '}
-              <Link href="/tax-free-weed-delivery-nyc">Shinnecock authority</Link> and includes a complimentary pre-roll
+              <Link href="/quiz">strain finder quiz</Link> for a recommendation. Every order is{' '}
+              <Link href="/tax-free-weed-delivery-nyc">tax-free</Link> and includes a complimentary pre-roll
               while supplies last.
             </p>
 

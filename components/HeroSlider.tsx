@@ -255,7 +255,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
               {/* Headline — Fraunces with mixed weight per brief */}
               {slide.headline && (
-                <motion.h1
+                <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
@@ -263,7 +263,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
                 >
                   {renderHeadline(slide.headline, slide.headlineAccent)}
-                </motion.h1>
+                </motion.h2>
               )}
 
               {/* Subtext */}

@@ -140,4 +140,4 @@ Yes. Pricing is tax-free — the menu price is the price at checkout.
 - [How checkout works](/blog/how-checkout-works) — what to expect after you tap order
 - [What 'sticky icky' actually means](/blog/what-sticky-icky-means) — flower quality, plain English
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.
+21+ only. Free delivery on orders over $25. Tax-free. Same-day across Manhattan, Williamsburg, Greenpoint, and Long Island City.

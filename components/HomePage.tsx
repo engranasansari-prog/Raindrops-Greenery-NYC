@@ -451,7 +451,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
       eyebrow: 'NYC · 21+ · Tax-free',
       headline: 'Guaranteed best flower on the market.',
       headlineAccent: 'best flower',
-      subtext: 'Free weed gift with every order. Tax-free under Shinnecock authority. Same-day delivery.',
+      subtext: 'Free weed gift with every order. Tax-free. Same-day delivery.',
       // The free pre-roll is automatic with every order — so "claim" simply
       // means "start an order." The button goes straight to the menu (gift
       // auto-applied at checkout), instead of a separate email/lead form that
@@ -463,7 +463,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
     {
       id: 'manhattan-brooklyn-queens',
       image: '/assets/banner-drops1.jpg',
-      imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan, Brooklyn, and Queens',
+      imageAlt: 'Premium Raindrops Greenery deliveries across Manhattan, Williamsburg, Greenpoint, and Long Island City',
       imagePosition: 'center',
       eyebrow: 'Members only · 21+',
       headline: 'Manhattan + Brooklyn + Queens. Same-day.',
@@ -492,6 +492,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
 
   return (
     <SiteChrome>
+      <h1 className="sr-only">Tax-Free Weed Delivery in NYC — Raindrops Greenery</h1>
       <HeroSlider slides={slides} />
 
       <section className="bg-[color:var(--rd-paper)] py-8 sm:py-10">

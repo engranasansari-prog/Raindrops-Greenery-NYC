@@ -124,8 +124,8 @@ Your address is used to fulfill the delivery and is handled per our [privacy pol
 ## More on this
 
 - [Browse the menu now](/menu)
-- [Why we're tax-free under Shinnecock authority](/blog/why-tax-free-shinnecock)
+- [Why we're tax-free](/tax-free-weed-delivery-nyc)
 - [How we deliver to Brooklyn and Queens in 50 minutes](/blog/east-river-50-minutes)
 - [Full FAQ](/faq) — every common question, answered
 
-21+ only. Free delivery on orders over $25. Tax-free under Shinnecock authority. Same-day across Manhattan, Brooklyn, and Queens.
+21+ only. Free delivery on orders over $25. Tax-free. Same-day across Manhattan, Williamsburg, Greenpoint, and Long Island City.

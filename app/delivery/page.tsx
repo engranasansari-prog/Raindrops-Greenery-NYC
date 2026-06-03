@@ -4,7 +4,7 @@ import DeliveryPage from '@/components/DeliveryPage';
 export const metadata: Metadata = {
   title: 'Same-Day Weed Delivery NYC',
   description:
-    'Same-day weed delivery and cannabis delivery across NYC — Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free under Shinnecock authority, free over $25. 21+.',
+    'Same-day weed delivery and cannabis delivery across NYC — Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free, free over $25. 21+.',
   alternates: { canonical: '/delivery' },
   openGraph: {
     title: 'Same-Day Weed Delivery NYC — Raindrops Greenery',

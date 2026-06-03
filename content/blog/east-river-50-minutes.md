@@ -115,7 +115,7 @@ Drop your ZIP on the [coverage map](/#coverage) — if you're in, your bag's on 
 ## More on this
 
 - [How checkout actually works](/blog/how-checkout-works) — step by step
-- [Why we're tax-free under Shinnecock authority](/blog/why-tax-free-shinnecock)
+- [Why we're tax-free](/tax-free-weed-delivery-nyc)
 - [Browse the menu](/menu) — Flower, Pre-Rolls, Edibles
 
-21+ only. Free delivery on orders over $25, no surge pricing, tax-free under Shinnecock authority.
+21+ only. Free delivery on orders over $25, no surge pricing, tax-free.

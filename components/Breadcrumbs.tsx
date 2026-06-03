@@ -44,7 +44,7 @@ export default function Breadcrumbs({ items, tone = 'light' }: { items: Crumb[];
             return (
               <li key={`${crumb.label}-${index}`} className="inline-flex items-center gap-1.5">
                 {crumb.href && !isLast ? (
-                  <Link href={crumb.href} className={`inline-flex items-center gap-1.5 transition hover:${activeColor}`}>
+                  <Link href={crumb.href} className={`inline-flex items-center gap-1.5 transition ${tone === 'dark' ? 'hover:text-[color:var(--rd-glow)]' : 'hover:text-[color:var(--rd-moss)]'}`}>
                     {index === 0 && <Home className="h-3 w-3" aria-hidden />}
                     <span>{crumb.label}</span>
                   </Link>

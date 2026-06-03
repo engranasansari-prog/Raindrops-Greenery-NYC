@@ -45,7 +45,7 @@ ${coverageList}
 - [Edibles](${business.baseUrl}/menu/edibles)
 - [Deals](${business.baseUrl}/deals): affordable, tax-free value picks
 - [Delivery areas + ZIP checker](${business.baseUrl}/delivery)
-- [Tax-free explainer](${business.baseUrl}/tax-free-weed-delivery-nyc): how Shinnecock authority works
+- [Tax-free explainer](${business.baseUrl}/tax-free-weed-delivery-nyc): how tax-free pricing works
 - [Strain finder quiz](${business.baseUrl}/quiz)
 - [About + license info](${business.baseUrl}/about)
 - [FAQ](${business.baseUrl}/faq)

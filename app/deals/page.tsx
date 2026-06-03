@@ -14,7 +14,7 @@ import { business } from '@/lib/site-data';
 export const metadata: Metadata = {
   title: 'Cheap Weed Delivery NYC — Tax-Free Deals',
   description:
-    'Looking for cheap weed delivery in NYC? Raindrops Greenery has affordable, tax-free cannabis — value picks from under $25, free delivery over $25, and a free gift on every order. Flower, pre-rolls & edibles. 21+.',
+    'Cheap, tax-free weed delivery in NYC — affordable value picks from under $25, free delivery over $25, and a free gift with every order. 21+.',
   alternates: { canonical: '/deals' },
   openGraph: {
     title: 'Cheap, Tax-Free Weed Delivery NYC — Raindrops Deals',
@@ -160,7 +160,7 @@ const DEALS_FAQ = [
   },
   {
     q: 'Do you offer weed deals or discount codes?',
-    a: 'No codes needed. Our deals are curated value picks that refresh as inventory rotates — lowest-priced first — plus a free weed gift on every order and free delivery over $25, all tax-free under Shinnecock authority.'
+    a: 'No codes needed. Our deals are curated value picks that refresh as inventory rotates — lowest-priced first — plus a free weed gift on every order and free delivery over $25, all tax-free.'
   },
   {
     q: 'Is delivery really free?',
@@ -313,7 +313,7 @@ export default function DealsPage() {
                   Free weed gift, <span className="italic">free delivery.</span>
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-                  Tax-free under Shinnecock authority. Every order ships with a complimentary pre-roll. 21+ only. Open daily 10 AM – 10 PM.
+                  Tax-free. Every order ships with a complimentary pre-roll. 21+ only. Open daily 10 AM – 10 PM.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

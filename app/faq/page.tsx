@@ -7,7 +7,7 @@ import { faqs, business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Weed Delivery FAQ — NYC',
-  description: 'Common questions about NYC weed delivery — tax-free Shinnecock authority, coverage areas, free delivery, the free gift, and 21+ ID requirements.',
+  description: 'Common questions about NYC weed delivery — tax-free pricing, coverage areas, free delivery, the free gift, and 21+ ID requirements.',
   alternates: { canonical: '/faq' },
   openGraph: {
     title: 'Raindrops Greenery FAQ',

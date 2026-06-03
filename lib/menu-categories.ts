@@ -43,7 +43,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     eyebrow: 'Flower Strains · 21+',
     h1Accent: 'Flower Strains.',
     heroLede:
-      'Curated cannabis flower delivered same-day across NYC — indica, sativa, and hybrid strains, filterable by potency, size, brand, and effect. Tax-free under Shinnecock authority, free on orders over $25.',
+      'Curated cannabis flower delivered same-day across NYC — indica, sativa, and hybrid strains, filterable by potency, size, brand, and effect. Tax-free, free on orders over $25.',
     intro:
       'Raindrops Greenery delivers cannabis flower across NYC the same day, every day from 10 AM to 10 PM. Our flower menu is a focused, curated selection — indica, sativa, and hybrid strains in 3.5g and 7g sizes — rather than an overwhelming wall of SKUs. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on every order over $25.',
     buyingNote:
@@ -73,7 +73,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     eyebrow: 'Pre-Rolls · 21+',
     h1Accent: 'Pre-Rolls.',
     heroLede:
-      'Ready-to-go cannabis pre-rolls delivered same-day across NYC — by strain, potency, and price. Tax-free under Shinnecock authority, free on orders over $25, with a complimentary pre-roll in every order.',
+      'Ready-to-go cannabis pre-rolls delivered same-day across NYC — by strain, potency, and price. Tax-free, free on orders over $25, with a complimentary pre-roll in every order.',
     intro:
       'Raindrops Greenery delivers cannabis pre-rolls across NYC the same day, every day from 10 AM to 10 PM. Our pre-roll selection is curated by strain and potency so you can order something ready to go in seconds. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on every order over $25.',
     buyingNote:
@@ -103,7 +103,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     eyebrow: 'Edibles · 21+',
     h1Accent: 'Edibles.',
     heroLede:
-      'Cannabis edibles delivered same-day across NYC — browse by THC content and price. Tax-free under Shinnecock authority, free on orders over $25, daily 10 AM–10 PM.',
+      'Cannabis edibles delivered same-day across NYC — browse by THC content and price. Tax-free, free on orders over $25, daily 10 AM–10 PM.',
     intro:
       'Raindrops Greenery delivers weed edibles across NYC the same day, every day from 10 AM to 10 PM. Each edible lists its total THC in milligrams on the product so you can choose what suits you. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on every order over $25.',
     buyingNote:
