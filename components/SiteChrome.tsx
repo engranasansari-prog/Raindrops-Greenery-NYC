@@ -232,12 +232,17 @@ function AgeGate() {
                     <p className="mx-auto mt-4 max-w-md text-[15px] leading-6 text-[color:var(--rd-text-dim)] sm:text-base">
                       This website and delivery service are restricted to adults 21 and older. Please come back when you are of legal age.
                     </p>
-                    <div className="mt-7 flex justify-center">
+                    <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                      {/* A real exit for under-21 / mistaken visitors — the gate
+                          must not be a one-button loop back to the challenge. */}
+                      <a href="https://www.google.com" className="btn-luxe btn-luxe-gold">
+                        Leave site
+                      </a>
                       <button
                         onClick={() => setDeclined(false)}
                         className="btn-luxe btn-luxe-ghost"
                       >
-                        Back
+                        I am 21+ — go back
                       </button>
                     </div>
                   </>

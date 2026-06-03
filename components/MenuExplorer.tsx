@@ -776,6 +776,8 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   max={Math.max(maxAvailablePrice, 50)}
                   value={priceMax}
                   onChange={(event) => setFilter(setPriceMax, Number(event.target.value))}
+                  aria-label="Maximum price"
+                  aria-valuetext={formatPrice(priceMax * 100)}
                   className="h-12 accent-[color:var(--rd-glow)]"
                 />
               </label>
@@ -790,6 +792,8 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                     max={40}
                     value={minThc}
                     onChange={(event) => setFilter(setMinThc, Number(event.target.value))}
+                    aria-label="Minimum THC percent"
+                    aria-valuetext={`${minThc}%`}
                     className="h-12 accent-[color:var(--rd-glow)]"
                   />
                 </label>

@@ -204,7 +204,9 @@ export default function StrainQuiz() {
   // Scroll-to-top on step change so each question lands at the same visual position.
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Respect reduced-motion — the quiz auto-advances + scrolls on every answer.
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
   }, [step]);
 
   const select = (value: string) => {

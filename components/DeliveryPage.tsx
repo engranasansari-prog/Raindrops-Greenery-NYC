@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Clock, ShieldCheck, Sparkles, Truck } from 'lucide-react';
 import { useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
@@ -38,6 +38,9 @@ export default function DeliveryPage() {
   // Single source of truth for the active cluster — shared between the
   // map (highlight) and the cluster cards (lifted state for hover sync).
   const [activeCluster, setActiveCluster] = useState<string | null>(null);
+  // Respect prefers-reduced-motion for the reveal animations + map scroll —
+  // raw framer whileInView / scrollIntoView bypass the global CSS RM rule.
+  const reduce = useReducedMotion();
 
   return (
     <SiteChrome>
@@ -94,7 +97,7 @@ export default function DeliveryPage() {
       <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: easeOut }}
@@ -117,7 +120,7 @@ export default function DeliveryPage() {
               return (
                 <motion.div
                   key={cluster.id}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={reduce ? false : { opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.25 }}
                   transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.4), ease: easeOut }}
@@ -131,7 +134,7 @@ export default function DeliveryPage() {
                     // Scroll the map back into view so the customer sees the highlight
                     if (typeof window !== 'undefined') {
                       const el = document.querySelector('[aria-label*="delivery coverage"]');
-                      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
                     }
                   }}
                   onKeyDown={(e) => {
@@ -145,7 +148,7 @@ export default function DeliveryPage() {
                       setActiveCluster(cluster.id);
                       if (typeof window !== 'undefined') {
                         const el = document.querySelector('[aria-label*="delivery coverage"]');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
                       }
                     }
                   }}
@@ -257,7 +260,7 @@ export default function DeliveryPage() {
       <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
         <div className="luxury-shell">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: easeOut }}
