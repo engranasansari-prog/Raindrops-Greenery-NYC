@@ -8,6 +8,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import BrandLogoLoop from '@/components/BrandLogoLoop';
 import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import {
   effectOptions,
@@ -436,6 +437,22 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
                 Keep browsing
               </button>
             </div>
+
+            {/* Reassurance right at the decision point — the three things a
+                first-time buyer is unsure about, answered beside the checkout
+                button: the promised gift is automatic, the delivery threshold,
+                and the door ID check. Reduces the #1 abandonment driver (fear
+                the gift/price won't carry over to checkout). */}
+            <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[color:var(--rd-text-dim)]">
+              <span className="inline-flex items-center gap-1.5 font-medium text-[color:var(--rd-glow)]">
+                <Check className="h-3.5 w-3.5" />
+                Free pre-roll gift added
+              </span>
+              <span aria-hidden className="text-[color:var(--rd-paper)]/25">·</span>
+              <span>Free delivery over $25 · tax-free</span>
+              <span aria-hidden className="text-[color:var(--rd-paper)]/25">·</span>
+              <span>21+ · ID checked at the door</span>
+            </p>
           </div>
         </div>
       </motion.div>
@@ -593,16 +610,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
           */}
           <div className="mb-8 flex justify-center sm:mb-10">
             <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(200,230,110,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                src="/assets/brand/raindrops-logo.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-hidden="true"
-              />
+              <BrandLogoLoop />
             </div>
           </div>
 
