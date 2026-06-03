@@ -302,7 +302,7 @@ export default function StrainQuiz() {
                         className={`group relative overflow-hidden rounded-2xl border p-6 text-left transition-[transform,border-color,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 ${
                           isSelected
                             ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12 shadow-[0_20px_60px_rgba(200,230,110,0.18)]'
-                            : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_24px_70px_rgba(0,0,0,0.24)]'
+                            : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_24px_70px_rgba(8,18,14,0.55)]'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">
@@ -404,7 +404,7 @@ export default function StrainQuiz() {
                         >
                           <Link
                             href={`/menu?product=${encodeURIComponent(product.id)}`}
-                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.20)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
+                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.52)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--rd-paper-soft)]">
                               {product.image && (

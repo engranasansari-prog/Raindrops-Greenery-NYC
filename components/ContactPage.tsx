@@ -156,7 +156,7 @@ export default function ContactPage() {
         <div className="luxury-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <form
             onSubmit={send}
-            className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-9"
+            className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)] sm:p-9"
           >
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Send a message</p>
             <h2
@@ -277,7 +277,7 @@ export default function ContactPage() {
           </form>
 
           <aside className="grid gap-4 self-start">
-            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
               <Clock className="h-6 w-6 text-[color:var(--rd-glow)]" />
               <p className="mt-3 rd-eyebrow text-[color:var(--rd-text-mute)]">Hours</p>
               <ul className="mt-3 grid gap-2 text-sm text-[color:var(--rd-text)] [font-family:var(--font-mono)]">
@@ -290,7 +290,7 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
               <p className="rd-eyebrow text-[color:var(--rd-glow)]">Find us social</p>
               <ul className="mt-4 grid gap-2 text-sm">
                 {social.map((item) => (
@@ -309,7 +309,7 @@ export default function ContactPage() {
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
               <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Need an order, not a chat?</p>
               <h3
                 className="mt-3 text-[color:var(--rd-text)]"

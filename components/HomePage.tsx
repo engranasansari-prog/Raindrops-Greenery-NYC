@@ -115,7 +115,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
   if (deals.length === 0) return null;
 
   return (
-    <section className="rd-luxe-dark py-20 text-[color:var(--rd-text)] sm:py-24">
+    <section className="rd-luxe-dark--glow py-20 text-[color:var(--rd-text)] sm:py-24">
       <div className="luxury-shell">
         <Reveal>
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
