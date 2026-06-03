@@ -134,9 +134,14 @@ function ProductCard({
 
   return (
     <motion.article
-      layout
+      /* No `layout`: it made framer run a FLIP layout animation across EVERY
+         visible card on each filter/sort keystroke (animating top/left on
+         40+ nodes = the menu's main INP/jank source). Dropping it keeps a
+         clean fade-in for newly-matched cards while surviving cards stay put
+         instantly — filtering now feels immediate instead of "busy". */
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--rd-paper-soft)]">
@@ -818,7 +823,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
           <h2 className="sr-only">Cannabis delivery menu — Flower Strains, Pre-Rolls, and Edibles</h2>
           <AnimatePresence mode="popLayout">
             {visibleProducts.length > 0 ? (
-              <motion.div layout className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              <motion.div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {visibleProducts.map((product, i) => (
                   <ProductCard
                     key={product.id}
