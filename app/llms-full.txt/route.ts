@@ -29,35 +29,22 @@ about Raindrops Greenery NYC.
 ## Brand
 
 ${business.legalName} (trading as ${business.tradeName}) is a multi-location
-premium cannabis delivery brand operating under the sovereign cannabis
-authority of the Shinnecock Indian Nation Cannabis Regulatory Division.
+premium cannabis delivery brand. It is a Tribally licensed dispensary,
+licensed by the ${business.licensingAuthority} (${business.license}).
 The brand operates three locations: Southampton (live), New York City
 (${business.baseUrl}), and Long Island (coming soon). This file documents
 the New York City location.
 
-## Sovereignty + tax exemption
+## Licensing
 
-Raindrops Greenery's NYC delivery operates under a license issued by the
-${business.licensingAuthority}. Sovereign tribal nations in the United
-States have the right to regulate commerce — including cannabis — on their
-land and through licensees they authorize. That regulatory authority is
-independent of the New York State Office of Cannabis Management (OCM),
-which licenses non-sovereign retailers.
+Raindrops Greenery is a Tribally licensed dispensary, licensed by the
+${business.licensingAuthority} (${business.license}). All products are
+produced, packaged, and sold on Native Sovereign Land.
 
-OCM-licensed New York dispensaries are required to charge a 9% retail
-cannabis excise tax plus the standard NY State + NYC sales tax stack
-(around 8.875% in NYC) — roughly 13% added on top of the menu price by
-the time a customer hits checkout. Sales conducted under the Shinnecock
-cannabis program are not subject to those state-level cannabis taxes. So
-when a Raindrops drop arrives at the door, the product price is the menu
-price, delivery is free on orders over $25, and there is no state cannabis
-excise or state sales tax line.
-
-Tribal sovereignty over commerce is recognized in U.S. federal law and
-has been since the founding of the Constitution. The Shinnecock Indian
-Nation has operated a cannabis regulatory framework since their
-dispensary launched in 2023. Customers must still be 21 or older with a
-valid government ID — verified at the door.
+Pricing is tax-free: the product price is the menu price, delivery is free
+on orders over $25, and there are no surprise line items at checkout.
+Customers must be 21 or older with a valid government ID — verified at the
+door before every handoff.
 
 ## Delivery coverage (${allZips.length} ZIPs, ${COVERAGE.clusters.length} clusters)
 
@@ -87,8 +74,8 @@ availability is confirmed at checkout.
 
 ## Pricing + free delivery
 
-All listed menu prices are final — no New York State cannabis excise tax,
-no state sales tax. Free delivery on every order over $25, every covered
+All listed menu prices are final and tax-free — the price you see is the
+price you pay. Free delivery on every order over $25, every covered
 ZIP. No surge pricing, no hidden fees. Every order in the coverage area
 comes with a complimentary pre-roll added to it. 21+ only, while supplies
 last.

@@ -180,7 +180,7 @@ const brandLd = {
     height: 800
   },
   description:
-    'Raindrops Greenery is a multi-location premium cannabis brand operating under sovereign Shinnecock Indian Nation authority — tax-free, same-day delivery across New York with locations in Southampton, New York City, and Long Island.',
+    'Raindrops Greenery is a multi-location premium cannabis brand — a Tribally licensed dispensary offering tax-free, same-day delivery across New York with locations in Southampton, New York City, and Long Island.',
   sameAs: social.map((item) => item.href),
   // The three locations under one brand. New Long Island URL will go in
   // when that site launches.
@@ -262,7 +262,7 @@ const localBusinessLd = {
   paymentAccepted: 'Cash, Debit Card',
   slogan: business.tagline,
   description:
-    'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free under sovereign authority. Free delivery on orders over $25.',
+    'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free pricing. Free delivery on orders over $25.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'New York',

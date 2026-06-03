@@ -110,7 +110,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
   const highlights = [
     { icon: Leaf, label: `${products.length} ${c.name}`, body: 'Curated — not an overwhelming wall of SKUs.' },
-    { icon: BadgeCheck, label: 'Tax-free', body: 'No NY State cannabis tax — Shinnecock authority.' },
+    { icon: BadgeCheck, label: 'Tax-free', body: 'Tribally licensed — the price you see is the price you pay.' },
     { icon: Truck, label: 'Free over $25', body: 'Free delivery on every order over $25.' },
     { icon: Clock, label: 'Same-day', body: 'Open daily 10 AM–10 PM across NYC.' }
   ];

@@ -123,7 +123,7 @@ In 30 seconds you'll see three matched products from current inventory. It's not
 
 ## Pricing — what you'll see vs. what you'll pay
 
-The price on the card is the price at checkout. No New York State cannabis excise tax, no state sales tax, no delivery fee on orders over $25. [Here's the full explanation.](/blog/why-tax-free-shinnecock)
+The price on the card is the price at checkout — tax-free pricing, with no delivery fee on orders over $25.
 
 The math:
 

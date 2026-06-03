@@ -50,7 +50,7 @@ const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
   {
     keywords: ['tax', 'taxes', 'tax-free', 'cheap', 'cheaper', 'why', 'savings', 'shinnecock'],
     reply: {
-      text: 'Raindrops operates under the sovereign cannabis authority of the Shinnecock Indian Nation, so your order is exempt from the NY State cannabis excise and sales taxes that apply at state-licensed shops. That’s the tax-free pricing you see — no surprises at checkout.',
+      text: 'Raindrops Greenery is a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — so pricing is tax-free and the price you see is the price you pay, with no surprises at checkout.',
       actions: [{ label: 'Shop the menu', href: '/menu' }]
     }
   },
@@ -77,7 +77,7 @@ const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
   },
   {
     keywords: ['pay', 'payment', 'cash', 'card', 'debit', 'credit', 'apple pay', 'method'],
-    reply: { text: 'Cash is always accepted at the door. Debit and additional options may be available at checkout depending on current processor support.' }
+    reply: { text: 'Pay by Bank through Dutchie Pay is the only form of payment, completed at secure checkout.' }
   },
   {
     keywords: ['menu', 'product', 'products', 'strain', 'strains', 'flower', 'edible', 'edibles', 'pre-roll', 'indica', 'sativa', 'hybrid', 'thc', 'potency', 'have', 'carry', 'stock', 'recommend', 'suggest', 'what should'],
@@ -112,7 +112,7 @@ const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
   },
   {
     keywords: ['license', 'licensed', 'legal', 'who', 'authority', 'regulated', 'real'],
-    reply: { text: 'Raindrops operates under a sovereign cannabis license issued by the Shinnecock Indian Nation Cannabis Regulatory Division.' }
+    reply: { text: 'Raindrops Greenery is a Tribally licensed dispensary, licensed by the Shinnecock Nation Cannabis Regulatory Division (Shinnecock Nation License #002).' }
   },
   {
     keywords: ['return', 'refund', 'wrong', 'issue', 'problem', 'broken', 'missing', 'damaged'],

@@ -19,7 +19,7 @@ export default function PrivacyPage() {
       currentPath="/legal/privacy"
     >
       <p>
-        {business.legalName} (“Raindrops Greenery”, “we”, “us”) operates an adult-use cannabis delivery service under a sovereign cannabis license issued by the {business.licensingAuthority}, serving New York City customers through the website at {business.baseUrl} (the “Service”). We respect the privacy of adults who use our Service and we are committed to handling personal information responsibly and in line with applicable Shinnecock and New York law, including the New York SHIELD Act.
+        {business.legalName} (“Raindrops Greenery”, “we”, “us”) operates an adult-use cannabis delivery service as a Tribally licensed dispensary licensed by the {business.licensingAuthority}, serving New York City customers through the website at {business.baseUrl} (the “Service”). We respect the privacy of adults who use our Service and we are committed to handling personal information responsibly and in line with applicable Shinnecock and New York law, including the New York SHIELD Act.
       </p>
 
       <h2>1. Who this policy applies to</h2>

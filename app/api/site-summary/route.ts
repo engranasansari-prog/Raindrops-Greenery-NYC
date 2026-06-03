@@ -63,11 +63,12 @@ export function GET() {
     },
     license: {
       authority: business.licensingAuthority,
+      number: business.license,
       jurisdiction: business.jurisdiction,
       shortDescription: business.licensingShort,
       taxStatus: 'tax-free',
       taxExplanation:
-        'Sales conducted under the sovereign Shinnecock cannabis license are exempt from the 9% New York State cannabis excise tax and ~8.875% NYC sales tax that apply to OCM-licensed dispensaries.'
+        'Raindrops Greenery is a Tribally licensed dispensary; all products are produced, packaged, and sold on Native Sovereign Land. Pricing is tax-free — the listed price is the price at checkout.'
     },
     contact: {
       phone: business.phone,

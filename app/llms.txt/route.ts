@@ -27,9 +27,9 @@ export function GET() {
 
 > Tax-free, Shinnecock-licensed cannabis delivery for Manhattan, Brooklyn (Williamsburg, Greenpoint), and Queens (Long Island City). Same-day. Free delivery on orders over $25. 21+ only.
 
-Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City, operating under the sovereign cannabis license of the ${business.licensingAuthority}. Sales under that license are exempt from the New York State 9% cannabis excise tax and the ~8.875% NYC sales tax charged at OCM-licensed dispensaries — the menu price is the price at checkout, with no surcharges. We deliver a focused catalog of Flower Strains, Pre-Rolls, and Edibles (no vape carts, concentrates, or tinctures), every day from ${business.hours[0].open} to ${business.hours[0].close}, free on orders over $25, with a complimentary pre-roll in every order. 21+ only; a valid government ID is verified at the door before every handoff, and products cannot be returned once delivered.
+Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City. It is a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — licensed by the ${business.licensingAuthority} (${business.license}). Pricing is tax-free: the menu price is the price at checkout, with no surcharges. We deliver a focused catalog of Flower Strains, Pre-Rolls, and Edibles (no vape carts, concentrates, or tinctures), every day from ${business.hours[0].open} to ${business.hours[0].close}, free on orders over $25, with a complimentary pre-roll in every order. 21+ only; a valid government ID is verified at the door before every handoff, and products cannot be returned once delivered.
 
-**Business:** ${business.legalName} (trade name ${business.tradeName}), founded ${business.yearFounded}. Phone ${business.phone}. Email ${business.email}. Sovereign jurisdiction: ${business.jurisdiction}.
+**Business:** ${business.legalName} (trade name ${business.tradeName}), founded ${business.yearFounded}. Phone ${business.phone}. Email ${business.email}. Jurisdiction: ${business.jurisdiction}.
 
 **Coverage:** ${COVERAGE.clusters.length} clusters / ${allZips.length} ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City:
 ${coverageList}

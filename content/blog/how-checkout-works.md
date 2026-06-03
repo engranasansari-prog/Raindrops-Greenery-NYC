@@ -27,7 +27,7 @@ The [main menu](/menu) shows everything in stock across three categories: **Flow
 - The strain type — Indica, Sativa, Hybrid, etc.
 - THC% (and CBD% when applicable)
 - The size — 3.5g, 7g, 10mg gummies, etc.
-- The price — the **final** price, no New York State cannabis excise or state sales tax
+- The price — the **final**, tax-free price
 
 You can filter by:
 
@@ -62,7 +62,7 @@ In checkout you'll complete:
 - **Delivery address** — apartment, suite, or door number; cross-street if useful
 - **Phone number** — for the driver to reach you on arrival
 - **Age verification** — you confirm you're 21 or older
-- **Payment** — accepted methods are shown live in checkout (cash is always accepted; debit and additional options vary by current processor support)
+- **Payment** — Pay by Bank through Dutchie Pay, completed at secure checkout
 
 Final pricing and availability are confirmed at this step. If something on the menu sold out between when you opened the page and when you tapped order, checkout will surface it before you commit.
 
@@ -93,8 +93,7 @@ What you won't see: the driver entering your home. We meet you at the lobby, sid
 
 A few line items that show up at other NYC cannabis delivery services and never show up at Raindrops:
 
-- **New York State cannabis excise tax (9%)** — not applied. [Why we're tax-free under Shinnecock authority.](/blog/why-tax-free-shinnecock)
-- **New York State + NYC combined sales tax (~8.875%)** — not applied
+- **Surprise taxes** — pricing is tax-free; the menu price is the price you pay
 - **Delivery fee** — free on every order over $25
 - **Service fee** — none
 - **"Convenience" fee** — none

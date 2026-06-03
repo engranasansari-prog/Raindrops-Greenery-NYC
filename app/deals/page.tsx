@@ -152,11 +152,11 @@ const dealsListLd = {
 const DEALS_FAQ = [
   {
     q: 'Is there cheap weed delivery in NYC?',
-    a: 'Yes. Raindrops Greenery offers affordable, tax-free weed delivery across NYC, with curated value picks starting under $25. Because we operate under Shinnecock authority, no New York State cannabis tax is added, and delivery is free on every order over $25 — so the total stays low.'
+    a: 'Yes. Raindrops Greenery offers affordable, tax-free weed delivery across NYC, with curated value picks starting under $25. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on every order over $25 — so the total stays low.'
   },
   {
     q: 'What is the cheapest weed delivery in NYC?',
-    a: 'Our "Under $25" picks are the most affordable on the menu, and every order ships free over $25 with a complimentary pre-roll. With no NY State cannabis tax on top, the price you see is the price you pay.'
+    a: 'Our "Under $25" picks are the most affordable on the menu, and every order ships free over $25 with a complimentary pre-roll. Pricing is tax-free, so the price you see is the price you pay.'
   },
   {
     q: 'Do you offer weed deals or discount codes?',
@@ -209,7 +209,7 @@ export default function DealsPage() {
               Curated picks. <span className="italic">No codes needed.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              The most affordable way to order weed in NYC — a curated shortlist, lowest-priced first, starting under $25. No discount codes, no gimmicks: a free weed gift with every order, free delivery over $25, and no New York State cannabis tax under Shinnecock. Tap any pick to head to secure checkout.
+              The most affordable way to order weed in NYC — a curated shortlist, lowest-priced first, starting under $25. No discount codes, no gimmicks: a free weed gift with every order, free delivery over $25, and tax-free pricing. Tap any pick to head to secure checkout.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -345,7 +345,7 @@ export default function DealsPage() {
           <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(19,36,29,0.18)] sm:p-7 sm:text-[15px]">
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Fine print</p>
             <p className="mt-3 text-[color:var(--rd-text)]">
-              Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll with every order while supplies last. Must be 21+ to order. Sales operate under the Shinnecock Indian Nation Cannabis Regulatory Division — no NY State cannabis excise or sales tax applies.
+              Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll with every order while supplies last. Must be 21+ to order. Raindrops Greenery is a Tribally licensed dispensary; all products are produced, packaged, and sold on Native Sovereign Land.
             </p>
           </div>
         </div>

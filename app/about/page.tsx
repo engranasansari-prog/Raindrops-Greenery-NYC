@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const pillars = [
   { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
-  { icon: Shield, title: 'Compliant', body: 'Shinnecock-licensed, age-verified at the door, tax-free checkout under sovereign authority.' },
+  { icon: Shield, title: 'Compliant', body: 'Age-verified at the door, tax-free checkout.' },
   { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) — with windows that fit the way the city moves.' },
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
 ];
@@ -66,8 +66,8 @@ export default function AboutPage() {
             </h2>
             <ul className="mt-5 grid gap-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
               <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Adult, 21+ delivery handled with care and discretion.</li>
-              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Indian Nation Cannabis Regulatory Division.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-free under sovereign authority — no NY State cannabis tax.</li>
+              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Nation Cannabis Regulatory Division.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-free — the price you see is the price you pay.</li>
               <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order over $25.</li>
               <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> ID verified at the door. Discreet hand-offs.</li>
             </ul>
@@ -190,16 +190,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Sovereign authority CTA card */}
+      {/* Licensing CTA card */}
       <section className="bg-[color:var(--rd-paper)] pb-20 sm:pb-24">
         <div className="luxury-shell">
           <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-amber)]/30 bg-[color:var(--rd-paper-soft)]/85 p-8 shadow-[0_24px_72px_rgba(45,74,58,0.10)] sm:p-12">
-            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Sovereign-licensed cannabis</p>
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Tribally licensed cannabis</p>
             <h2 className="mt-3 text-[color:var(--rd-ink)]">
-              Operating under <span className="italic">Shinnecock Indian Nation</span> authority.
+              A <span className="italic">Tribally licensed</span> dispensary.
             </h2>
             <p className="mt-4 max-w-3xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
-              Raindrops Greenery is a Shinnecock-licensed cannabis delivery partner. Every product on the menu is sourced, tracked, and sold under the cannabis program of the {business.licensingAuthority}. Sovereign authority means our sales are exempt from New York State cannabis excise and sales taxes.
+              Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land. {business.license}.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <OrderButton label="Start an order" />

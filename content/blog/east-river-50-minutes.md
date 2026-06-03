@@ -48,9 +48,8 @@ If you've used a marketplace-style cannabis delivery in NYC, you know the math:
 - $5 to $8 delivery fee
 - $4 to $7 service fee
 - 18% to 22% "convenience" tip suggested
-- Plus the 13% state cannabis tax (if it's an OCM-licensed operator)
 
-A $60 order rings up at $90+ by checkout. Ours doesn't. [The price on the card is the price at the door](/blog/why-tax-free-shinnecock) — sovereign Shinnecock authority means no state cannabis excise and no state sales tax on top of the menu price.
+A $60 order rings up at $90+ by checkout. Ours doesn't — the price on the card is the price at the door, with no service or convenience fees and free delivery over $25.
 
 ## Neighborhood ETA averages
 

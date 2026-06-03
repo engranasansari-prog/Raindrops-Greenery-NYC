@@ -17,12 +17,12 @@ import { business } from '@/lib/site-data';
 export const metadata: Metadata = {
   title: 'Tax-Free Weed Delivery in NYC',
   description:
-    'Tax-free, same-day weed delivery in NYC from Raindrops Greenery — Shinnecock-licensed, so no NY State cannabis tax. Free delivery over $25 across Manhattan, Williamsburg, Greenpoint & LIC. 21+.',
+    'Tax-free, same-day weed delivery in NYC from Raindrops Greenery — a Tribally licensed dispensary. Free delivery over $25 across Manhattan, Williamsburg, Greenpoint & LIC. 21+.',
   alternates: { canonical: '/tax-free-weed-delivery-nyc' },
   openGraph: {
     title: 'Tax-Free Weed Delivery in NYC | Raindrops Greenery',
     description:
-      'Same-day, tax-free cannabis delivery across NYC — no NY State cannabis tax, free delivery over $25, free pre-roll with every order. 21+.',
+      'Same-day, tax-free cannabis delivery across NYC — free delivery over $25, free pre-roll with every order. 21+.',
     url: '/tax-free-weed-delivery-nyc',
     images: [{ url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`, width: 1200, height: 800, alt: 'Tax-free weed delivery in NYC' }]
   }
@@ -40,7 +40,7 @@ const faqLd = {
       name: 'Is weed delivery in NYC tax-free?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'It can be. Raindrops Greenery delivers under the sovereign cannabis license of the Shinnecock Indian Nation, so its orders are exempt from the New York State cannabis excise and sales taxes charged at OCM-licensed dispensaries. The listed price is the price at checkout.'
+        text: 'Yes. Raindrops Greenery is a Tribally licensed dispensary, so its pricing is tax-free — the listed price is the price at checkout. All products are produced, packaged, and sold on Native Sovereign Land.'
       }
     },
     {
@@ -72,7 +72,7 @@ const breadcrumbLd = {
 };
 
 const HIGHLIGHTS = [
-  { icon: BadgeCheck, label: 'Tax-free', body: 'No NY State cannabis tax — Shinnecock authority.' },
+  { icon: BadgeCheck, label: 'Tax-free', body: 'Tribally licensed — the price you see is the price you pay.' },
   { icon: Truck, label: 'Free delivery', body: 'Free on every order over $25. No surge, no hidden fees.' },
   { icon: Clock, label: 'Same-day', body: 'Open daily 10 AM–10 PM. Avg drop-off under an hour.' },
   { icon: MapPin, label: 'NYC coverage', body: 'Manhattan + Williamsburg, Greenpoint & LIC.' }
@@ -103,11 +103,10 @@ export default function TaxFreeDeliveryPage() {
             Tax-Free Weed Delivery <span className="italic">in NYC.</span>
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-            Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City. Because we
-            operate under the sovereign cannabis license of the Shinnecock Indian Nation, your order skips the
-            New York State cannabis excise and sales taxes charged at state-licensed dispensaries — the price
-            you see is the price you pay. Free delivery on orders over $25, and a complimentary pre-roll with
-            every order.
+            Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City. We&rsquo;re a
+            Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign
+            Land — so the price you see is the price you pay. Free delivery on orders over $25, and a
+            complimentary pre-roll with every order.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/menu" className="btn-luxe btn-luxe-gold">
@@ -140,13 +139,12 @@ export default function TaxFreeDeliveryPage() {
       <section className="bg-[color:var(--rd-paper)] py-14 sm:py-20">
         <div className="luxury-shell grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="blog-prose max-w-2xl">
-            <h2>What makes it tax-free?</h2>
+            <h2>Tribally licensed, tax-free</h2>
             <p>
-              Raindrops Greenery sells through the sovereign cannabis authority of the{' '}
-              {business.licensingAuthority}. Sales conducted under that license are exempt from the New York
-              State cannabis excise tax and the state/city sales tax that OCM-licensed dispensaries must add.
-              In practice that means no surprise line items at checkout — what is listed on the menu is the
-              total you pay.
+              Raindrops Greenery is a Tribally licensed dispensary, licensed by the{' '}
+              {business.licensingAuthority} ({business.license}). All products are produced, packaged, and sold
+              on Native Sovereign Land, and pricing is tax-free — no surprise line items at checkout, so what is
+              listed on the menu is the total you pay.
             </p>
 
             <h2>Where we deliver in NYC</h2>

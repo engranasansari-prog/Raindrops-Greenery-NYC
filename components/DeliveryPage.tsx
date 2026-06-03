@@ -29,7 +29,7 @@ const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
 
 const PILLARS = [
   { icon: Truck, title: 'Free delivery', body: 'Free on every order over $25, every covered ZIP. No surge, no hidden fees.' },
-  { icon: Sparkles, title: 'Tax-free', body: 'Sovereign Shinnecock authority — no NY State cannabis excise or sales tax.' },
+  { icon: Sparkles, title: 'Tax-free', body: 'Tribally licensed dispensary — tax-free checkout, no hidden fees.' },
   { icon: Clock, title: 'Same-day', body: 'Open 10 AM – 10 PM. Average drop-off window: 35–55 minutes depending on zone.' },
   { icon: ShieldCheck, title: 'Discreet', body: '21+ ID verified at the door. Short, professional hand-offs.' }
 ];

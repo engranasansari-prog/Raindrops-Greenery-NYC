@@ -25,11 +25,12 @@ export const business = {
   // Continuous open window in 24h, used by the live status badge.
   openHour: 10,
   closeHour: 22,
-  // Operating under a sovereign Shinnecock Indian Nation cannabis license.
-  licensingAuthority: 'Shinnecock Indian Nation Cannabis Regulatory Division',
+  // Tribally licensed under the Shinnecock Nation cannabis program.
+  licensingAuthority: 'Shinnecock Nation Cannabis Regulatory Division',
+  license: 'Shinnecock Nation License #002',
   licensingShort: 'Shinnecock-licensed cannabis delivery partner',
-  // Sovereign tribal land base (Shinnecock Indian Nation, Long Island, New York).
-  jurisdiction: 'Shinnecock Indian Nation, Long Island, New York',
+  // Tribal land base (Shinnecock Nation, Long Island, New York).
+  jurisdiction: 'Shinnecock Nation, Long Island, New York',
   serviceRegion: 'New York City',
   // Production deploy: the site lives at the subdomain
   // https://nyc.raindropsgreenery.com (connected to Vercel via a CNAME).
@@ -123,7 +124,7 @@ export const supportedZips = ALL_ZIPS;
 export const trustPoints = [
   {
     title: 'Tax-free',
-    body: 'Sovereign Shinnecock authority — no NY State cannabis tax on your order.'
+    body: 'Tribally licensed dispensary — tax-free checkout, the price you see is the price you pay.'
   },
   {
     title: 'Free delivery',
@@ -156,7 +157,7 @@ export const steps = [
 export const valueProps = [
   {
     title: 'Tax-free',
-    body: 'At Shinnecock Indian Nation sovereign tribal laws allow us to operate independently on tribal land, which means New York State cannabis retail taxes are not applied the same way they are at state-licensed dispensaries. That allows us to offer legally regulated, lab-tested cannabis products without the additional state cannabis taxes customers typically pay elsewhere.'
+    body: 'Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land.'
   },
   {
     title: 'Free delivery',
@@ -197,7 +198,7 @@ export const testimonials = [
 export const faqs = [
   {
     q: 'Why is Raindrops tax-free?',
-    a: 'Raindrops operates under the sovereign cannabis authority of the Shinnecock Indian Nation. Sales through our license are exempt from the New York State cannabis excise and sales taxes that apply to OCM-licensed dispensaries.'
+    a: 'Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land.'
   },
   {
     q: 'Is delivery really free?',
@@ -209,7 +210,7 @@ export const faqs = [
   },
   {
     q: 'Who licenses Raindrops Greenery?',
-    a: 'Raindrops Greenery operates under a sovereign cannabis license issued by the Shinnecock Indian Nation Cannabis Regulatory Division.'
+    a: 'Raindrops Greenery operates under a cannabis license issued by the Shinnecock Nation Cannabis Regulatory Division.'
   },
   {
     q: 'Where does Raindrops Greenery deliver?',
@@ -233,7 +234,7 @@ export const faqs = [
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'Accepted payment options are shown in checkout and at the door. Cash is always accepted; debit and additional options may be available subject to current processor support.'
+    a: 'Pay by Bank through Dutchie Pay is the only form of payment.'
   },
   {
     q: 'How discreet is the delivery?',
@@ -248,10 +249,6 @@ export const faqs = [
   // structured data and give AI engines clean, citable answers about
   // Raindrops. Every answer stays within our real coverage + licensing.
   {
-    q: 'Is there tax-free weed delivery in NYC?',
-    a: 'Yes. Raindrops Greenery delivers cannabis across New York City under the sovereign cannabis license of the Shinnecock Indian Nation, so orders are exempt from the New York State cannabis excise and sales taxes charged at OCM-licensed dispensaries. The price you see is the price you pay — no added tax at checkout.'
-  },
-  {
     q: 'Who delivers weed to Williamsburg, Greenpoint, or Long Island City?',
     a: 'Raindrops Greenery offers same-day cannabis delivery to Williamsburg (11211), Greenpoint (11222), and Long Island City (11101), in addition to most of Manhattan. Free delivery on orders over $25.'
   },
@@ -261,7 +258,7 @@ export const faqs = [
   },
   {
     q: 'How much does weed delivery cost in NYC?',
-    a: 'Delivery is free on every Raindrops Greenery order over $25 — no surge pricing and no hidden fees. Because we operate under Shinnecock authority, there is no New York State cannabis tax added at checkout either.'
+    a: 'Delivery is free on every Raindrops Greenery order over $25 — no surge pricing and no hidden fees. Pricing is tax-free, and a complimentary pre-roll is added to every order.'
   },
   {
     q: 'Where can I order edibles for delivery in NYC?',
@@ -271,6 +268,6 @@ export const faqs = [
 
 export const promoStrip = {
   // Set message to null to hide the strip.
-  message: 'Free delivery across Manhattan + LIC, Williamsburg & Greenpoint · Tax-free under Shinnecock · Open 10am–10pm',
+  message: 'Free delivery across Manhattan + LIC, Williamsburg & Greenpoint · Tax-free · Open 10am–10pm',
   cta: { label: 'Check coverage', href: '#coverage' }
 };

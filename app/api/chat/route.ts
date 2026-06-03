@@ -22,12 +22,12 @@ const MODEL = process.env.CHAT_MODEL || 'claude-haiku-4-5-20251001';
 
 const KNOWLEDGE = `BUSINESS: ${business.tradeName} (${business.legalName}) — ${business.tagline}. Phone/text: ${business.phone}. Email: ${business.email}. Instagram: ${social[0]?.handle ?? '@raindropsgreenery'}.
 HOURS: every day, ${business.hours[0].open}–${business.hours[0].close}.
-LICENSING / WHY TAX-FREE: operates under a sovereign cannabis license from the ${business.licensingAuthority} (${business.jurisdiction}). Orders are exempt from the NY State cannabis excise + sales taxes charged at state-licensed dispensaries — that is the tax-free pricing.
+LICENSING: Raindrops Greenery is a Tribally licensed dispensary, licensed by the ${business.licensingAuthority} (${business.license}). All products are produced, packaged, and sold on Native Sovereign Land. Pricing is tax-free — the price shown is the price paid. Do NOT claim exemption from specific New York State taxes, do NOT cite tax percentages, and do NOT compare to OCM or state-licensed dispensaries.
 DELIVERY AREA: same-day across Manhattan PLUS Williamsburg, Greenpoint, and Long Island City ONLY. Never claim all of Brooklyn or all of Queens. Free delivery on orders over $25. Average drop-off under an hour. Covered ZIP codes: ${ALL_ZIPS.join(', ')}.
 FREE GIFT: every order includes a complimentary pre-roll, auto-added at checkout (21+, while supplies last). No code needed.
 ORDERING: browse the menu, pick products, tap any "Order" button to reach secure checkout for payment, ID verification, and delivery. Menu: /menu. Featured picks (curated by price, lowest first): /deals. 2-minute strain quiz: /quiz. Delivery areas + ZIP checker: /delivery. About: /about. FAQ: /faq. Contact: /contact. Checkout link: ${checkout.dutchieUrl}.
 PRODUCTS: three categories — Flower Strains, Pre-Rolls, and Edibles — filterable by price, potency (THC), size, brand, and effect. Premium items carry a ✦ STICKY badge ($40+).
-PAYMENT: cash always accepted at the door; debit and other options may be available at checkout depending on processor support.
+PAYMENT: Pay by Bank through Dutchie Pay is the only form of payment, completed at secure checkout.
 21+ ONLY: a valid government photo ID is verified at the door before handoff.
 RETURNS: for safety + compliance, cannabis can't be returned once delivered; contact support within 24 hours if there's an issue.
 

@@ -26,7 +26,7 @@ Each [flower listing on the menu](/menu?category=Flower) shows:
 - **Strain type** — Indica, Sativa, Hybrid, Indica-Hybrid, or Sativa-Hybrid
 - **THC%** — the percentage of total THC content by dry weight, the strongest predictor of how strong the flower will feel
 - **Size** — usually 3.5g (an "eighth"), 7g (a "quarter"), or smaller pack sizes
-- **Price** — the menu price is the final price; no New York State cannabis excise tax, no state sales tax
+- **Price** — the menu price is the final, tax-free price
 
 ### How to read a strain type
 
@@ -131,7 +131,7 @@ Yes. Many of our regular orders combine a Flower strain with a 10mg edible pack 
 Two reasons: (1) the regulated vape cart market has had documented safety issues with hardware and additives, and (2) we want our customers to enjoy products we'd stake our name on. Concentrates and tinctures are more specialized and we'd rather focus the menu than dilute it.
 
 **Are prices on the menu the final prices?**
-Yes. No New York State cannabis excise tax and no state sales tax apply to orders through our Shinnecock-licensed program. [Here's the longer explanation.](/blog/why-tax-free-shinnecock)
+Yes. Pricing is tax-free — the menu price is the price at checkout.
 
 ## More on this
 

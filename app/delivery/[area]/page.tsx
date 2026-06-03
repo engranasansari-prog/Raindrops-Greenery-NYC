@@ -108,12 +108,12 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
     offers: {
       '@type': 'Offer',
       priceCurrency: 'USD',
-      description: 'Free delivery on orders over $25; no New York State cannabis tax under Shinnecock authority.'
+      description: 'Free delivery on orders over $25; Tribally licensed, tax-free pricing.'
     }
   };
 
   const highlights = [
-    { icon: BadgeCheck, label: 'Tax-free', body: 'No NY State cannabis tax — Shinnecock authority.' },
+    { icon: BadgeCheck, label: 'Tax-free', body: 'Tribally licensed — the price you see is the price you pay.' },
     { icon: Truck, label: 'Free over $25', body: 'Free delivery on every order over $25. No hidden fees.' },
     { icon: Clock, label: 'Same-day', body: `${n.etaLabel} average · open daily 10 AM–10 PM.` },
     { icon: MapPin, label: 'Coverage', body: `${n.borough} · ${zipLabel} we serve here.` }

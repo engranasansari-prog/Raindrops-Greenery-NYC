@@ -49,7 +49,7 @@ This is the single highest‑value off‑site action. It's the **only** way to a
 
 **GBP description (copy‑paste, ~730 characters):**
 ```
-Raindrops Greenery is a tax-free, same-day cannabis delivery service for New York City. Because we operate under the sovereign cannabis license of the Shinnecock Indian Nation, orders skip the New York State cannabis tax charged at state-licensed dispensaries — the price you see is the price you pay. We deliver curated flower strains, pre-rolls, and edibles across Manhattan plus Williamsburg, Greenpoint, and Long Island City, every day from 10 AM to 10 PM. Delivery is free on orders over $25, with a complimentary pre-roll in every order. Browse the menu, drop your ZIP to confirm coverage, and check out securely. Adults 21+ only; a valid government ID is verified at delivery. Keep cannabis out of reach of children and pets.
+Raindrops Greenery is a tax-free, same-day cannabis delivery service for New York City and a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land. We deliver curated flower strains, pre-rolls, and edibles across Manhattan plus Williamsburg, Greenpoint, and Long Island City, every day from 10 AM to 10 PM. Pricing is tax-free, delivery is free on orders over $25, and a complimentary pre-roll is added to every order. Browse the menu, drop your ZIP to confirm coverage, and check out securely. Adults 21+ only; a valid government ID is verified at delivery. Keep cannabis out of reach of children and pets.
 ```
 
 ---
@@ -65,7 +65,7 @@ For both: use the exact NAP from §0, set hours, set the delivery service area t
 
 **Profile "About" text (copy‑paste, ~360 characters):**
 ```
-Tax-free, same-day weed delivery in NYC. Raindrops Greenery operates under Shinnecock Indian Nation authority, so there is no New York State cannabis tax on your order. Curated flower strains, pre-rolls, and edibles delivered across Manhattan, Williamsburg, Greenpoint, and Long Island City, 10 AM–10 PM daily. Free delivery over $25, plus a free pre-roll on every order. 21+ only.
+Tax-free, same-day weed delivery in NYC. Raindrops Greenery is a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land. Curated flower strains, pre-rolls, and edibles delivered across Manhattan, Williamsburg, Greenpoint, and Long Island City, 10 AM–10 PM daily. Free delivery over $25, plus a free pre-roll on every order. 21+ only.
 ```
 
 ---
