@@ -55,7 +55,7 @@ export default function NewsletterForm({ source = 'website-footer' }: { source?:
 
   return (
     <form onSubmit={submit} className="grid w-full max-w-md gap-3" aria-label="Email signup">
-      <div className="flex items-stretch overflow-hidden rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 transition focus-within:border-[color:var(--rd-glow)] focus-within:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]">
+      <div className="flex items-stretch overflow-hidden rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 transition focus-within:border-[color:var(--rd-glow)] focus-within:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]">
         <span className="flex items-center pl-4 text-[color:var(--rd-text-mute)]">
           <Mail className="h-4 w-4" />
         </span>

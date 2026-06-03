@@ -302,7 +302,7 @@ function AgeGate() {
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="your@email.com"
-                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
+                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
                     />
                   </label>
                   <label className="grid gap-1.5">
@@ -317,7 +317,7 @@ function AgeGate() {
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
                       placeholder="(555) 123-4567"
-                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/16 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
+                      className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] disabled:opacity-60"
                     />
                   </label>
 
