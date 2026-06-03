@@ -77,7 +77,7 @@ const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
   },
   {
     keywords: ['pay', 'payment', 'cash', 'card', 'debit', 'credit', 'apple pay', 'method'],
-    reply: { text: 'Pay by Bank through Dutchie Pay is the only form of payment, completed at secure checkout.' }
+    reply: { text: 'Pay by Bank through Dutchie pay is the only form of Payment.' }
   },
   {
     keywords: ['menu', 'product', 'products', 'strain', 'strains', 'flower', 'edible', 'edibles', 'pre-roll', 'indica', 'sativa', 'hybrid', 'thc', 'potency', 'have', 'carry', 'stock', 'recommend', 'suggest', 'what should'],

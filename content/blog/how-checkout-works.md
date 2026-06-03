@@ -62,7 +62,7 @@ In checkout you'll complete:
 - **Delivery address** — apartment, suite, or door number; cross-street if useful
 - **Phone number** — for the driver to reach you on arrival
 - **Age verification** — you confirm you're 21 or older
-- **Payment** — Pay by Bank through Dutchie Pay, completed at secure checkout
+- **Payment** — Pay by Bank through Dutchie pay is the only form of Payment.
 
 Final pricing and availability are confirmed at this step. If something on the menu sold out between when you opened the page and when you tapped order, checkout will surface it before you commit.
 

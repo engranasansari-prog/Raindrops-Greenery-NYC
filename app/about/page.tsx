@@ -67,7 +67,7 @@ export default function AboutPage() {
             <ul className="mt-5 grid gap-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
               <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Adult, 21+ delivery handled with care and discretion.</li>
               <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Nation Cannabis Regulatory Division.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-free — the price you see is the price you pay.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-Free</li>
               <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order over $25.</li>
               <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> ID verified at the door. Discreet hand-offs.</li>
             </ul>
@@ -199,7 +199,7 @@ export default function AboutPage() {
               A <span className="italic">Tribally licensed</span> dispensary.
             </h2>
             <p className="mt-4 max-w-3xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
-              Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land. {business.license}.
+              Raindrops Greenery is a Tribally licensed dispensary. All Products are produced, packaged, and sold on Native Sovereign Land. {business.license}.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <OrderButton label="Start an order" />

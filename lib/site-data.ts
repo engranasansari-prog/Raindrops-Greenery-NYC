@@ -157,7 +157,7 @@ export const steps = [
 export const valueProps = [
   {
     title: 'Tax-free',
-    body: 'Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land.'
+    body: 'Raindrops Greenery is a Tribally licensed dispensary. All Products are produced, packaged, and sold on Native Sovereign Land.'
   },
   {
     title: 'Free delivery',
@@ -198,7 +198,7 @@ export const testimonials = [
 export const faqs = [
   {
     q: 'Why is Raindrops tax-free?',
-    a: 'Raindrops Greenery is a Tribally licensed dispensary. All products are produced, packaged, and sold on Native Sovereign Land.'
+    a: 'Raindrops Greenery is a Tribally licensed dispensary. All Products are produced, packaged, and sold on Native Sovereign Land.'
   },
   {
     q: 'Is delivery really free?',
@@ -234,7 +234,7 @@ export const faqs = [
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'Pay by Bank through Dutchie Pay is the only form of payment.'
+    a: 'Pay by Bank through Dutchie pay is the only form of Payment.'
   },
   {
     q: 'How discreet is the delivery?',
