@@ -73,6 +73,10 @@ export function OrderButton({
   );
 }
 
+// 21+ confirmation persists this long before we re-ask (30 days). Was
+// per-session, which re-walled returning buyers on every single visit.
+const AGE_CONFIRM_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
 function AgeGate() {
   // Three-phase modal: 'age' (21+ challenge) → 'subscribe' (optional welcome
   // signup) → closed. Skipping the subscribe step still dismisses the modal.
@@ -84,10 +88,21 @@ function AgeGate() {
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [subscribeMessage, setSubscribeMessage] = useState('');
 
-  // sessionStorage per the brief (§4.1) — re-prompt each new session
+  // Remember the 21+ confirmation for 30 days (localStorage) instead of
+  // re-walling every new session — re-prompting a returning buyer nightly is
+  // friction with no compliance upside (the duty is to ASK, not to ask each
+  // visit). The optional welcome/subscribe step still runs on a fresh confirm.
+  // Storage errors (private mode) fall back to showing the gate.
   useEffect(() => {
+    let confirmed = false;
+    try {
+      const at = Number(localStorage.getItem('rd_age_confirmed_at'));
+      confirmed = at > 0 && Date.now() - at < AGE_CONFIRM_TTL_MS;
+    } catch {
+      confirmed = false;
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPhase(sessionStorage.getItem('rd_age_confirmed') === 'yes' ? 'hidden' : 'age');
+    setPhase(confirmed ? 'hidden' : 'age');
   }, []);
 
   const showing = phase !== 'hidden';
@@ -104,7 +119,11 @@ function AgeGate() {
   }, [showing]);
 
   const confirmAge = () => {
-    sessionStorage.setItem('rd_age_confirmed', 'yes');
+    try {
+      localStorage.setItem('rd_age_confirmed_at', String(Date.now()));
+    } catch {
+      /* private mode — the gate simply re-shows next visit */
+    }
     setPhase('subscribe');
   };
 
@@ -460,7 +479,10 @@ function StickyOrderBar() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 520);
+    // Appear after a short scroll (was 520px ≈ a full screen, so mobile
+    // buyers had no persistent CTA through the entire hero). 160px = just past
+    // the chrome, once the hero's own CTAs start leaving the viewport.
+    const handleScroll = () => setVisible(window.scrollY > 160);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -478,11 +500,14 @@ function StickyOrderBar() {
           style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}
         >
           <div className="flex items-center justify-between gap-3">
-            <div className="hidden pl-4 sm:block">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready to checkout?</p>
-              <p className="mt-1 text-sm text-[color:var(--rd-text)]">Continue to secure checkout</p>
+            {/* Value cue now visible on ALL sizes (was sm:block → hidden on the
+                smallest phones, leaving a bare button). Reinforces the offer
+                everywhere the omnipresent bar shows. */}
+            <div className="min-w-0 pl-4">
+              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Free gift every order</p>
+              <p className="mt-0.5 truncate text-sm text-[color:var(--rd-text)]">Free delivery over $25</p>
             </div>
-            <OrderButton className="w-full sm:w-auto" />
+            <OrderButton className="shrink-0" />
           </div>
         </motion.div>
       )}

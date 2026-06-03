@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -365,7 +365,18 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
 // 5. One testimonial (V6 §4)
 // =====================================================================
 function TestimonialFeature() {
-  const t = testimonials[0];
+  // Rotate through ALL reviews (was hard-pinned to testimonials[0], so two of
+  // three named buyers — and the all-borough spread — never showed). Auto-
+  // advances; pauses entirely under reduced-motion; dots let users jump.
+  const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const count = testimonials.length;
+  useEffect(() => {
+    if (reduceMotion || count < 2) return;
+    const id = setInterval(() => setActive((i) => (i + 1) % count), 6500);
+    return () => clearInterval(id);
+  }, [reduceMotion, count]);
+  const t = testimonials[active];
   return (
     <section className="bg-[color:var(--rd-paper-soft)] py-14 sm:py-20 lg:py-24">
       <div className="luxury-shell">
@@ -394,32 +405,61 @@ function TestimonialFeature() {
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
               </div>
-              <p
-                className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
-              >
-                5.0★ from NYC · Verified order
-              </p>
-
-              <blockquote
-                className="mt-6 text-2xl leading-tight text-[color:var(--rd-text)] sm:text-3xl md:text-4xl"
-                style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', letterSpacing: '-0.02em' }}
-              >
-                “{t.quote}”
-              </blockquote>
-
-              <figcaption className="mt-10 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink-soft)] px-5 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.32)]">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-base font-bold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                  {t.author.charAt(0)}
-                </span>
-                <span className="text-left leading-tight">
-                  <span className="block text-[15px] font-semibold text-[color:var(--rd-text)]">{t.author}</span>
-                  <span
-                    className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+              {/* Fixed min-height holds the layout so rotation never shifts
+                  the page; crossfade swaps quote + author together. */}
+              <div className="relative mt-4 min-h-[210px] sm:min-h-[240px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={active}
+                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    {t.location}
-                  </span>
-                </span>
-              </figcaption>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                      5.0★ · {t.location} · Verified order
+                    </p>
+
+                    <blockquote
+                      className="mt-5 text-2xl leading-tight text-[color:var(--rd-text)] sm:text-3xl md:text-4xl"
+                      style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', letterSpacing: '-0.02em' }}
+                    >
+                      “{t.quote}”
+                    </blockquote>
+
+                    <figcaption className="mt-8 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink-soft)] px-5 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.32)]">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-base font-bold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                        {t.author.charAt(0)}
+                      </span>
+                      <span className="text-left leading-tight">
+                        <span className="block text-[15px] font-semibold text-[color:var(--rd-text)]">{t.author}</span>
+                        <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                          {t.location}
+                        </span>
+                      </span>
+                    </figcaption>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {count > 1 && (
+                <div className="mt-6 flex items-center justify-center gap-2">
+                  {testimonials.map((item, i) => (
+                    <button
+                      key={item.author}
+                      type="button"
+                      onClick={() => setActive(i)}
+                      aria-label={`Show review from ${item.author}`}
+                      aria-current={i === active ? 'true' : undefined}
+                      className={`h-1.5 rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out)] ${
+                        i === active
+                          ? 'w-6 bg-[color:var(--rd-glow)]'
+                          : 'w-1.5 bg-[color:var(--rd-paper)]/25 hover:bg-[color:var(--rd-paper)]/40'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
 
               <div className="mt-8 inline-flex">
                 <Link

@@ -187,14 +187,23 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                 {result.status === 'supported' && result.cluster && (
                   <motion.div
                     key="supported"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.5, ease: easeOut }}
+                    transition={{ type: 'spring', stiffness: 380, damping: 26 }}
                     className="rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4"
                   >
                     <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
-                      <Check className="h-3.5 w-3.5" />
+                      {/* The check pops a beat AFTER the card lands — celebrates
+                          the highest-intent moment ("yes, we deliver to you"). */}
+                      <motion.span
+                        initial={{ scale: 0, rotate: -25 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: 'spring', stiffness: 520, damping: 16, delay: 0.13 }}
+                        className="inline-flex"
+                      >
+                        <Check className="h-3.5 w-3.5" />
+                      </motion.span>
                       You’re in
                     </p>
                     <p className="mt-2 text-base font-medium text-[color:var(--rd-text)]">
