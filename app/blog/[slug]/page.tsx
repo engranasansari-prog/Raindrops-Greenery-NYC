@@ -165,7 +165,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
           <div className="absolute inset-0">
             <Image src={post.coverImage} alt="" fill priority sizes="100vw" className="object-cover opacity-[0.30]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.55),rgba(19,36,29,0.85))]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27, 51, 40,0.55),rgba(27, 51, 40,0.85))]" />
           </div>
           <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
             <Link
@@ -196,7 +196,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Article body + sidebar on light surface */}
         <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
           <div className="luxury-shell grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_280px]">
-            <div className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 shadow-[0_18px_54px_rgba(45,74,58,0.08)] sm:p-10">
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 shadow-[0_18px_54px_rgba(46, 82, 64,0.08)] sm:p-10">
               <div className="blog-prose">
                 {post.blocks.map((block, index) => {
                   if (block.type === 'heading') {
@@ -281,7 +281,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   <Link
                     key={r.slug}
                     href={`/blog/${r.slug}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/35 hover:shadow-[0_24px_60px_rgba(45,74,58,0.10)]"
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/35 hover:shadow-[0_24px_60px_rgba(46, 82, 64,0.10)]"
                   >
                     <div className="relative aspect-[5/3] overflow-hidden bg-[color:var(--rd-paper-soft)]">
                       <Image

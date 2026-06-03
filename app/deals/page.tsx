@@ -200,7 +200,7 @@ export default function DealsPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-22" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.55))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27, 51, 40,0.94),rgba(27, 51, 40,0.55))]" />
         <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
@@ -342,7 +342,7 @@ export default function DealsPage() {
             glow accent — same treatment used on every other dark-section
             eyebrow across the site for consistency.
           */}
-          <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(19,36,29,0.18)] sm:p-7 sm:text-[15px]">
+          <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(27, 51, 40,0.18)] sm:p-7 sm:text-[15px]">
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Fine print</p>
             <p className="mt-3 text-[color:var(--rd-text)]">
               Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll with every order while supplies last. Must be 21+ to order. Raindrops Greenery is a Tribally licensed dispensary; all products are produced, packaged, and sold on Native Sovereign Land.

@@ -96,8 +96,12 @@ export default function AnnouncementBar() {
       role="region"
       aria-label="Site announcements"
       style={{
+        // Rebuilt from tokens (was #13241D + a phantom #1A2D24 + hard-coded
+        // #2E5240): ink edges → moss-tinted → moss center. The edges are now
+        // exactly var(--rd-ink), so the seam with the Nav (also --rd-ink) is
+        // one continuous green instead of two different greens touching.
         background:
-          'linear-gradient(90deg, #13241D 0%, #1A2D24 18%, #2E5240 50%, #1A2D24 82%, #13241D 100%)',
+          'linear-gradient(90deg, var(--rd-ink) 0%, color-mix(in srgb, var(--rd-moss) 32%, var(--rd-ink)) 18%, var(--rd-moss) 50%, color-mix(in srgb, var(--rd-moss) 32%, var(--rd-ink)) 82%, var(--rd-ink) 100%)',
         borderBottom: '1px solid rgba(200,230,110,0.22)',
         boxShadow: '0 1px 0 rgba(0,0,0,0.45), inset 0 -1px 0 rgba(200,230,110,0.05)'
       }}
@@ -134,12 +138,12 @@ export default function AnnouncementBar() {
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(90deg, #13241D 0%, rgba(19,36,29,0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, var(--rd-ink) 0%, rgba(27, 51, 40, 0.9) 40%, transparent)' }}
       />
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(270deg, #13241D 0%, rgba(19,36,29,0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(270deg, var(--rd-ink) 0%, rgba(27, 51, 40, 0.9) 40%, transparent)' }}
       />
     </div>
   );

@@ -20,7 +20,7 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: `${BASE}/`,
     display: 'standalone',
     background_color: '#F0E8D2',
-    theme_color: '#13241D',
+    theme_color: '#1B3328',
     orientation: 'portrait',
     icons: [
       { src: `${BASE}/assets/logo.jpg`, sizes: '192x192', type: 'image/jpeg', purpose: 'any' },

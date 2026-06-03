@@ -16,11 +16,11 @@
   /* Foundation — 80% of the canvas */
   /* Palette v3 — "premium emerald" (May 2026 client refresh). The client read
      v2 as still "a bit dark" / heavy. v3 lifts the dark backgrounds from a
-     near-black forest (#13241D) to a richer, warmer DEEP EMERALD (#1B3328) so
+     near-black forest (#1B3328) to a richer, warmer DEEP EMERALD (#1B3328) so
      the dark sections feel like velvet, not void — more luxury, less weight —
      while keeping text/borders strong-dark for readability. Paper unchanged
      (already a warm cream). */
-  --rd-ink:        #1B3328;   /* was #13241D — deep emerald, clearly green not black */
+  --rd-ink:        #1B3328;   /* was #1B3328 — deep emerald, clearly green not black */
   --rd-ink-soft:   #243F31;   /* elevated cards on ink — keeps a real depth gap */
   --rd-paper:      #F0E8D2;   /* warm, rich cream */
   --rd-paper-soft: #E6DCC2;   /* deeper cream layer */
@@ -35,24 +35,24 @@
   /* Accents — 5%, sparing */
   --rd-amber:      #D4A574;
   --rd-amber-dark: #A38554;
-  --rd-rain:       #6FA8DC;
+  --rd-rain:       #8FC0E8;   /* lightened from #6FA8DC: the INDICA badge (rain text on the dark chip over cream) was 4.35:1, an AA fail at 11px — this clears it. Rain is used only for that badge. */
 
   /* Text — on ink */
   --rd-text:       #F0E8D2;   /* matches new paper for consistent warmth */
   --rd-text-dim:   rgba(240, 232, 210, 0.74);
-  /* Lighthouse audit (re-run for palette v2): #13241D base needs slightly
+  /* Lighthouse audit (re-run for palette v2): #1B3328 base needs slightly
      higher alpha than the old #0A1410 to hit AA 4.5:1 on body text.
      Bumped to 0.66 (Feb 2026 contrast pass) for headroom on text-mute
      when overlaid on the new ink — previous 0.60 was right at the edge. */
   --rd-text-mute:  rgba(240, 232, 210, 0.72);
 
   /* Text — on paper */
-  --rd-on-paper:        #13241D;   /* matches new ink */
-  --rd-on-paper-dim:    rgba(19, 36, 29, 0.66);
+  --rd-on-paper:        #1B3328;   /* matches new ink */
+  --rd-on-paper-dim:    rgba(27, 51, 40, 0.70);
   /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
      legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
      clears ~4.6:1 while still reading as a muted tertiary tone. */
-  --rd-on-paper-mute:   rgba(19, 36, 29, 0.68);
+  --rd-on-paper-mute:   rgba(27, 51, 40, 0.68);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -75,9 +75,9 @@
   --emerald-deep:   var(--rd-moss);
   --sage:           var(--rd-mint);
   --ink:            var(--rd-ink);
-  --muted:          rgba(19, 36, 29, 0.55);
-  --line:           rgba(19, 36, 29, 0.1);
-  --shadow-soft:    0 30px 90px rgba(19, 36, 29, 0.14);
+  --muted:          rgba(27, 51, 40, 0.72);   /* was 0.55 = 3.52:1 on cream (AA fail); 0.72 clears AA for any legacy consumer */
+  --line:           rgba(27, 51, 40, 0.1);
+  --shadow-soft:    0 30px 90px rgba(27, 51, 40, 0.14);
 }
 
 * {
@@ -299,9 +299,9 @@ textarea:focus:not(:focus-visible) {
    reads as "editorial drop" rather than "Bootstrap card." */
 .rd-shadow-luxe {
   box-shadow:
-    0 1px 2px rgba(19, 36, 29, 0.04),
-    0 8px 24px rgba(19, 36, 29, 0.08),
-    0 32px 64px -16px rgba(19, 36, 29, 0.12);
+    0 1px 2px rgba(27, 51, 40, 0.04),
+    0 8px 24px rgba(27, 51, 40, 0.08),
+    0 32px 64px -16px rgba(27, 51, 40, 0.12);
 }
 
 /* Gold-edge ring — applied sparingly to important cards (testimonials,
@@ -309,7 +309,7 @@ textarea:focus:not(:focus-visible) {
 .rd-ring-gold {
   box-shadow:
     0 0 0 1px rgba(212, 165, 116, 0.18),
-    0 24px 64px rgba(19, 36, 29, 0.14);
+    0 24px 64px rgba(27, 51, 40, 0.14);
 }
 
 .gold-text {
@@ -342,7 +342,7 @@ textarea:focus:not(:focus-visible) {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(19, 36, 29, 0.55) 100%);
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(27, 51, 40, 0.55) 100%);
 }
 
 /* Drop expensive blur on small screens for paint performance */
@@ -675,12 +675,12 @@ textarea:focus:not(:focus-visible) {
 .btn-luxe-outline {
   background: transparent;
   color: var(--rd-ink);
-  border: 1px solid rgba(19, 36, 29, 0.22);
+  border: 1px solid rgba(27, 51, 40, 0.22);
 }
 .btn-luxe-outline:hover {
   border-color: var(--rd-moss);
   color: var(--rd-moss);
-  background: rgba(19, 36, 29, 0.04);
+  background: rgba(27, 51, 40, 0.04);
   transform: translateY(-1px);
 }
 

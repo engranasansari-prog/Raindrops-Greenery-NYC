@@ -37,7 +37,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/heroPhoto.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.28]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.55))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27, 51, 40,0.94),rgba(27, 51, 40,0.55))]" />
         <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
             <Breadcrumbs items={[{ label: 'About' }]} tone="dark" />
@@ -104,7 +104,7 @@ export default function AboutPage() {
             {pillars.map(({ icon: Icon, title, body }) => (
               <div
                 key={title}
-                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 p-6 shadow-[0_18px_54px_rgba(45,74,58,0.08)]"
+                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 p-6 shadow-[0_18px_54px_rgba(46, 82, 64,0.08)]"
               >
                 <Icon className="h-7 w-7 text-[color:var(--rd-moss)]" />
                 <h3
@@ -165,7 +165,7 @@ export default function AboutPage() {
             {testimonials.map((item) => (
               <figure
                 key={item.author}
-                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-7 shadow-[0_18px_54px_rgba(45,74,58,0.08)]"
+                className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-7 shadow-[0_18px_54px_rgba(46, 82, 64,0.08)]"
               >
                 <blockquote
                   className="text-[color:var(--rd-ink)]"
@@ -193,7 +193,7 @@ export default function AboutPage() {
       {/* Licensing CTA card */}
       <section className="bg-[color:var(--rd-paper)] pb-20 sm:pb-24">
         <div className="luxury-shell">
-          <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-amber)]/30 bg-[color:var(--rd-paper-soft)]/85 p-8 shadow-[0_24px_72px_rgba(45,74,58,0.10)] sm:p-12">
+          <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-amber)]/30 bg-[color:var(--rd-paper-soft)]/85 p-8 shadow-[0_24px_72px_rgba(46, 82, 64,0.10)] sm:p-12">
             <p className="rd-eyebrow text-[color:var(--rd-moss)]">Tribally licensed cannabis</p>
             <h2 className="mt-3 text-[color:var(--rd-ink)]">
               A <span className="italic">Tribally licensed</span> dispensary.

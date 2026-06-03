@@ -123,13 +123,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.20]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.95),rgba(19,36,29,0.7),rgba(19,36,29,0.9))]" aria-hidden />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27, 51, 40,0.95),rgba(27, 51, 40,0.7),rgba(27, 51, 40,0.9))]" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(45,74,58,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46, 82, 64,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
