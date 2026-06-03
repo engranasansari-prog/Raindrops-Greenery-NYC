@@ -155,7 +155,7 @@ export default function DeliveryPage() {
                   className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-6 lg:p-7 ${
                     isActive
                       ? 'border-[color:var(--rd-moss)] bg-[color:var(--rd-paper-bright)] shadow-[0_24px_60px_rgba(46,82,64,0.18)]'
-                      : 'border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/70 hover:border-[color:var(--rd-moss)]/30'
+                      : 'border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] shadow-[0_10px_28px_rgba(27,51,40,0.08)] hover:border-[color:var(--rd-moss)]/40'
                   }`}
                   role="button"
                   aria-pressed={isActive}
@@ -233,7 +233,7 @@ export default function DeliveryPage() {
                 <Link
                   key={n.slug}
                   href={`/delivery/${n.slug}`}
-                  className="group flex flex-col rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)]/70 p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/40"
+                  className="group flex flex-col rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] shadow-[0_10px_28px_rgba(27,51,40,0.08)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/40"
                 >
                   <p className="rd-eyebrow text-[color:var(--rd-moss)]">{n.borough}</p>
                   <h3
