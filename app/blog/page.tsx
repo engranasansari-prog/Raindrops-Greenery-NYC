@@ -79,8 +79,7 @@ export default function BlogPage() {
                   </span>
                 </div>
                 <h2
-                  className="mt-3 text-[color:var(--rd-text)]"
-                  style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.4rem, 2vw, 1.75rem)', lineHeight: 1.2, letterSpacing: '-0.015em' }}
+                  className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
                 >
                   {post.title}
                 </h2>

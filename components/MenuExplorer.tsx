@@ -348,7 +348,7 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               </div>
               <button
                 onClick={onClose}
-                className="shrink-0 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-3 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
                 aria-label="Close product details"
               >
                 <X className="h-5 w-5" />

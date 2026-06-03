@@ -205,6 +205,20 @@ h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; font-variation-setting
 .rd-mono { font-family: var(--font-mono), 'JetBrains Mono', monospace; }
 .rd-display { font-family: var(--font-display), 'Fraunces', Georgia, serif; }
 
+/* Sidebar / card section heading — the repeated "aside h2" (~1.4–1.75rem
+   Fraunces) that was hand-inlined identically on faq / blog / menu[category] /
+   delivery[area]. Unlayered (like the h1–h6 element rules) so it overrides the
+   global h2 size by class specificity, and carries the size-appropriate optical
+   axis (opsz 48, not the global h2's display-grade opsz 112). */
+.rd-head-aside {
+  font-family: var(--font-display), 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-variation-settings: 'SOFT' 60, 'opsz' 48, 'WONK' 0;
+}
+
 /* =====================================================================
    Motion / accessibility
    ===================================================================== */

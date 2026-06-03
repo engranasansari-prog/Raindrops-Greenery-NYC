@@ -184,8 +184,7 @@ export default function TaxFreeDeliveryPage() {
           <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
             <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready to order?</p>
             <h2
-              className="mt-3 text-[color:var(--rd-text)]"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.4rem, 2vw, 1.75rem)', letterSpacing: '-0.015em' }}
+              className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
             >
               Tax-free, same-day, <span className="italic">to your door.</span>
             </h2>

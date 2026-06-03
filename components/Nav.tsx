@@ -189,7 +189,7 @@ export default function Nav() {
       {drawerOpen && (
         <>
           <div
-            className="fixed inset-0 z-[55] bg-black/60 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[55] bg-[rgba(6,19,15,0.72)] backdrop-blur-md md:hidden"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
           />
