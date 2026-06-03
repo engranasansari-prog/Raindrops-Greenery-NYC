@@ -60,6 +60,11 @@
   /* iOS safe-area */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
+  /* Fixed chrome height = AnnouncementBar (36px) + Nav (72px). Single source of
+     truth for the <main> top spacer AND anchor scroll-margin, so tweaking
+     either bar's height can't silently mis-offset content or anchor jumps. */
+  --rd-chrome-h: 108px;
+
   /* Legacy aliases — keep so all existing components inherit the new look
      without needing component-by-component rewrites this pass. */
   --ivory:          var(--rd-paper);
@@ -204,7 +209,7 @@ h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; font-variation-setting
   }
 }
 
-:target { scroll-margin-top: 120px; }
+:target { scroll-margin-top: calc(var(--rd-chrome-h) + 12px); }
 
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible),

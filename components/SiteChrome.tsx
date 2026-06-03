@@ -519,7 +519,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       <AgeGate />
-      <main id="main" className="pt-[108px]">{children}</main>
+      <main id="main" className="pt-[var(--rd-chrome-h)]">{children}</main>
       <Footer />
       <StickyOrderBar />
       <BackToTop />

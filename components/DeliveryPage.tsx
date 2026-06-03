@@ -43,8 +43,16 @@ export default function DeliveryPage() {
     <SiteChrome>
       {/* Hero — full-width pill with backdrop image + headline */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.22]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.62),rgba(19,36,29,0.78))]" />
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.18] sm:opacity-[0.22]" />
+        {/* Mobile: heavy near-uniform VERTICAL wash. The headline + lede span the
+            full width on phones, so the desktop horizontal gradient let the
+            backdrop image bleed through behind the right half of the text — the
+            "text mixing with background" report. A vertical wash keeps the whole
+            text block on a dark, legible field. */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(19,36,29,0.93),rgba(19,36,29,0.84),rgba(19,36,29,0.96))] sm:hidden" />
+        {/* Desktop: cinematic horizontal gradient — text sits on the dark left,
+            the image stays visible on the right. Middle stop deepened 0.62→0.70. */}
+        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(19,36,29,0.94),rgba(19,36,29,0.70),rgba(19,36,29,0.80))]" />
         <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
           <div className="max-w-3xl">
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
