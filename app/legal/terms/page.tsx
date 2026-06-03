@@ -35,7 +35,7 @@ export default function TermsPage() {
       <h2>3. Orders, pricing, and availability</h2>
       <ul>
         <li>Product availability and pricing shown on the Service is provided as of the displayed sync timestamp and may change without notice.</li>
-        <li>Final price (including applicable taxes and delivery fees) is shown in checkout before you confirm.</li>
+        <li>Final price (and any applicable delivery fees) is shown in checkout before you confirm.</li>
         <li>We may limit quantities, refuse, or cancel any order at our discretion, including for suspected fraud, ID issues, or unsafe delivery conditions.</li>
         <li>Promotional codes are limited to one per order unless stated otherwise and may be discontinued at any time.</li>
       </ul>

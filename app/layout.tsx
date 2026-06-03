@@ -267,7 +267,7 @@ const localBusinessLd = {
   email: business.email,
   priceRange: '$$',
   currenciesAccepted: 'USD',
-  paymentAccepted: 'Cash, Debit Card',
+  paymentAccepted: 'Pay by Bank (Dutchie Pay)',
   slogan: business.tagline,
   description:
     'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free pricing. Free delivery on orders over $25.',

@@ -108,7 +108,7 @@ export function GET() {
       taxFree: true,
       freeDeliveryMinimum: 25,
       freeGift: 'Complimentary pre-roll with every order while supplies last',
-      paymentAccepted: ['Cash', 'Debit Card']
+      paymentAccepted: ['Pay by Bank (Dutchie Pay)']
     },
     catalog: {
       categories: ['Flower Strains', 'Pre-Rolls', 'Edibles'],

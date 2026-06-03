@@ -103,8 +103,8 @@ The menu price is the price. The math you do in your head before tapping order i
 
 ## Common questions
 
-**Can I pay the driver in cash?**
-Cash is accepted at the door. Debit may be available; check current methods in checkout.
+**How do I pay?**
+Pay by Bank through Dutchie Pay is the only form of payment. It is handled securely at checkout — not with the driver at the door.
 
 **Can someone else accept the delivery for me?**
 No — the ID must match the name on the order, and the recipient must be 21 or older. If you're ordering on behalf of someone else, they need to be the one at the door with ID.

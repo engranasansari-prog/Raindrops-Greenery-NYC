@@ -196,7 +196,7 @@ function AgeGate() {
               sizes="100vw"
               className="object-cover opacity-40"
             />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(27, 51, 40,0.62),rgba(27, 51, 40,0.95))]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(27,51,40,0.62),rgba(27,51,40,0.95))]" />
           </div>
 
           <motion.div
@@ -507,7 +507,7 @@ function StickyOrderBar() {
           animate={{ opacity: 1, y: 0, x: '-50%' }}
           exit={{ opacity: 0, y: 24, x: '-50%' }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-1/2 z-40 w-[min(720px,calc(100%-16px))] rounded-full border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink)]/90 p-2 shadow-[0_20px_70px_rgba(27, 51, 40,0.45)] backdrop-blur-2xl md:hidden"
+          className="fixed left-1/2 z-40 w-[min(720px,calc(100%-16px))] rounded-full border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink)]/90 p-2 shadow-[0_20px_70px_rgba(27,51,40,0.45)] backdrop-blur-2xl md:hidden"
           style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}
         >
           <div className="flex items-center justify-between gap-3">

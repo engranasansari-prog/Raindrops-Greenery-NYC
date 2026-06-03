@@ -219,6 +219,7 @@ export default function ChatAssistant() {
   // Seed the welcome message the first time the panel opens.
   useEffect(() => {
     if (open && messages.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMessages([
         {
           id: nextId(),

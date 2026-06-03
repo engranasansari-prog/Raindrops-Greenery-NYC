@@ -52,10 +52,10 @@ export default function DeliveryPage() {
             backdrop image bleed through behind the right half of the text — the
             "text mixing with background" report. A vertical wash keeps the whole
             text block on a dark, legible field. */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27, 51, 40,0.93),rgba(27, 51, 40,0.84),rgba(27, 51, 40,0.96))] sm:hidden" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.93),rgba(27,51,40,0.84),rgba(27,51,40,0.96))] sm:hidden" />
         {/* Desktop: cinematic horizontal gradient — text sits on the dark left,
             the image stays visible on the right. Middle stop deepened 0.62→0.70. */}
-        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27, 51, 40,0.94),rgba(27, 51, 40,0.70),rgba(27, 51, 40,0.80))]" />
+        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27,51,40,0.94),rgba(27,51,40,0.70),rgba(27,51,40,0.80))]" />
         <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
           <div className="max-w-3xl">
             <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />

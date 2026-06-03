@@ -128,7 +128,7 @@ export default function ContactPage() {
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46, 82, 64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative grid gap-10 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">

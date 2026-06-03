@@ -24,7 +24,7 @@
 - Background `var(--rd-moss)`, subtle lime border-bottom
 - 4 value props in a right-to-left marquee (30s loop, pauses on hover)
 - Content: `🎁 Free weed gift with every order · 🌿 Guaranteed best flowers ·
-  💰 Tax-free under Shinnecock authority · 🚚 Free delivery in Manhattan +
+  💰 Tax-free, Tribally licensed dispensary · 🚚 Free delivery in Manhattan +
   East River`
 - Items repeated 3× in the DOM so the loop is seamless
 - Respect `prefers-reduced-motion` (animation paused)

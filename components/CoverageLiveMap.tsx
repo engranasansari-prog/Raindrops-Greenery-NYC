@@ -528,7 +528,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           dimming labels. Pure decoration, never intercepts pointer events. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_60px_rgba(27, 51, 40,0.18)]"
+        className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_60px_rgba(27,51,40,0.18)]"
       />
       {/* Coverage stat eyebrow — true, on-brand chrome top-left. */}
       <div

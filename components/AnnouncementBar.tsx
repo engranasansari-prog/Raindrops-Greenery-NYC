@@ -24,7 +24,7 @@ const ITEMS: Item[] = [
   // implies full-borough coverage (we only cover Williamsburg + Greenpoint in
   // Brooklyn and Long Island City in Queens).
   { lead: 'Free delivery in', accent: 'Brooklyn', tail: '— Williamsburg + Greenpoint' },
-  { lead: 'Tax-free under', accent: 'Shinnecock', tail: 'authority' },
+  { lead: 'Tax-free,', accent: 'Tribally licensed', tail: 'dispensary' },
   { lead: 'Free delivery in', accent: 'Queens', tail: '— Long Island City' }
 ];
 
@@ -138,12 +138,12 @@ export default function AnnouncementBar() {
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(90deg, var(--rd-ink) 0%, rgba(27, 51, 40, 0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(90deg, var(--rd-ink) 0%, rgba(27,51,40, 0.9) 40%, transparent)' }}
       />
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 lg:w-24"
         aria-hidden
-        style={{ background: 'linear-gradient(270deg, var(--rd-ink) 0%, rgba(27, 51, 40, 0.9) 40%, transparent)' }}
+        style={{ background: 'linear-gradient(270deg, var(--rd-ink) 0%, rgba(27,51,40, 0.9) 40%, transparent)' }}
       />
     </div>
   );
