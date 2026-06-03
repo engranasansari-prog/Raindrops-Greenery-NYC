@@ -145,7 +145,7 @@ function ProductCard({
       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--rd-paper-soft)]">
+      <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         <ProductImage product={product} eager={eager} />
         <div className="absolute left-3 top-3 flex flex-col gap-1.5">
           <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] backdrop-blur [font-family:var(--font-mono)] ${STRAIN_BADGE[strain]}`}>
@@ -169,7 +169,7 @@ function ProductCard({
                 fontFamily: 'var(--font-display)',
                 fontWeight: 400,
                 letterSpacing: '-0.02em',
-                fontSize: 'clamp(1.05rem, 1.6vw, 1.4rem)',
+                fontSize: 'clamp(1.05rem, 1.5vw, 1.35rem)',
                 lineHeight: 1.2
               }}
               title={product.name}

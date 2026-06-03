@@ -28,7 +28,7 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
   return (
     <Link
       href={`/menu?product=${encodeURIComponent(product.id)}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
       <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         {product.image && (
@@ -59,11 +59,12 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
         <h3
           className="mt-1 line-clamp-2 break-words text-[color:var(--rd-text)]"
           style={{
-            fontFamily: 'var(--font-sans)',
-            fontWeight: 500,
-            fontSize: 'clamp(0.95rem, 1.3vw, 1.05rem)',
-            lineHeight: 1.3,
-            minHeight: 'calc(1.3em * 2)'
+            fontFamily: 'var(--font-display)',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
+            fontSize: 'clamp(1.05rem, 1.5vw, 1.35rem)',
+            lineHeight: 1.2,
+            minHeight: 'calc(1.2em * 2)'
           }}
           title={product.name}
         >
