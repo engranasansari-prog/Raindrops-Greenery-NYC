@@ -117,7 +117,7 @@ export default function ContactPage() {
   };
 
   const inputClass =
-    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)]/60';
+    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]';
 
   return (
     <SiteChrome>
@@ -190,7 +190,7 @@ export default function ContactPage() {
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
-                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)]/60"
+                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]"
                 />
               </label>
             </div>

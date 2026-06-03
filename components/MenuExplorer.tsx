@@ -475,7 +475,7 @@ function SelectField({ label, value, onChange, children }: { label: string; valu
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)]/60 [font-family:var(--font-sans)]"
+        className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] [font-family:var(--font-sans)]"
       >
         {children}
       </select>
