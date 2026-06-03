@@ -25,6 +25,12 @@ const nextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Allowed quality levels for next/image. The hero (the LCP element) sits
+    // behind an 0.78–0.94 dark gradient + film grain + Ken Burns drift, so a
+    // q50 AVIF is visually identical to q75 there while cutting ~40–60% of the
+    // LCP byte cost. Product cards stay at the default 75. (Next 16 requires
+    // every non-default quality used in <Image quality=…> to be listed here.)
+    qualities: [50, 60, 75],
     // Long edge cache — Dutchie product images don't change; once Next.js
     // optimizes one, keep it for a year.
     minimumCacheTTL: 60 * 60 * 24 * 365,

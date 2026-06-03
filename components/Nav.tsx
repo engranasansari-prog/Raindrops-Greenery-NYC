@@ -159,8 +159,8 @@ export default function Nav() {
                 >
                   {item.short}
                   <span
-                    className={`absolute left-0 -bottom-1.5 h-[1.5px] bg-[color:var(--rd-glow)] transition-all ${
-                      active ? 'w-full' : 'w-0 group-hover:w-full'
+                    className={`absolute left-0 -bottom-1.5 h-[1.5px] w-full origin-left bg-[color:var(--rd-glow)] transition-transform duration-300 [transition-timing-function:var(--ease-out)] ${
+                      active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
                   />
                 </Link>

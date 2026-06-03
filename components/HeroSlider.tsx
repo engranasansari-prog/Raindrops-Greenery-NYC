@@ -179,6 +179,10 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               priority={index === 0}
               fetchPriority={index === 0 ? 'high' : 'auto'}
               sizes="100vw"
+              // Hero sits under a heavy dark gradient + grain — q50 is
+              // indistinguishable from q75 here but ~40–60% lighter, which is
+              // a direct LCP win on slow connections (it's the LCP element).
+              quality={50}
               className="object-cover hero-kenburns"
               style={{ objectPosition: slide.imagePosition ?? 'center' }}
             />
@@ -259,8 +263,8 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
-                  className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[5.5rem]"
-                  style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.03em' }}
+                  className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[6.25rem] xl:leading-[0.98]"
+                  style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.035em' }}
                 >
                   {renderHeadline(slide.headline, slide.headlineAccent)}
                 </motion.h2>

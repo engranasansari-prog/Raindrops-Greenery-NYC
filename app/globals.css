@@ -124,7 +124,13 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.05;
-  font-variation-settings: 'SOFT' 70, 'opsz' 144;
+  /* Default optical sizing for mid-sized headings. The previous rule used a
+     single static 'opsz' 144 for EVERY heading — so a 16px h6 and an 88px h1
+     rendered from the same display master (the big sizes never got the tight,
+     high-contrast display cut, the small sizes got fitting they shouldn't).
+     We now set opsz per size below: h1/h2 go large + switch WONK on for the
+     expressive Fraunces character; h5/h6 drop to a text-grade opsz. */
+  font-variation-settings: 'SOFT' 60, 'opsz' 56, 'WONK' 0;
   /* Balance multi-line headlines so the last line never dangles a single
      orphan word — the single biggest "editorial polish" tell on luxury sites.
      Falls back gracefully on browsers that don't support it. */
@@ -143,10 +149,14 @@ h1, h2, h3, h4, h5, h6 {
    display compression, slightly looser on smaller mobile to keep
    text breathable. */
 h1 {
-  font-size: clamp(2rem, 5.5vw + 0.75rem, 5.5rem);
+  /* Desktop ceiling lifted 5.5rem → 6rem for more display presence on large
+     screens (only engages ≥~1530px via the vw term — mobile/tablet floor and
+     mid sizes are unchanged, so the prior "too big on mobile" tuning holds). */
+  font-size: clamp(2rem, 5.5vw + 0.75rem, 6rem);
   font-weight: 300;
   letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 1.04;
+  font-variation-settings: 'SOFT' 48, 'opsz' 144, 'WONK' 1;
 }
 
 h2 {
@@ -154,6 +164,7 @@ h2 {
   font-weight: 400;
   letter-spacing: -0.025em;
   line-height: 1.12;
+  font-variation-settings: 'SOFT' 54, 'opsz' 112, 'WONK' 1;
 }
 
 h3 {
@@ -161,11 +172,12 @@ h3 {
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  font-variation-settings: 'SOFT' 60, 'opsz' 64, 'WONK' 0;
 }
 
-h4 { font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem); font-weight: 500; }
-h5 { font-size: 1.125rem; font-weight: 500; line-height: 1.3; }
-h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; }
+h4 { font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem); font-weight: 500; font-variation-settings: 'SOFT' 60, 'opsz' 40, 'WONK' 0; }
+h5 { font-size: 1.125rem; font-weight: 500; line-height: 1.3; font-variation-settings: 'SOFT' 60, 'opsz' 28, 'WONK' 0; }
+h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; font-variation-settings: 'SOFT' 60, 'opsz' 24, 'WONK' 0; }
 
 .rd-eyebrow {
   font-family: var(--font-mono), 'JetBrains Mono', monospace;
@@ -250,7 +262,26 @@ textarea:focus:not(:focus-visible) {
    on hero containers + dark CTA bands. Falls back gracefully — solid ink
    is still the base if a child opts out. */
 .rd-luxe-dark {
-  background: linear-gradient(180deg, var(--rd-ink) 0%, var(--rd-ink-soft) 100%);
+  /* A faint moss glow rising from the top edge — over the ink→ink-soft fall —
+     gives each dark band real depth instead of reading as one flat slab. Kept
+     subtle (13% moss) so consecutive dark sections still feel like one brand
+     world, just with light in them. Variants below add per-section variety. */
+  background:
+    radial-gradient(125% 78% at 50% 0%, color-mix(in srgb, var(--rd-moss) 13%, transparent) 0%, transparent 58%),
+    linear-gradient(180deg, var(--rd-ink) 0%, var(--rd-ink-soft) 100%);
+}
+/* Tonal variants — drop onto ALTERNATE dark sections so a long scroll reads as
+   distinct "rooms" rather than one continuous green slab (the recurring
+   "feels flat / two-colored" note). Same family, different light source. */
+.rd-luxe-dark--warm {
+  background:
+    radial-gradient(120% 80% at 85% 0%, color-mix(in srgb, var(--rd-amber) 12%, transparent) 0%, transparent 55%),
+    linear-gradient(165deg, var(--rd-ink-soft) 0%, var(--rd-ink) 62%);
+}
+.rd-luxe-dark--glow {
+  background:
+    radial-gradient(120% 85% at 12% 8%, color-mix(in srgb, var(--rd-glow) 11%, transparent) 0%, transparent 52%),
+    linear-gradient(196deg, var(--rd-ink) 0%, var(--rd-ink-soft) 100%);
 }
 
 /* Light cream sections benefit from a soft warm-paper gradient. Same
@@ -499,8 +530,11 @@ textarea:focus:not(:focus-visible) {
    vs framer-motion which costs ~50ms each. */
 .rd-reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  /* Less travel + slightly quicker than the old 20px/0.55s — dense editorial
+     content reads better when it settles rather than lunges. Stagger between
+     siblings (set via inline transition-delay) does the choreography. */
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
 .rd-reveal--in {
   opacity: 1;
@@ -544,14 +578,12 @@ textarea:focus:not(:focus-visible) {
 .animate-marquee {
   width: max-content;
   animation: marquee 28s linear infinite;
-  /* will-change is a HINT to the browser to prep a GPU layer; it does
-     NOT set a value the way a static `transform` would. We previously
-     also set `transform: translate3d(0, 0, 0)` and `backface-visibility:
-     hidden` here, but the static transform conflicted with the
-     @keyframes animation on iOS Safari / older Android Chrome and
-     effectively froze the marquee on mobile. Hint-only is the safe
-     cross-browser pattern. */
-  will-change: transform;
+  /* NOTE: deliberately NO `will-change`. An ALWAYS-RUNNING animation that is
+     hinted keeps a compositor layer promoted for the entire life of the page
+     — wasted GPU memory + battery on mobile, for zero benefit (the browser
+     already composites an animating transform on its own). We also avoid a
+     static transform/backface-visibility here: it conflicted with the
+     @keyframes on iOS Safari / older Android Chrome and froze the marquee. */
 }
 /* Mobile cadence — content is the same size as desktop but the viewport
    window is narrower, so each pip needs more on-screen time to read.
@@ -594,14 +626,17 @@ textarea:focus:not(:focus-visible) {
 .btn-luxe:hover svg { transform: translateX(2px); }
 
 .btn-luxe-gold {
-  background: var(--rd-glow);
+  /* Lit pill — a top-down gradient + a 1px inner highlight makes the primary
+     CTA read as a physical, back-lit jewel rather than a flat fill. This is
+     the most-clicked pixel on the site, so it earns the extra craft. */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rd-glow) 82%, white) 0%, var(--rd-glow) 56%, color-mix(in srgb, var(--rd-glow) 90%, black) 100%);
   color: var(--rd-ink);
-  border: 1px solid var(--rd-glow);
-  box-shadow: 0 12px 36px rgba(200, 230, 110, 0.32);
+  border: 1px solid color-mix(in srgb, var(--rd-glow) 76%, black);
+  box-shadow: 0 12px 36px rgba(200, 230, 110, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .btn-luxe-gold:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 18px 48px rgba(200, 230, 110, 0.42);
+  transform: translateY(-1.5px);
+  box-shadow: 0 20px 52px rgba(200, 230, 110, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
 .btn-luxe-ghost {
@@ -644,6 +679,21 @@ textarea:focus:not(:focus-visible) {
   transform: translateY(-1px);
 }
 
+/* Press feedback — the single biggest "alive on mobile" upgrade. The whole
+   button system was hover-only (no :active anywhere), so on touch — most of
+   this audience — taps got ZERO acknowledgment until navigation fired. This
+   compresses the pill ~3% with a fast 90ms press-in; the slower default
+   280ms transition handles the eased release. Placed AFTER every variant
+   :hover so it wins while the pointer is down (hover + active both match).
+   Overrides the hover translateY lift with a settle-to-press. */
+.btn-luxe:active {
+  transform: scale(0.97);
+  transition-duration: 90ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-luxe:active { transform: none; }
+}
+
 /* Size modifier — smaller, denser variant for product-card CTAs and
    inline form actions where the full 48px primary-CTA height would
    overwhelm the row. Compose like:
@@ -672,7 +722,8 @@ textarea:focus:not(:focus-visible) {
   border-radius: 9999px;
   filter: blur(48px);
   opacity: 0;
-  will-change: transform, opacity;
+  /* No `will-change` — these drift forever; hinting just pins permanent GPU
+     layers. The browser composites the animating transform without it. */
 }
 @media (min-width: 768px) {
   .smoke-blob {
@@ -736,7 +787,6 @@ textarea:focus:not(:focus-visible) {
    ───────────────────────────────────────────────────────────────── */
 @media (min-width: 640px) {
   .hero-kenburns {
-    will-change: transform;
     animation: hero-kenburns 20s ease-in-out infinite alternate;
   }
 }
@@ -746,7 +796,6 @@ textarea:focus:not(:focus-visible) {
 }
 @media (max-width: 639.98px) {
   .hero-kenburns {
-    will-change: transform;
     animation: hero-kenburns-pan 22s ease-in-out infinite alternate;
   }
 }

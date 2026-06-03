@@ -7,12 +7,20 @@ import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import './globals.css';
 
-// Display — Fraunces (variable, opsz + SOFT for editorial feel)
+// Display — Fraunces (variable). We load THREE expressive axes:
+//   • opsz  — optical sizing, dialed per heading size in globals.css so big
+//             display text gets the tight, high-contrast cut and small text
+//             stays readable (instead of one static opsz for every size).
+//   • SOFT  — softens terminals slightly for a warmer, less clinical serif.
+//   • WONK  — Fraunces' signature "wonky" axis (swashy ball-terminals + the
+//             expressive italic). This is what makes Fraunces look like a
+//             $$$ editorial face rather than a generic serif; we switch it on
+//             for the large display sizes only.
 const display = Fraunces({
   subsets: ['latin'],
   variable: '--font-display',
   weight: 'variable',
-  axes: ['opsz', 'SOFT'],
+  axes: ['opsz', 'SOFT', 'WONK'],
   display: 'swap'
 });
 // Body — DM Sans (clean, modern, non-Inter)
@@ -384,10 +392,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <head>
-        {/* Preconnect to font CDN for snappier first paint (covered by next/font
-            but the explicit hint helps in some browsers and crawlers). */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* NOTE: no font-CDN preconnect. next/font SELF-HOSTS Fraunces / DM Sans
+            / JetBrains Mono from this origin at build time, so the browser never
+            requests fonts.googleapis.com or fonts.gstatic.com — preconnecting to
+            them just burned two DNS+TLS handshakes on cold mobile for nothing. */}
         {/* No product-image CDN preconnect needed: next/image proxies every
             menu thumbnail through same-origin /_next/image, so the browser
             never opens a direct connection to the upstream S3 host. (The prior

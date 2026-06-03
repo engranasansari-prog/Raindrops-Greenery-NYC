@@ -252,7 +252,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                     placeholder="blur"
                     blurDataURL={PRODUCT_BLUR_DATA_URL}
                     loading="eager"
-                    className="object-contain p-6 transition-transform duration-[4000ms] [transition-timing-function:linear] group-hover:scale-[1.07]"
+                    className="object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
                 )}
                 <div className="absolute left-3 top-3 flex flex-col gap-1.5">
