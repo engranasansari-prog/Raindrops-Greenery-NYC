@@ -7,15 +7,12 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
-  Box,
-  Droplet,
   Plus,
-  RotateCcw,
-  ShieldCheck,
   Star
 } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import SiteChrome from '@/components/SiteChrome';
+import Reveal from '@/components/Reveal';
 // LiveOrderToasts only appears 3.5s after mount and doesn't need to be on
 // the critical-path JS. Lazy-loading it shaves ~5KB from the initial bundle
 // and keeps it off the LCP critical path.
@@ -25,7 +22,7 @@ const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import HookPills from '@/components/HookPills';
-import { testimonials, valueProps } from '@/lib/site-data';
+import { testimonials } from '@/lib/site-data';
 import { type FeaturedDeal } from '@/lib/featured-deals';
 import { type StrainTag } from '@/lib/menu-utils';
 
@@ -68,100 +65,12 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
  * animation context. Plain `transition` + a single class flip on intersect
  * is ~zero JS overhead.
  */
-function Reveal({
-  children,
-  delay = 0,
-  className = ''
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [shown, setShown] = useState(false);
+// Reveal (scroll-in) now lives in its own client module — components/Reveal.tsx
+// — so server components (e.g. ValueProps) can use it. Imported above.
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const el = ref.current;
-    if (!el) return;
-    // Respect reduced motion — show immediately, no transition needed.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setShown(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <div
-      ref={ref}
-      className={`rd-reveal ${shown ? 'rd-reveal--in' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}s` } : undefined}
-    >
-      {children}
-    </div>
-  );
-}
-
-// =====================================================================
-// 3. Why Raindrops — 4 cards aligned to the hooks (V6 §6.3)
-// =====================================================================
-const VALUE_ICONS = [Droplet, ShieldCheck, Box, RotateCcw];
-
-function ValueProps() {
-  return (
-    <section className="rd-luxe-paper py-14 sm:py-20 lg:py-24">
-      <div className="luxury-shell">
-        <Reveal>
-          <div className="mb-10 max-w-2xl">
-            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Why Raindrops</p>
-            <h2 className="mt-4 text-[color:var(--rd-ink)]">
-              Four reasons New Yorkers <span className="italic">come back.</span>
-            </h2>
-          </div>
-        </Reveal>
-        <div className="grid gap-5 md:grid-cols-2">
-          {valueProps.map((item, index) => {
-            const Icon = VALUE_ICONS[index] ?? Droplet;
-            return (
-              <Reveal key={item.title} delay={index * 0.05}>
-                <div className="rd-shadow-luxe group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/35 sm:p-8 lg:p-9">
-                  <div className="flex items-start justify-between gap-4">
-                    <Icon className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
-                    <span
-                      className="text-4xl text-[color:var(--rd-amber)]/35 sm:text-5xl lg:text-6xl"
-                      style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.05em' }}
-                    >
-                      0{index + 1}
-                    </span>
-                  </div>
-                  <h3
-                    className="mt-5 text-xl text-[color:var(--rd-ink)] sm:mt-7 sm:text-2xl lg:text-3xl"
-                    style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-[15px] leading-[1.55] text-[color:var(--rd-on-paper-dim)] sm:text-base sm:leading-7">{item.body}</p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
+// "Why Raindrops" is now a SERVER component — components/home/ValueProps.tsx —
+// rendered from app/page.tsx and slotted in here via the valuePropsSlot prop,
+// so its static markup + icon SVGs no longer ship in the home hydration payload.
 
 // =====================================================================
 // 4. Featured picks — 3 curated products (no discounts; the real value is
@@ -481,7 +390,7 @@ function TestimonialFeature() {
 // =====================================================================
 // Page composition — exactly 6 sections per V6 §4
 // =====================================================================
-export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
+export default function HomePage({ deals, valuePropsSlot }: { deals: FeaturedDeal[]; valuePropsSlot: ReactNode }) {
   const slides: HeroSlide[] = [
     {
       id: 'best-flower',
@@ -545,7 +454,7 @@ export default function HomePage({ deals }: { deals: FeaturedDeal[] }) {
         <CoverageMap />
       </div>
 
-      <ValueProps />
+      {valuePropsSlot}
 
       <FeaturedDeals deals={deals} />
 
