@@ -203,6 +203,15 @@ h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; font-variation-setting
 }
 
 .rd-mono { font-family: var(--font-mono), 'JetBrains Mono', monospace; }
+
+/* One-shot card entrance — replaces framer initial/animate on the menu grid so
+   filtering 44 cards re-renders with zero framer overhead (the INP fix). Pure
+   CSS; the global prefers-reduced-motion rule disables it. */
+@keyframes rd-card-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.rd-card-in { animation: rd-card-in 0.32s var(--ease-out) both; }
 .rd-display { font-family: var(--font-display), 'Fraunces', Georgia, serif; }
 
 /* Sidebar / card section heading — the repeated "aside h2" (~1.4–1.75rem

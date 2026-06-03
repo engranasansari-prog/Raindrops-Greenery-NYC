@@ -126,7 +126,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.16] sm:opacity-[0.20]" />
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" quality={50} className="object-cover opacity-[0.16] sm:opacity-[0.20]" />
         {/* Mobile: heavier uniform wash so the full-width headline never sits
             over the bleed-through backdrop image (text-on-image legibility). */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.93),rgba(27,51,40,0.86),rgba(27,51,40,0.96))] sm:hidden" aria-hidden />

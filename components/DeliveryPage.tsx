@@ -46,7 +46,7 @@ export default function DeliveryPage() {
     <SiteChrome>
       {/* Hero — full-width pill with backdrop image + headline */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.18] sm:opacity-[0.22]" />
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" quality={50} className="object-cover opacity-[0.18] sm:opacity-[0.22]" />
         {/* Mobile: heavy near-uniform VERTICAL wash. The headline + lede span the
             full width on phones, so the desktop horizontal gradient let the
             backdrop image bleed through behind the right half of the text — the

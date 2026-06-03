@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BrandLogoLoop from '@/components/BrandLogoLoop';
@@ -82,6 +82,11 @@ const weights = getAvailableWeights(menuProducts);
 const profiles = getAvailableProfiles(menuProducts);
 const totalProducts = menuProducts.length;
 
+// Precompute each product's search text ONCE at module load. Previously
+// getMenuSearchText (getBrandLabel + inferProfile + getPotencyLabel + ... per
+// product) ran for all 44 products on EVERY keystroke — a major INP cost.
+const SEARCH_TEXT = new Map(menuProducts.map((p) => [p.id, getMenuSearchText(p)]));
+
 const sortLabels: Record<SortMode, string> = {
   featured: 'Featured',
   'price-low': 'Price low to high',
@@ -119,7 +124,7 @@ function ProductImage({ product, eager = false }: { product: LiveMenuProduct; ea
   );
 }
 
-function ProductCard({
+const ProductCard = memo(function ProductCard({
   product,
   onDetails,
   eager = false
@@ -134,16 +139,14 @@ function ProductCard({
   const sticky = isSticky(product);
 
   return (
-    <motion.article
-      /* No `layout`: it made framer run a FLIP layout animation across EVERY
-         visible card on each filter/sort keystroke (animating top/left on
-         40+ nodes = the menu's main INP/jank source). Dropping it keeps a
-         clean fade-in for newly-matched cards while surviving cards stay put
-         instantly — filtering now feels immediate instead of "busy". */
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+    <article
+      /* De-framered for INP: was a <motion.article> with initial/animate, so on
+         the 44-card menu every keystroke/slider-tick re-rendered all visible
+         cards with framer's per-node overhead — the main INP cost. Now a plain
+         <article> with a pure-CSS entrance (rd-card-in) + React.memo on the
+         component + a stable onDetails callback, so a filter change re-renders
+         only the cards whose props actually changed, at zero framer cost. */
+      className="rd-card-in group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
       <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         <ProductImage product={product} eager={eager} />
@@ -241,9 +244,9 @@ function ProductCard({
           </Link>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
-}
+});
 
 function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
@@ -497,6 +500,20 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
     return menuProducts.find((product) => product.id === initialProductId) ?? null;
   });
 
+  // INP: defer the filter inputs so the search box + slider thumb stay at 60fps
+  // (cheap immediate state) while the expensive filter+sort+grid render runs at
+  // low priority React can interrupt for the next keystroke.
+  const deferredQuery = useDeferredValue(query);
+  const deferredPriceMax = useDeferredValue(priceMax);
+  const deferredMinThc = useDeferredValue(minThc);
+
+  // Stable so the memoized ProductCards don't re-render every keystroke just
+  // because a fresh arrow was created inline in the grid map.
+  const handleDetails = useCallback((p: LiveMenuProduct) => {
+    setSelectedProduct(p);
+    trackProductView(p.name, p.category);
+  }, []);
+
   // Keep ?product= in the URL in sync with the open modal so individual items are shareable.
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -531,7 +548,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   }, [category]);
 
   const filteredProducts = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = deferredQuery.trim().toLowerCase();
 
     return menuProducts
       .filter((product) => category === 'All' || product.category === category)
@@ -549,14 +566,14 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
       // within the slider range. Customers dragging the slider to $75
       // see the flower whose 7g variant is $75 even though its 3.5g is $40.
       .filter((product) => {
-        const cap = priceMax * 100;
+        const cap = deferredPriceMax * 100;
         if (product.variants.length > 0) return product.variants.some((v) => v.price <= cap);
         return product.salePrice <= cap;
       })
       // Min-THC slider applies ONLY to Flower (client request — Pre-Rolls
       // are pre-made products where the % varies less, and Edibles use mg).
-      .filter((product) => category !== 'Flower' || getPrimaryPotency(product) >= minThc)
-      .filter((product) => !normalizedQuery || getMenuSearchText(product).includes(normalizedQuery))
+      .filter((product) => category !== 'Flower' || getPrimaryPotency(product) >= deferredMinThc)
+      .filter((product) => !normalizedQuery || (SEARCH_TEXT.get(product.id) ?? '').includes(normalizedQuery))
       .sort((a, b) => {
         if (sort === 'price-low') return a.salePrice - b.salePrice;
         if (sort === 'price-high') return b.salePrice - a.salePrice;
@@ -569,7 +586,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
         if (categoryDelta !== 0) return categoryDelta;
         return Number(hasSale(b)) - Number(hasSale(a)) || Number(b.quantity > 0) - Number(a.quantity > 0) || a.name.localeCompare(b.name);
       });
-  }, [category, minThc, priceMax, profile, query, sort, weight]);
+  }, [category, deferredMinThc, deferredPriceMax, profile, deferredQuery, sort, weight]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
 
@@ -828,38 +845,28 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
               and crawlers the H2 level between the page H1 and the H3 product
               titles — fixes the H1→H3 heading-order skip. */}
           <h2 className="sr-only">Cannabis delivery menu — Flower Strains, Pre-Rolls, and Edibles</h2>
-          <AnimatePresence mode="popLayout">
-            {visibleProducts.length > 0 ? (
-              <motion.div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-                {visibleProducts.map((product, i) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    onDetails={(p) => {
-                      setSelectedProduct(p);
-                      trackProductView(p.name, p.category);
-                    }}
-                    /* First 6 cards above the fold are hinted eager so they render
-                       without waiting for IntersectionObserver. Use the map index
-                       (was indexOf — an O(n²) scan per render). */
-                    eager={i < 6}
-                  />
-                ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mx-auto max-w-2xl rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-10 text-center"
-              >
-                <SlidersHorizontal className="mx-auto h-10 w-10 text-[color:var(--rd-glow)]" />
-                <h2 className="mt-5 text-[color:var(--rd-text)]">
-                  No products <span className="italic">matched.</span>
-                </h2>
-                <p className="mt-3 text-[color:var(--rd-text-dim)]">Adjust the filters or reset to see the full menu.</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {visibleProducts.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {visibleProducts.map((product, i) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onDetails={handleDetails}
+                  /* First 6 cards above the fold are hinted eager so they render
+                     without waiting for IntersectionObserver. */
+                  eager={i < 6}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="rd-card-in mx-auto max-w-2xl rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-10 text-center">
+              <SlidersHorizontal className="mx-auto h-10 w-10 text-[color:var(--rd-glow)]" />
+              <h2 className="mt-5 text-[color:var(--rd-text)]">
+                No products <span className="italic">matched.</span>
+              </h2>
+              <p className="mt-3 text-[color:var(--rd-text-dim)]">Adjust the filters or reset to see the full menu.</p>
+            </div>
+          )}
 
           <div className="mt-10 flex flex-col items-center justify-between gap-4 rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 md:flex-row">
             <p className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)]">

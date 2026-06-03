@@ -194,6 +194,7 @@ function AgeGate() {
               alt=""
               fill
               sizes="100vw"
+              quality={50}
               className="object-cover opacity-40"
             />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(27,51,40,0.62),rgba(27,51,40,0.95))]" />
