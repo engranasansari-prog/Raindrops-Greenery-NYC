@@ -238,10 +238,14 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
               aria-selected={i === activeIndex}
               aria-label={`Show deal ${i + 1}`}
               onClick={() => scrollToIndex(i)}
-              className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
-                i === activeIndex ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 hover:bg-[color:var(--rd-paper)]/55'
-              }`}
-            />
+              className="group flex h-11 items-center px-1"
+            >
+              <span
+                className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
+                  i === activeIndex ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 group-hover:bg-[color:var(--rd-paper)]/55'
+                }`}
+              />
+            </button>
           ))}
         </div>
 
@@ -252,7 +256,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             onClick={() => scrollToIndex(Math.max(activeIndex - 1, 0))}
             disabled={activeIndex === 0}
             aria-label="Previous deal"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
@@ -261,7 +265,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             onClick={() => scrollToIndex(Math.min(activeIndex + 1, deals.length - 1))}
             disabled={activeIndex === deals.length - 1}
             aria-label="Next deal"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
           >
             <ArrowRight className="h-4 w-4" />
           </button>

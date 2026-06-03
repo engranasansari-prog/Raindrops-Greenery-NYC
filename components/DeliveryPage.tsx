@@ -126,30 +126,16 @@ export default function DeliveryPage() {
                   transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.4), ease: easeOut }}
                   onMouseEnter={() => setActiveCluster(cluster.id)}
                   onMouseLeave={() => setActiveCluster(null)}
-                  onFocus={() => setActiveCluster(cluster.id)}
-                  onBlur={() => setActiveCluster(null)}
-                  tabIndex={0}
                   onClick={() => {
                     setActiveCluster(cluster.id);
-                    // Scroll the map back into view so the customer sees the highlight
+                    // Mouse convenience only: clicking the card recenters the map
+                    // on its zone. Deliberately NOT a role=button / tab stop — it
+                    // was wrapping a real <a> (invalid nested-interactive + a
+                    // redundant tab stop). The inner "Order in this area" link is
+                    // the keyboard-accessible action.
                     if (typeof window !== 'undefined') {
                       const el = document.querySelector('[aria-label*="delivery coverage"]');
                       if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    // role="button" must be operable by keyboard (WCAG 2.1.1).
-                    // Enter/Space activate the card the same as a click; the
-                    // inner "Order in this area" link keeps its own Enter via
-                    // stopPropagation so the two don't collide.
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      if (e.target !== e.currentTarget) return;
-                      e.preventDefault();
-                      setActiveCluster(cluster.id);
-                      if (typeof window !== 'undefined') {
-                        const el = document.querySelector('[aria-label*="delivery coverage"]');
-                        if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-                      }
                     }
                   }}
                   className={`group flex h-full cursor-pointer flex-col rounded-3xl border p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 sm:p-6 lg:p-7 ${
@@ -157,8 +143,6 @@ export default function DeliveryPage() {
                       ? 'border-[color:var(--rd-moss)] bg-[color:var(--rd-paper-bright)] shadow-[0_24px_60px_rgba(46,82,64,0.18)]'
                       : 'border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] shadow-[0_10px_28px_rgba(27,51,40,0.08)] hover:border-[color:var(--rd-moss)]/40'
                   }`}
-                  role="button"
-                  aria-pressed={isActive}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">

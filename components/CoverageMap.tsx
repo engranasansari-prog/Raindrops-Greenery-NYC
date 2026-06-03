@@ -386,7 +386,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       type="button"
                       onClick={() => setOpenCluster(null)}
                       aria-label="Close details"
-                      className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
+                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
                     >
                       <X className="h-4 w-4" />
                     </button>

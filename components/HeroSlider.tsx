@@ -353,7 +353,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             onClick={() => setUserPaused((value) => !value)}
             aria-pressed={userPaused}
             aria-label={userPaused ? 'Play slideshow' : 'Pause slideshow'}
-            className="absolute bottom-5 left-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] sm:bottom-9"
+            className="absolute bottom-5 left-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] sm:bottom-9"
           >
             {userPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
           </button>
