@@ -12,6 +12,7 @@ import OpenStatus from '@/components/OpenStatus';
 import BackToTop from '@/components/BackToTop';
 import dynamic from 'next/dynamic';
 import { business, checkout, footerLinkGroups, social } from '@/lib/site-data';
+import { trackOrderClick, trackSignup } from '@/lib/analytics';
 
 // Chat concierge — load after hydration (client-only floating widget) so it
 // never competes with first paint / LCP.
@@ -38,11 +39,13 @@ const ChatAssistant = dynamic(() => import('@/components/ChatAssistant'), { ssr:
 export function OrderButton({
   label = 'Order now',
   className = '',
-  responsive = false
+  responsive = false,
+  source = 'order_button'
 }: {
   label?: string;
   className?: string;
   responsive?: boolean;
+  source?: string;
 }) {
   if (responsive) {
     return (
@@ -51,6 +54,7 @@ export function OrderButton({
         target="_blank"
         rel="noreferrer"
         aria-label={label}
+        onClick={() => trackOrderClick(source)}
         className={`btn-luxe btn-luxe-gold inline-flex h-11 w-11 min-h-0 items-center justify-center !px-0 md:h-auto md:w-auto md:!px-6 ${className}`}
       >
         <ShoppingBag className="h-4 w-4" />
@@ -64,6 +68,7 @@ export function OrderButton({
       href={checkout.dutchieUrl}
       target="_blank"
       rel="noreferrer"
+      onClick={() => trackOrderClick(source)}
       className={`btn-luxe btn-luxe-gold ${className}`}
     >
       <ShoppingBag className="h-4 w-4" />
@@ -156,6 +161,7 @@ function AgeGate() {
       if (data.ok) {
         setSubscribeStatus('success');
         setSubscribeMessage(data.message ?? "You’re in. Drops incoming.");
+        trackSignup('age_gate');
         // Auto-close after a beat so the customer can see the success state.
         window.setTimeout(close, 1600);
       } else {

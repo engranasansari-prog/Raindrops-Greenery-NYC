@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ArrowRight, Check, Mail } from 'lucide-react';
+import { trackSignup } from '@/lib/analytics';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -39,6 +40,7 @@ export default function NewsletterForm({ source = 'website-footer' }: { source?:
         setStatus('success');
         setMessage(data.message ?? "You're in.");
         setEmail('');
+        trackSignup(source);
       } else {
         setStatus('error');
         setMessage(data.error ?? 'Something went wrong.');

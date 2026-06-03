@@ -9,6 +9,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BrandLogoLoop from '@/components/BrandLogoLoop';
+import { trackOrderClick, trackProductView } from '@/lib/analytics';
 import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import {
   effectOptions,
@@ -232,6 +233,7 @@ function ProductCard({
             target="_blank"
             rel="noreferrer"
             aria-label={`Order ${product.name} — secure checkout`}
+            onClick={() => trackOrderClick('menu_card', { item: product.name })}
             className="btn-luxe btn-luxe-gold btn-luxe-sm"
           >
             Order
@@ -429,6 +431,7 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
                 target="_blank"
                 rel="noreferrer"
                 aria-label={`Order ${product.name} — secure checkout`}
+                onClick={() => trackOrderClick('menu_modal', { item: product.name })}
                 className="btn-luxe btn-luxe-gold"
               >
                 Secure checkout
@@ -828,7 +831,10 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   <ProductCard
                     key={product.id}
                     product={product}
-                    onDetails={setSelectedProduct}
+                    onDetails={(p) => {
+                      setSelectedProduct(p);
+                      trackProductView(p.name, p.category);
+                    }}
                     /* First 6 cards above the fold are hinted eager so they render
                        without waiting for IntersectionObserver. Use the map index
                        (was indexOf — an O(n²) scan per render). */

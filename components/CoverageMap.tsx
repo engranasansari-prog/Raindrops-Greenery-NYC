@@ -9,6 +9,7 @@ import { COVERAGE } from '@/lib/coverage';
 import { checkZip } from '@/lib/zip-utils';
 import ZipSearch from '@/components/ZipSearch';
 import { useModalA11y } from '@/hooks/useModalA11y';
+import { trackZipCheck } from '@/lib/analytics';
 
 /* =====================================================================
    Raindrops coverage — V9 simplification (per client review).
@@ -105,6 +106,19 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
   }, []);
 
   const result = useMemo(() => (submitted ? checkZip(zip) : checkZip('')), [submitted, zip]);
+
+  // Conversion event: fire once per resolved ZIP check (covered or not) — the
+  // qualification signal that tells us how much in-area vs out-of-area demand
+  // we're getting. Deduped by zip+status so editing after submit can't double-fire.
+  const trackedZipRef = useRef<string>('');
+  useEffect(() => {
+    if (!submitted) return;
+    if (result.status !== 'supported' && result.status !== 'unsupported') return;
+    const key = `${zip}:${result.status}`;
+    if (trackedZipRef.current === key) return;
+    trackedZipRef.current = key;
+    trackZipCheck(zip, result.status === 'supported');
+  }, [submitted, result.status, zip]);
 
   const onSubmit = () => setSubmitted(true);
   const onChange = (value: string) => {

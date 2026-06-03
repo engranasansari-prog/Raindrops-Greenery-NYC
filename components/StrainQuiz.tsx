@@ -4,11 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
+import { trackQuizComplete } from '@/lib/analytics';
 import {
   formatPrice,
   getBrandLabel,
@@ -188,6 +189,17 @@ export default function StrainQuiz() {
   const selectedValue = current ? (answers[current.key] as string | undefined) : undefined;
 
   const results = useMemo(() => (finished ? recommend(answers) : []), [answers, finished]);
+
+  // Conversion event: fire once each time the quiz completes (re-arms on retake).
+  const quizDoneRef = useRef(false);
+  useEffect(() => {
+    if (finished && !quizDoneRef.current) {
+      quizDoneRef.current = true;
+      trackQuizComplete(results[0]?.name);
+    } else if (!finished) {
+      quizDoneRef.current = false;
+    }
+  }, [finished, results]);
 
   // Scroll-to-top on step change so each question lands at the same visual position.
   useEffect(() => {
