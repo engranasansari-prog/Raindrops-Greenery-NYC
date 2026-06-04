@@ -10,7 +10,7 @@ import { business, social } from '@/lib/site-data';
 const topics = ['Order help', 'Delivery question', 'Wholesale / brand partnership', 'Press', 'Other'];
 
 function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; label: string; value: string; href?: string }) {
-  const className = "group block rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_22px_60px_rgba(200,230,110,0.10)]";
+  const className = "group block rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_22px_60px_rgba(198,160,100,0.10)]";
   const content = (
     <>
       <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" />
@@ -117,7 +117,7 @@ export default function ContactPage() {
   };
 
   const inputClass =
-    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]';
+    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]';
 
   return (
     <SiteChrome>
@@ -128,7 +128,7 @@ export default function ContactPage() {
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative grid gap-10 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
@@ -190,7 +190,7 @@ export default function ContactPage() {
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
-                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]"
+                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]"
                 />
               </label>
             </div>
@@ -199,7 +199,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={sending}
-                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 [font-family:var(--font-mono)]"
+                className="group inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(198,160,100,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(198,160,100,0.42)] disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0 [font-family:var(--font-mono)]"
               >
                 {sending ? 'Sending…' : 'Send message'}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-0.5" />

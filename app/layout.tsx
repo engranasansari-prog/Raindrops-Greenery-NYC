@@ -1,40 +1,34 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
+import { Cormorant_Garamond, Jost } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import { COVERAGE } from '@/lib/coverage';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import './globals.css';
 
-// Display — Fraunces (variable). We load THREE expressive axes:
-//   • opsz  — optical sizing, dialed per heading size in globals.css so big
-//             display text gets the tight, high-contrast cut and small text
-//             stays readable (instead of one static opsz for every size).
-//   • SOFT  — softens terminals slightly for a warmer, less clinical serif.
-//   • WONK  — Fraunces' signature "wonky" axis (swashy ball-terminals + the
-//             expressive italic). This is what makes Fraunces look like a
-//             $$$ editorial face rather than a generic serif; we switch it on
-//             for the large display sizes only.
-const display = Fraunces({
+// Display — Cormorant Garamond. A high-contrast "fashion-magazine" serif whose
+// dramatic thick/thin stroke contrast is the classic typographic signature of
+// luxury. Loaded at the weights the heading scale uses — globals.css bumps
+// headings to 500/600 because Cormorant reads lighter than the old Fraunces at
+// the same numeric weight. Italic is loaded for editorial accent words.
+const display = Cormorant_Garamond({
   subsets: ['latin'],
   variable: '--font-display',
-  weight: 'variable',
-  axes: ['opsz', 'SOFT', 'WONK'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
   display: 'swap'
 });
-// Body — DM Sans (clean, modern, non-Inter)
-const sans = DM_Sans({
+// Body — Jost (clean geometric grotesque). Also powers every label / eyebrow /
+// price: globals.css aliases --font-mono → --font-sans, so the old JetBrains
+// Mono call-sites become elegant wide-tracked Jost labels (the uppercase +
+// letter-spacing at each call-site is what reads them as "labels"). The result
+// is a tight two-family system — Cormorant display + Jost for everything else —
+// which reads far more "boutique" than the previous three-family mix.
+const sans = Jost({
   subsets: ['latin'],
   variable: '--font-sans',
   weight: ['300', '400', '500', '600', '700'],
-  display: 'swap'
-});
-// Mono — JetBrains Mono for prices, badges, eyebrows
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  weight: ['400', '500', '600', '700'],
   display: 'swap'
 });
 
@@ -142,8 +136,8 @@ export const viewport: Viewport = {
   maximumScale: 5,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#F0E8D2' },
-    { media: '(prefers-color-scheme: dark)', color: '#1B3328' }
+    { media: '(prefers-color-scheme: light)', color: '#F4EFE3' },
+    { media: '(prefers-color-scheme: dark)', color: '#1B3A2C' }
   ]
 };
 
@@ -390,7 +384,7 @@ const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-K36KHP6THQ';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <head>
         {/* NOTE: no font-CDN preconnect. next/font SELF-HOSTS Fraunces / DM Sans
             / JetBrains Mono from this origin at build time, so the browser never

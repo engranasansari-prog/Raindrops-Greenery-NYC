@@ -146,7 +146,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             <Link
               key={deal.id}
               href={`/menu?product=${deal.hrefId}`}
-              className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)] md:min-w-0 md:max-w-none"
+              className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.12)] md:min-w-0 md:max-w-none"
             >
               <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
                 {deal.image && (
@@ -309,7 +309,7 @@ function TestimonialFeature() {
               aria-hidden
               style={{
                 background:
-                  'radial-gradient(ellipse at top, rgba(200,230,110,0.16), transparent 60%)'
+                  'radial-gradient(ellipse at top, rgba(198,160,100,0.16), transparent 60%)'
               }}
             />
 

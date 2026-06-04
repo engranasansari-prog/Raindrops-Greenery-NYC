@@ -35,7 +35,7 @@ export default function ValueProps() {
                   <div className="flex items-start justify-between gap-4">
                     <Icon className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
                     <span
-                      className="text-4xl text-[color:var(--rd-amber)]/35 sm:text-5xl lg:text-6xl"
+                      className="text-4xl text-[color:var(--rd-amber-dark)]/40 sm:text-5xl lg:text-6xl"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.05em' }}
                     >
                       0{index + 1}

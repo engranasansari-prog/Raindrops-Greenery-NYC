@@ -174,7 +174,7 @@ export default function AboutPage() {
                   “{item.quote}”
                 </blockquote>
                 <figcaption className="mt-6 inline-flex items-center gap-3">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-sm font-semibold text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[color:var(--rd-moss)] text-sm font-semibold text-[color:var(--rd-paper)] [font-family:var(--font-mono)]">
                     {item.author.charAt(0)}
                   </span>
                   <span className="text-left leading-tight">

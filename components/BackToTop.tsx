@@ -32,7 +32,7 @@ export default function BackToTop() {
       aria-label="Back to top"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
-      className={`fixed left-4 z-[60] inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.4)] transition-[opacity,transform] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+6rem)] ${
+      className={`fixed left-4 z-[60] inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(198,160,100,0.4)] transition-[opacity,transform] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+6rem)] ${
         visible ? 'opacity-100' : 'pointer-events-none opacity-0 translate-y-2'
       }`}
     >

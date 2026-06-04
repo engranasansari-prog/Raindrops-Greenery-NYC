@@ -82,7 +82,7 @@ export default function DeliveryEta({ variant = 'desktop' }: { variant?: 'deskto
           className="relative inline-flex h-2 w-2 rounded-full"
           style={{
             background: status.open ? 'var(--rd-glow)' : 'var(--rd-text-mute)',
-            boxShadow: status.open ? '0 0 10px rgba(200,230,110,0.55)' : 'none'
+            boxShadow: status.open ? '0 0 10px rgba(198,160,100,0.55)' : 'none'
           }}
         />
       </span>

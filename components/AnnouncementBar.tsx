@@ -41,7 +41,7 @@ function Diamond({ tone }: { tone: 'lime' | 'amber' }) {
     >
       <span
         className="text-[10px] leading-none opacity-70"
-        style={{ color, textShadow: `0 0 8px ${tone === 'lime' ? 'rgba(200,230,110,0.45)' : 'rgba(212,165,116,0.45)'}` }}
+        style={{ color, textShadow: `0 0 8px ${tone === 'lime' ? 'rgba(198,160,100,0.45)' : 'rgba(212,165,116,0.45)'}` }}
       >
         ✦
       </span>
@@ -65,7 +65,7 @@ function Pip({ children }: { children: Item }) {
           fontWeight: 500,
           letterSpacing: '-0.012em',
           color: 'var(--rd-glow)',
-          textShadow: '0 0 14px rgba(200,230,110,0.28)'
+          textShadow: '0 0 14px rgba(198,160,100,0.28)'
         }}
       >
         {children.accent}
@@ -102,8 +102,8 @@ export default function AnnouncementBar() {
         // one continuous green instead of two different greens touching.
         background:
           'linear-gradient(90deg, var(--rd-ink) 0%, color-mix(in srgb, var(--rd-moss) 32%, var(--rd-ink)) 18%, var(--rd-moss) 50%, color-mix(in srgb, var(--rd-moss) 32%, var(--rd-ink)) 82%, var(--rd-ink) 100%)',
-        borderBottom: '1px solid rgba(200,230,110,0.22)',
-        boxShadow: '0 1px 0 rgba(0,0,0,0.45), inset 0 -1px 0 rgba(200,230,110,0.05)'
+        borderBottom: '1px solid rgba(198,160,100,0.22)',
+        boxShadow: '0 1px 0 rgba(0,0,0,0.45), inset 0 -1px 0 rgba(198,160,100,0.05)'
       }}
     >
       {/* Soft warm well behind text — the strip glows from the middle */}
@@ -112,7 +112,7 @@ export default function AnnouncementBar() {
         aria-hidden
         style={{
           background:
-            'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(200,230,110,0.10), transparent 70%)'
+            'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(198,160,100,0.10), transparent 70%)'
         }}
       />
       {/* Top hairline highlight for crispness */}

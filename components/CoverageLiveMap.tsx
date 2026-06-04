@@ -91,8 +91,8 @@ const DELIVERY_ROUTES: Array<Array<[number, number]>> = [
 // as an SVG data URI so there's no asset to ship or 404.
 const COURIER_SVG =
   "<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'>" +
-  "<circle cx='24' cy='24' r='21' fill='#1B3328' stroke='#C8E66E' stroke-width='2.5'/>" +
-  "<g transform='translate(11,12)' fill='none' stroke='#F0E8D2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" +
+  "<circle cx='24' cy='24' r='21' fill='#1B3A2C' stroke='#C6A064' stroke-width='2.5'/>" +
+  "<g transform='translate(11,12)' fill='none' stroke='#F4EFE3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" +
   "<circle cx='18.5' cy='17.5' r='3.5'/><circle cx='5.5' cy='17.5' r='3.5'/><circle cx='15' cy='5' r='1'/>" +
   "<path d='M12 17.5V14l-3-3 4-3 2 3h2'/></g></svg>";
 
@@ -367,7 +367,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         type: 'line',
         source: 'routes',
         layout: { 'line-cap': 'round', 'line-join': 'round' },
-        paint: { 'line-color': '#C8E66E', 'line-width': 2, 'line-opacity': 0.45, 'line-dasharray': [1.5, 1.5] }
+        paint: { 'line-color': '#C6A064', 'line-width': 2, 'line-opacity': 0.45, 'line-dasharray': [1.5, 1.5] }
       });
 
       map.addSource('destinations', { type: 'geojson', data: staticGeojson('dest') });
@@ -375,13 +375,13 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         id: 'dest-pulse',
         type: 'circle',
         source: 'destinations',
-        paint: { 'circle-radius': 7, 'circle-color': '#C8E66E', 'circle-opacity': 0.22 }
+        paint: { 'circle-radius': 7, 'circle-color': '#C6A064', 'circle-opacity': 0.22 }
       });
       map.addLayer({
         id: 'dest-dot',
         type: 'circle',
         source: 'destinations',
-        paint: { 'circle-radius': 3.5, 'circle-color': '#1B3328', 'circle-stroke-color': '#C8E66E', 'circle-stroke-width': 1.5 }
+        paint: { 'circle-radius': 3.5, 'circle-color': '#1B3A2C', 'circle-stroke-color': '#C6A064', 'circle-stroke-width': 1.5 }
       });
 
       // Staggered start positions so the couriers aren't synchronized.

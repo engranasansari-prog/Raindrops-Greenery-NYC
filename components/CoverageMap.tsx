@@ -143,7 +143,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
         aria-hidden
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(200,230,110,0.06), transparent 60%)'
+            'radial-gradient(ellipse at center, rgba(198,160,100,0.06), transparent 60%)'
         }}
       />
 

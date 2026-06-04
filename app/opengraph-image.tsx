@@ -28,8 +28,8 @@ export default async function OpengraphImage() {
           justifyContent: 'space-between',
           padding: 80,
           background:
-            'radial-gradient(ellipse at top right, rgba(200,230,110,0.18), transparent 55%), radial-gradient(ellipse at bottom left, rgba(91,140,110,0.22), transparent 60%), #1B3328',
-          color: '#F0E8D2',
+            'radial-gradient(ellipse at top right, rgba(198,160,100,0.18), transparent 55%), radial-gradient(ellipse at bottom left, rgba(91,140,110,0.22), transparent 60%), #1B3A2C',
+          color: '#F4EFE3',
           fontFamily: 'serif'
         }}
       >
@@ -51,8 +51,8 @@ export default async function OpengraphImage() {
               width: 12,
               height: 12,
               borderRadius: 999,
-              background: '#C8E66E',
-              boxShadow: '0 0 0 6px rgba(200,230,110,0.18)',
+              background: '#C6A064',
+              boxShadow: '0 0 0 6px rgba(198,160,100,0.18)',
               display: 'flex'
             }}
           />
@@ -69,7 +69,7 @@ export default async function OpengraphImage() {
               margin: 0,
               fontWeight: 300,
               fontStyle: 'italic',
-              color: '#F0E8D2'
+              color: '#F4EFE3'
             }}
           >
             Premium drops.
@@ -81,7 +81,7 @@ export default async function OpengraphImage() {
               letterSpacing: -3,
               margin: 0,
               fontWeight: 600,
-              color: '#C8E66E'
+              color: '#C6A064'
             }}
           >
             NYC only.
@@ -108,7 +108,7 @@ export default async function OpengraphImage() {
                 fontSize: 38,
                 letterSpacing: -1.5,
                 fontWeight: 500,
-                color: '#F0E8D2'
+                color: '#F4EFE3'
               }}
             >
               Raindrops Greenery

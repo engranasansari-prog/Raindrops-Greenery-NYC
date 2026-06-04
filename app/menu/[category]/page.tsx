@@ -129,7 +129,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">

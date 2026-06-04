@@ -343,7 +343,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed right-4 z-[61] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_16px_44px_rgba(200,230,110,0.45)] transition-transform hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
+            className="fixed right-4 z-[61] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_16px_44px_rgba(198,160,100,0.45)] transition-transform hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
           >
             <MessageCircle className="h-6 w-6" />
             <span className="absolute right-0 top-0 flex h-3.5 w-3.5">

@@ -183,7 +183,7 @@ export default function ZipSearch({
         className="mt-3 flex flex-col gap-3 sm:flex-row"
       >
         <div
-          className={`flex flex-1 items-center gap-3 rounded-xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 ${inputPad} transition focus-within:border-[color:var(--rd-glow)] focus-within:bg-[color:var(--rd-ink-soft)]/85 focus-within:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]`}
+          className={`flex flex-1 items-center gap-3 rounded-xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 ${inputPad} transition focus-within:border-[color:var(--rd-glow)] focus-within:bg-[color:var(--rd-ink-soft)]/85 focus-within:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]`}
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded={showDropdown}

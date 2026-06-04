@@ -305,7 +305,7 @@ export default function DealsPage() {
       <section className="bg-[color:var(--rd-paper)] py-16">
         <div className="luxury-shell">
           <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] p-8 text-[color:var(--rd-text)] sm:p-12">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(200,230,110,0.18),transparent_55%)]" aria-hidden />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,160,100,0.18),transparent_55%)]" aria-hidden />
             <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
               <div>
                 <p className="rd-eyebrow text-[color:var(--rd-glow)]">Every order</p>

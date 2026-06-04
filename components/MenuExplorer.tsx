@@ -146,7 +146,7 @@ const ProductCard = memo(function ProductCard({
          <article> with a pure-CSS entrance (rd-card-in) + React.memo on the
          component + a stable onDetails callback, so a filter change re-renders
          only the cards whose props actually changed, at zero framer cost. */
-      className="rd-card-in group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+      className="rd-card-in group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.12)]"
     >
       <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         <ProductImage product={product} eager={eager} />
@@ -478,7 +478,7 @@ function SelectField({ label, value, onChange, children }: { label: string; valu
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] [font-family:var(--font-sans)]"
+        className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)] [font-family:var(--font-sans)]"
       >
         {children}
       </select>
@@ -614,7 +614,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(200,230,110,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
@@ -634,7 +634,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             faint lime ring + drop shadow.
           */}
           <div className="mb-8 flex justify-center sm:mb-10">
-            <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(200,230,110,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
+            <div className="relative h-28 w-28 overflow-hidden rounded-full border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] shadow-[0_0_0_4px_rgba(198,160,100,0.05),0_18px_44px_rgba(0,0,0,0.32)] sm:h-32 sm:w-32">
               <BrandLogoLoop />
             </div>
           </div>
@@ -667,7 +667,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                   aria-pressed={active}
                   className={`group rounded-2xl border p-3 text-left transition-[transform,border-color,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 sm:p-4 ${
                     active
-                      ? 'border-[color:var(--rd-glow)]/55 bg-[color:var(--rd-glow)]/10 shadow-[0_20px_60px_rgba(200,230,110,0.18)]'
+                      ? 'border-[color:var(--rd-glow)]/55 bg-[color:var(--rd-glow)]/10 shadow-[0_20px_60px_rgba(198,160,100,0.18)]'
                       : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/30 hover:bg-[color:var(--rd-ink-soft)]/80'
                   }`}
                 >
@@ -721,7 +721,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
                       aria-pressed={active}
                       className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
                         active
-                          ? 'bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(200,230,110,0.32)]'
+                          ? 'bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(198,160,100,0.32)]'
                           : 'border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]'
                       }`}
                     >
@@ -876,7 +876,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             {visibleCount < filteredProducts.length ? (
               <button
                 onClick={() => setVisibleCount((count) => count + 18)}
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(198,160,100,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(198,160,100,0.42)] [font-family:var(--font-mono)]"
               >
                 Load more products
                 <ArrowRight className="h-3.5 w-3.5" />

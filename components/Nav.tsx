@@ -89,11 +89,11 @@ export default function Nav() {
         className="fixed inset-x-0 top-9 z-50 h-[72px]
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
                    bg-[color:var(--rd-ink)]
-                   border-b border-[rgba(200,230,110,0.08)]
+                   border-b border-[rgba(198,160,100,0.08)]
                    data-[scrolled=true]:bg-[rgba(27,51,40,0.88)]
                    data-[scrolled=true]:backdrop-blur-xl
                    data-[scrolled=true]:backdrop-saturate-150
-                   data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
+                   data-[scrolled=true]:border-[rgba(198,160,100,0.15)]
                    data-[scrolled=true]:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)]"
       >
         <div className="relative mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 md:px-6">
@@ -131,7 +131,7 @@ export default function Nav() {
               alt="Raindrops Greenery"
               width={40}
               height={40}
-              className="rounded-full ring-1 ring-[rgba(200,230,110,0.2)]"
+              className="rounded-full ring-1 ring-[rgba(198,160,100,0.2)]"
               priority
             />
             <span className="hidden flex-col leading-tight sm:flex">
@@ -195,7 +195,7 @@ export default function Nav() {
           />
           <aside
             id="rd-nav-drawer"
-            className="fixed bottom-0 left-0 top-0 z-[60] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[rgba(200,230,110,0.1)] bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
+            className="fixed bottom-0 left-0 top-0 z-[60] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[rgba(198,160,100,0.1)] bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
@@ -227,7 +227,7 @@ export default function Nav() {
                     aria-current={active ? 'page' : undefined}
                     className={`flex h-14 items-center gap-3 border-l-2 px-5 transition ${
                       active
-                        ? 'border-[color:var(--rd-glow)] bg-[rgba(200,230,110,0.04)] text-[color:var(--rd-glow)]'
+                        ? 'border-[color:var(--rd-glow)] bg-[rgba(198,160,100,0.04)] text-[color:var(--rd-glow)]'
                         : 'border-transparent text-[color:var(--rd-text-dim)] hover:bg-[rgba(240,232,210,0.03)] hover:text-[color:var(--rd-text)]'
                     }`}
                   >
