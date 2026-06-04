@@ -7,61 +7,123 @@
 <title>Raindrops Greenery — Luxury Direction Preview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Jost:wght@300;400;500;600&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,500;1,6..96,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Jost:wght@300;400;500;600&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; }
   body { font-family: 'Jost', system-ui, sans-serif; color: #1b1b18; background: #e9e6df; -webkit-font-smoothing: antialiased; }
   .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
-  .topbar { background: #14241d; color: #f3eee0; padding: 28px 0; text-align: center; }
-  .topbar h1 { font-family: 'Playfair Display', serif; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.4rem); letter-spacing: -.01em; }
-  .topbar p { margin-top: 10px; font-size: 15px; opacity: .82; max-width: 760px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-  .topbar .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; margin-bottom: 14px; }
+  .topbar { background: #14241d; color: #f3eee0; padding: 30px 0; text-align: center; }
+  .topbar h1 { font-family: 'Bodoni Moda', serif; font-weight: 600; font-size: clamp(1.7rem, 3.2vw, 2.6rem); letter-spacing: .01em; }
+  .topbar p { margin-top: 12px; font-size: 15px; opacity: .82; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.65; }
+  .topbar .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .6; margin-bottom: 14px; }
+
+  /* section bands that separate the elevated picks from round one */
+  .band { padding: 50px 0 6px; text-align: center; }
+  .band .k { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#9a7b4d; }
+  .band h2 { font-family:'Playfair Display',serif; font-weight:600; font-size:clamp(1.4rem,2.4vw,2rem); color:#1c2a22; margin-top:10px; }
+  .band p { max-width:660px; margin:10px auto 0; font-size:14px; line-height:1.6; color:#5b5b50; }
 
   .dir { padding: 70px 0; }
-  .dir-head { display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom: 38px; }
+  .dir-head { display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom: 40px; }
   .dir-tag { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; padding:6px 12px; border-radius:999px; }
-  .dir-name { font-size: clamp(1.5rem,2.4vw,2rem); }
-  .dir-feel { font-size:14px; opacity:.7; }
+  .dir-name { font-size: clamp(1.6rem,2.6vw,2.2rem); }
+  .dir-feel { font-size:14px; opacity:.72; max-width:46em; line-height:1.55; }
 
-  .grid { display:grid; grid-template-columns: 1.4fr .9fr; gap: 40px; align-items:center; }
+  .grid { display:grid; grid-template-columns: 1.4fr .9fr; gap: 48px; align-items:center; }
   @media (max-width: 880px){ .grid{ grid-template-columns:1fr; } }
 
+  .eyebrow-row { display:flex; align-items:center; gap:14px; }
+  .tick { display:inline-block; width:34px; height:1px; }
   .eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; }
-  .hero-h { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing:-.02em; margin: 18px 0 0; }
+  .hero-h { font-size: clamp(2.5rem, 5.2vw, 4.6rem); line-height: 1.02; letter-spacing:-.015em; margin: 18px 0 0; }
   .hero-h em { font-style: italic; }
-  .hero-sub { margin-top: 22px; max-width: 30em; font-size: 17px; line-height: 1.6; }
-  .ctas { margin-top: 30px; display:flex; gap:14px; flex-wrap:wrap; }
-  .btn { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; padding:15px 26px; border-radius:999px; border:1px solid transparent; cursor:pointer; }
+  .hairline { height:1px; width:104px; margin:26px 0 0; border:0; }
+  .hero-sub { margin-top: 24px; max-width: 30em; font-size: 17px; line-height: 1.62; }
+  .ctas { margin-top: 32px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; padding:15px 28px; border-radius:999px; border:1px solid transparent; cursor:pointer; }
   .btn-ghost { background:transparent; }
 
   .card { border-radius: 22px; overflow:hidden; }
   .card-img { aspect-ratio: 1/1; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.16em; }
-  .card-body { padding: 22px; }
+  .card-body { padding: 26px; }
   .badge { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; text-transform:uppercase; padding:5px 11px; border-radius:999px; border:1px solid; display:inline-block; }
-  .card-brand { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; margin-top:14px; opacity:.7; }
-  .card-name { font-size: 1.55rem; line-height:1.15; margin-top:6px; letter-spacing:-.01em; }
+  .card-brand { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; margin-top:16px; opacity:.7; }
+  .card-name { font-size: 1.6rem; line-height:1.12; margin-top:7px; letter-spacing:-.01em; }
+  .card-divider { height:1px; margin:18px 0; }
   .card-row { display:flex; align-items:center; justify-content:space-between; margin-top:18px; }
   .price { font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:600; }
   .card-cta { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:11px 18px; border-radius:999px; }
 
-  .swatches { margin-top:40px; display:flex; gap:0; border-radius:14px; overflow:hidden; max-width:560px; }
-  .sw { flex:1; height:64px; display:flex; align-items:flex-end; justify-content:center; padding:6px; font-family:'JetBrains Mono',monospace; font-size:9px; }
-  .fonts { margin-top:18px; font-size:13px; opacity:.7; }
+  .swatches { margin-top:42px; display:flex; gap:0; border-radius:14px; overflow:hidden; max-width:580px; }
+  .sw { flex:1; height:66px; display:flex; align-items:flex-end; justify-content:center; padding:6px; font-family:'JetBrains Mono',monospace; font-size:9px; }
+  .fonts { margin-top:18px; font-size:13px; opacity:.72; }
   .fonts b { opacity:1; }
+
+  /* elevated picks get wider tracking on the eyebrow + serif price */
+  .D .eyebrow, .E .eyebrow { letter-spacing:.34em; }
+  .star { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; padding:5px 11px; border-radius:999px; border:1px solid; }
+
+  /* ============ D — ATELIER (light editorial luxury) ============ */
+  .D { background:#F1ECE0; color:#3a4a3f; font-family:'Jost',sans-serif; }
+  .D .dir-tag{ background:#1E2C24; color:#EFE7D6; }
+  .D .dir-name{ font-family:'Bodoni Moda',serif; color:#1E2C24; font-weight:600; }
+  .D .star{ background:#9C7C4C; color:#fff; border-color:#9C7C4C; }
+  .D .tick{ background:#A98A52; }
+  .D .eyebrow{ color:#8A6B3C; }
+  .D .hero-h{ font-family:'Bodoni Moda',serif; font-weight:700; color:#1E2C24; }
+  .D .hero-h em{ color:#9C7C4C; }
+  .D .hairline{ background:linear-gradient(90deg,#A98A52,transparent); }
+  .D .hero-sub{ color:#5c6a60; }
+  .D .btn-primary{ background:#1E2C24; color:#F3ECDC; }
+  .D .btn-ghost{ border-color:#1E2C2455; color:#1E2C24; }
+  .D .card{ background:#FBF8F0; border:1px solid #1e2c2418; box-shadow:0 30px 70px rgba(30,44,36,.10); }
+  .D .card-img{ background:linear-gradient(135deg,#EFE7D5,#E0D4B9); color:#9c8a64; }
+  .D .badge{ background:transparent; color:#8A6B3C; border-color:#8A6B3C66; }
+  .D .card-brand{ color:#8d8676; }
+  .D .card-name{ font-family:'Bodoni Moda',serif; font-weight:600; color:#1E2C24; }
+  .D .card-divider{ background:#1e2c2414; }
+  .D .price{ font-family:'Bodoni Moda',serif; color:#1E2C24; }
+  .D .card-cta{ background:transparent; color:#9C7C4C; border:1px solid #9C7C4C55; }
+
+  /* ============ E — MAISON NOIR (dark, done right) ============ */
+  .E { background:#15201B; color:#cfc9b8; font-family:'Jost',sans-serif; }
+  .E .dir-tag{ background:#C9A86A; color:#15201B; }
+  .E .dir-name{ font-family:'Cormorant Garamond',serif; color:#EFE7D3; font-weight:600; }
+  .E .dir-feel{ color:#cfc9b8; }
+  .E .star{ background:transparent; color:#C9A86A; border-color:#C9A86A88; }
+  .E .tick{ background:#C9A86A; }
+  .E .eyebrow{ color:#C9A86A; }
+  .E .hero-h{ font-family:'Cormorant Garamond',serif; font-weight:600; color:#F2EBD8; }
+  .E .hero-h em{ color:#D4B878; }
+  .E .hairline{ background:linear-gradient(90deg,#C9A86A,transparent); }
+  .E .hero-sub{ color:#b4af9d; }
+  .E .btn-primary{ background:#C9A86A; color:#15201B; }
+  .E .btn-ghost{ border-color:#EFE7D333; color:#EFE7D3; }
+  .E .card{ background:#1E2A2380; border:1px solid #ffffff12; box-shadow:0 30px 70px rgba(0,0,0,.4); }
+  .E .card-img{ background:linear-gradient(135deg,#22332a,#16211b); color:#8a9c8f; }
+  .E .badge{ background:transparent; color:#C9A86A; border-color:#C9A86A55; }
+  .E .card-brand{ color:#a7a290; }
+  .E .card-name{ font-family:'Cormorant Garamond',serif; font-weight:600; color:#F2EBD8; }
+  .E .card-divider{ background:#ffffff12; }
+  .E .price{ font-family:'Cormorant Garamond',serif; font-weight:600; color:#D4B878; }
+  .E .card-cta{ background:transparent; color:#C9A86A; border:1px solid #C9A86A55; }
 
   /* ============ A — IVORY & CHAMPAGNE ============ */
   .A { background:#F7F2E8; color:#28271f; font-family:'Jost',sans-serif; }
   .A .dir-tag{ background:#1E3A2E; color:#F7F2E8; }
   .A .dir-name{ font-family:'Cormorant Garamond',serif; color:#1E3A2E; }
+  .A .tick{ background:#B08A4A; }
   .A .eyebrow{ color:#A8843E; }
   .A .hero-h{ font-family:'Cormorant Garamond',serif; font-weight:600; color:#1E3A2E; }
   .A .hero-h em{ color:#B08A4A; }
+  .A .hairline{ background:linear-gradient(90deg,#B08A4A,transparent); }
   .A .hero-sub{ color:#5a584e; }
   .A .btn-primary{ background:#1E3A2E; color:#F7F2E8; }
   .A .btn-ghost{ border-color:#1E3A2E55; color:#1E3A2E; }
   .A .card{ background:#fff; box-shadow:0 24px 60px rgba(40,60,48,.12); }
   .A .card-img{ background:linear-gradient(135deg,#EFE7D5,#E2D6BC); color:#9c8a64; }
   .A .badge{ background:#1E3A2E; color:#F7F2E8; border-color:#1E3A2E; }
+  .A .card-divider{ background:#1e3a2e12; }
   .A .card-name{ font-family:'Cormorant Garamond',serif; font-weight:600; color:#1E3A2E; }
   .A .price{ color:#B08A4A; }
   .A .card-cta{ background:#B08A4A; color:#fff; }
@@ -71,9 +133,11 @@
   .B .dir-tag{ background:#CFAE6A; color:#0E3B2C; }
   .B .dir-name{ font-family:'Playfair Display',serif; color:#EFE9DA; }
   .B .dir-feel{ color:#EFE9DA; }
+  .B .tick{ background:#CFAE6A; }
   .B .eyebrow{ color:#CFAE6A; }
   .B .hero-h{ font-family:'Playfair Display',serif; font-weight:600; color:#F4EEDF; }
   .B .hero-h em{ color:#D8B86C; }
+  .B .hairline{ background:linear-gradient(90deg,#CFAE6A,transparent); }
   .B .hero-sub{ color:#cdc7b6; }
   .B .btn-primary{ background:#CFAE6A; color:#0E3B2C; }
   .B .btn-ghost{ border-color:#EFE9DA44; color:#EFE9DA; }
@@ -81,6 +145,7 @@
   .B .card-img{ background:linear-gradient(135deg,#1a5a44,#0c3527); color:#8fb3a1; }
   .B .badge{ background:#0c3527; color:#CFAE6A; border-color:#CFAE6A88; }
   .B .card-brand{ color:#a9c2b5; }
+  .B .card-divider{ background:#ffffff14; }
   .B .card-name{ font-family:'Playfair Display',serif; font-weight:600; color:#F4EEDF; }
   .B .price{ color:#D8B86C; }
   .B .card-cta{ background:#CFAE6A; color:#0E3B2C; }
@@ -89,15 +154,18 @@
   .C { background:#F4EFE3; color:#26241d; font-family:'DM Sans',sans-serif; }
   .C .dir-tag{ background:#14352A; color:#F4EFE3; }
   .C .dir-name{ font-family:'Fraunces',serif; color:#14352A; }
+  .C .tick{ background:#C9A86A; }
   .C .eyebrow{ color:#3E6B54; }
   .C .hero-h{ font-family:'Fraunces',serif; font-weight:300; color:#14352A; }
   .C .hero-h em{ color:#C9A86A; font-weight:400; }
+  .C .hairline{ background:linear-gradient(90deg,#C9A86A,transparent); }
   .C .hero-sub{ color:#56544a; }
   .C .btn-primary{ background:#C9A86A; color:#1a1a14; }
   .C .btn-ghost{ border-color:#14352A44; color:#14352A; }
   .C .card{ background:#fff; box-shadow:0 22px 56px rgba(30,50,40,.12); }
   .C .card-img{ background:linear-gradient(135deg,#EDE5D2,#DFD3B8); color:#9c8a64; }
   .C .badge{ background:#14352A; color:#F4EFE3; border-color:#14352A; }
+  .C .card-divider{ background:#14352a12; }
   .C .card-name{ font-family:'Fraunces',serif; font-weight:400; color:#14352A; }
   .C .price{ color:#C9A86A; }
   .C .card-cta{ background:#14352A; color:#F4EFE3; }
@@ -107,9 +175,109 @@
 
 <div class="topbar">
   <div class="wrap">
-    <div class="mono">Raindrops Greenery — Direction Preview</div>
-    <h1>Pick the new luxury look</h1>
-    <p>Three redesigns of the colours + fonts, shown on a real hero, product card and buttons. Tell Claude which one you like (A, B or C) — or mix-and-match (e.g. “A’s colours with B’s font”). Because the site is token-driven, the chosen look rolls across every page in one pass. This page is temporary &amp; hidden from search.</p>
+    <div class="mono">Raindrops Greenery — Direction Preview · v2</div>
+    <h1>A more premium direction</h1>
+    <p>You asked to push it further. I added two <b>elevated</b> looks at the top — <b>D (light, editorial)</b> and <b>E (a richer dark)</b> — with more refined fonts, warmer “expensive” colours (bone &amp; antique bronze, not bright gold), wider letter-spacing, hairline rules and quieter buttons. The first round (A / B / C) is kept below for comparison. Tell Claude your pick — e.g. “D”, or “D’s colours with E’s serif” — and the whole site re-skins in one pass.</p>
+  </div>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <div class="k">★ Pushed further — my two elevated picks</div>
+    <h2>The “quiet luxury” tier</h2>
+    <p>These lean on the details that actually read as expensive: complex warm neutrals, antique-metal accents, a high-contrast serif, and lots of breathing room.</p>
+  </div>
+</div>
+
+<!-- D -->
+<section class="dir D">
+  <div class="wrap">
+    <div class="dir-head">
+      <span class="dir-tag">Direction D</span>
+      <span class="star">★ Editor’s choice</span>
+      <span class="dir-name">Atelier — Bone &amp; Bronze</span>
+      <span class="dir-feel">— editorial luxury: warm bone, antique bronze, and a Vogue-style <b>Bodoni</b> headline. The most “expensive magazine” look — and the strongest fix for “depressing”.</span>
+    </div>
+    <div class="grid">
+      <div>
+        <div class="eyebrow-row"><span class="tick"></span><span class="eyebrow">NYC · 21+ · Tribally licensed</span></div>
+        <h1 class="hero-h">Tax-free flower,<br><em>delivered.</em></h1>
+        <hr class="hairline">
+        <p class="hero-sub">Same-day cannabis delivery across Manhattan, Williamsburg, Greenpoint &amp; LIC. A free gift with every order.</p>
+        <div class="ctas">
+          <button class="btn btn-primary">Shop the menu</button>
+          <button class="btn btn-ghost">Check coverage</button>
+        </div>
+        <div class="swatches">
+          <div class="sw" style="background:#F1ECE0;color:#8a8576">#F1ECE0</div>
+          <div class="sw" style="background:#FBF8F0;color:#b0a98f">#FBF8F0</div>
+          <div class="sw" style="background:#1E2C24;color:#c5b48f">#1E2C24</div>
+          <div class="sw" style="background:#9C7C4C;color:#fff">#9C7C4C</div>
+          <div class="sw" style="background:#C3A36A;color:#3a2e16">#C3A36A</div>
+        </div>
+        <div class="fonts">Display: <b>Bodoni Moda</b> · Body: <b>Jost</b> · Accent: antique bronze</div>
+      </div>
+      <div class="card">
+        <div class="card-img">PRODUCT PHOTO</div>
+        <div class="card-body">
+          <span class="badge">Hybrid</span>
+          <div class="card-brand">Top Shelf</div>
+          <div class="card-name">Sticky Icky OG</div>
+          <div class="card-divider"></div>
+          <div class="card-row"><span class="price">$45</span><span class="card-cta">Order —›</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- E -->
+<section class="dir E">
+  <div class="wrap">
+    <div class="dir-head">
+      <span class="dir-tag">Direction E</span>
+      <span class="star">★ Premium dark</span>
+      <span class="dir-name">Maison Noir</span>
+      <span class="dir-feel">— dark done right: a warm espresso-green (not the old flat, cold dark), antique gold and a high-contrast Cormorant serif. Moody and luxe — like a jewellery box — not depressing.</span>
+    </div>
+    <div class="grid">
+      <div>
+        <div class="eyebrow-row"><span class="tick"></span><span class="eyebrow">NYC · 21+ · Tribally licensed</span></div>
+        <h1 class="hero-h">Tax-free flower,<br><em>delivered.</em></h1>
+        <hr class="hairline">
+        <p class="hero-sub">Same-day cannabis delivery across Manhattan, Williamsburg, Greenpoint &amp; LIC. A free gift with every order.</p>
+        <div class="ctas">
+          <button class="btn btn-primary">Shop the menu</button>
+          <button class="btn btn-ghost">Check coverage</button>
+        </div>
+        <div class="swatches">
+          <div class="sw" style="background:#15201B;color:#c5b48f">#15201B</div>
+          <div class="sw" style="background:#1E2A23;color:#b0a98f">#1E2A23</div>
+          <div class="sw" style="background:#ECE5D5;color:#8a8576">#ECE5D5</div>
+          <div class="sw" style="background:#C9A86A;color:#15201B">#C9A86A</div>
+          <div class="sw" style="background:#D4B878;color:#15201B">#D4B878</div>
+        </div>
+        <div class="fonts">Display: <b>Cormorant Garamond</b> · Body: <b>Jost</b> · Accent: antique gold</div>
+      </div>
+      <div class="card">
+        <div class="card-img">PRODUCT PHOTO</div>
+        <div class="card-body">
+          <span class="badge">Hybrid</span>
+          <div class="card-brand">Top Shelf</div>
+          <div class="card-name">Sticky Icky OG</div>
+          <div class="card-divider"></div>
+          <div class="card-row"><span class="price">$45</span><span class="card-cta">Order —›</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <div class="k">First round — for comparison</div>
+    <h2>A · B · C</h2>
+    <p>The three you saw earlier. Keep them here so you can see how much further D &amp; E push the premium feel.</p>
   </div>
 </div>
 
@@ -119,12 +287,13 @@
     <div class="dir-head">
       <span class="dir-tag">Direction A</span>
       <span class="dir-name">Ivory &amp; Champagne</span>
-      <span class="dir-feel">— light, warm, airy luxury (Aesop / boutique apothecary). The biggest fix for “depressing”.</span>
+      <span class="dir-feel">— light, warm, airy luxury (Aesop / boutique apothecary).</span>
     </div>
     <div class="grid">
       <div>
-        <div class="eyebrow">NYC · 21+ · Tax-free</div>
+        <div class="eyebrow-row"><span class="tick"></span><span class="eyebrow">NYC · 21+ · Tax-free</span></div>
         <h1 class="hero-h">Best flower,<br><em>delivered.</em></h1>
+        <hr class="hairline">
         <p class="hero-sub">Same-day tax-free cannabis delivery across Manhattan, Williamsburg, Greenpoint &amp; LIC. A free gift with every order.</p>
         <div class="ctas">
           <button class="btn btn-primary">Shop the menu</button>
@@ -145,6 +314,7 @@
           <span class="badge">Hybrid</span>
           <div class="card-brand">Top Shelf</div>
           <div class="card-name">Sticky Icky OG</div>
+          <div class="card-divider"></div>
           <div class="card-row"><span class="price">$45</span><span class="card-cta">Order ›</span></div>
         </div>
       </div>
@@ -158,12 +328,13 @@
     <div class="dir-head">
       <span class="dir-tag">Direction B</span>
       <span class="dir-name">Emerald &amp; Gold</span>
-      <span class="dir-feel">— keeps the green identity but makes it rich, not heavy: jewel emerald + real gold (premium spirits / jewellery).</span>
+      <span class="dir-feel">— keeps the green identity but makes it rich, not heavy: jewel emerald + real gold.</span>
     </div>
     <div class="grid">
       <div>
-        <div class="eyebrow">NYC · 21+ · Tax-free</div>
+        <div class="eyebrow-row"><span class="tick"></span><span class="eyebrow">NYC · 21+ · Tax-free</span></div>
         <h1 class="hero-h">Best flower,<br><em>delivered.</em></h1>
+        <hr class="hairline">
         <p class="hero-sub">Same-day tax-free cannabis delivery across Manhattan, Williamsburg, Greenpoint &amp; LIC. A free gift with every order.</p>
         <div class="ctas">
           <button class="btn btn-primary">Shop the menu</button>
@@ -184,6 +355,7 @@
           <span class="badge">Hybrid</span>
           <div class="card-brand">Top Shelf</div>
           <div class="card-name">Sticky Icky OG</div>
+          <div class="card-divider"></div>
           <div class="card-row"><span class="price">$45</span><span class="card-cta">Order ›</span></div>
         </div>
       </div>
@@ -197,12 +369,13 @@
     <div class="dir-head">
       <span class="dir-tag">Direction C</span>
       <span class="dir-name">Cream &amp; Forest</span>
-      <span class="dir-feel">— keeps your CURRENT font (Fraunces) but on a light cream + gold palette, so you can tell if it was the colours all along.</span>
+      <span class="dir-feel">— keeps your CURRENT font (Fraunces) on a light cream + gold palette, to isolate whether it was the colours all along.</span>
     </div>
     <div class="grid">
       <div>
-        <div class="eyebrow">NYC · 21+ · Tax-free</div>
+        <div class="eyebrow-row"><span class="tick"></span><span class="eyebrow">NYC · 21+ · Tax-free</span></div>
         <h1 class="hero-h">Best flower,<br><em>delivered.</em></h1>
+        <hr class="hairline">
         <p class="hero-sub">Same-day tax-free cannabis delivery across Manhattan, Williamsburg, Greenpoint &amp; LIC. A free gift with every order.</p>
         <div class="ctas">
           <button class="btn btn-primary">Shop the menu</button>
@@ -223,6 +396,7 @@
           <span class="badge">Hybrid</span>
           <div class="card-brand">Top Shelf</div>
           <div class="card-name">Sticky Icky OG</div>
+          <div class="card-divider"></div>
           <div class="card-row"><span class="price">$45</span><span class="card-cta">Order ›</span></div>
         </div>
       </div>
@@ -230,9 +404,9 @@
   </div>
 </section>
 
-<div class="topbar" style="padding:36px 0;">
+<div class="topbar" style="padding:38px 0;">
   <div class="wrap">
-    <p style="opacity:.92;">Reply to Claude with your pick — e.g. <b>“B”</b>, or <b>“A’s palette + B’s Playfair font”</b>. Then it’s one centralized change and the whole site re-skins.</p>
+    <p style="opacity:.92;">Reply to Claude with your pick — e.g. <b>“D”</b>, or <b>“D’s palette + E’s serif”</b>. Then it’s one centralized change and the whole site re-skins.</p>
   </div>
 </div>
 
