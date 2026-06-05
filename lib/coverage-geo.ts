@@ -36,7 +36,7 @@ const CLUSTER_COLORS: Record<CoverageCluster['id'], string> = {
   'gv-soho-tribeca': '#45B677',
   'fidi-battery': '#57C888',
   'south-street': '#6FD89C',
-  'east-river': '#2E9AA0'
+  'east-river': '#2E9A66'
 };
 
 export { CLUSTER_COLORS };

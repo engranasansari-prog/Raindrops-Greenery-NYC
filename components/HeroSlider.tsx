@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import SmokeLayer from '@/components/SmokeLayer';
 import { trackCta } from '@/lib/analytics';
 
@@ -71,7 +71,13 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback((next: number) => {
-    setIndex(((next % slides.length) + slides.length) % slides.length);
+    // INP: mark the slide change as a non-urgent transition so the
+    // interaction (arrow key / dot / swipe) paints immediately and the
+    // framer-motion cross-fade re-render is scheduled off the critical path —
+    // keeps hero interactions from blocking the next paint.
+    startTransition(() => {
+      setIndex(((next % slides.length) + slides.length) % slides.length);
+    });
   }, [slides.length]);
 
   const next = useCallback(() => goTo(index + 1), [goTo, index]);
