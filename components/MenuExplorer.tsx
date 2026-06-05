@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { Fragment, memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, memo, startTransition, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import BrandLogoLoop from '@/components/BrandLogoLoop';
@@ -301,7 +301,7 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
 
   return (
     <motion.div
-      className="fixed inset-0 z-[90] flex items-stretch justify-center bg-[rgba(6,19,15,0.78)] p-0 backdrop-blur-xl sm:items-center sm:p-4"
+      className="fixed inset-0 z-[90] flex items-stretch justify-center bg-[rgba(6,19,15,0.84)] p-0 sm:items-center sm:p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -512,7 +512,9 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
   // Stable so the memoized ProductCards don't re-render every keystroke just
   // because a fresh arrow was created inline in the grid map.
   const handleDetails = useCallback((p: LiveMenuProduct) => {
-    setSelectedProduct(p);
+    // INP: open the modal in a non-urgent transition so the click paints
+    // immediately and the dialog mount is scheduled off the critical path.
+    startTransition(() => setSelectedProduct(p));
     trackProductView(p.name, p.category);
   }, []);
 

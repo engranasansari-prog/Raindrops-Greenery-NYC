@@ -348,7 +348,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: easeOut }}
-                className="fixed inset-0 z-[70] flex items-end justify-center bg-[rgba(6,19,15,0.78)] p-0 backdrop-blur-xl sm:items-center sm:p-6"
+                className="fixed inset-0 z-[70] flex items-end justify-center bg-[rgba(6,19,15,0.84)] p-0 sm:items-center sm:p-6"
                 onClick={() => setOpenCluster(null)}
                 role="dialog"
                 aria-modal="true"
