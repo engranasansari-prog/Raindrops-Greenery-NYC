@@ -1,6 +1,5 @@
 export const checkout = {
   dutchieUrl: 'https://dutchie.com/stores/raindrops-greenery-retail',
-  liveMenuUrl: 'https://raindropsgreenery.dispensary.shop/rec/menu',
   sourceNote:
     'Product browsing is available on this website. Final availability, payment, verification, and delivery details are completed through checkout.'
 };
@@ -28,7 +27,7 @@ export const business = {
   // Tribally licensed under the Shinnecock Nation cannabis program.
   licensingAuthority: 'Shinnecock Nation Cannabis Regulatory Division',
   license: 'Shinnecock Nation License #002',
-  licensingShort: 'Shinnecock-licensed cannabis delivery partner',
+  licensingShort: 'Tribally licensed dispensary',
   // Tribal land base (Shinnecock Nation, Long Island, New York).
   jurisdiction: 'Shinnecock Nation, Long Island, New York',
   serviceRegion: 'New York City',
@@ -234,7 +233,7 @@ export const faqs = [
   },
   {
     q: 'What payment methods are accepted?',
-    a: 'Pay by Bank through Dutchie pay is the only form of Payment.'
+    a: 'Pay by Bank through Dutchie Pay is the only form of Payment.'
   },
   {
     q: 'How discreet is the delivery?',
@@ -265,9 +264,3 @@ export const faqs = [
     a: 'Raindrops Greenery delivers Edibles — along with Flower Strains and Pre-Rolls — same-day across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Browse the Edibles category on the menu to order.'
   }
 ];
-
-export const promoStrip = {
-  // Set message to null to hide the strip.
-  message: 'Free delivery across Manhattan + LIC, Williamsburg & Greenpoint · Tax-free · Open 10am–10pm',
-  cta: { label: 'Check coverage', href: '#coverage' }
-};

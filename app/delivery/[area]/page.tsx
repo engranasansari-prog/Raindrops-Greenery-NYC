@@ -203,9 +203,15 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
 
             <h2>How fast is delivery to {n.name}?</h2>
             <p>{n.routing}</p>
-            <p>
-              Landmarks we deliver near include {n.landmarks.slice(0, -1).join(', ')}, and {n.landmarks[n.landmarks.length - 1]}.
-            </p>
+            {n.landmarks.length > 0 && (
+              <p>
+                Landmarks we deliver near include{' '}
+                {n.landmarks.length === 1
+                  ? n.landmarks[0]
+                  : `${n.landmarks.slice(0, -1).join(', ')}, and ${n.landmarks[n.landmarks.length - 1]}`}
+                .
+              </p>
+            )}
 
             <h2>What you can order</h2>
             <p>

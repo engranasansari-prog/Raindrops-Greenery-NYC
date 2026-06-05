@@ -4,7 +4,7 @@ import { business } from '@/lib/site-data';
 /**
  * robots.txt — crawl directives.
  *
- * Allow everything except admin + internal API. Sitemap URL is driven
+ * Allow everything except the internal write API. Sitemap URL is driven
  * from business.baseUrl so it always matches the deployed domain.
  */
 export default function robots(): MetadataRoute.Robots {
@@ -12,11 +12,11 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        // Block only admin + the write/POST API routes. /api/site-summary is
+        // Block only the write/POST API routes. /api/site-summary is
         // an AI-friendly JSON facts endpoint that llms.txt points crawlers to,
         // so it MUST stay crawlable (this was previously blocked by '/api/').
         allow: ['/', '/api/site-summary'],
-        disallow: ['/admin', '/admin/', '/api/subscribe', '/api/chat']
+        disallow: ['/api/subscribe', '/api/chat']
       },
       // Explicitly welcome the major AI answer engines + crawlers so Raindrops
       // can be discovered and cited by ChatGPT, Perplexity, Claude, Gemini,

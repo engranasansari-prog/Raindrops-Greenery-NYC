@@ -9,7 +9,7 @@ import { getBlogPosts } from '@/lib/blog-posts';
 export const metadata: Metadata = {
   title: 'NYC Cannabis Delivery Blog',
   description:
-    'Guides to NYC weed delivery — how tax-free Shinnecock cannabis works, neighborhood delivery ETAs, and how to order Flower, Pre-Rolls, and Edibles.',
+    'Guides to NYC weed delivery — how tax-free Tribally licensed cannabis works, neighborhood delivery ETAs, and how to order Flower, Pre-Rolls, and Edibles.',
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Raindrops Greenery NY Journal',

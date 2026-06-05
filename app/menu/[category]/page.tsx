@@ -136,7 +136,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           <Breadcrumbs items={[{ label: 'Menu', href: '/menu' }, { label: c.name }]} tone="dark" />
           <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">{c.eyebrow}</p>
           <h1 className="mt-4 text-[color:var(--rd-text)]">
-            Weed Delivery NYC — <span className="italic">{c.h1Accent}</span>
+            {c.name} — <span className="italic">Weed Delivery NYC.</span>
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
             {c.heroLede}

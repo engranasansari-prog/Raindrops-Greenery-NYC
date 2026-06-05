@@ -177,18 +177,25 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       bearing: 0,
       attributionControl: { compact: true },
       dragRotate: false,
-      touchZoomRotate: false
+      // Cooperative gestures: on this mobile-heavy audience a one-finger drag on
+      // the full-width map must SCROLL THE PAGE (two fingers pan/pinch the map),
+      // and desktop wheel only zooms with ⌘/Ctrl held — otherwise the page
+      // scrolls. MapLibre shows its own gesture overlay for both. This replaces
+      // the old manual scrollZoom.disable()/wheel-listener dance, which did the
+      // desktop half only and would now fight this flag.
+      // NOTE: `touchZoomRotate` is intentionally NOT disabled here — the old
+      // `touchZoomRotate: false` killed two-finger pinch, which is exactly the
+      // gesture cooperative-gestures hands to the map on touch. We keep pinch
+      // and disable only the ROTATE half below (flat coverage inset, no compass).
+      cooperativeGestures: true
     });
 
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-    map.scrollZoom.disable();
-    map.on('wheel', (e) => {
-      if (e.originalEvent.ctrlKey || e.originalEvent.metaKey) {
-        e.originalEvent.preventDefault();
-        map.scrollZoom.enable();
-        window.setTimeout(() => map.scrollZoom.disable(), 600);
-      }
-    });
+    // Allow two-finger pinch-zoom but keep the map north-up (no twist).
+    map.touchZoomRotate.disableRotation();
+
+    // NavigationControl lives bottom-right so its top corner can't overlap the
+    // "N ZIPs · Same-day" chip pinned top-left on very narrow (≤360px) phones.
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
 
     map.on('load', () => {
       // ── ZIP polygons (real ZCTA boundaries) ──────────────────────────
@@ -521,8 +528,13 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       <div
         ref={containerRef}
         className="h-[480px] w-full overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/12 sm:h-[560px] lg:h-[620px]"
-        aria-label="Map of Raindrops Greenery NYC delivery coverage — Manhattan, Long Island City, Williamsburg, and Greenpoint, shown as real ZIP-code boundaries"
-        role="application"
+        // role="img" (not "application"): the map offers no keyboard way to
+        // select a zone, so announcing it as an interactive application would
+        // strand keyboard/AT users. The keyboard-operable summary cards beside
+        // the map are the accessible path to every zone's detail; here we just
+        // describe the visual as a labelled image.
+        aria-label="Map of Raindrops Greenery NYC delivery coverage — Manhattan, Long Island City, Williamsburg, and Greenpoint, shown as real ZIP-code boundaries. Use the coverage cards beside the map to view each zone's delivery details."
+        role="img"
       />
       {/* Brand vignette — ties the generic basemap to the site without
           dimming labels. Pure decoration, never intercepts pointer events. */}
@@ -538,6 +550,20 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         <span className="rd-pulse" aria-hidden />
         <span className="rd-eyebrow text-[color:var(--rd-glow)]">
           {ALL_ZIPS.length} ZIPs · Same-day NYC
+        </span>
+      </div>
+      {/* Responsive zoom hint — cooperative gestures change the interaction per
+          device, so the prompt must too. Touch (coarse pointer) reads "Pinch to
+          zoom"; mouse (fine pointer) reads "⌘ + scroll". Sits bottom-left, clear
+          of the top-left stat chip and the bottom-right zoom controls. Pure
+          chrome, hidden from AT (the container's role/aria-label cover intent). */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-4 left-4 z-10 inline-flex items-center rounded-full border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink)]/72 px-3 py-1.5 backdrop-blur-md sm:left-5"
+      >
+        <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
+          <span className="hidden pointer-fine:inline">⌘ + scroll to zoom · tap a zone</span>
+          <span className="pointer-fine:hidden">Pinch to zoom · tap a zone</span>
         </span>
       </div>
     </div>

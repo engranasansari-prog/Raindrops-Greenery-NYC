@@ -137,6 +137,16 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
   const slide = slides[index];
 
+  // Accessible description of the live slide for the polite live region below.
+  // Uses the headline when present, falling back to the image alt for the
+  // imageOnly (edibles) slide so the announcement is never empty. The paused
+  // suffix mirrors the explicit Pause button (userPaused) so screen-reader
+  // users know auto-advance has stopped.
+  const slideName = slide.headline ?? slide.imageAlt;
+  const slideAnnouncement = `Slide ${index + 1} of ${slides.length}: ${slideName}${
+    userPaused ? '. Slideshow paused.' : ''
+  }`;
+
   return (
     <section
       ref={sectionRef}
@@ -152,11 +162,25 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
+      {/* Polite live region — announces the current slide and paused state to
+          screen readers as the carousel advances, without stealing focus. Kept
+          visually hidden (sr-only). */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {slideAnnouncement}
+      </div>
+
       {/* Layer 1: slide image (cross-faded with slow zoom) */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div
             key={slide.id}
+            // Each cross-faded image wrapper represents the current slide for
+            // assistive tech: role="group" + aria-roledescription="slide" pairs
+            // with the section's aria-roledescription="carousel", and the label
+            // gives screen-reader users position context ("1 of 3").
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${slides.length}`}
             // Skip the opacity 0 → 1 fade for the FIRST slide so LCP fires
             // immediately (Lighthouse was clocking LCP at 5.1s because
             // the initial fade delayed the browser's largest-element pick).
@@ -313,18 +337,24 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       {/* Layer 4: controls */}
       {slides.length > 1 && (
         <>
-          {/* Dots */}
-          <div className="absolute inset-x-0 bottom-6 z-20 flex justify-center gap-2 sm:bottom-10">
+          {/* Dots — each pip sits inside a ≥44px tall button so the tap target
+              meets the minimum even though the visual pip is ~6px (matches the
+              FeaturedDeals dot pattern). */}
+          <div className="absolute inset-x-0 bottom-3 z-20 flex justify-center sm:bottom-7">
             {slides.map((s, i) => (
               <button
                 key={s.id}
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={i === index}
                 onClick={() => goTo(i)}
-                className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
-                  i === index ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 hover:bg-[color:var(--rd-paper)]/55'
-                }`}
-              />
+                className="group flex h-11 items-center px-1.5"
+              >
+                <span
+                  className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
+                    i === index ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 group-hover:bg-[color:var(--rd-paper)]/55'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -370,13 +400,21 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
 function renderHeadline(headline: string, accent?: string) {
   if (!accent) return <span style={{ fontWeight: 500 }}>{headline}</span>;
-  const parts = headline.split(accent);
-  if (parts.length === 1) return <span style={{ fontWeight: 500 }}>{headline}</span>;
+  // Robust split on the FIRST occurrence via indexOf/slice so the full
+  // headline always renders, even when the accent appears 0 or multiple
+  // times. (The old `headline.split(accent)` silently dropped every segment
+  // past the first match when the accent occurred more than once.) `before`
+  // and `after` are sliced around the matched range so before + accent +
+  // after === headline exactly.
+  const at = headline.indexOf(accent);
+  if (at === -1) return <span style={{ fontWeight: 500 }}>{headline}</span>;
+  const before = headline.slice(0, at);
+  const after = headline.slice(at + accent.length);
   return (
     <>
-      <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[0]}</span>
+      {before && <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{before}</span>}
       <span style={{ fontWeight: 600, color: 'var(--rd-glow)', fontStyle: 'normal' }}>{accent}</span>
-      <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[1]}</span>
+      {after && <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{after}</span>}
     </>
   );
 }

@@ -12,9 +12,7 @@ import BrandLogoLoop from '@/components/BrandLogoLoop';
 import { trackOrderClick, trackProductView } from '@/lib/analytics';
 import { menuCounts, menuProducts, type LiveMenuProduct } from '@/lib/menu';
 import {
-  effectOptions,
   formatPrice,
-  getAvailableBrands,
   getAvailableProfiles,
   getAvailableWeights,
   getBrandLabel,
@@ -77,10 +75,8 @@ const CATEGORY_ORDER: Record<LiveMenuProduct['category'], number> = {
 };
 
 const maxAvailablePrice = getMaxPrice(menuProducts);
-const brands = getAvailableBrands(menuProducts);
 const weights = getAvailableWeights(menuProducts);
 const profiles = getAvailableProfiles(menuProducts);
-const totalProducts = menuProducts.length;
 
 // Precompute each product's search text ONCE at module load. Previously
 // getMenuSearchText (getBrandLabel + inferProfile + getPotencyLabel + ... per
@@ -486,7 +482,13 @@ function SelectField({ label, value, onChange, children }: { label: string; valu
   );
 }
 
-export default function MenuExplorer({ initialCategory, initialProductId, initialDealsOnly, initialEffect }: { initialCategory?: string; initialProductId?: string; initialDealsOnly?: boolean; initialEffect?: string }) {
+// NOTE: `initialDealsOnly` (?deals=) and `initialEffect` (?effect=) are accepted
+// but intentionally NOT consumed — the menu has no deals-only mode or effect
+// pre-filter. They stay in the prop type only so app/menu/page.tsx, which still
+// forwards them, keeps type-checking. TODO: remove these props here AND the
+// matching `initialDealsOnly`/`initialEffect` wiring (plus the `deals`/`effect`
+// keys on MenuSearchParams) in app/menu/page.tsx together, so the API is honest.
+export default function MenuExplorer({ initialCategory, initialProductId }: { initialCategory?: string; initialProductId?: string; initialDealsOnly?: boolean; initialEffect?: string }) {
   const [category, setCategory] = useState<CategoryFilter>(normalizeCategory(initialCategory));
   const [query, setQuery] = useState('');
   const [profile, setProfile] = useState('All');
@@ -512,6 +514,24 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
   const handleDetails = useCallback((p: LiveMenuProduct) => {
     setSelectedProduct(p);
     trackProductView(p.name, p.category);
+  }, []);
+
+  // Deep-linked modal (/menu?product=ID) opens the dialog from the useState
+  // seed above, which bypasses handleDetails — so without this the click path
+  // tracks a product view but the shared/deep link does not. Fire it once on
+  // mount for the seeded product so deep-linked views are tracked exactly the
+  // same as clicks. The ref guard keeps it to a single fire even under React
+  // Strict Mode's double-invoked effects in dev.
+  const deepLinkTracked = useRef(false);
+  useEffect(() => {
+    if (deepLinkTracked.current) return;
+    deepLinkTracked.current = true;
+    if (selectedProduct) {
+      trackProductView(selectedProduct.name, selectedProduct.category);
+    }
+    // Mount-only: intentionally not reacting to later selectedProduct changes
+    // (those go through handleDetails, which already tracks).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Keep ?product= in the URL in sync with the open modal so individual items are shareable.
@@ -644,7 +664,7 @@ export default function MenuExplorer({ initialCategory, initialProductId, initia
             <Breadcrumbs items={[{ label: 'Menu' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops NY menu</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
-              Flower Strains, Pre-Rolls, <span className="italic">and Edibles.</span>
+              NYC weed delivery menu — Flower Strains, Pre-Rolls <span className="italic">&amp; Edibles.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               Browse the Raindrops weed delivery menu — curated cannabis Flower Strains, Pre-Rolls, and Edibles. Filter by price, potency, size, brand, and deals, then tap any product for secure checkout.

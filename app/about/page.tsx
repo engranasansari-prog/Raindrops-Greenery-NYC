@@ -9,18 +9,18 @@ import { business, serviceAreas, testimonials, valueProps } from '@/lib/site-dat
 export const metadata: Metadata = {
   title: 'About Our NYC Weed Delivery',
   description:
-    'Shinnecock-licensed weed delivery for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated cannabis menu, transparent pricing, free delivery.',
+    'Tribally licensed weed delivery for Manhattan plus Long Island City, Williamsburg, and Greenpoint. Curated cannabis menu, transparent pricing, free delivery.',
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About Raindrops Greenery',
-    description: 'Shinnecock-licensed NYC cannabis delivery. Curated. Transparent. Professional.',
+    description: 'Tribally licensed NYC cannabis delivery. Curated. Transparent. Professional.',
     url: '/about',
     images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
   }
 };
 
 const pillars = [
-  { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
+  { icon: Leaf, title: 'Curated', body: 'A focused menu of Flower Strains, Pre-Rolls, and Edibles instead of overwhelming category sprawl.' },
   { icon: Shield, title: 'Compliant', body: 'Age-verified at the door, tax-free checkout.' },
   { icon: Truck, title: 'Local', body: 'Built around NYC delivery — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City) — with windows that fit the way the city moves.' },
   { icon: Sparkles, title: 'Premium', body: 'Brands we use ourselves, presented with the detail customers actually need.' }
@@ -87,7 +87,7 @@ export default function AboutPage() {
               When New York opened legal adult-use cannabis, the customer experience didn’t catch up. Endless menus, vague product detail, and clunky checkout. Raindrops Greenery started with a simple bet: keep the catalog focused, show the details that actually help an adult customer decide, and make checkout fast.
             </p>
             <p className="mt-4 text-base leading-8 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
-              We curate Flower, Pre-Rolls, and Edibles — three categories, picked carefully — and we run delivery the way we’d want one for ourselves: discreet, on time, and respectful of your space.
+              We curate Flower Strains, Pre-Rolls, and Edibles — three categories, picked carefully — and we run delivery the way we’d want one for ourselves: discreet, on time, and respectful of your space.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/menu" className="btn-luxe btn-luxe-dark">

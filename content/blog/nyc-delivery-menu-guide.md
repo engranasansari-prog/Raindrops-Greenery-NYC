@@ -49,7 +49,7 @@ Strain types are a rough behavioral category, not a scientific guarantee — you
 
 ### Price range
 
-A slider for the menu price range. Helpful when you have a budget cap or when you want to see only the [top shelf](/deals) — try setting the floor to $40 and see what shows.
+A slider for the menu price range. Helpful when you have a budget cap or when you want to see only the [heavy hitters](/deals) — try setting the floor to $40 and see what shows.
 
 ### Potency (Flower only)
 
@@ -138,7 +138,7 @@ No surge pricing. No service fee. No "convenience" fee. The price doesn't change
 Each product has a shareable URL (the dialog updates the URL when open). Copy the URL to bookmark — that's the lightest-weight way to "save" a product.
 
 **Do you ever have sale prices on the menu?**
-Current pricing is the **final** pricing. We don't run discount codes or surprise sales — the model is "every menu price is already the lowest reasonable price for the product." We do curate selections in [/deals](/deals) by quality and value (Heavy Hitters, Top Shelf, Under $25), but those aren't discounted prices, they're curated picks.
+Current pricing is the **final** pricing. We don't run discount codes or surprise sales — the model is "every menu price is already the lowest reasonable price for the product." We do curate selections in [/deals](/deals) by quality and value (Under $25, Crowd favorites, Heavy hitters), but those aren't discounted prices, they're curated picks.
 
 **How often does the menu update?**
 Daily as inventory rotates. Sold-out items disappear and new arrivals show up automatically — the menu reflects what we can actually deliver tonight.

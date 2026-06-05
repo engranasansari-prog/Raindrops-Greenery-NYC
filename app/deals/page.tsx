@@ -12,7 +12,7 @@ import { getBrandLabel, getPrimaryPotency, inferProfile } from '@/lib/menu-utils
 import { business } from '@/lib/site-data';
 
 export const metadata: Metadata = {
-  title: 'Cheap Weed Delivery NYC — Tax-Free Deals',
+  title: 'Cheap Weed Delivery NYC',
   description:
     'Cheap, tax-free weed delivery in NYC — affordable value picks from under $25, free delivery over $25, and a free gift with every order. 21+.',
   alternates: { canonical: '/deals' },
@@ -206,7 +206,7 @@ export default function DealsPage() {
             <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
             <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Deals · value picks</p>
             <h1 className="mt-4 text-[color:var(--rd-text)]">
-              Curated picks. <span className="italic">No codes needed.</span>
+              Cheap weed delivery in NYC. <span className="italic">No codes needed.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
               The most affordable way to order weed in NYC — a curated shortlist, lowest-priced first, starting under $25. No discount codes, no gimmicks: a free weed gift with every order, free delivery over $25, and tax-free pricing. Tap any pick to head to secure checkout.

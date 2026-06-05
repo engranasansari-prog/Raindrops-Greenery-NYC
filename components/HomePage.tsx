@@ -20,6 +20,7 @@ const LiveOrderToasts = dynamic(() => import('@/components/LiveOrderToasts'), {
   ssr: false
 });
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
+import { trackOrderClick } from '@/lib/analytics';
 import HeroSlider, { type HeroSlide } from '@/components/HeroSlider';
 import HookPills from '@/components/HookPills';
 import { testimonials } from '@/lib/site-data';
@@ -146,6 +147,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             <Link
               key={deal.id}
               href={`/menu?product=${deal.hrefId}`}
+              onClick={() => trackOrderClick('home_featured', { item: deal.name })}
               className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)] md:min-w-0 md:max-w-none"
             >
               <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
@@ -154,13 +156,13 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                     src={deal.image}
                     alt={deal.name}
                     fill
-                    /* Next.js Image Optimization on. The home page only ships 3
-                       featured deals so all 3 are hinted eager — they're near-fold
-                       on any viewport. */
+                    /* Next.js Image Optimization on. Featured picks are the 4th
+                       section (below the fold on every viewport) and never the
+                       LCP, so these lazy-load by default — no eager hint. The
+                       blur placeholder covers the brief load-in. */
                     sizes="(max-width: 640px) 78vw, (max-width: 1024px) 50vw, 33vw"
                     placeholder="blur"
                     blurDataURL={PRODUCT_BLUR_DATA_URL}
-                    loading="eager"
                     className="object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                   />
                 )}
@@ -357,7 +359,7 @@ function TestimonialFeature() {
               </div>
 
               {count > 1 && (
-                <div className="mt-6 flex items-center justify-center gap-2">
+                <div className="mt-6 flex items-center justify-center">
                   {testimonials.map((item, i) => (
                     <button
                       key={item.author}
@@ -365,12 +367,16 @@ function TestimonialFeature() {
                       onClick={() => setActive(i)}
                       aria-label={`Show review from ${item.author}`}
                       aria-current={i === active ? 'true' : undefined}
-                      className={`h-1.5 rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out)] ${
-                        i === active
-                          ? 'w-6 bg-[color:var(--rd-glow)]'
-                          : 'w-1.5 bg-[color:var(--rd-paper)]/25 hover:bg-[color:var(--rd-paper)]/40'
-                      }`}
-                    />
+                      className="group flex h-11 items-center px-1.5"
+                    >
+                      <span
+                        className={`h-1.5 rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out)] ${
+                          i === active
+                            ? 'w-6 bg-[color:var(--rd-glow)]'
+                            : 'w-1.5 bg-[color:var(--rd-paper)]/25 group-hover:bg-[color:var(--rd-paper)]/40'
+                        }`}
+                      />
+                    </button>
                   ))}
                 </div>
               )}

@@ -29,6 +29,3 @@ export function checkZip(input: string): ZipResult {
   if (cluster) return { status: 'supported', zip, borough: cluster.shortName, cluster };
   return { status: 'unsupported', zip, borough: null, cluster: null };
 }
-
-export const UNSUPPORTED_MESSAGE = 'Not yet in your area — we’re expanding fast.';
-export const SUPPORTED_MESSAGE = 'You’re in. Same-day delivery available.';

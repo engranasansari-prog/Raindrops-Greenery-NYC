@@ -145,18 +145,3 @@ export const menuCounts: Record<(typeof productCategories)[number], number> = pr
   },
   {} as Record<(typeof productCategories)[number], number>
 );
-
-// Kept for backward compat with anything that referenced the old sync timestamp.
-export const menuSyncedAt: string = (() => {
-  try {
-    // PRODUCT_META lives in products.json — read directly to avoid coupling.
-    // Fall back to "now" if unavailable.
-     
-    const meta = require('../data/products.json').meta as { exportedAt?: string };
-    return meta.exportedAt ?? new Date().toISOString();
-  } catch {
-    return new Date().toISOString();
-  }
-})();
-
-export const menuSourceUrl = 'https://dutchie.com/stores/raindrops-greenery-retail';

@@ -85,7 +85,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['11211'],
     etaMinutes: clusterEta('east-river'),
     etaLabel: '~55 min',
-    title: 'Weed Delivery in Williamsburg, Brooklyn',
+    title: 'Weed Delivery in Williamsburg',
     metaDescription:
       'Same-day, tax-free weed delivery to Williamsburg, Brooklyn (11211) — North Side, South Side, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Brooklyn · 11211 · 21+',
@@ -136,7 +136,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['11222'],
     etaMinutes: clusterEta('east-river'),
     etaLabel: '~55 min',
-    title: 'Weed Delivery in Greenpoint, Brooklyn',
+    title: 'Weed Delivery in Greenpoint',
     metaDescription:
       'Same-day, tax-free weed delivery to Greenpoint, Brooklyn (11222) — Franklin Street, Manhattan Avenue, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Brooklyn · 11222 · 21+',
@@ -182,7 +182,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['11101'],
     etaMinutes: clusterEta('east-river'),
     etaLabel: '~55 min',
-    title: 'Weed Delivery in Long Island City, Queens',
+    title: 'Weed Delivery in Long Island City',
     metaDescription:
       'Same-day, tax-free weed delivery to Long Island City, Queens (11101) — Hunters Point, Court Square, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Queens · 11101 · 21+',
@@ -235,7 +235,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     etaLabel: '35–50 min',
     title: 'Weed Delivery in Manhattan, NYC',
     metaDescription:
-      'Same-day, tax-free weed delivery across most of Manhattan — Upper East & West Sides, Midtown, the Village, SoHo, Tribeca & FiDi. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery across most of Manhattan — Upper East & West Sides, Midtown, the Village, SoHo & FiDi. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · 21+ · Same-day',
     heroLede:
       'Tax-free, same-day cannabis delivery across most of Manhattan — from the Financial District up through Midtown to the Upper East and Upper West Sides. Free on orders over $25, with a free pre-roll in every bag.',
@@ -287,9 +287,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['10021', '10028', '10065', '10075', '10128'],
     etaMinutes: clusterEta('ues-uws'),
     etaLabel: '~50 min',
-    title: 'Weed Delivery on the Upper East Side, NYC',
+    title: 'Weed Delivery on the Upper East Side',
     metaDescription:
-      'Same-day, tax-free weed delivery to the Upper East Side (10021, 10028, 10065, 10075, 10128) — Lenox Hill, Yorkville & Carnegie Hill. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery to the Upper East Side (10021, 10028, 10065, 10075, 10128) — Lenox Hill & Yorkville. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · UES · 21+',
     heroLede:
       'Tax-free, same-day cannabis delivery across the Upper East Side — Lenox Hill, Yorkville, and Carnegie Hill. Free on orders over $25, with a free pre-roll in every bag.',
@@ -334,9 +334,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['10023', '10024', '10025'],
     etaMinutes: clusterEta('ues-uws'),
     etaLabel: '~50 min',
-    title: 'Weed Delivery on the Upper West Side, NYC',
+    title: 'Weed Delivery on the Upper West Side',
     metaDescription:
-      'Same-day, tax-free weed delivery to the Upper West Side (10023, 10024, 10025) — Lincoln Square, the museum blocks & Manhattan Valley. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery to the Upper West Side (10023, 10024, 10025) — Lincoln Square to Manhattan Valley. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · UWS · 21+',
     heroLede:
       'Tax-free, same-day cannabis delivery across the Upper West Side — from Lincoln Square up through Manhattan Valley. Free on orders over $25, with a free pre-roll in every bag.',
@@ -381,9 +381,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['10003', '10009'],
     etaMinutes: clusterEta('chelsea-flatiron-ev'),
     etaLabel: '~35 min',
-    title: 'Weed Delivery in the East Village, NYC',
+    title: 'Weed Delivery in the East Village',
     metaDescription:
-      'Same-day, tax-free weed delivery to the East Village (10003, 10009) — Alphabet City, Tompkins Square & St. Marks. One of our fastest drops. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery to the East Village (10003, 10009) — Alphabet City, Tompkins Square & St. Marks. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · East Village · 21+',
     heroLede:
       'Tax-free, same-day cannabis delivery across the East Village — Alphabet City, Tompkins Square, and St. Marks. One of our fastest drops, free on orders over $25, with a free pre-roll in every bag.',
@@ -428,9 +428,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     zips: ['10001', '10016', '10017', '10018', '10019', '10022', '10036'],
     etaMinutes: clusterEta('midtown'),
     etaLabel: '~40 min',
-    title: 'Weed Delivery in Midtown Manhattan, NYC',
+    title: 'Weed Delivery in Midtown Manhattan',
     metaDescription:
-      'Same-day, tax-free weed delivery across Midtown Manhattan — Hell’s Kitchen, Murray Hill, Grand Central & the Theater District. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery across Midtown Manhattan — Hell’s Kitchen, Murray Hill, Grand Central & the Theater District. Free over $25, daily 10–10. 21+.',
     eyebrow: 'Manhattan · Midtown · 21+',
     heroLede:
       'Tax-free, same-day cannabis delivery across Midtown — Hell’s Kitchen, the Theater District, Grand Central, and Murray Hill. Free on orders over $25, with a free pre-roll in every bag.',

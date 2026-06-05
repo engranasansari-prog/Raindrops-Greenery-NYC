@@ -1,11 +1,52 @@
 /** @type {import('next').NextConfig} */
+
+/*
+ * Content-Security-Policy — REPORT-ONLY (non-enforcing).
+ *
+ * This NEVER blocks anything: the browser only logs violations to the console
+ * (and to report-uri if we add one later). It exists so we can watch real
+ * traffic and confirm the allow-list below is complete BEFORE ever switching to
+ * an enforcing `Content-Security-Policy`. Adding it cannot break the site.
+ *
+ * The directives enumerate every origin the CLIENT actually talks to:
+ *   • script  — GA loader (googletagmanager) + Meta Pixel loader (connect.facebook.net).
+ *               'unsafe-inline'/'unsafe-eval' cover the inline JSON-LD, the GA &
+ *               Pixel bootstrap snippets, and MapLibre GL's expression compiler.
+ *   • connect — GA/GTM beacons, Meta Pixel, and the web3forms endpoint the
+ *               contact form + chat assistant POST to from the browser.
+ *               (The Anthropic chat call is server-side in /api/chat, so it
+ *               needs no client connect-src entry.)
+ *   • img     — the S3 product-image CDN, CartoDB raster map tiles, tracking
+ *               pixels, plus data:/blob: for next/image + MapLibre canvases.
+ *   • worker  — blob: for the MapLibre GL web worker.
+ *   • style/font — 'unsafe-inline' + data: for next/font and MapLibre's
+ *               injected inline styles.
+ */
+const cspReportOnly = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'self'",
+  "form-action 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net",
+  "connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://api.web3forms.com",
+  "img-src 'self' data: blob: https://s3-us-west-2.amazonaws.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "worker-src 'self' blob:",
+  "child-src 'self' blob:",
+  "manifest-src 'self'"
+].join('; ');
+
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self), interest-cohort=()' },
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
-  { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }
+  { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+  // Report-Only: observe + tune; does NOT enforce, so it can't break the site.
+  { key: 'Content-Security-Policy-Report-Only', value: cspReportOnly }
 ];
 
 const nextConfig = {
@@ -38,19 +79,12 @@ const nextConfig = {
     // variants of small product cards.
     deviceSizes: [360, 640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Only one upstream host actually serves <Image> sources: every product
+    // photo in data/products.json is an s3-us-west-2.amazonaws.com/dutchie-images
+    // URL. The previously-listed raindropsgreenery.dispensary.shop /
+    // storage.googleapis.com / origin.dispensary.shop hosts had no remaining
+    // next/image references, so they're dropped to keep the allow-list tight.
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'raindropsgreenery.dispensary.shop'
-      },
-      {
-        protocol: 'https',
-        hostname: 'storage.googleapis.com'
-      },
-      {
-        protocol: 'https',
-        hostname: 'origin.dispensary.shop'
-      },
       // V8 — Dutchie product image CDN
       {
         protocol: 'https',

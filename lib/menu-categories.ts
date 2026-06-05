@@ -24,8 +24,6 @@ export type MenuCategory = {
   title: string;
   metaDescription: string;
   eyebrow: string;
-  /** H1 accent word (rendered italic). */
-  h1Accent: string;
   heroLede: string;
   intro: string;
   buyingNote: string;
@@ -39,9 +37,8 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     name: 'Flower Strains',
     title: 'Weed Flower Strains Delivery NYC',
     metaDescription:
-      'Same-day, tax-free flower delivery in NYC. Browse curated cannabis flower strains — indica, sativa & hybrid — by potency, size, and price. Free delivery over $25. 21+.',
+      'Same-day, tax-free flower delivery in NYC. Browse curated cannabis strains — indica, sativa & hybrid — by potency, size and price. Free over $25. 21+.',
     eyebrow: 'Flower Strains · 21+',
-    h1Accent: 'Flower Strains.',
     heroLede:
       'Curated cannabis flower delivered same-day across NYC — indica, sativa, and hybrid strains, filterable by potency, size, brand, and effect. Tax-free, free on orders over $25.',
     intro:
@@ -69,9 +66,8 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     name: 'Pre-Rolls',
     title: 'Pre-Rolls Delivery NYC — Tax-Free',
     metaDescription:
-      'Same-day, tax-free pre-roll delivery in NYC. Browse curated cannabis pre-rolls ready to go, by strain and price. Free delivery over $25, plus a free pre-roll on every order. 21+.',
+      'Same-day, tax-free pre-roll delivery in NYC. Browse curated cannabis pre-rolls by strain and price. Free over $25, plus a free pre-roll on every order. 21+.',
     eyebrow: 'Pre-Rolls · 21+',
-    h1Accent: 'Pre-Rolls.',
     heroLede:
       'Ready-to-go cannabis pre-rolls delivered same-day across NYC — by strain, potency, and price. Tax-free, free on orders over $25, with a complimentary pre-roll in every order.',
     intro:
@@ -101,7 +97,6 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     metaDescription:
       'Same-day, tax-free edibles delivery in NYC. Browse cannabis edibles by THC content and price. Free delivery over $25. 21+.',
     eyebrow: 'Edibles · 21+',
-    h1Accent: 'Edibles.',
     heroLede:
       'Cannabis edibles delivered same-day across NYC — browse by THC content and price. Tax-free, free on orders over $25, daily 10 AM–10 PM.',
     intro:

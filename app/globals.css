@@ -51,8 +51,10 @@
   --rd-on-paper-dim:    rgba(27,51,40, 0.70);
   /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
      legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
-     clears ~4.6:1 while still reading as a muted tertiary tone. */
-  --rd-on-paper-mute:   rgba(27,51,40, 0.68);
+     clears ~4.6:1 while still reading as a muted tertiary tone.
+     Re-audit (Jun 2026): 0.68 measured ~4.27:1 on the cream card — an AA
+     fail for regulatory fine print. Bumped to 0.74 (≈4.8:1) for headroom. */
+  --rd-on-paper-mute:   rgba(27,51,40, 0.74);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -847,3 +849,16 @@ textarea:focus:not(:focus-visible) {
    compositor work — and on mobile a permanently promoted full-viewport layer —
    the moment the hero leaves the viewport. */
 .hero-paused .hero-kenburns { animation-play-state: paused !important; }
+
+/* ─────────────────────────────────────────────────────────────────
+   MapLibre zoom controls — touch-target floor (CoverageLiveMap).
+   The default NavigationControl buttons render ~29px, below the 44px
+   WCAG / 24px minimum for comfortable touch on this mobile-heavy
+   audience. On coarse pointers, grow them to 40px so they're easy to
+   tap. Desktop (fine pointer) keeps the compact default. */
+@media (pointer: coarse) {
+  .maplibregl-ctrl-group button {
+    width: 40px;
+    height: 40px;
+  }
+}

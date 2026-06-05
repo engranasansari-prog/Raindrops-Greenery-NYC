@@ -16,7 +16,7 @@ A focused catalog means we can carry products we actually trust, and customers c
 
 ## Flower Strains
 
-**Flower** is dried, cured cannabis bud. It's the classic format and still the most popular for a reason: aroma, flavor, strain character, and complete control over dose.
+**Flower Strains** are dried, cured cannabis bud. It's the classic format and still the most popular for a reason: aroma, flavor, strain character, and complete control over dose.
 
 ### What you're looking at
 

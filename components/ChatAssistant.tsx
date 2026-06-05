@@ -6,6 +6,7 @@ import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { business, checkout } from '@/lib/site-data';
 import { checkZip } from '@/lib/zip-utils';
+import { trackOrderClick } from '@/lib/analytics';
 
 /**
  * Raindrops Concierge — a lightweight, brand-styled chat assistant.
@@ -77,7 +78,7 @@ const INTENTS: Array<{ keywords: string[]; reply: BotReply }> = [
   },
   {
     keywords: ['pay', 'payment', 'cash', 'card', 'debit', 'credit', 'apple pay', 'method'],
-    reply: { text: 'Pay by Bank through Dutchie pay is the only form of Payment.' }
+    reply: { text: 'Pay by Bank through Dutchie Pay is the only form of Payment.' }
   },
   {
     keywords: ['menu', 'product', 'products', 'strain', 'strains', 'flower', 'edible', 'edibles', 'pre-roll', 'indica', 'sativa', 'hybrid', 'thc', 'potency', 'have', 'carry', 'stock', 'recommend', 'suggest', 'what should'],
@@ -412,6 +413,11 @@ export default function ChatAssistant() {
                               href={a.href}
                               target="_blank"
                               rel="noopener noreferrer"
+                              onClick={
+                                a.href === checkout.dutchieUrl
+                                  ? () => trackOrderClick('chat_assistant')
+                                  : undefined
+                              }
                               className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-3.5 py-1.5 text-xs font-semibold text-[color:var(--rd-ink)] transition hover:brightness-105"
                             >
                               {a.label}

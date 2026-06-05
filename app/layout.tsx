@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import Script from 'next/script';
 import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import { COVERAGE } from '@/lib/coverage';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
+import AnalyticsPageview from '@/components/AnalyticsPageview';
 import './globals.css';
 
 // Display — Fraunces (variable). We load THREE expressive axes:
@@ -85,11 +87,9 @@ export const metadata: Metadata = {
     canonical: business.baseUrl
   },
   // manifest is auto-linked by app/manifest.ts (basePath-aware) — no explicit URL.
-  icons: {
-    icon: [{ url: '/assets/logo.jpg', type: 'image/jpeg' }],
-    apple: [{ url: '/assets/logo.jpg' }],
-    shortcut: ['/assets/logo.jpg']
-  },
+  // icons are auto-linked from app/icon.jpg + app/apple-icon.jpg (file-based
+  // metadata). Next.js emits the <link rel="icon"> / "apple-touch-icon" tags and
+  // serves /favicon.ico from app/icon.jpg, so no manual `icons` block is needed.
   openGraph: {
     title: 'Tax-Free Weed Delivery NYC | Raindrops Greenery',
     description:
@@ -97,21 +97,17 @@ export const metadata: Metadata = {
     url: business.baseUrl,
     siteName: 'Raindrops Greenery',
     locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`,
-        width: 1200,
-        height: 800,
-        alt: 'Raindrops Greenery NYC dispensary'
-      }
-    ]
+    type: 'website'
+    // No explicit `images` here: app/opengraph-image.tsx generates a correct
+    // 1200×630 branded card that Next.js auto-links for both og:image AND
+    // twitter:image. (The old hard-coded DISPENSARYIMAGE entry declared
+    // 1200×800 but the real file is 1000×750 — a mismatch crawlers flag.)
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tax-Free Weed Delivery NYC | Raindrops Greenery',
-    description: 'Same-day tax-free weed delivery, free over $25, 21+. Manhattan, Williamsburg, Greenpoint, and LIC.',
-    images: [`${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`]
+    description: 'Same-day tax-free weed delivery, free over $25, 21+. Manhattan, Williamsburg, Greenpoint, and LIC.'
+    // images omitted on purpose — falls back to the generated opengraph-image.
   },
   robots: {
     index: true,
@@ -149,15 +145,15 @@ export const viewport: Viewport = {
 
 /* =====================================================================
    STRUCTURED DATA / JSON-LD
-   Five connected schemas exposed at the root of every page:
+   Four connected schemas exposed at the root of every page:
 
-     1. Organization       — brand identity, sameAs, contactPoint
-     2. LocalBusiness      — local-pack signals: geo, areaServed, hours,
-                             rating, payment, price range, image gallery
-     3. WebSite            — sitelinks search box via SearchAction
-     4. WebPage            — generic page envelope linking the above
-     5. FAQ headline       — top-3 conversion-relevant FAQs surfaced
-                             site-wide so any page can win the FAQ snippet
+     1. Organization (brand)  — the multi-location Raindrops Greenery brand:
+                                identity, sameAs, subOrganization list
+     2. Organization (NYC)    — this location's org node: contactPoint,
+                                logo, parentOrganization → brand
+     3. LocalBusiness/Store   — local-pack signals: geo, areaServed, hours,
+                                payment, price range, image gallery, services
+     4. WebSite               — sitelinks search box via SearchAction
 
    Every schema cross-references via @id so Google understands they're
    the same entity. Per Google's structured-data documentation, this is
@@ -184,8 +180,8 @@ const brandLd = {
   logo: {
     '@type': 'ImageObject',
     url: `${business.baseUrl}/assets/logo.jpg`,
-    width: 800,
-    height: 800
+    width: 1024,
+    height: 1024
   },
   description:
     'Raindrops Greenery is a multi-location premium cannabis brand — a Tribally licensed dispensary offering tax-free, same-day delivery across New York with locations in Southampton, New York City, and Long Island.',
@@ -212,8 +208,8 @@ const organizationLd = {
   logo: {
     '@type': 'ImageObject',
     url: `${business.baseUrl}/assets/logo.jpg`,
-    width: 800,
-    height: 800
+    width: 1024,
+    height: 1024
   },
   image: [
     `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`,
@@ -267,7 +263,7 @@ const localBusinessLd = {
   email: business.email,
   priceRange: '$$',
   currenciesAccepted: 'USD',
-  paymentAccepted: 'Pay by Bank (Dutchie Pay)',
+  paymentAccepted: 'Pay by Bank through Dutchie Pay',
   slogan: business.tagline,
   description:
     'Premium 21+ Shinnecock-licensed cannabis delivery for NYC — Manhattan plus parts of Brooklyn (Williamsburg, Greenpoint) and Queens (Long Island City). Tax-free pricing. Free delivery on orders over $25.',
@@ -388,6 +384,10 @@ const websiteLd = {
 // set — e.g. to point preview deploys at a separate property, or to blank it.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-K36KHP6THQ';
 
+// Meta Pixel ID — env-only (no default), so the Pixel scripts mount only when a
+// client actually provisions one in Vercel.
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
@@ -467,10 +467,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Script>
           </>
         )}
-        {process.env.NEXT_PUBLIC_META_PIXEL_ID && (
+        {META_PIXEL_ID && (
           <Script id="meta-pixel" strategy="lazyOnload">
-            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${process.env.NEXT_PUBLIC_META_PIXEL_ID}');fbq('track','PageView');`}
+            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
           </Script>
+        )}
+        {/*
+          SPA pageview bridge. The inline GA/Pixel snippets above fire only the
+          initial document-load pageview; App Router navigations are client-side
+          and would otherwise go uncounted. AnalyticsPageview re-fires page_view /
+          PageView on every route change (skipping the first render). It mounts
+          whenever EITHER analytics surface is active. Wrapped in <Suspense>
+          because it reads useSearchParams (required for a CSR bailout boundary).
+        */}
+        {(GA_ID || META_PIXEL_ID) && (
+          <Suspense fallback={null}>
+            <AnalyticsPageview />
+          </Suspense>
         )}
         {children}
       </body>

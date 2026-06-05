@@ -17,7 +17,7 @@ import { business } from '@/lib/site-data';
 export const metadata: Metadata = {
   title: 'Tax-Free Weed Delivery in NYC',
   description:
-    'Tax-free, same-day weed delivery in NYC from Raindrops Greenery — a Tribally licensed dispensary. Free delivery over $25 across Manhattan, Williamsburg, Greenpoint & LIC. 21+.',
+    'Tax-free, same-day weed delivery in NYC by Raindrops Greenery, a Tribally licensed dispensary. Free over $25 in Manhattan, Williamsburg, Greenpoint & LIC. 21+.',
   alternates: { canonical: '/tax-free-weed-delivery-nyc' },
   openGraph: {
     title: 'Tax-Free Weed Delivery in NYC | Raindrops Greenery',
