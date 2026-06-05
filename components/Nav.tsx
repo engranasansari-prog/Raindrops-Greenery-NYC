@@ -90,9 +90,7 @@ export default function Nav() {
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
                    bg-[color:var(--rd-ink)]
                    border-b border-[rgba(200,230,110,0.08)]
-                   data-[scrolled=true]:bg-[rgba(27,51,40,0.88)]
-                   data-[scrolled=true]:backdrop-blur-xl
-                   data-[scrolled=true]:backdrop-saturate-150
+                   data-[scrolled=true]:bg-[rgba(27,51,40,0.97)]
                    data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
                    data-[scrolled=true]:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)]"
       >

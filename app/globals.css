@@ -816,6 +816,12 @@ textarea:focus:not(:focus-visible) {
 @media (prefers-reduced-motion: reduce) {
   .smoke-blob { animation: none !important; }
 }
+/* Pause the (desktop-only) smoke drift while the hero is scrolled off-screen —
+   the same IntersectionObserver-driven `.hero-paused` toggle the Ken Burns uses.
+   Stops three blur(48px) layers from compositing for nothing once you scroll
+   past the hero (which is the bulk of the page) — a real desktop scroll-
+   smoothness win on top of removing the fixed-nav backdrop-blur. */
+.hero-paused .smoke-blob { animation-play-state: paused !important; }
 
 /* ─────────────────────────────────────────────────────────────────
    Hero Ken Burns — an ambient "living photograph" motion on the hero
