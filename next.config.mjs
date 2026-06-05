@@ -28,11 +28,18 @@ const cspReportOnly = [
   "object-src 'none'",
   "frame-ancestors 'self'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net",
-  "connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://api.web3forms.com",
-  "img-src 'self' data: blob: https://s3-us-west-2.amazonaws.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
-  "style-src 'self' 'unsafe-inline'",
-  "font-src 'self' data:",
+  // Vercel Live / Toolbar — the in-browser preview + comments overlay that only
+  // YOU (logged into Vercel) ever load; real customers never request it. Its
+  // domains (vercel.live for script/style/frame/font, vercel.com for images,
+  // *.pusher.com for the live-comments websocket) are whitelisted per Vercel's
+  // CSP guidance so the toolbar works and stops the "CSP missing Vercel Toolbar
+  // domains" warning. Harmless on the public site.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://vercel.live",
+  "connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://api.web3forms.com https://vercel.live https://*.pusher.com wss://*.pusher.com",
+  "img-src 'self' data: blob: https://s3-us-west-2.amazonaws.com https://basemaps.cartocdn.com https://*.basemaps.cartocdn.com https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://vercel.live https://vercel.com",
+  "style-src 'self' 'unsafe-inline' https://vercel.live",
+  "font-src 'self' data: https://vercel.live https://assets.vercel.com",
+  "frame-src 'self' https://vercel.live",
   "worker-src 'self' blob:",
   "child-src 'self' blob:",
   "manifest-src 'self'"
