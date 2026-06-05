@@ -12,8 +12,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Raindrops Greenery NY Delivery Menu',
     description: 'Filter the Raindrops NY Flower, Pre-Rolls, and Edibles menu by category, price, potency, and effect.',
-    url: '/menu',
-    images: [{ url: '/assets/flower.avif', width: 1200, height: 800, alt: 'Raindrops Greenery menu products' }]
+    url: '/menu'
+    // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+    // 1200×630 branded card (the old flower.avif entry declared 1200×800 but
+    // the real asset is smaller — a dimension mismatch crawlers flag).
   }
 };
 
@@ -106,32 +108,20 @@ function buildProductSchema() {
   };
 }
 
-const menuBreadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: business.baseUrl },
-    { '@type': 'ListItem', position: 2, name: 'Menu', item: `${business.baseUrl}/menu` }
-  ]
-};
-
 export default async function MenuPage({ searchParams }: { searchParams?: Promise<MenuSearchParams> }) {
   const params = searchParams ? await searchParams : {};
   const productSchema = buildProductSchema();
   return (
     <>
-      {/* Plain <script> tags so JSON-LD ships in the initial SSR HTML
-          for Googlebot + AI engines. ItemList → product rich results;
-          BreadcrumbList → search breadcrumb display. */}
+      {/* Plain <script> tag so the ItemList JSON-LD ships in the initial SSR
+          HTML for Googlebot + AI engines → product rich results. The
+          BreadcrumbList is emitted by the <Breadcrumbs> component inside
+          <MenuExplorer> (Home › Menu), so it's intentionally not duplicated
+          here. */}
       <script
         type="application/ld+json"
-         
+
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
-      />
-      <script
-        type="application/ld+json"
-         
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(menuBreadcrumbLd) }}
       />
       <MenuExplorer
         initialCategory={params.category}

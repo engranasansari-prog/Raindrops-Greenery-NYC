@@ -41,8 +41,10 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
     openGraph: {
       title: `${c.title} | Raindrops Greenery`,
       description: c.metaDescription,
-      url,
-      images: [{ url: `${business.baseUrl}/assets/flower.avif`, width: 1200, height: 800, alt: c.title }]
+      url
+      // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+      // 1200×630 branded card (the old flower.avif entry declared 1200×800 but
+      // the real asset is smaller — a dimension mismatch crawlers flag).
     }
   };
 }

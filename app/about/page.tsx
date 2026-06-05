@@ -14,8 +14,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Raindrops Greenery',
     description: 'Tribally licensed NYC cannabis delivery. Curated. Transparent. Professional.',
-    url: '/about',
-    images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
+    url: '/about'
+    // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+    // 1200×630 branded card (the old DISPENSARYIMAGE entry declared 1200×800
+    // but the real asset is smaller — a dimension mismatch crawlers flag).
   }
 };
 

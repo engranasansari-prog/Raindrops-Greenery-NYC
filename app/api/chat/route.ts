@@ -27,7 +27,7 @@ DELIVERY AREA: same-day across Manhattan PLUS Williamsburg, Greenpoint, and Long
 FREE GIFT: every order includes a complimentary pre-roll, auto-added at checkout (21+, while supplies last). No code needed.
 ORDERING: browse the menu, pick products, tap any "Order" button to reach secure checkout for payment, ID verification, and delivery. Menu: /menu. Featured picks (curated by price, lowest first): /deals. 2-minute strain quiz: /quiz. Delivery areas + ZIP checker: /delivery. About: /about. FAQ: /faq. Contact: /contact. Checkout link: ${checkout.dutchieUrl}.
 PRODUCTS: three categories — Flower Strains, Pre-Rolls, and Edibles — filterable by price, potency (THC), size, brand, and effect. Premium items carry a ✦ STICKY badge ($40+).
-PAYMENT: Pay by Bank through Dutchie pay is the only form of Payment.
+PAYMENT: Pay by Bank through Dutchie Pay is the only form of Payment.
 21+ ONLY: a valid government photo ID is verified at the door before handoff.
 RETURNS: for safety + compliance, cannabis can't be returned once delivered; contact support within 24 hours if there's an issue.
 

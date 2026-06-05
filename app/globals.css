@@ -48,7 +48,7 @@
 
   /* Text — on paper */
   --rd-on-paper:        #1B3328;   /* matches new ink */
-  --rd-on-paper-dim:    rgba(27,51,40, 0.70);
+  --rd-on-paper-dim:    rgba(27,51,40, 0.74);
   /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
      legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
      clears ~4.6:1 while still reading as a muted tertiary tone.
@@ -253,8 +253,16 @@ textarea:focus:not(:focus-visible) {
 }
 
 :focus-visible {
-  outline: 2px solid var(--rd-glow);
+  /* Dual treatment so the ring is unmistakable on BOTH surfaces:
+       • Ink outline carries the ≥3:1 contrast (WCAG 2.4.11 / 1.4.11) on the
+         cream tokens — #1B3328 vs #F0E8D2/#E6DCC2/#FAF5E5 all measure >9:1.
+       • Gold glow halo provides the visible ring on dark ink (#1B3328,
+         #243F31), where the ink outline alone would vanish.
+     The lone lime outline (~1.15:1 on cream) failed the audit and the
+     published Accessibility Statement; this replaces it. */
+  outline: 2px solid var(--rd-ink);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--rd-glow);
   border-radius: 4px;
 }
 

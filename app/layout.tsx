@@ -88,8 +88,12 @@ export const metadata: Metadata = {
   },
   // manifest is auto-linked by app/manifest.ts (basePath-aware) — no explicit URL.
   // icons are auto-linked from app/icon.jpg + app/apple-icon.jpg (file-based
-  // metadata). Next.js emits the <link rel="icon"> / "apple-touch-icon" tags and
-  // serves /favicon.ico from app/icon.jpg, so no manual `icons` block is needed.
+  // metadata). Next.js emits the <link rel="icon"> (icon.jpg) and
+  // <link rel="apple-touch-icon"> (apple-icon.jpg) tags, so no manual `icons`
+  // block is needed. NOTE: /favicon.ico is NOT separately provided — there's no
+  // app/favicon.ico, so a hard request to /favicon.ico 404s. That's fine:
+  // browsers use the emitted <link rel="icon"> for the tab icon and only fall
+  // back to /favicon.ico when no such link exists.
   openGraph: {
     title: 'Tax-Free Weed Delivery NYC | Raindrops Greenery',
     description:
@@ -175,7 +179,9 @@ const brandLd = {
   '@type': 'Organization',
   '@id': BRAND_ID,
   name: 'Raindrops Greenery',
-  alternateName: 'Raindrops Greenery NY LLC',
+  // Brand-level alias only. The NY LLC legal name belongs on the #org
+  // (location) node, not the multi-location brand entity.
+  alternateName: 'Raindrops Greenery NY',
   url: BRAND_ORIGIN,
   logo: {
     '@type': 'ImageObject',
@@ -380,9 +386,15 @@ const websiteLd = {
 };
 
 // GA4 Measurement ID. Public (it ships in the page HTML), so it's safe to keep
-// in source as the default. A NEXT_PUBLIC_GA_ID env var in Vercel still wins if
-// set — e.g. to point preview deploys at a separate property, or to blank it.
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-K36KHP6THQ';
+// in source. But the hard-coded fallback is applied ONLY on the production
+// Vercel deploy — otherwise preview deploys, local dev, and forks would all
+// report into the live GA property and pollute its data. A NEXT_PUBLIC_GA_ID
+// env var always wins if set (e.g. to point a preview deploy at a separate
+// property), and anywhere it's unset off-production GA_ID stays undefined, so
+// the <Script> block below (gated on `GA_ID &&`) never mounts.
+const GA_ID =
+  process.env.NEXT_PUBLIC_GA_ID ??
+  (process.env.VERCEL_ENV === 'production' ? 'G-K36KHP6THQ' : undefined);
 
 // Meta Pixel ID — env-only (no default), so the Pixel scripts mount only when a
 // client actually provisions one in Vercel.

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import SmokeLayer from '@/components/SmokeLayer';
+import { trackCta } from '@/lib/analytics';
 
 export type HeroSlide = {
   id: string;
@@ -431,16 +432,34 @@ function SlideCta({
   variant: 'gold' | 'ghost';
 }) {
   const cls = `btn-luxe ${variant === 'gold' ? 'btn-luxe-gold' : 'btn-luxe-ghost'}`;
+
+  // Fire a GA conversion event for EVERY hero CTA click, then run any
+  // caller-supplied onClick. Previously this lived only on the no-href
+  // <button> branch, so the hero's primary CTA — "Claim free weed gift",
+  // which has an href → /menu and is the top-of-funnel intent signal — went
+  // through the <Link> branch and fired nothing. Now both branches track.
+  // The label is derived from the CTA copy (e.g. "Claim free weed gift" →
+  // hero_claim_free_weed_gift) so each hero CTA is reported accurately rather
+  // than under one hardcoded name. Navigation is untouched (no preventDefault).
+  const analyticsLabel = `hero_${label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')}`;
+  const handleClick = () => {
+    trackCta(analyticsLabel, 'home_hero');
+    onClick?.();
+  };
+
   if (href) {
     return (
-      <Link href={href} className={cls}>
+      <Link href={href} className={cls} onClick={handleClick}>
         {label}
         <ArrowRight />
       </Link>
     );
   }
   return (
-    <button type="button" onClick={onClick} className={cls}>
+    <button type="button" onClick={handleClick} className={cls}>
       {label}
       <ArrowRight />
     </button>

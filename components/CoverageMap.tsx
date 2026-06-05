@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Check, MapPin, Sparkles, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { COVERAGE } from '@/lib/coverage';
+import { COVERAGE, ALL_ZIPS } from '@/lib/coverage';
 import { checkZip } from '@/lib/zip-utils';
 import ZipSearch from '@/components/ZipSearch';
 import { useModalA11y } from '@/hooks/useModalA11y';
@@ -165,7 +165,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               Manhattan + <span className="italic">Brooklyn + Queens.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
-              32 ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free,
+              {ALL_ZIPS.length} ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free,
               free same-day delivery on orders over $25. Drop your ZIP — or tap any zone on the map.
             </p>
           </motion.div>

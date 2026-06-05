@@ -19,6 +19,33 @@ import { NEIGHBORHOODS } from '@/lib/neighborhoods';
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+// Map each COVERAGE cluster id → the neighborhood guide page(s) it covers, so
+// every cluster card on the hub can link straight to its /delivery/[area] page.
+// Without this, the four Manhattan sub-area pages (UES/UWS/EV/Midtown) were
+// orphaned — reachable only from /delivery/manhattan, never the hub. Most
+// clusters map to one guide; ues-uws covers two (UES + UWS) and we surface both
+// so neither stays orphaned. Built by reading each neighborhood's clusterId from
+// neighborhoods.ts (preferring sub-area spokes), so it can't drift from source.
+const CLUSTER_TO_NEIGHBORHOODS: Record<string, { slug: string; name: string }[]> = (() => {
+  // Explicit per-cluster guide slugs. Each must exist in NEIGHBORHOODS and
+  // declare the matching clusterId; we validate both and skip any stale entry.
+  const PREFERRED: Record<string, string[]> = {
+    'ues-uws': ['upper-east-side', 'upper-west-side'],
+    midtown: ['midtown'],
+    'chelsea-flatiron-ev': ['east-village'],
+    'east-river': ['williamsburg']
+  };
+  const map: Record<string, { slug: string; name: string }[]> = {};
+  for (const [clusterId, slugs] of Object.entries(PREFERRED)) {
+    const guides = slugs
+      .map((slug) => NEIGHBORHOODS.find((n) => n.slug === slug && n.clusterId === clusterId))
+      .filter((n): n is NonNullable<typeof n> => Boolean(n))
+      .map((n) => ({ slug: n.slug, name: n.name }));
+    if (guides.length) map[clusterId] = guides;
+  }
+  return map;
+})();
+
 // Lazy-load CoverageMap — same heavy SVG component used on the home page.
 const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
   ssr: false,
@@ -182,14 +209,36 @@ export default function DeliveryPage() {
                     ))}
                   </div>
 
-                  <Link
-                    href="/menu"
-                    className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-medium text-[color:var(--rd-moss)] transition-colors group-hover:text-[color:var(--rd-ink)]"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Order in this area</span>
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
-                  </Link>
+                  {(() => {
+                    const guides = CLUSTER_TO_NEIGHBORHOODS[cluster.id] ?? [];
+                    return (
+                      <div className="mt-auto flex flex-col gap-2.5 pt-6">
+                        <Link
+                          href="/menu"
+                          className="inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-moss)] transition-colors group-hover:text-[color:var(--rd-ink)]"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Order in this area</span>
+                          <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+                        </Link>
+                        {guides.length > 0 && (
+                          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                            {guides.map((guide) => (
+                              <Link
+                                key={guide.slug}
+                                href={`/delivery/${guide.slug}`}
+                                className="inline-flex items-center gap-1.5 text-[13px] text-[color:var(--rd-on-paper-dim)] transition-colors hover:text-[color:var(--rd-moss)]"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <span className="border-b border-[color:var(--rd-ink)]/15 pb-0.5">{guide.name} delivery details</span>
+                                <ArrowRight className="h-3.5 w-3.5" />
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </motion.div>
               );
             })}

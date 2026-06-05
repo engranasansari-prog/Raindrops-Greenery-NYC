@@ -19,8 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Cheap, Tax-Free Weed Delivery NYC — Raindrops Deals',
     description: 'Affordable, tax-free cannabis picks for NYC delivery — from under $25 to the premium $40+ ✦ STICKY tier. Free delivery over $25.',
-    url: '/deals',
-    images: [{ url: '/assets/flower.avif', width: 1200, height: 800, alt: 'Cheap tax-free weed delivery deals in NYC' }]
+    url: '/deals'
   }
 };
 
@@ -278,7 +277,7 @@ export default function DealsPage() {
             eyebrow="Heavy hitters"
             title="The ✦ STICKY tier"
             italic="top of the shop."
-            body="Our premium $40-and-up tier — the strongest, most-wanted flower and high-dose edibles. Every ✦ STICKY pick lives here."
+            body="Our premium $40-and-up tier — top-shelf flower and high-dose edibles. Every ✦ STICKY pick lives here."
             products={heavyHitters}
           />
         </>

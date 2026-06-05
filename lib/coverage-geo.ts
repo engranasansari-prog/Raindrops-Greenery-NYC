@@ -1,13 +1,13 @@
 // GeoJSON builders for the MapLibre coverage map (V15, May 2026).
 //
 // V15 is the "real boundaries" rebuild. The map now reads from
-// `coverage-zip-boundaries.ts` — actual US Census ZCTA polygons for the 32
+// `coverage-zip-boundaries.ts` — actual US Census ZCTA polygons for the 33
 // covered NYC ZIPs — instead of the hand-drawn approximations that the client
 // (rightly) read as "confusing squares." Shapes follow real streets and the
 // waterfront, so the map looks like a precise coverage inset, not a doodle.
 //
 // Decluttering strategy (the other half of the client note):
-//   • Default view shows 7 CLUSTER labels (neighborhood + ETA), not 32 ZIP
+//   • Default view shows 7 CLUSTER labels (neighborhood + ETA), not 33 ZIP
 //     numbers. That alone removes the "crowded with zip codes" feeling.
 //   • Individual ZIP numbers fade in only when the customer zooms into a
 //     neighborhood (handled in CoverageLiveMap via a minzoom gate).

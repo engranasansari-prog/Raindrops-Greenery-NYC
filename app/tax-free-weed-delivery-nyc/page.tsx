@@ -15,16 +15,21 @@ import { business } from '@/lib/site-data';
  */
 
 export const metadata: Metadata = {
-  title: 'Tax-Free Weed Delivery in NYC',
+  // Retargeted to an informational/explainer long-tail intent ("why is it
+  // tax-free?") so this page doesn't cannibalize the homepage, which already
+  // ranks for the commercial head term "Tax-Free Weed Delivery NYC".
+  title: 'Why Is Raindrops Weed Delivery Tax-Free?',
   description:
-    'Tax-free, same-day weed delivery in NYC by Raindrops Greenery, a Tribally licensed dispensary. Free over $25 in Manhattan, Williamsburg, Greenpoint & LIC. 21+.',
+    'Why is Raindrops Greenery weed delivery tax-free? Because it is a Tribally licensed dispensary selling on Native Sovereign Land — the listed NYC price is what you pay. 21+.',
   alternates: { canonical: '/tax-free-weed-delivery-nyc' },
   openGraph: {
-    title: 'Tax-Free Weed Delivery in NYC | Raindrops Greenery',
+    title: 'Why Is Raindrops Weed Delivery Tax-Free? | Raindrops Greenery',
     description:
-      'Same-day, tax-free cannabis delivery across NYC — free delivery over $25, free pre-roll with every order. 21+.',
-    url: '/tax-free-weed-delivery-nyc',
-    images: [{ url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`, width: 1200, height: 800, alt: 'Tax-free weed delivery in NYC' }]
+      'The reason Raindrops weed delivery in NYC is tax-free: a Tribally licensed dispensary selling on Native Sovereign Land. Same-day, free over $25, 21+.',
+    url: '/tax-free-weed-delivery-nyc'
+    // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+    // 1200×630 branded card (the old DISPENSARYIMAGE entry declared 1200×800
+    // but the real asset is smaller — a dimension mismatch crawlers flag).
   }
 };
 
@@ -62,15 +67,6 @@ const faqLd = {
   ]
 };
 
-const breadcrumbLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: business.baseUrl },
-    { '@type': 'ListItem', position: 2, name: 'Tax-Free Weed Delivery in NYC', item: PAGE_URL }
-  ]
-};
-
 const HIGHLIGHTS = [
   { icon: BadgeCheck, label: 'Tax-free', body: 'Tribally licensed — the price you see is the price you pay.' },
   { icon: Truck, label: 'Free delivery', body: 'Free on every order over $25. No surge, no hidden fees.' },
@@ -82,7 +78,9 @@ export default function TaxFreeDeliveryPage() {
   return (
     <SiteChrome>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
+      {/* BreadcrumbList JSON-LD is emitted by the <Breadcrumbs> component in
+          the hero (Home › Tax-Free Weed Delivery in NYC), so it's not
+          duplicated here. */}
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
@@ -100,7 +98,7 @@ export default function TaxFreeDeliveryPage() {
           <Breadcrumbs items={[{ label: 'Tax-Free Weed Delivery in NYC' }]} tone="dark" />
           <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">NYC · 21+ · Tax-free</p>
           <h1 className="mt-4 text-[color:var(--rd-text)]">
-            Tax-Free Weed Delivery <span className="italic">in NYC.</span>
+            Why is Raindrops weed delivery <span className="italic">tax-free?</span>
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
             Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City. We&rsquo;re a

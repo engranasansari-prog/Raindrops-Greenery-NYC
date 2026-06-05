@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { faqs, business } from '@/lib/site-data';
+import { faqs } from '@/lib/site-data';
 
 export const metadata: Metadata = {
   title: 'Weed Delivery FAQ — NYC',
@@ -12,8 +12,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Raindrops Greenery FAQ',
     description: 'Answers about delivery, ordering, checkout, and product browsing.',
-    url: '/faq',
-    images: [{ url: `${business.baseUrl}/assets/DISPENSARYIMAGE.jpg`, width: 1200, height: 800, alt: 'Raindrops Greenery NYC' }]
+    url: '/faq'
+    // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+    // 1200×630 branded card (the old DISPENSARYIMAGE entry declared 1200×800
+    // but the real asset is smaller — a dimension mismatch crawlers flag).
   }
 };
 

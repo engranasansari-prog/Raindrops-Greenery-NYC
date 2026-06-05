@@ -9,8 +9,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Same-Day Weed Delivery NYC — Raindrops Greenery',
     description: 'Same-day weed delivery — Manhattan, Williamsburg, Greenpoint, and Long Island City.',
-    url: '/delivery',
-    images: [{ url: '/assets/DISPENSARYIMAGE.jpg', width: 1200, height: 800, alt: 'Raindrops Greenery NYC dispensary' }]
+    url: '/delivery'
+    // No explicit `images`: falls back to app/opengraph-image.tsx's generated
+    // 1200×630 branded card (the old DISPENSARYIMAGE entry declared 1200×800
+    // but the real asset is smaller — a dimension mismatch crawlers flag).
   }
 };
 
