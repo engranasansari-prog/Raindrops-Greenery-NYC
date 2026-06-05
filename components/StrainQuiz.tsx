@@ -227,7 +227,7 @@ export default function StrainQuiz() {
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
@@ -238,30 +238,30 @@ export default function StrainQuiz() {
         />
 
         <div className="luxury-shell relative py-12 sm:py-16 lg:py-24">
-          <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="dark" />
+          <Breadcrumbs items={[{ label: 'Strain finder' }]} tone="light" />
           <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+              <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-moss)]">
                 <Sparkles className="h-3.5 w-3.5" />
                 4 questions · 30 seconds
               </p>
-              <h1 className="mt-4 text-[color:var(--rd-text)]">
+              <h1 className="mt-4 text-[color:var(--rd-ink)]">
                 Find your <span className="italic">strain.</span>
               </h1>
-              <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg">
                 Tell us how you want to feel — we’ll pull three drops from the live menu that fit. Not medical advice, just a smart starting point.
               </p>
             </div>
             {!finished && (
-              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/70 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)] sm:self-auto">
-                Step <span className="text-[color:var(--rd-glow)]">{Math.min(step + 1, total)}</span> / {total}
+              <span className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-dim)] [font-family:var(--font-mono)] sm:self-auto">
+                Step <span className="text-[color:var(--rd-moss)]">{Math.min(step + 1, total)}</span> / {total}
               </span>
             )}
           </div>
 
           {/* Progress rail */}
           {!finished && (
-            <div className="mt-8 h-px w-full bg-[color:var(--rd-paper)]/8">
+            <div className="mt-8 h-px w-full bg-[color:var(--rd-ink)]/10">
               <motion.div
                 initial={false}
                 animate={{ width: `${progress}%` }}
@@ -274,7 +274,7 @@ export default function StrainQuiz() {
       </section>
 
       {/* Quiz body */}
-      <section className="rd-luxe-dark overflow-hidden pb-20 text-[color:var(--rd-text)] sm:pb-24">
+      <section className="rd-luxe-paper overflow-hidden pb-20 text-[color:var(--rd-ink)] sm:pb-24">
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
             {!finished && current ? (
@@ -285,8 +285,8 @@ export default function StrainQuiz() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.45, ease: easeOut }}
               >
-                <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Question {step + 1} of {total}</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                <p className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Question {step + 1} of {total}</p>
+                <h2 className="mt-3 text-[color:var(--rd-ink)]">
                   {current.label} <span className="italic">{current.italic}</span>
                 </h2>
 
@@ -301,13 +301,13 @@ export default function StrainQuiz() {
                         aria-pressed={isSelected}
                         className={`group relative overflow-hidden rounded-2xl border p-6 text-left transition-[transform,border-color,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 ${
                           isSelected
-                            ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12 shadow-[0_20px_60px_rgba(198,160,100,0.18)]'
-                            : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_24px_70px_rgba(8,18,14,0.55)]'
+                            ? 'border-[color:var(--rd-amber-dark)] bg-[color:var(--rd-glow)]/12 shadow-[0_20px_60px_rgba(27,58,44,0.12)]'
+                            : 'border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] hover:border-[color:var(--rd-amber-dark)]/45 rd-shadow-luxe'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <h3
-                            className="text-2xl text-[color:var(--rd-text)] sm:text-3xl"
+                            className="text-2xl text-[color:var(--rd-ink)] sm:text-3xl"
                             style={{ fontFamily: 'var(--font-display)', fontWeight: 400, letterSpacing: '-0.02em' }}
                           >
                             {option.value}
@@ -316,14 +316,14 @@ export default function StrainQuiz() {
                             className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition ${
                               isSelected
                                 ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)]'
-                                : 'border-[color:var(--rd-paper)]/22 text-transparent group-hover:border-[color:var(--rd-glow)]/40'
+                                : 'border-[color:var(--rd-ink)]/20 text-transparent group-hover:border-[color:var(--rd-amber-dark)]/45'
                             }`}
                             aria-hidden
                           >
                             <Check className="h-4 w-4" />
                           </span>
                         </div>
-                        <p className="mt-3 text-sm leading-6 text-[color:var(--rd-text-dim)] sm:text-base">{option.body}</p>
+                        <p className="mt-3 text-sm leading-6 text-[color:var(--rd-on-paper-dim)] sm:text-base">{option.body}</p>
                       </button>
                     );
                   })}
@@ -334,12 +334,12 @@ export default function StrainQuiz() {
                     type="button"
                     onClick={back}
                     disabled={step === 0}
-                    className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-text)] disabled:cursor-not-allowed disabled:opacity-30"
+                    className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-ink)] disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     <ArrowLeft className="h-4 w-4" />
                     Back
                   </button>
-                  <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Tap an option to continue</span>
+                  <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Tap an option to continue</span>
                 </div>
               </motion.div>
             ) : (
@@ -352,11 +352,11 @@ export default function StrainQuiz() {
               >
                 <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
                   <div className="min-w-0">
-                    <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+                    <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-moss)]">
                       <Check className="h-3.5 w-3.5" />
                       Matched
                     </p>
-                    <h2 className="mt-3 break-words text-[color:var(--rd-text)]">
+                    <h2 className="mt-3 break-words text-[color:var(--rd-ink)]">
                       Three drops <span className="italic">picked for you.</span>
                     </h2>
                     {/* Chip row instead of inline sentence — wraps cleanly on mobile */}
@@ -366,7 +366,7 @@ export default function StrainQuiz() {
                         .map((value) => (
                           <span
                             key={value as string}
-                            className="inline-flex items-center rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+                            className="inline-flex items-center rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]"
                           >
                             {value}
                           </span>
@@ -376,7 +376,7 @@ export default function StrainQuiz() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)] sm:self-auto [font-family:var(--font-mono)]"
+                    className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 hover:text-[color:var(--rd-moss)] sm:self-auto [font-family:var(--font-mono)]"
                   >
                     <RotateCcw className="h-4 w-4" />
                     Retake
@@ -384,7 +384,7 @@ export default function StrainQuiz() {
                 </div>
 
                 {results.length === 0 ? (
-                  <div className="mt-10 rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-8 text-[color:var(--rd-text-dim)]">
+                  <div className="mt-10 rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-8 text-[color:var(--rd-on-paper-dim)]">
                     No exact matches in stock right now — open the full menu to keep browsing.
                   </div>
                 ) : (
@@ -404,7 +404,7 @@ export default function StrainQuiz() {
                         >
                           <Link
                             href={`/menu?product=${encodeURIComponent(product.id)}`}
-                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.52)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.14)]"
+                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] rd-shadow-luxe transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-amber-dark)]/45 hover:shadow-[0_30px_70px_rgba(27,58,44,0.13)]"
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--rd-paper-soft)]">
                               {product.image && (
@@ -430,9 +430,9 @@ export default function StrainQuiz() {
                               </div>
                             </div>
                             <div className="flex flex-1 flex-col p-5">
-                              <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
+                              <p className="rd-eyebrow truncate text-[color:var(--rd-on-paper-mute)]">{getBrandLabel(product)}</p>
                               <h3
-                                className="mt-2 line-clamp-2 break-words text-[color:var(--rd-text)]"
+                                className="mt-2 line-clamp-2 break-words text-[color:var(--rd-ink)]"
                                 style={{
                                   fontFamily: 'var(--font-display)',
                                   fontWeight: 400,
@@ -444,30 +444,30 @@ export default function StrainQuiz() {
                               >
                                 {product.name}
                               </h3>
-                              <p className="mt-2 text-xs text-[color:var(--rd-text-dim)]">{inferProfile(product)}</p>
+                              <p className="mt-2 text-xs text-[color:var(--rd-on-paper-dim)]">{inferProfile(product)}</p>
                               <div className="mt-auto flex items-end justify-between pt-5">
                                 <div className="[font-family:var(--font-mono)]">
                                   {product.variants.length > 1 ? (
                                     <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-0.5">
                                       {product.variants.map((variant, i) => (
                                         <Fragment key={variant.label}>
-                                          <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                                          <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-mute)] text-left">
                                             {variant.label}
                                           </span>
-                                          <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                                          <span className={`font-semibold tabular-nums text-[color:var(--rd-amber-dark)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
                                             {formatPrice(variant.price)}
                                           </span>
                                         </Fragment>
                                       ))}
                                     </div>
                                   ) : (
-                                    <span className="block text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
+                                    <span className="block text-xl font-semibold text-[color:var(--rd-amber-dark)] sm:text-2xl">{formatPrice(product.salePrice)}</span>
                                   )}
                                 </div>
                                 {thc && (
                                   <span className="text-right [font-family:var(--font-mono)]">
-                                    <span className="block text-base font-semibold text-[color:var(--rd-glow)]">{thc}%</span>
-                                    <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">THC</span>
+                                    <span className="block text-base font-semibold text-[color:var(--rd-moss)]">{thc}%</span>
+                                    <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">THC</span>
                                   </span>
                                 )}
                               </div>
@@ -484,12 +484,12 @@ export default function StrainQuiz() {
                     Open full menu
                     <ArrowRight />
                   </Link>
-                  <Link href="/deals" className="btn-luxe btn-luxe-ghost">
+                  <Link href="/deals" className="btn-luxe btn-luxe-outline">
                     See live deals
                   </Link>
                 </div>
 
-                <p className="mt-10 rd-eyebrow text-[color:var(--rd-text-mute)]">
+                <p className="mt-10 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">
                   Recommendations are educational, not medical advice. Cannabis affects each person differently. Start low, go slow — especially with edibles.
                 </p>
               </motion.div>

@@ -10,12 +10,12 @@ import { business, social } from '@/lib/site-data';
 const topics = ['Order help', 'Delivery question', 'Wholesale / brand partnership', 'Press', 'Other'];
 
 function ContactStat({ icon: Icon, label, value, href }: { icon: typeof Phone; label: string; value: string; href?: string }) {
-  const className = "group block rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_22px_60px_rgba(198,160,100,0.10)]";
+  const className = "group block rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-5 transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:border-[color:var(--rd-amber-dark)]/45 hover:shadow-[0_22px_60px_rgba(27,58,44,0.12)]";
   const content = (
     <>
-      <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" />
-      <p className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)]">{label}</p>
-      <p className="mt-2 text-sm font-medium leading-6 text-[color:var(--rd-text)]">{value}</p>
+      <Icon className="h-6 w-6 text-[color:var(--rd-moss)]" />
+      <p className="mt-4 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">{label}</p>
+      <p className="mt-2 text-sm font-medium leading-6 text-[color:var(--rd-ink)]">{value}</p>
     </>
   );
   if (href) {
@@ -117,12 +117,12 @@ export default function ContactPage() {
   };
 
   const inputClass =
-    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]';
+    'h-12 rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] px-4 text-sm font-medium text-[color:var(--rd-ink)] outline-none transition placeholder:text-[color:var(--rd-on-paper-mute)] hover:border-[color:var(--rd-amber-dark)]/45 focus:border-[color:var(--rd-moss)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]';
 
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
@@ -133,12 +133,12 @@ export default function ContactPage() {
         />
         <div className="luxury-shell relative grid gap-10 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <Breadcrumbs items={[{ label: 'Contact' }]} tone="dark" />
-            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Get in touch</p>
-            <h1 className="mt-4 text-[color:var(--rd-text)]">
+            <Breadcrumbs items={[{ label: 'Contact' }]} tone="light" />
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">Get in touch</p>
+            <h1 className="mt-4 text-[color:var(--rd-ink)]">
               Real humans <span className="italic">answer here.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
               Questions about a delivery, a product, or a partnership? Use the form, give us a call, or message us on social. We answer most messages within one business day.
             </p>
           </div>
@@ -156,11 +156,11 @@ export default function ContactPage() {
         <div className="luxury-shell grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <form
             onSubmit={send}
-            className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)] sm:p-9"
+            className="rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 rd-shadow-luxe sm:p-9"
           >
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Send a message</p>
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Send a message</p>
             <h2
-              className="mt-3 text-[color:var(--rd-text)]"
+              className="mt-3 text-[color:var(--rd-ink)]"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.6rem, 2.4vw, 2.2rem)', letterSpacing: '-0.02em' }}
             >
               Tell us what <span className="italic">you need.</span>
@@ -168,15 +168,15 @@ export default function ContactPage() {
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="grid gap-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Your name</span>
+                <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Your name</span>
                 <input required value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Email</span>
+                <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Email</span>
                 <input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2 md:col-span-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Topic</span>
+                <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Topic</span>
                 <select value={topic} onChange={(event) => setTopic(event.target.value)} className={inputClass}>
                   {topics.map((item) => (
                     <option key={item}>{item}</option>
@@ -184,13 +184,13 @@ export default function ContactPage() {
                 </select>
               </label>
               <label className="grid gap-2 md:col-span-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Message</span>
+                <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Message</span>
                 <textarea
                   required
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
-                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]"
+                  className="rounded-2xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-4 text-sm leading-7 text-[color:var(--rd-ink)] outline-none transition placeholder:text-[color:var(--rd-on-paper-mute)] hover:border-[color:var(--rd-amber-dark)]/45 focus:border-[color:var(--rd-moss)] focus:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]"
                 />
               </label>
             </div>
@@ -207,12 +207,12 @@ export default function ContactPage() {
               <button
                 type="button"
                 onClick={copyEmail}
-                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
+                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 hover:text-[color:var(--rd-ink)] [font-family:var(--font-mono)]"
                 aria-label={`Copy ${business.email} to clipboard`}
               >
                 {copied ? (
                   <>
-                    <Check className="h-4 w-4 text-[color:var(--rd-glow)]" />
+                    <Check className="h-4 w-4 text-[color:var(--rd-moss)]" />
                     Copied
                   </>
                 ) : (
@@ -225,17 +225,17 @@ export default function ContactPage() {
             </div>
 
             {sent && (
-              <div role="status" aria-live="polite" className="mt-5 rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
-                <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
+              <div role="status" aria-live="polite" className="mt-5 rounded-2xl border border-[color:var(--rd-amber-dark)]/30 bg-[color:var(--rd-glow)]/8 p-4 text-sm leading-6 text-[color:var(--rd-ink)]">
+                <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-moss)]">
                   <Check className="h-4 w-4" />
                   {WEB3FORMS_KEY ? 'Message sent' : 'Your email app should open'}
                 </p>
-                <p className="mt-2 text-[color:var(--rd-text-dim)]">
+                <p className="mt-2 text-[color:var(--rd-on-paper-dim)]">
                   {WEB3FORMS_KEY ? (
                     <>
                       Thanks — your message is on its way to our team. We reply within one business
                       day. You can also reach us directly at{' '}
-                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-moss)] underline underline-offset-4">
                         {business.email}
                       </a>
                       .
@@ -243,10 +243,10 @@ export default function ContactPage() {
                   ) : (
                     <>
                       If nothing opened, email us directly at{' '}
-                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                      <a href={business.emailHref} className="font-medium text-[color:var(--rd-moss)] underline underline-offset-4">
                         {business.email}
                       </a>{' '}
-                      or tap <span className="font-medium text-[color:var(--rd-text)]">Copy email</span> above.
+                      or tap <span className="font-medium text-[color:var(--rd-ink)]">Copy email</span> above.
                     </>
                   )}
                 </p>
@@ -254,22 +254,22 @@ export default function ContactPage() {
             )}
 
             {error && (
-              <div role="alert" className="mt-5 rounded-2xl border border-[color:var(--rd-amber)]/40 bg-[color:var(--rd-amber)]/10 p-4 text-sm leading-6 text-[color:var(--rd-text)]">
+              <div role="alert" className="mt-5 rounded-2xl border border-[color:var(--rd-amber-dark)]/40 bg-[color:var(--rd-amber)]/10 p-4 text-sm leading-6 text-[color:var(--rd-ink)]">
                 Something went wrong sending your message. Please email us directly at{' '}
-                <a href={business.emailHref} className="font-medium text-[color:var(--rd-glow)] underline underline-offset-4">
+                <a href={business.emailHref} className="font-medium text-[color:var(--rd-moss)] underline underline-offset-4">
                   {business.email}
                 </a>
                 .
               </div>
             )}
 
-            <p className="mt-5 text-xs leading-6 text-[color:var(--rd-text-mute)]">
+            <p className="mt-5 text-xs leading-6 text-[color:var(--rd-on-paper-mute)]">
               Please do not include payment information. For order issues, call{' '}
-              <a href={business.phoneHref} className="underline underline-offset-4 hover:text-[color:var(--rd-text-dim)]">
+              <a href={business.phoneHref} className="underline underline-offset-4 hover:text-[color:var(--rd-on-paper-dim)]">
                 {business.phone}
               </a>{' '}
               or email{' '}
-              <a href={business.emailHref} className="underline underline-offset-4 hover:text-[color:var(--rd-text-dim)]">
+              <a href={business.emailHref} className="underline underline-offset-4 hover:text-[color:var(--rd-on-paper-dim)]">
                 {business.email}
               </a>
               .
@@ -277,21 +277,21 @@ export default function ContactPage() {
           </form>
 
           <aside className="grid gap-4 self-start">
-            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
-              <Clock className="h-6 w-6 text-[color:var(--rd-glow)]" />
-              <p className="mt-3 rd-eyebrow text-[color:var(--rd-text-mute)]">Hours</p>
-              <ul className="mt-3 grid gap-2 text-sm text-[color:var(--rd-text)] [font-family:var(--font-mono)]">
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 rd-shadow-luxe">
+              <Clock className="h-6 w-6 text-[color:var(--rd-moss)]" />
+              <p className="mt-3 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Hours</p>
+              <ul className="mt-3 grid gap-2 text-sm text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                 {business.hours.map((slot) => (
-                  <li key={slot.day} className="flex items-center justify-between gap-3 border-b border-[color:var(--rd-paper)]/8 pb-2 last:border-0 last:pb-0">
-                    <span className="text-[color:var(--rd-text-dim)]">{slot.day}</span>
+                  <li key={slot.day} className="flex items-center justify-between gap-3 border-b border-[color:var(--rd-ink)]/10 pb-2 last:border-0 last:pb-0">
+                    <span className="text-[color:var(--rd-on-paper-dim)]">{slot.day}</span>
                     <span>{slot.open} – {slot.close}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Find us social</p>
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 rd-shadow-luxe">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">Find us social</p>
               <ul className="mt-4 grid gap-2 text-sm">
                 {social.map((item) => (
                   <li key={item.label}>
@@ -299,20 +299,20 @@ export default function ContactPage() {
                       href={item.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 font-medium text-[color:var(--rd-text)] transition hover:text-[color:var(--rd-glow)]"
+                      className="inline-flex items-center gap-2 font-medium text-[color:var(--rd-ink)] transition hover:text-[color:var(--rd-moss)]"
                     >
                       {item.label}
-                      <span className="text-[color:var(--rd-text-mute)]">— {item.handle}</span>
+                      <span className="text-[color:var(--rd-on-paper-mute)]">— {item.handle}</span>
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-6 shadow-[0_24px_72px_rgba(8,18,14,0.5)]">
-              <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Need an order, not a chat?</p>
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 rd-shadow-luxe">
+              <p className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Need an order, not a chat?</p>
               <h3
-                className="mt-3 text-[color:var(--rd-text)]"
+                className="mt-3 text-[color:var(--rd-ink)]"
                 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.35rem, 1.8vw, 1.65rem)', letterSpacing: '-0.015em' }}
               >
                 Skip ahead <span className="italic">to checkout.</span>

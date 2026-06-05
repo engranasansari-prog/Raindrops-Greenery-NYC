@@ -125,27 +125,27 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" quality={50} className="object-cover opacity-[0.16] sm:opacity-[0.20]" />
-        {/* Mobile: heavier uniform wash so the full-width headline never sits
+        {/* Mobile: heavier uniform bone wash so the full-width headline never sits
             over the bleed-through backdrop image (text-on-image legibility). */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.93),rgba(27,51,40,0.86),rgba(27,51,40,0.96))] sm:hidden" aria-hidden />
-        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27,51,40,0.95),rgba(27,51,40,0.80),rgba(27,51,40,0.9))]" aria-hidden />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(244,239,227,0.93),rgba(244,239,227,0.86),rgba(244,239,227,0.96))] sm:hidden" aria-hidden />
+        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(244,239,227,0.95),rgba(244,239,227,0.80),rgba(244,239,227,0.9))]" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(198,160,100,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.18), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'Delivery', href: '/delivery' }, { label: n.name }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">{n.eyebrow}</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">
+          <Breadcrumbs items={[{ label: 'Delivery', href: '/delivery' }, { label: n.name }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">{n.eyebrow}</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">
             Weed Delivery in <span className="italic">{n.name}.</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
             {n.heroLede}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -153,7 +153,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
               View the menu
               <ArrowRight />
             </Link>
-            <Link href="/delivery" className="btn-luxe btn-luxe-ghost">
+            <Link href="/delivery" className="btn-luxe btn-luxe-outline">
               Check your ZIP
               <ArrowRight />
             </Link>
@@ -163,10 +163,10 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
             {highlights.map((h) => {
               const Icon = h.icon;
               return (
-                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-4">
-                  <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" strokeWidth={1.6} />
-                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-text)]">{h.label}</p>
-                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-text-dim)]">{h.body}</p>
+                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-4">
+                  <Icon className="h-6 w-6 text-[color:var(--rd-moss)]" strokeWidth={1.6} />
+                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-ink)]">{h.label}</p>
+                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-on-paper-dim)]">{h.body}</p>
                 </div>
               );
             })}
@@ -250,14 +250,14 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
 
           {/* CTA sidebar */}
           <aside className="h-fit lg:sticky lg:top-28">
-            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Order in {n.name}</p>
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-5 rd-shadow-luxe sm:p-6">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">Order in {n.name}</p>
               <h2
-                className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
+                className="rd-head-aside mt-3 text-[color:var(--rd-ink)]"
               >
                 Tax-free, same-day, <span className="italic">to your door.</span>
               </h2>
-              <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
+              <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
                 Free delivery over $25 and a free pre-roll with every {n.name} order. 21+ only.
               </p>
               <div className="mt-5 grid gap-3">
@@ -280,7 +280,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
                       className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                     >
                       <MapPin className="h-4 w-4 text-[color:var(--rd-moss)]" />
-                      <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">
+                      <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-amber-dark)]">
                         Weed delivery in {o.name}
                       </span>
                     </Link>
@@ -292,7 +292,7 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
                     className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                   >
                     <ArrowRight className="h-4 w-4 text-[color:var(--rd-moss)]" />
-                    <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">
+                    <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-amber-dark)]">
                       All delivery areas
                     </span>
                   </Link>

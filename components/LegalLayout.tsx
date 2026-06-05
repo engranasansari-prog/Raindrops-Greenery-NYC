@@ -27,8 +27,8 @@ export default function LegalLayout({
 }) {
   return (
     <SiteChrome>
-      {/* Hero — dark ink to match the rest of the site */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      {/* Hero — light paper to match the rest of the site */}
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
@@ -38,11 +38,11 @@ export default function LegalLayout({
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'Legal', href: '/legal/privacy' }, { label: title }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">{eyebrow}</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">{title}</h1>
-          <p className="mt-5 max-w-3xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">{intro}</p>
-          <p className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)]">Last updated {lastUpdated}</p>
+          <Breadcrumbs items={[{ label: 'Legal', href: '/legal/privacy' }, { label: title }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">{eyebrow}</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">{title}</h1>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">{intro}</p>
+          <p className="mt-4 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Last updated {lastUpdated}</p>
         </div>
       </section>
 
@@ -84,7 +84,7 @@ export default function LegalLayout({
                 href="/contact"
                 className="mt-4 inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-moss)] transition hover:text-[color:var(--rd-ink)]"
               >
-                <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Contact us</span>
+                <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">Contact us</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

@@ -34,13 +34,13 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 const CoverageLiveMap = dynamic(() => import('@/components/CoverageLiveMap'), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[480px] w-full items-center justify-center rounded-2xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] sm:h-[560px] lg:h-[620px]">
+    <div className="flex h-[480px] w-full items-center justify-center rounded-2xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] sm:h-[560px] lg:h-[620px]">
       <div className="text-center">
         <span className="relative inline-flex h-3 w-3">
-          <span className="absolute inset-0 motion-safe:animate-ping rounded-full bg-[color:var(--rd-glow)] opacity-60" />
-          <span className="relative inline-flex h-3 w-3 rounded-full bg-[color:var(--rd-glow)]" />
+          <span className="absolute inset-0 motion-safe:animate-ping rounded-full bg-[color:var(--rd-moss)] opacity-60" />
+          <span className="relative inline-flex h-3 w-3 rounded-full bg-[color:var(--rd-moss)]" />
         </span>
-        <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+        <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-mute)] [font-family:var(--font-mono)]">
           Loading coverage map…
         </p>
       </div>
@@ -137,7 +137,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
   };
 
   return (
-    <section className={`relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] ${compact ? 'py-10 sm:py-14' : 'py-14 sm:py-20 lg:py-28'}`}>
+    <section className={`relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)] ${compact ? 'py-10 sm:py-14' : 'py-14 sm:py-20 lg:py-28'}`}>
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden
@@ -157,14 +157,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
             transition={{ duration: 0.7, ease: easeOut }}
             className="max-w-3xl"
           >
-            <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+            <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-moss)]">
               <MapPin className="h-3.5 w-3.5" />
               Where we deliver
             </p>
-            <h2 className="mt-4 text-[color:var(--rd-text)]">
+            <h2 className="mt-4 text-[color:var(--rd-ink)]">
               Manhattan + <span className="italic">Brooklyn + Queens.</span>
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
               32 ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free,
               free same-day delivery on orders over $25. Drop your ZIP — or tap any zone on the map.
             </p>
@@ -207,7 +207,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     transition={{ type: 'spring', stiffness: 380, damping: 26 }}
                     className="rounded-2xl border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/8 p-4"
                   >
-                    <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
+                    <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-moss)]">
                       {/* The check pops a beat AFTER the card lands — celebrates
                           the highest-intent moment ("yes, we deliver to you"). */}
                       <motion.span
@@ -220,10 +220,10 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       </motion.span>
                       You’re in
                     </p>
-                    <p className="mt-2 text-base font-medium text-[color:var(--rd-text)]">
+                    <p className="mt-2 text-base font-medium text-[color:var(--rd-ink)]">
                       Same-day delivery available in {result.cluster.shortName}.
                     </p>
-                    <p className="mt-1 text-sm text-[color:var(--rd-text-dim)]">
+                    <p className="mt-1 text-sm text-[color:var(--rd-on-paper-dim)]">
                       Average drop-off: ~{result.cluster.etaMinutes} min. Free on orders over $25 · tax-free.
                     </p>
                     <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -246,14 +246,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     transition={{ duration: 0.5, ease: easeOut }}
                     className="rounded-2xl border border-[color:var(--rd-amber)]/30 bg-[color:var(--rd-amber)]/8 p-4"
                   >
-                    <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-amber)]">
+                    <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-amber-dark)]">
                       <MapPin className="h-3.5 w-3.5" />
                       Not yet
                     </p>
-                    <p className="mt-2 text-base font-medium text-[color:var(--rd-text)]">
+                    <p className="mt-2 text-base font-medium text-[color:var(--rd-ink)]">
                       We don’t cover {zip} yet — we’re expanding fast.
                     </p>
-                    <p className="mt-1 text-sm text-[color:var(--rd-text-dim)]">
+                    <p className="mt-1 text-sm text-[color:var(--rd-on-paper-dim)]">
                       Drop your email in the footer and we’ll notify you the day we hit your area.
                     </p>
                   </motion.div>
@@ -280,17 +280,17 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       }}
                       className={`group rounded-xl border p-3.5 text-left transition-[border-color,background,transform] duration-300 [transition-timing-function:var(--ease-out)] ${
                         isActive
-                          ? 'border-[color:var(--rd-glow)]/55 bg-[color:var(--rd-ink-soft)]/85'
-                          : 'border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/45 hover:border-[color:var(--rd-glow)]/30'
+                          ? 'border-[color:var(--rd-amber-dark)]/45 bg-[color:var(--rd-paper-bright)]'
+                          : 'border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] hover:border-[color:var(--rd-amber-dark)]/45'
                       }`}
                     >
-                      <p className="rd-eyebrow truncate text-[color:var(--rd-text-dim)]">{cluster.shortName}</p>
-                      <div className="mt-1 flex items-baseline justify-between gap-2 text-[color:var(--rd-text)]">
+                      <p className="rd-eyebrow truncate text-[color:var(--rd-on-paper-dim)]">{cluster.shortName}</p>
+                      <div className="mt-1 flex items-baseline justify-between gap-2 text-[color:var(--rd-ink)]">
                         <div className="flex items-baseline gap-1.5 [font-family:var(--font-mono)]">
                           <span className="text-xl font-semibold">~{cluster.etaMinutes}</span>
-                          <span className="text-xs uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">min</span>
+                          <span className="text-xs uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-mute)]">min</span>
                         </div>
-                        <span className="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+                        <span className="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-mute)] [font-family:var(--font-mono)]">
                           {cluster.zips.length} ZIP{cluster.zips.length === 1 ? '' : 's'}
                         </span>
                       </div>
@@ -303,7 +303,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
 
           {/* The map */}
           <div ref={mapWrapRef} className={compact ? 'order-1' : 'order-1 lg:order-2'}>
-            <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink-soft)]/70 p-3 shadow-[0_30px_90px_rgba(0,0,0,0.45)] backdrop-blur sm:p-4 lg:p-5">
+            <div className="relative overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-3 rd-shadow-luxe backdrop-blur sm:p-4 lg:p-5">
               {mapInView ? (
                 <CoverageLiveMap
                   activeCluster={highlight}
@@ -316,17 +316,17 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                 // Same-size placeholder so there's zero layout shift when the
                 // map mounts on scroll.
                 <div
-                  className="h-[480px] w-full rounded-2xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] sm:h-[560px] lg:h-[620px]"
+                  className="h-[480px] w-full rounded-2xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] sm:h-[560px] lg:h-[620px]"
                   aria-hidden
                 />
               )}
 
               {/* Legend / hint */}
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 px-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 px-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-mute)] [font-family:var(--font-mono)]">
                 <span className="inline-flex items-center gap-2">
                   <span className="relative inline-flex h-2 w-2">
-                    <span className="absolute inset-0 motion-safe:animate-ping rounded-full bg-[color:var(--rd-glow)] opacity-60" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[color:var(--rd-glow)]" />
+                    <span className="absolute inset-0 motion-safe:animate-ping rounded-full bg-[color:var(--rd-moss)] opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[color:var(--rd-moss)]" />
                   </span>
                   Active coverage · 7 zones
                 </span>
@@ -362,14 +362,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   exit={{ y: 40, opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.45, ease: easeOut }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80vh] sm:rounded-3xl"
+                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] text-[color:var(--rd-ink)] rd-shadow-luxe outline-none sm:max-h-[80vh] sm:rounded-3xl"
                 >
                   {/* Sticky header — close button doesn't overlap text */}
                   <div className="relative flex items-start gap-3 px-5 pt-5 pb-3 sm:px-7 sm:pt-7">
                     <div className="min-w-0 flex-1">
-                      <p className="rd-eyebrow truncate text-[color:var(--rd-glow)]">{c.shortName}</p>
+                      <p className="rd-eyebrow truncate text-[color:var(--rd-moss)]">{c.shortName}</p>
                       <h3
-                        className="mt-2 break-words text-[color:var(--rd-text)]"
+                        className="mt-2 break-words text-[color:var(--rd-ink)]"
                         style={{
                           fontFamily: 'var(--font-display)',
                           fontWeight: 400,
@@ -386,7 +386,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       type="button"
                       onClick={() => setOpenCluster(null)}
                       aria-label="Close details"
-                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]"
+                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 hover:text-[color:var(--rd-ink)]"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -396,24 +396,24 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-5 sm:px-7">
                     {/* Stat tiles — 3-col on sm+, 3-col equal on mobile but smaller */}
                     <div className="mt-2 grid grid-cols-3 gap-2 [font-family:var(--font-mono)] sm:gap-3">
-                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
-                        <p className="text-xl font-semibold text-[color:var(--rd-glow)] sm:text-2xl">~{c.etaMinutes}</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">min ETA</p>
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-moss)] sm:text-2xl">~{c.etaMinutes}</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-on-paper-mute)] sm:text-[10px] sm:tracking-[0.16em]">min ETA</p>
                       </div>
-                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
-                        <p className="text-xl font-semibold text-[color:var(--rd-text)] sm:text-2xl">{c.zips.length}</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">ZIPs</p>
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-ink)] sm:text-2xl">{c.zips.length}</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-on-paper-mute)] sm:text-[10px] sm:tracking-[0.16em]">ZIPs</p>
                       </div>
-                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
-                        <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">$25+</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">free ship</p>
+                      <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-soft)] px-2 py-3 text-center sm:p-3">
+                        <p className="text-xl font-semibold text-[color:var(--rd-amber-dark)] sm:text-2xl">$25+</p>
+                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-on-paper-mute)] sm:text-[10px] sm:tracking-[0.16em]">free ship</p>
                       </div>
                     </div>
 
-                    <p className="mt-5 rd-eyebrow text-[color:var(--rd-text-mute)]">Covered ZIPs</p>
+                    <p className="mt-5 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">Covered ZIPs</p>
                     <div className="mt-3 flex flex-wrap gap-1.5">
                       {c.zips.map((z) => (
-                        <span key={z} className="inline-flex shrink-0 rounded-md border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
+                        <span key={z} className="inline-flex shrink-0 rounded-md border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-soft)] px-2.5 py-1 text-[11px] tracking-wider text-[color:var(--rd-on-paper-dim)] [font-family:var(--font-mono)]">
                           {z}
                         </span>
                       ))}
@@ -421,7 +421,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   </div>
 
                   {/* Sticky CTA footer */}
-                  <div className="border-t border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] px-5 py-4 sm:px-7 sm:py-5">
+                  <div className="border-t border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] px-5 py-4 sm:px-7 sm:py-5">
                     <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                       <Link href="/menu" className="btn-luxe btn-luxe-gold w-full justify-center sm:w-auto">
                         Order menu

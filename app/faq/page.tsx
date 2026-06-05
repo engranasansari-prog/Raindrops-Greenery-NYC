@@ -41,22 +41,22 @@ export default function FaqPage() {
       />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(198,160,100,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.10), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.10), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'FAQ' }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Frequently asked</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">
+          <Breadcrumbs items={[{ label: 'FAQ' }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">Frequently asked</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">
             Quick answers <span className="italic">before you order.</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
             Clear details about delivery areas, age requirements, product browsing, and checkout.
           </p>
         </div>
@@ -86,14 +86,14 @@ export default function FaqPage() {
             ))}
           </div>
 
-          <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Need the menu?</p>
+          <aside className="h-fit rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-5 rd-shadow-luxe sm:p-6">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Need the menu?</p>
             <h2
-              className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
+              className="rd-head-aside mt-3 text-[color:var(--rd-ink)]"
             >
               Browse Flower, Pre-Rolls, <span className="italic">and Edibles.</span>
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
+            <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
               Filter by strain, profile, price, and potency. Free weed gift on every order.
             </p>
             <div className="mt-5 grid gap-3">

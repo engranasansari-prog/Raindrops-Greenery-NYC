@@ -121,24 +121,24 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.20]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,51,40,0.95),rgba(27,51,40,0.7),rgba(27,51,40,0.9))]" aria-hidden />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(244,239,227,0.95),rgba(244,239,227,0.82),rgba(244,239,227,0.92))]" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
           style={{
             background:
-              'radial-gradient(ellipse at top left, rgba(198,160,100,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(46,82,64,0.45), transparent 60%)'
+              'radial-gradient(ellipse at top left, rgba(198,160,100,0.16), transparent 55%), radial-gradient(ellipse at bottom right, rgba(244,239,227,0.55), transparent 60%)'
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'Menu', href: '/menu' }, { label: c.name }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">{c.eyebrow}</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">
+          <Breadcrumbs items={[{ label: 'Menu', href: '/menu' }, { label: c.name }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">{c.eyebrow}</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">
             Weed Delivery NYC — <span className="italic">{c.h1Accent}</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
             {c.heroLede}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -153,10 +153,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
             {highlights.map((h) => {
               const Icon = h.icon;
               return (
-                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-4">
-                  <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" strokeWidth={1.6} />
-                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-text)]">{h.label}</p>
-                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-text-dim)]">{h.body}</p>
+                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-4">
+                  <Icon className="h-6 w-6 text-[color:var(--rd-moss)]" strokeWidth={1.6} />
+                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-ink)]">{h.label}</p>
+                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-on-paper-dim)]">{h.body}</p>
                 </div>
               );
             })}
@@ -180,17 +180,17 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
       {/* Product grid — server-rendered so the products are in the SSR HTML. */}
       {products.length > 0 ? (
-        <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-14 text-[color:var(--rd-text)] sm:py-20">
+        <section className="border-t border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper)] py-14 text-[color:var(--rd-ink)] sm:py-20">
           <div className="luxury-shell">
             <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div className="max-w-2xl">
-                <p className="rd-eyebrow text-[color:var(--rd-glow)]">The {c.name} menu</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                <p className="rd-eyebrow text-[color:var(--rd-moss)]">The {c.name} menu</p>
+                <h2 className="mt-3 text-[color:var(--rd-ink)]">
                   Browse our <span className="italic">{c.name.toLowerCase()}.</span>
                 </h2>
               </div>
-              <Link href="/menu" className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">
-                <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Filter the full menu</span>
+              <Link href="/menu" className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-moss)]">
+                <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">Filter the full menu</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
               </Link>
             </div>
@@ -202,9 +202,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           </div>
         </section>
       ) : (
-        <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)]">
+        <section className="bg-[color:var(--rd-paper)] py-16 text-[color:var(--rd-ink)]">
           <div className="luxury-shell text-center">
-            <p className="text-[color:var(--rd-text-dim)]">This category is restocking. </p>
+            <p className="text-[color:var(--rd-on-paper-dim)]">This category is restocking. </p>
             <Link href="/menu" className="btn-luxe btn-luxe-gold mt-4 inline-flex">Browse the full menu<ArrowRight /></Link>
           </div>
         </section>
@@ -224,14 +224,14 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           </div>
 
           <aside className="h-fit lg:sticky lg:top-28">
-            <div className="rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready to order?</p>
+            <div className="rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-5 rd-shadow-luxe sm:p-6">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">Ready to order?</p>
               <h2
-                className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
+                className="rd-head-aside mt-3 text-[color:var(--rd-ink)]"
               >
                 Tax-free, same-day, <span className="italic">to your door.</span>
               </h2>
-              <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
+              <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
                 Free delivery over $25 and a free pre-roll with every order. 21+ only.
               </p>
               <div className="mt-5 grid gap-3">
@@ -253,7 +253,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                       className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                     >
                       <Leaf className="h-4 w-4 text-[color:var(--rd-moss)]" />
-                      <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">
+                      <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-amber-dark)]">
                         {o.name}
                       </span>
                     </Link>
@@ -265,7 +265,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                     className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                   >
                     <ArrowRight className="h-4 w-4 text-[color:var(--rd-moss)]" />
-                    <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">
+                    <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-amber-dark)]">
                       Today’s deals
                     </span>
                   </Link>

@@ -85,9 +85,9 @@ export default function TaxFreeDeliveryPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
-        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.20]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,51,40,0.95),rgba(27,51,40,0.78),rgba(27,51,40,0.9))]" aria-hidden />
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
+        <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.12]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(244,239,227,0.95),rgba(244,239,227,0.85),rgba(244,239,227,0.92))]" aria-hidden />
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
@@ -97,12 +97,12 @@ export default function TaxFreeDeliveryPage() {
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'Tax-Free Weed Delivery in NYC' }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">NYC · 21+ · Tax-free</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">
+          <Breadcrumbs items={[{ label: 'Tax-Free Weed Delivery in NYC' }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">NYC · 21+ · Tax-free</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">
             Tax-Free Weed Delivery <span className="italic">in NYC.</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
             Raindrops Greenery is a tax-free, same-day cannabis delivery service in New York City. We&rsquo;re a
             Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign
             Land — so the price you see is the price you pay. Free delivery on orders over $25, and a
@@ -113,7 +113,7 @@ export default function TaxFreeDeliveryPage() {
               View the menu
               <ArrowRight />
             </Link>
-            <Link href="/delivery" className="btn-luxe btn-luxe-ghost">
+            <Link href="/delivery" className="btn-luxe btn-luxe-outline">
               Check your ZIP
               <ArrowRight />
             </Link>
@@ -123,10 +123,10 @@ export default function TaxFreeDeliveryPage() {
             {HIGHLIGHTS.map((h) => {
               const Icon = h.icon;
               return (
-                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-4">
-                  <Icon className="h-6 w-6 text-[color:var(--rd-glow)]" strokeWidth={1.6} />
-                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-text)]">{h.label}</p>
-                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-text-dim)]">{h.body}</p>
+                <div key={h.label} className="rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-4">
+                  <Icon className="h-6 w-6 text-[color:var(--rd-moss)]" strokeWidth={1.6} />
+                  <p className="mt-3 text-sm font-semibold text-[color:var(--rd-ink)]">{h.label}</p>
+                  <p className="mt-1 text-[13px] leading-6 text-[color:var(--rd-on-paper-dim)]">{h.body}</p>
                 </div>
               );
             })}
@@ -181,14 +181,14 @@ export default function TaxFreeDeliveryPage() {
           </div>
 
           {/* CTA sidebar */}
-          <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.28)] sm:p-6">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready to order?</p>
+          <aside className="h-fit rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-5 rd-shadow-luxe sm:p-6">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Ready to order?</p>
             <h2
-              className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
+              className="rd-head-aside mt-3 text-[color:var(--rd-ink)]"
             >
               Tax-free, same-day, <span className="italic">to your door.</span>
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
+            <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
               Free delivery over $25 and a free pre-roll with every order. 21+ only.
             </p>
             <div className="mt-5 grid gap-3">

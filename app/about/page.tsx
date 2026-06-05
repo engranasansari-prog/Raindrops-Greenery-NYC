@@ -35,17 +35,17 @@ export default function AboutPage() {
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <Image src="/assets/heroPhoto.jpg" alt="" fill priority sizes="100vw" className="object-cover opacity-[0.28]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,51,40,0.94),rgba(27,51,40,0.55))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(244,239,227,0.94),rgba(244,239,227,0.55))]" />
         <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <Breadcrumbs items={[{ label: 'About' }]} tone="dark" />
-            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">About Raindrops</p>
-            <h1 className="mt-4 text-[color:var(--rd-text)]">
+            <Breadcrumbs items={[{ label: 'About' }]} tone="light" />
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">About Raindrops</p>
+            <h1 className="mt-4 text-[color:var(--rd-ink)]">
               A premium New York <span className="italic">cannabis delivery,</span> done right.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
               Raindrops Greenery launched to bring a calmer, more confident path into licensed cannabis delivery for {serviceAreas.join(', ')}. Less noise, better product detail, and a delivery experience that respects your time.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -56,20 +56,20 @@ export default function AboutPage() {
               <OrderButton />
             </div>
           </div>
-          <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/65 p-6 shadow-[0_24px_72px_rgba(0,0,0,0.32)] backdrop-blur">
-            <Compass className="h-7 w-7 text-[color:var(--rd-glow)]" />
+          <div className="rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 rd-shadow-luxe backdrop-blur">
+            <Compass className="h-7 w-7 text-[color:var(--rd-moss)]" />
             <h2
-              className="mt-4 text-[color:var(--rd-text)]"
+              className="mt-4 text-[color:var(--rd-ink)]"
               style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.5rem, 2.2vw, 2rem)', letterSpacing: '-0.015em' }}
             >
               Our <span className="italic">promise</span>
             </h2>
-            <ul className="mt-5 grid gap-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">
-              <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Adult, 21+ delivery handled with care and discretion.</li>
-              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Sourced through the Shinnecock Nation Cannabis Regulatory Division.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Tax-Free</li>
-              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> Free delivery on every order over $25.</li>
-              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" /> ID verified at the door. Discreet hand-offs.</li>
+            <ul className="mt-5 grid gap-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">
+              <li className="flex items-start gap-3"><HandHeart className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-moss)]" /> Adult, 21+ delivery handled with care and discretion.</li>
+              <li className="flex items-start gap-3"><Leaf className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-moss)]" /> Sourced through the Shinnecock Nation Cannabis Regulatory Division.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-moss)]" /> Tax-Free</li>
+              <li className="flex items-start gap-3"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-moss)]" /> Free delivery on every order over $25.</li>
+              <li className="flex items-start gap-3"><Shield className="mt-0.5 h-4 w-4 shrink-0 text-[color:var(--rd-moss)]" /> ID verified at the door. Discreet hand-offs.</li>
             </ul>
           </div>
         </div>
@@ -120,12 +120,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What we stand on — dark band */}
-      <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
+      {/* What we stand on — light band */}
+      <section className="bg-[color:var(--rd-paper)] py-16 text-[color:var(--rd-ink)] sm:py-20">
         <div className="luxury-shell">
           <div className="max-w-3xl">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">What we stand on</p>
-            <h2 className="mt-3 text-[color:var(--rd-text)]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">What we stand on</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
               Four commitments <span className="italic">to every adult New York customer.</span>
             </h2>
           </div>
@@ -135,16 +135,16 @@ export default function AboutPage() {
               return (
                 <div
                   key={value.title}
-                  className="flex h-full flex-col rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-6 sm:p-7"
+                  className="flex h-full flex-col rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-6 sm:p-7"
                 >
-                  <Icon className="h-7 w-7 text-[color:var(--rd-glow)]" />
+                  <Icon className="h-7 w-7 text-[color:var(--rd-moss)]" />
                   <h3
-                    className="mt-4 text-[color:var(--rd-text)]"
+                    className="mt-4 text-[color:var(--rd-ink)]"
                     style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 'clamp(1.2rem, 1.6vw, 1.4rem)', letterSpacing: '-0.015em' }}
                   >
                     {value.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">{value.body}</p>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">{value.body}</p>
                 </div>
               );
             })}

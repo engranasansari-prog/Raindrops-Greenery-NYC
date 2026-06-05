@@ -28,7 +28,7 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
   return (
     <Link
       href={`/menu?product=${encodeURIComponent(product.id)}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.12)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] rd-shadow-luxe transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-amber-dark)]/45 hover:shadow-[0_30px_70px_rgba(27,58,44,0.13)]"
     >
       <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         {product.image && (
@@ -55,9 +55,9 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{getBrandLabel(product)}</p>
+        <p className="rd-eyebrow truncate text-[color:var(--rd-on-paper-mute)]">{getBrandLabel(product)}</p>
         <h3
-          className="mt-1 line-clamp-2 break-words text-[color:var(--rd-text)]"
+          className="mt-1 line-clamp-2 break-words text-[color:var(--rd-ink)]"
           style={{
             fontFamily: 'var(--font-display)',
             fontWeight: 400,
@@ -76,22 +76,22 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
               <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-0.5">
                 {product.variants.map((variant, i) => (
                   <Fragment key={variant.label}>
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-mute)] text-left">
                       {variant.label}
                     </span>
-                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber-dark)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
                       {formatPrice(variant.price)}
                     </span>
                   </Fragment>
                 ))}
               </div>
             ) : (
-              <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">
+              <p className="text-xl font-semibold text-[color:var(--rd-amber-dark)] sm:text-2xl">
                 {formatPrice(product.salePrice)}
               </p>
             )}
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1 rd-eyebrow text-[color:var(--rd-glow)]">
+          <span className="inline-flex shrink-0 items-center gap-1 rd-eyebrow text-[color:var(--rd-moss)]">
             View
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
           </span>

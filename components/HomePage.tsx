@@ -32,20 +32,20 @@ import { type StrainTag } from '@/lib/menu-utils';
 const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
   ssr: false,
   loading: () => (
-    <section className="bg-[color:var(--rd-ink)] py-14 sm:py-20 lg:py-28">
+    <section className="bg-[color:var(--rd-paper)] py-14 sm:py-20 lg:py-28">
       <div className="luxury-shell">
-        <div className="h-3 w-32 animate-pulse rounded-full bg-[color:var(--rd-paper)]/10" />
-        <div className="mt-4 h-10 w-60 animate-pulse rounded-md bg-[color:var(--rd-paper)]/10" />
+        <div className="h-3 w-32 animate-pulse rounded-full bg-[color:var(--rd-ink)]/8" />
+        <div className="mt-4 h-10 w-60 animate-pulse rounded-md bg-[color:var(--rd-ink)]/8" />
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <div className="space-y-3">
-            <div className="h-14 animate-pulse rounded-2xl bg-[color:var(--rd-paper)]/8" />
+            <div className="h-14 animate-pulse rounded-2xl bg-[color:var(--rd-ink)]/8" />
             <div className="grid grid-cols-2 gap-2">
               {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-16 animate-pulse rounded-xl bg-[color:var(--rd-paper)]/8" />
+                <div key={i} className="h-16 animate-pulse rounded-xl bg-[color:var(--rd-ink)]/8" />
               ))}
             </div>
           </div>
-          <div className="aspect-[4/3] animate-pulse rounded-3xl bg-[color:var(--rd-paper)]/8" />
+          <div className="aspect-[4/3] animate-pulse rounded-3xl bg-[color:var(--rd-ink)]/8" />
         </div>
       </div>
     </section>
@@ -115,24 +115,24 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
   if (deals.length === 0) return null;
 
   return (
-    <section className="rd-luxe-dark--glow py-20 text-[color:var(--rd-text)] sm:py-24">
+    <section className="rd-luxe-paper py-20 text-[color:var(--rd-ink)] sm:py-24">
       <div className="luxury-shell">
         <Reveal>
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
-              <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
+              <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-moss)]">
                 <Star className="h-3.5 w-3.5" />
                 Featured picks
               </p>
-              <h2 className="mt-4 text-[color:var(--rd-text)]">
+              <h2 className="mt-4 text-[color:var(--rd-ink)]">
                 Three picks <span className="italic">to start with.</span>
               </h2>
             </div>
             <Link
               href="/deals"
-              className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+              className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-moss)]"
             >
-              <span className="border-b border-[color:var(--rd-glow)] pb-0.5">See all picks</span>
+              <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">See all picks</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
             </Link>
           </div>
@@ -146,7 +146,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             <Link
               key={deal.id}
               href={`/menu?product=${deal.hrefId}`}
-              className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.12)] md:min-w-0 md:max-w-none"
+              className="group relative flex h-full min-w-[78vw] max-w-[78vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-amber-dark)]/45 hover:shadow-[0_30px_70px_rgba(27,58,44,0.13)] md:min-w-0 md:max-w-none"
             >
               <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
                 {deal.image && (
@@ -186,9 +186,9 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                 </div>
               </div>
               <div className="flex flex-1 flex-col p-5">
-                <p className="rd-eyebrow truncate text-[color:var(--rd-text-mute)]">{deal.brand}</p>
+                <p className="rd-eyebrow truncate text-[color:var(--rd-on-paper-mute)]">{deal.brand}</p>
                 <h3
-                  className="mt-1 line-clamp-2 break-words text-[color:var(--rd-text)]"
+                  className="mt-1 line-clamp-2 break-words text-[color:var(--rd-ink)]"
                   style={{
                     fontFamily: 'var(--font-display)',
                     fontWeight: 400,
@@ -202,26 +202,26 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                   {deal.name}
                 </h3>
                 {deal.description && (
-                  <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-[color:var(--rd-text-dim)]">
+                  <p className="mt-2 line-clamp-2 text-[13px] leading-6 text-[color:var(--rd-on-paper-dim)]">
                     {deal.description}
                   </p>
                 )}
                 <div className="mt-auto flex items-end justify-between pt-3">
                   <div className="[font-family:var(--font-mono)]">
                     {deal.isSale && (
-                      <span className="block text-[11px] text-[color:var(--rd-text-mute)] line-through">{deal.priceLabel}</span>
+                      <span className="block text-[11px] text-[color:var(--rd-on-paper-mute)] line-through">{deal.priceLabel}</span>
                     )}
-                    <span className="block text-lg font-semibold text-[color:var(--rd-amber)]">{deal.salePriceLabel}</span>
+                    <span className="block text-lg font-semibold text-[color:var(--rd-amber-dark)]">{deal.salePriceLabel}</span>
                   </div>
                   {deal.thc && (
                     <span className="text-right [font-family:var(--font-mono)]">
-                      <span className="block text-base font-semibold text-[color:var(--rd-glow)]">{deal.thc}%</span>
-                      <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">THC</span>
+                      <span className="block text-base font-semibold text-[color:var(--rd-moss)]">{deal.thc}%</span>
+                      <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">THC</span>
                     </span>
                   )}
                 </div>
                 {deal.dealLabel && (
-                  <p className="mt-2 truncate text-[11px] text-[color:var(--rd-text-mute)]">{deal.dealLabel}</p>
+                  <p className="mt-2 truncate text-[11px] text-[color:var(--rd-on-paper-mute)]">{deal.dealLabel}</p>
                 )}
               </div>
             </Link>
@@ -242,7 +242,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             >
               <span
                 className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
-                  i === activeIndex ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 group-hover:bg-[color:var(--rd-paper)]/55'
+                  i === activeIndex ? 'w-10 bg-[color:var(--rd-moss)]' : 'w-3 bg-[color:var(--rd-ink)]/20 group-hover:bg-[color:var(--rd-ink)]/40'
                 }`}
               />
             </button>
@@ -256,7 +256,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             onClick={() => scrollToIndex(Math.max(activeIndex - 1, 0))}
             disabled={activeIndex === 0}
             aria-label="Previous deal"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/12 text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 disabled:opacity-30"
           >
             <ArrowLeft className="h-4 w-4" />
           </button>
@@ -265,7 +265,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             onClick={() => scrollToIndex(Math.min(activeIndex + 1, deals.length - 1))}
             disabled={activeIndex === deals.length - 1}
             aria-label="Next deal"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/12 text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 disabled:opacity-30"
           >
             <ArrowRight className="h-4 w-4" />
           </button>
@@ -300,8 +300,8 @@ function TestimonialFeature() {
               on every element so nothing inherits a near-white text
               token from the body. */}
           <div
-            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center shadow-[0_30px_90px_rgba(27,51,40,0.22)] sm:px-12 sm:py-16"
-            style={{ color: 'var(--rd-text)' }}
+            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-paper-bright)] px-6 py-12 text-center rd-shadow-luxe sm:px-12 sm:py-16"
+            style={{ color: 'var(--rd-ink)' }}
           >
             {/* Soft brand glow well behind the quote */}
             <div
@@ -314,7 +314,7 @@ function TestimonialFeature() {
             />
 
             <div className="relative">
-              <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber)]">
+              <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber-dark)]">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
@@ -330,24 +330,24 @@ function TestimonialFeature() {
                     exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
                       5.0★ · {t.location} · Verified order
                     </p>
 
                     <blockquote
-                      className="mt-5 text-2xl leading-tight text-[color:var(--rd-text)] sm:text-3xl md:text-4xl"
+                      className="mt-5 text-2xl leading-tight text-[color:var(--rd-ink)] sm:text-3xl md:text-4xl"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontStyle: 'italic', letterSpacing: '-0.02em' }}
                     >
                       “{t.quote}”
                     </blockquote>
 
-                    <figcaption className="mt-8 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink-soft)] px-5 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.32)]">
+                    <figcaption className="mt-8 inline-flex items-center gap-4 rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper)] px-5 py-3 rd-shadow-luxe">
                       <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-base font-bold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                         {t.author.charAt(0)}
                       </span>
                       <span className="text-left leading-tight">
-                        <span className="block text-[15px] font-semibold text-[color:var(--rd-text)]">{t.author}</span>
-                        <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                        <span className="block text-[15px] font-semibold text-[color:var(--rd-ink)]">{t.author}</span>
+                        <span className="mt-0.5 block text-[11px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
                           {t.location}
                         </span>
                       </span>
@@ -367,8 +367,8 @@ function TestimonialFeature() {
                       aria-current={i === active ? 'true' : undefined}
                       className={`h-1.5 rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out)] ${
                         i === active
-                          ? 'w-6 bg-[color:var(--rd-glow)]'
-                          : 'w-1.5 bg-[color:var(--rd-paper)]/25 hover:bg-[color:var(--rd-paper)]/40'
+                          ? 'w-6 bg-[color:var(--rd-moss)]'
+                          : 'w-1.5 bg-[color:var(--rd-ink)]/20 hover:bg-[color:var(--rd-ink)]/40'
                       }`}
                     />
                   ))}
@@ -378,9 +378,9 @@ function TestimonialFeature() {
               <div className="mt-8 inline-flex">
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-text-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-glow)]"
+                  className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-on-paper-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-moss)]"
                 >
-                  <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Read more customer stories</span>
+                  <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">Read more customer stories</span>
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
                 </Link>
               </div>

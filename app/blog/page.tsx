@@ -29,7 +29,7 @@ export default function BlogPage() {
   return (
     <SiteChrome>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <div
           className="pointer-events-none absolute inset-0"
           aria-hidden
@@ -39,12 +39,12 @@ export default function BlogPage() {
           }}
         />
         <div className="luxury-shell relative max-w-4xl py-12 sm:py-16 lg:py-20">
-          <Breadcrumbs items={[{ label: 'Journal' }]} tone="dark" />
-          <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Raindrops Journal</p>
-          <h1 className="mt-4 text-[color:var(--rd-text)]">
+          <Breadcrumbs items={[{ label: 'Journal' }]} tone="light" />
+          <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">Raindrops Journal</p>
+          <h1 className="mt-4 text-[color:var(--rd-ink)]">
             Guides for <span className="italic">better ordering.</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
             Product education, delivery notes, and simple ordering tips for adult customers in Manhattan, LIC, Williamsburg, and Greenpoint.
           </p>
         </div>
@@ -58,7 +58,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(198,160,100,0.12)]"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] rd-shadow-luxe transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-amber-dark)]/45 hover:shadow-[0_30px_70px_rgba(27,58,44,0.13)]"
             >
               <div className="relative aspect-[5/3] overflow-hidden bg-[color:var(--rd-paper-soft)]">
                 <Image
@@ -70,21 +70,21 @@ export default function BlogPage() {
                 />
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <div className="flex flex-wrap items-center gap-2 rd-eyebrow text-[color:var(--rd-text-mute)]">
-                  <span className="text-[color:var(--rd-glow)]">{post.category}</span>
-                  <span aria-hidden className="text-[color:var(--rd-paper)]/20">·</span>
+                <div className="flex flex-wrap items-center gap-2 rd-eyebrow text-[color:var(--rd-on-paper-mute)]">
+                  <span className="text-[color:var(--rd-moss)]">{post.category}</span>
+                  <span aria-hidden className="text-[color:var(--rd-ink)]/20">·</span>
                   <span className="inline-flex items-center gap-1">
                     <CalendarDays className="h-3.5 w-3.5" />
                     {formatDate(post.publishedAt)}
                   </span>
                 </div>
                 <h2
-                  className="rd-head-aside mt-3 text-[color:var(--rd-text)]"
+                  className="rd-head-aside mt-3 text-[color:var(--rd-ink)]"
                 >
                   {post.title}
                 </h2>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--rd-text-dim)]">{post.excerpt}</p>
-                <p className="mt-auto inline-flex items-center gap-2 pt-6 rd-eyebrow text-[color:var(--rd-glow)]">
+                <p className="mt-3 text-sm leading-7 text-[color:var(--rd-on-paper-dim)]">{post.excerpt}</p>
+                <p className="mt-auto inline-flex items-center gap-2 pt-6 rd-eyebrow text-[color:var(--rd-moss)]">
                   Read article
                   <ArrowRight className="h-4 w-4 transition-transform [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
                 </p>

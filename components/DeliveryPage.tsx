@@ -23,7 +23,7 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
   ssr: false,
   loading: () => (
-    <div className="h-[520px] w-full rounded-3xl bg-[color:var(--rd-ink-soft)]/40" />
+    <div className="h-[520px] w-full rounded-3xl bg-[color:var(--rd-paper-bright)]" />
   )
 });
 
@@ -45,25 +45,25 @@ export default function DeliveryPage() {
   return (
     <SiteChrome>
       {/* Hero — full-width pill with backdrop image + headline */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <Image src="/assets/DISPENSARYIMAGE.jpg" alt="" fill priority sizes="100vw" quality={50} className="object-cover opacity-[0.18] sm:opacity-[0.22]" />
-        {/* Mobile: heavy near-uniform VERTICAL wash. The headline + lede span the
-            full width on phones, so the desktop horizontal gradient let the
+        {/* Mobile: heavy near-uniform VERTICAL bone wash. The headline + lede span
+            the full width on phones, so the desktop horizontal gradient let the
             backdrop image bleed through behind the right half of the text — the
             "text mixing with background" report. A vertical wash keeps the whole
-            text block on a dark, legible field. */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.93),rgba(27,51,40,0.84),rgba(27,51,40,0.96))] sm:hidden" />
-        {/* Desktop: cinematic horizontal gradient — text sits on the dark left,
-            the image stays visible on the right. Middle stop deepened 0.62→0.70. */}
-        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27,51,40,0.94),rgba(27,51,40,0.70),rgba(27,51,40,0.80))]" />
+            text block on a light, legible field. */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(244,239,227,0.93),rgba(244,239,227,0.86),rgba(244,239,227,0.96))] sm:hidden" />
+        {/* Desktop: cinematic horizontal gradient — text sits on the bone left,
+            the image stays visible on the right. */}
+        <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(244,239,227,0.95),rgba(244,239,227,0.78),rgba(244,239,227,0.85))]" />
         <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
           <div className="max-w-3xl">
-            <Breadcrumbs items={[{ label: 'Delivery' }]} tone="dark" />
-            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Same-day NYC delivery</p>
-            <h1 className="mt-4 text-[color:var(--rd-text)]">
+            <Breadcrumbs items={[{ label: 'Delivery' }]} tone="light" />
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">Same-day NYC delivery</p>
+            <h1 className="mt-4 text-[color:var(--rd-ink)]">
               Manhattan. <span className="italic">Brooklyn + Queens.</span> Same-day.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
               Same-day weed delivery across Manhattan plus Williamsburg, Greenpoint, and Long Island City — {ALL_ZIPS.length} ZIPs in {COVERAGE.clusters.length} neighborhoods. Tax-free, free on orders over $25, with average drop-off in under an hour.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -187,7 +187,7 @@ export default function DeliveryPage() {
                     className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-medium text-[color:var(--rd-moss)] transition-colors group-hover:text-[color:var(--rd-ink)]"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Order in this area</span>
+                    <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">Order in this area</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
                   </Link>
                 </motion.div>
@@ -230,7 +230,7 @@ export default function DeliveryPage() {
                     {n.zips.length === 1 ? n.zips[0] : `${n.zips.length} ZIPs`} · {n.etaLabel}
                   </p>
                   <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-medium text-[color:var(--rd-moss)] transition-colors group-hover:text-[color:var(--rd-ink)]">
-                    <span className="border-b border-[color:var(--rd-glow)] pb-0.5">View guide</span>
+                    <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">View guide</span>
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
                   </span>
                 </Link>
@@ -241,7 +241,7 @@ export default function DeliveryPage() {
       </section>
 
       {/* Pillars */}
-      <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
+      <section className="bg-[color:var(--rd-paper)] py-16 text-[color:var(--rd-ink)] sm:py-20">
         <div className="luxury-shell">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 24 }}
@@ -250,8 +250,8 @@ export default function DeliveryPage() {
             transition={{ duration: 0.7, ease: easeOut }}
             className="max-w-2xl"
           >
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">What every order gets</p>
-            <h2 className="mt-3 text-[color:var(--rd-text)]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">What every order gets</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
               The same rules <span className="italic">across every ZIP.</span>
             </h2>
           </motion.div>
@@ -259,12 +259,12 @@ export default function DeliveryPage() {
             {PILLARS.map((p) => {
               const Icon = p.icon;
               return (
-                <div key={p.title} className="rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)]/55 p-5 sm:p-6">
-                  <Icon className="h-7 w-7 text-[color:var(--rd-glow)]" />
-                  <h3 className="mt-4 text-xl text-[color:var(--rd-text)]" style={{ fontFamily: 'var(--font-display)', fontWeight: 500, letterSpacing: '-0.02em' }}>
+                <div key={p.title} className="rounded-2xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-5 sm:p-6">
+                  <Icon className="h-7 w-7 text-[color:var(--rd-moss)]" />
+                  <h3 className="mt-4 text-xl text-[color:var(--rd-ink)]" style={{ fontFamily: 'var(--font-display)', fontWeight: 500, letterSpacing: '-0.02em' }}>
                     {p.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-[color:var(--rd-text-dim)]">{p.body}</p>
+                  <p className="mt-2 text-sm leading-6 text-[color:var(--rd-on-paper-dim)]">{p.body}</p>
                 </div>
               );
             })}
@@ -275,15 +275,15 @@ export default function DeliveryPage() {
       {/* Bottom CTA */}
       <section className="bg-[color:var(--rd-paper)] pb-20 pt-16 sm:pb-24 sm:pt-20">
         <div className="luxury-shell">
-          <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] p-8 text-[color:var(--rd-text)] sm:p-12 lg:p-16">
+          <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-paper-bright)] p-8 text-[color:var(--rd-ink)] rd-shadow-luxe sm:p-12 lg:p-16">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,160,100,0.18),transparent_55%)]" aria-hidden />
             <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
               <div>
-                <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready when you are</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                <p className="rd-eyebrow text-[color:var(--rd-moss)]">Ready when you are</p>
+                <h2 className="mt-3 text-[color:var(--rd-ink)]">
                   Free weed gift, <span className="italic">free delivery.</span>
                 </h2>
-                <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+                <p className="mt-5 max-w-xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
                   Open 10 AM – 10 PM, every day. Browse the menu, drop your ZIP, and the bag is on the way.
                 </p>
               </div>

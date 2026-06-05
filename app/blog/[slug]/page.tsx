@@ -161,34 +161,34 @@ export default async function BlogPostPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <article>
-        {/* Hero — dark ink to match the rest of the site */}
-        <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+        {/* Hero — light bone wash over the cover image to match the rest of the site */}
+        <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
           <div className="absolute inset-0">
-            <Image src={post.coverImage} alt="" fill priority sizes="100vw" className="object-cover opacity-[0.30]" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.55),rgba(27,51,40,0.85))]" />
+            <Image src={post.coverImage} alt="" fill priority sizes="100vw" className="object-cover opacity-[0.18]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(244,239,227,0.85),rgba(244,239,227,0.95))]" />
           </div>
           <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-dim)] transition hover:border-[color:var(--rd-amber-dark)]/45 hover:text-[color:var(--rd-ink)] [font-family:var(--font-mono)]"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to journal
             </Link>
             <div className="mt-8 max-w-4xl">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">{post.category}</p>
-              <h1 className="mt-4 text-[color:var(--rd-text)]">{post.title}</h1>
-              <div className="mt-5 flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] [font-family:var(--font-mono)]">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">{post.category}</p>
+              <h1 className="mt-4 text-[color:var(--rd-ink)]">{post.title}</h1>
+              <div className="mt-5 flex flex-wrap items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-dim)] [font-family:var(--font-mono)]">
                 <span className="inline-flex items-center gap-2">
-                  <CalendarDays className="h-3.5 w-3.5 text-[color:var(--rd-glow)]" />
+                  <CalendarDays className="h-3.5 w-3.5 text-[color:var(--rd-moss)]" />
                   {formatDate(post.publishedAt)}
                 </span>
-                <span aria-hidden className="text-[color:var(--rd-paper)]/20">·</span>
+                <span aria-hidden className="text-[color:var(--rd-ink)]/20">·</span>
                 <span>{post.readTime}</span>
-                <span aria-hidden className="text-[color:var(--rd-paper)]/20">·</span>
+                <span aria-hidden className="text-[color:var(--rd-ink)]/20">·</span>
                 <span>{post.author}</span>
               </div>
-              <p className="mt-6 max-w-3xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">{post.excerpt}</p>
+              <p className="mt-6 max-w-3xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">{post.excerpt}</p>
             </div>
           </div>
         </section>
@@ -232,10 +232,10 @@ export default async function BlogPostPage({ params }: PageProps) {
               </div>
             </div>
 
-            <aside className="h-fit rounded-3xl border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink-soft)] p-6 text-[color:var(--rd-text)] shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Ready to shop?</p>
+            <aside className="h-fit rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 text-[color:var(--rd-ink)] rd-shadow-luxe">
+              <p className="rd-eyebrow text-[color:var(--rd-moss)]">Ready to shop?</p>
               <h2
-                className="mt-3 text-[color:var(--rd-text)]"
+                className="mt-3 text-[color:var(--rd-ink)]"
                 style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.35rem, 1.8vw, 1.65rem)', letterSpacing: '-0.015em' }}
               >
                 Browse products, <span className="italic">checkout securely.</span>

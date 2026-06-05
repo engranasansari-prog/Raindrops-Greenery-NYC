@@ -42,21 +42,21 @@ function Section({
 }) {
   if (products.length === 0) return null;
   return (
-    <section className="border-t border-[color:var(--rd-paper)]/8 bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
+    <section className="border-t border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper)] py-16 text-[color:var(--rd-ink)] sm:py-20">
       <div className="luxury-shell">
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">{eyebrow}</p>
-            <h2 className="mt-3 text-[color:var(--rd-text)]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">{eyebrow}</p>
+            <h2 className="mt-3 text-[color:var(--rd-ink)]">
               {title} <span className="italic">{italic}</span>
             </h2>
-            <p className="mt-3 text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">{body}</p>
+            <p className="mt-3 text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">{body}</p>
           </div>
           <Link
             href="/menu"
-            className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+            className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-moss)]"
           >
-            <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Open full menu</span>
+            <span className="border-b border-[color:var(--rd-amber-dark)] pb-0.5">Open full menu</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
           </Link>
         </div>
@@ -198,17 +198,17 @@ export default function DealsPage() {
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dealsFaqLd) }} />
       {/* Hero */}
-      <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
+      <section className="relative overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)]">
         <Image src="/assets/flower.avif" alt="" fill priority sizes="100vw" className="object-cover opacity-22" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(27,51,40,0.94),rgba(27,51,40,0.55))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(244,239,227,0.94),rgba(244,239,227,0.78))]" />
         <div className="luxury-shell relative grid gap-8 py-12 sm:py-16 lg:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div>
-            <Breadcrumbs items={[{ label: 'Deals' }]} tone="dark" />
-            <p className="mt-5 rd-eyebrow text-[color:var(--rd-glow)]">Deals · value picks</p>
-            <h1 className="mt-4 text-[color:var(--rd-text)]">
+            <Breadcrumbs items={[{ label: 'Deals' }]} tone="light" />
+            <p className="mt-5 rd-eyebrow text-[color:var(--rd-moss)]">Deals · value picks</p>
+            <h1 className="mt-4 text-[color:var(--rd-ink)]">
               Curated picks. <span className="italic">No codes needed.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+            <p className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
               The most affordable way to order weed in NYC — a curated shortlist, lowest-priced first, starting under $25. No discount codes, no gimmicks: a free weed gift with every order, free delivery over $25, and tax-free pricing. Tap any pick to head to secure checkout.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -233,14 +233,14 @@ export default function DealsPage() {
       </section>
 
       {totalCurated === 0 ? (
-        <section className="bg-[color:var(--rd-ink)] py-20 text-[color:var(--rd-text)] sm:py-24">
+        <section className="bg-[color:var(--rd-paper)] py-20 text-[color:var(--rd-ink)] sm:py-24">
           <div className="luxury-shell">
-            <div className="mx-auto max-w-2xl rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-10 text-center">
-              <BadgePercent className="mx-auto h-10 w-10 text-[color:var(--rd-glow)]" />
-              <h2 className="mt-5 text-[color:var(--rd-text)]">
+            <div className="mx-auto max-w-2xl rounded-3xl border border-[color:var(--rd-ink)]/10 bg-[color:var(--rd-paper-bright)] p-10 text-center">
+              <BadgePercent className="mx-auto h-10 w-10 text-[color:var(--rd-moss)]" />
+              <h2 className="mt-5 text-[color:var(--rd-ink)]">
                 No curated drops <span className="italic">right now.</span>
               </h2>
-              <p className="mt-3 text-[color:var(--rd-text-dim)]">
+              <p className="mt-3 text-[color:var(--rd-on-paper-dim)]">
                 The full 44-product menu is open. Free weed gift still applies.
               </p>
               <div className="mt-6 inline-flex">
@@ -304,15 +304,15 @@ export default function DealsPage() {
       {/* Decorative footer band */}
       <section className="bg-[color:var(--rd-paper)] py-16">
         <div className="luxury-shell">
-          <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] p-8 text-[color:var(--rd-text)] sm:p-12">
+          <div className="relative overflow-hidden rounded-3xl bg-[color:var(--rd-paper-bright)] p-8 text-[color:var(--rd-ink)] sm:p-12">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(198,160,100,0.18),transparent_55%)]" aria-hidden />
             <div className="relative grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-end">
               <div>
-                <p className="rd-eyebrow text-[color:var(--rd-glow)]">Every order</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                <p className="rd-eyebrow text-[color:var(--rd-moss)]">Every order</p>
+                <h2 className="mt-3 text-[color:var(--rd-ink)]">
                   Free weed gift, <span className="italic">free delivery.</span>
                 </h2>
-                <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8">
+                <p className="mt-4 max-w-xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8">
                   Tax-free. Every order ships with a complimentary pre-roll. 21+ only. Open daily 10 AM – 10 PM.
                 </p>
               </div>
@@ -342,9 +342,9 @@ export default function DealsPage() {
             glow accent — same treatment used on every other dark-section
             eyebrow across the site for consistency.
           */}
-          <div className="mt-10 rounded-2xl border border-[color:var(--rd-glow)]/22 bg-[color:var(--rd-ink-soft)] p-6 text-sm leading-7 text-[color:var(--rd-text-dim)] shadow-[0_8px_30px_rgba(27,51,40,0.18)] sm:p-7 sm:text-[15px]">
-            <p className="rd-eyebrow text-[color:var(--rd-glow)]">Fine print</p>
-            <p className="mt-3 text-[color:var(--rd-text)]">
+          <div className="mt-10 rounded-2xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 text-sm leading-7 text-[color:var(--rd-on-paper-dim)] rd-shadow-luxe sm:p-7 sm:text-[15px]">
+            <p className="rd-eyebrow text-[color:var(--rd-moss)]">Fine print</p>
+            <p className="mt-3 text-[color:var(--rd-ink)]">
               Curated sections refresh as inventory rotates. Free weed gift = one complimentary pre-roll with every order while supplies last. Must be 21+ to order. Raindrops Greenery is a Tribally licensed dispensary; all products are produced, packaged, and sold on Native Sovereign Land.
             </p>
           </div>

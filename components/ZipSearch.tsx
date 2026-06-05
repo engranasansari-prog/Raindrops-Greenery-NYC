@@ -152,14 +152,14 @@ export default function ZipSearch({
   return (
     <div ref={wrapRef} className="relative w-full max-w-md">
       <div className="flex items-center justify-between gap-3">
-        <label htmlFor={`zip-${listId}`} className="rd-eyebrow text-[color:var(--rd-text-dim)]">
+        <label htmlFor={`zip-${listId}`} className="rd-eyebrow text-[color:var(--rd-on-paper-dim)]">
           {label}
         </label>
         <button
           type="button"
           onClick={useLocation}
           disabled={geoStatus === 'requesting' || geoStatus === 'looking-up'}
-          className="group inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-glow)] disabled:opacity-60 [font-family:var(--font-mono)]"
+          className="group inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-mute)] transition hover:text-[color:var(--rd-moss)] disabled:opacity-60 [font-family:var(--font-mono)]"
           /* aria-label must START WITH the visible text "Use location" so
              voice-control + screen-reader users get a consistent name
              (WCAG 2.5.3). */
@@ -183,14 +183,14 @@ export default function ZipSearch({
         className="mt-3 flex flex-col gap-3 sm:flex-row"
       >
         <div
-          className={`flex flex-1 items-center gap-3 rounded-xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 ${inputPad} transition focus-within:border-[color:var(--rd-glow)] focus-within:bg-[color:var(--rd-ink-soft)]/85 focus-within:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]`}
+          className={`flex flex-1 items-center gap-3 rounded-xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] ${inputPad} transition focus-within:border-[color:var(--rd-moss)] focus-within:bg-[color:var(--rd-paper-bright)] focus-within:shadow-[0_0_0_4px_rgba(198,160,100,0.18)]`}
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded={showDropdown}
           aria-controls={listId}
           aria-owns={listId}
         >
-          <Search className="h-4 w-4 text-[color:var(--rd-text-mute)]" />
+          <Search className="h-4 w-4 text-[color:var(--rd-on-paper-mute)]" />
           <input
             ref={inputRef}
             id={`zip-${listId}`}
@@ -213,7 +213,7 @@ export default function ZipSearch({
             // failure in Lighthouse.
             aria-controls={showDropdown ? listId : undefined}
             aria-activedescendant={activeIdx >= 0 ? `${listId}-opt-${activeIdx}` : undefined}
-            className="w-full bg-transparent text-base font-medium tracking-wider text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]"
+            className="w-full bg-transparent text-base font-medium tracking-wider text-[color:var(--rd-ink)] outline-none placeholder:text-[color:var(--rd-on-paper-mute)] [font-family:var(--font-mono)]"
           />
           {value && (
             <button
@@ -223,7 +223,7 @@ export default function ZipSearch({
                 inputRef.current?.focus();
               }}
               aria-label="Clear ZIP"
-              className="text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-text-dim)]"
+              className="text-[color:var(--rd-on-paper-mute)] transition hover:text-[color:var(--rd-on-paper-dim)]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -239,7 +239,7 @@ export default function ZipSearch({
       {(geoStatus === 'requesting' || geoStatus === 'looking-up' || geoStatus === 'error') && (
         <p
           className={`mt-2 text-[11px] [font-family:var(--font-mono)] ${
-            geoStatus === 'error' ? 'text-[color:var(--rd-amber)]' : 'text-[color:var(--rd-text-mute)]'
+            geoStatus === 'error' ? 'text-[color:var(--rd-amber-dark)]' : 'text-[color:var(--rd-on-paper-mute)]'
           }`}
           role="status"
         >
@@ -257,7 +257,7 @@ export default function ZipSearch({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18, ease: easeOut }}
-            className="absolute left-0 right-0 z-30 mt-2 max-h-[260px] overflow-auto rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] p-1.5 shadow-[0_24px_60px_rgba(0,0,0,0.5)] backdrop-blur sm:right-auto sm:w-[420px]"
+            className="absolute left-0 right-0 z-30 mt-2 max-h-[260px] overflow-auto rounded-2xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-1.5 shadow-[0_24px_60px_rgba(0,0,0,0.5)] backdrop-blur sm:right-auto sm:w-[420px]"
           >
             {suggestions.map((s, idx) => {
               const active = idx === activeIdx;
@@ -274,23 +274,23 @@ export default function ZipSearch({
                     }`}
                   >
                     <span className="flex min-w-0 items-center gap-3">
-                      <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[color:var(--rd-glow)]/15 text-[10px] font-semibold text-[color:var(--rd-glow)] [font-family:var(--font-mono)]">
+                      <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[color:var(--rd-glow)]/15 text-[10px] font-semibold text-[color:var(--rd-moss)] [font-family:var(--font-mono)]">
                         {s.zip.slice(0, 2)}
                       </span>
                       <span className="min-w-0">
-                        <span className="block truncate text-sm font-medium text-[color:var(--rd-text)]">
+                        <span className="block truncate text-sm font-medium text-[color:var(--rd-ink)]">
                           {s.zip} · {s.shortName}
                         </span>
-                        <span className="block truncate text-[11px] text-[color:var(--rd-text-mute)]">
+                        <span className="block truncate text-[11px] text-[color:var(--rd-on-paper-mute)]">
                           {s.neighborhood}
                         </span>
                       </span>
                     </span>
                     <span className="shrink-0 text-right [font-family:var(--font-mono)]">
-                      <span className="block text-sm font-semibold text-[color:var(--rd-glow)]">
+                      <span className="block text-sm font-semibold text-[color:var(--rd-moss)]">
                         ~{s.etaMinutes}
                       </span>
-                      <span className="block text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">
+                      <span className="block text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-on-paper-mute)]">
                         min
                       </span>
                     </span>
@@ -298,9 +298,9 @@ export default function ZipSearch({
                 </li>
               );
             })}
-            <li className="border-t border-[color:var(--rd-paper)]/8 px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+            <li className="border-t border-[color:var(--rd-ink)]/10 px-3 py-2 text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-on-paper-mute)] [font-family:var(--font-mono)]">
               <span className="inline-flex items-center gap-2">
-                <Check className="h-3 w-3 text-[color:var(--rd-glow)]" />
+                <Check className="h-3 w-3 text-[color:var(--rd-moss)]" />
                 {COVERAGE.area} · free same-day
               </span>
             </li>
@@ -313,7 +313,7 @@ export default function ZipSearch({
           "you're covered" feedback. */}
       {result.status === 'supported' && result.cluster && !showDropdown && (
         <p
-          className="mt-3 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+          className="mt-3 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-moss)]/40 bg-[color:var(--rd-glow)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-moss)] [font-family:var(--font-mono)]"
         >
           <MapPin className="h-3 w-3" />
           {result.cluster.shortName} · ~{result.cluster.etaMinutes} min

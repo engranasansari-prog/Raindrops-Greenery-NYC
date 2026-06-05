@@ -140,7 +140,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
   return (
     <section
       ref={sectionRef}
-      className={`rd-grain rd-vignette relative isolate w-full overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)] ${inView ? '' : 'hero-paused'}`}
+      className={`relative isolate w-full overflow-hidden bg-[color:var(--rd-paper)] text-[color:var(--rd-ink)] ${inView ? '' : 'hero-paused'}`}
       aria-roledescription="carousel"
       aria-label="Featured offers"
       onMouseEnter={() => setPaused(true)}
@@ -207,15 +207,15 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             */}
             {slide.imageOnly ? (
               <>
-                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[color:var(--rd-ink)]/55 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[color:var(--rd-ink)]/65 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[color:var(--rd-paper)]/70 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[color:var(--rd-paper)]/80 to-transparent" />
               </>
             ) : (
               <>
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(27,51,40,0.88)_0%,rgba(27,51,40,0.78)_55%,rgba(27,51,40,0.92)_100%)] sm:hidden" />
-                <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(27,51,40,0.94)_0%,rgba(27,51,40,0.78)_38%,rgba(27,51,40,0.32)_72%,rgba(27,51,40,0.58)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(244,239,227,0.93)_0%,rgba(244,239,227,0.82)_55%,rgba(244,239,227,0.96)_100%)] sm:hidden" />
+                <div className="absolute inset-0 hidden sm:block sm:bg-[linear-gradient(90deg,rgba(244,239,227,0.97)_0%,rgba(244,239,227,0.86)_38%,rgba(244,239,227,0.42)_72%,rgba(244,239,227,0.66)_100%)]" />
                 {/* Bottom fade for nav-content seam */}
-                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-paper)] to-transparent" />
               </>
             )}
           </motion.div>
@@ -250,10 +250,10 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
-                  className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-3.5 py-1.5 backdrop-blur-sm"
+                  className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[color:var(--rd-ink)]/15 bg-[color:var(--rd-paper-bright)]/75 px-3.5 py-1.5 backdrop-blur-sm"
                 >
                   <span className="rd-pulse motion-safe:[animation-play-state:running]" aria-hidden />
-                  <span className="rd-eyebrow text-[color:var(--rd-text)]">{slide.eyebrow}</span>
+                  <span className="rd-eyebrow text-[color:var(--rd-moss)]">{slide.eyebrow}</span>
                 </motion.div>
               )}
 
@@ -263,7 +263,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
-                  className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-text)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[6.25rem] xl:leading-[0.98]"
+                  className="mt-5 text-[2rem] leading-[1.05] text-[color:var(--rd-ink)] sm:mt-6 sm:text-5xl sm:leading-[1] md:text-6xl lg:text-7xl xl:text-[6.25rem] xl:leading-[0.98]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.035em' }}
                 >
                   {renderHeadline(slide.headline, slide.headlineAccent)}
@@ -276,7 +276,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.21, ease: easeOut }}
-                  className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8 md:text-xl"
+                  className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-on-paper-dim)] sm:text-lg sm:leading-8 md:text-xl"
                 >
                   {slide.subtext}
                 </motion.p>
@@ -302,8 +302,8 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
                 className="mt-10 flex items-center gap-3"
               >
-                <span className="h-px w-12 bg-[color:var(--rd-paper)]/24" />
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">21+ · NYC only · While supplies last</span>
+                <span className="h-px w-12 bg-[color:var(--rd-ink)]/24" />
+                <span className="rd-eyebrow text-[color:var(--rd-on-paper-mute)]">21+ · NYC only · While supplies last</span>
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -322,7 +322,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 aria-current={i === index}
                 onClick={() => goTo(i)}
                 className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
-                  i === index ? 'w-10 bg-[color:var(--rd-glow)]' : 'w-3 bg-[color:var(--rd-paper)]/28 hover:bg-[color:var(--rd-paper)]/55'
+                  i === index ? 'w-10 bg-[color:var(--rd-ink)]' : 'w-3 bg-[color:var(--rd-ink)]/25 hover:bg-[color:var(--rd-ink)]/45'
                 }`}
               />
             ))}
@@ -333,14 +333,14 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             <button
               aria-label="Previous slide"
               onClick={prev}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/18 bg-[color:var(--rd-paper-bright)]/80 text-[color:var(--rd-on-paper-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-moss)] hover:text-[color:var(--rd-moss)]"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               aria-label="Next slide"
               onClick={next}
-              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+              className="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/18 bg-[color:var(--rd-paper-bright)]/80 text-[color:var(--rd-on-paper-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-moss)] hover:text-[color:var(--rd-moss)]"
             >
               <ArrowRight className="h-4 w-4" />
             </button>
@@ -353,7 +353,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             onClick={() => setUserPaused((value) => !value)}
             aria-pressed={userPaused}
             aria-label={userPaused ? 'Play slideshow' : 'Pause slideshow'}
-            className="absolute bottom-5 left-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)] sm:bottom-9"
+            className="absolute bottom-5 left-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-ink)]/18 bg-[color:var(--rd-paper-bright)]/80 text-[color:var(--rd-on-paper-dim)] backdrop-blur-md transition hover:border-[color:var(--rd-moss)] hover:text-[color:var(--rd-moss)] sm:bottom-9"
           >
             {userPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
           </button>
@@ -362,7 +362,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
 
       {/* Layer 5: scroll cue */}
       <div className="pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center pb-[max(env(safe-area-inset-bottom,0px),8px)] sm:bottom-4">
-        <ChevronDown className="rd-scroll-cue h-5 w-5 text-[color:var(--rd-text-mute)]" aria-hidden />
+        <ChevronDown className="rd-scroll-cue h-5 w-5 text-[color:var(--rd-on-paper-mute)]" aria-hidden />
       </div>
     </section>
   );
@@ -375,7 +375,7 @@ function renderHeadline(headline: string, accent?: string) {
   return (
     <>
       <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[0]}</span>
-      <span style={{ fontWeight: 600, color: 'var(--rd-glow)', fontStyle: 'normal' }}>{accent}</span>
+      <span style={{ fontWeight: 600, color: 'var(--rd-amber-dark)', fontStyle: 'normal' }}>{accent}</span>
       <span style={{ fontWeight: 300, fontStyle: 'italic' }}>{parts[1]}</span>
     </>
   );
@@ -392,7 +392,7 @@ function SlideCta({
   onClick?: () => void;
   variant: 'gold' | 'ghost';
 }) {
-  const cls = `btn-luxe ${variant === 'gold' ? 'btn-luxe-gold' : 'btn-luxe-ghost'}`;
+  const cls = `btn-luxe ${variant === 'gold' ? 'btn-luxe-gold' : 'btn-luxe-outline'}`;
   if (href) {
     return (
       <Link href={href} className={cls}>
