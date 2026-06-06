@@ -7,6 +7,7 @@ import { COVERAGE } from '@/lib/coverage';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import AnalyticsPageview from '@/components/AnalyticsPageview';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 // Display — Fraunces (variable). We load THREE expressive axes:
@@ -498,6 +499,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Suspense>
         )}
         {children}
+        {/* Vercel Speed Insights — real-user Core Web Vitals (LCP / INP / CLS)
+            field data. Sends nothing in dev; collects in production once Speed
+            Insights is enabled in Vercel → Settings → Speed Insights (included
+            on the Pro plan). This is the source of the INP numbers in the
+            Vercel dashboard. */}
+        <SpeedInsights />
       </body>
     </html>
   );
