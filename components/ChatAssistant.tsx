@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 import { MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { business, checkout } from '@/lib/site-data';
@@ -330,12 +331,12 @@ export default function ChatAssistant() {
   };
 
   return (
-    <>
+    <MotionProvider>
       {/* Launcher — hidden while the panel is open. Positioned to clear the
           mobile sticky order bar (raised on small screens). */}
       <AnimatePresence>
         {!open && (
-          <motion.button
+          <m.button
             type="button"
             onClick={() => setOpen(true)}
             aria-label="Open the Raindrops chat concierge"
@@ -351,13 +352,13 @@ export default function ChatAssistant() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[color:var(--rd-amber)] opacity-60" />
               <span className="relative inline-flex h-3.5 w-3.5 rounded-full border-2 border-[color:var(--rd-glow)] bg-[color:var(--rd-amber)]" />
             </span>
-          </motion.button>
+          </m.button>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             role="dialog"
             aria-label="Raindrops concierge chat"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -499,9 +500,9 @@ export default function ChatAssistant() {
             <p className="bg-[color:var(--rd-ink)] px-4 pb-3 text-center text-[10px] text-[color:var(--rd-text-mute)]">
               21+ only · Quick answers about Raindrops · Not medical advice
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </>
+    </MotionProvider>
   );
 }

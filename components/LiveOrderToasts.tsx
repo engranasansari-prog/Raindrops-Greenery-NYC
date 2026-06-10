@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { Check, MapPin, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { buildSampleFeed, type LiveOrderEvent } from '@/lib/sample-orders';
@@ -80,7 +80,7 @@ export default function LiveOrderToasts() {
     >
       <AnimatePresence mode="wait">
         {visible && (
-          <motion.div
+          <m.div
             key={`${event.neighborhood}-${index}`}
             initial={{ opacity: 0, y: 24, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -121,7 +121,7 @@ export default function LiveOrderToasts() {
             >
               <X className="h-3.5 w-3.5" />
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

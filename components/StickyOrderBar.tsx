@@ -1,7 +1,8 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import MotionProvider from '@/components/MotionProvider';
 import { OrderButton } from '@/components/SiteChrome';
 
 /**
@@ -30,9 +31,10 @@ export default function StickyOrderBar() {
   }, []);
 
   return (
+    <MotionProvider>
     <AnimatePresence>
       {visible && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24, x: '-50%' }}
           animate={{ opacity: 1, y: 0, x: '-50%' }}
           exit={{ opacity: 0, y: 24, x: '-50%' }}
@@ -50,8 +52,9 @@ export default function StickyOrderBar() {
             </div>
             <OrderButton className="shrink-0" />
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
+    </MotionProvider>
   );
 }

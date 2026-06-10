@@ -2,7 +2,7 @@
 
 import { ArrowRight, Check, Loader2, LocateFixed, MapPin, Search, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { COVERAGE } from '@/lib/coverage';
 import { suggestZips, type ZipSuggestion } from '@/lib/zip-suggest';
 import { checkZip, normalizeZip } from '@/lib/zip-utils';
@@ -250,7 +250,7 @@ export default function ZipSearch({
       {/* Autocomplete dropdown */}
       <AnimatePresence>
         {showDropdown && (
-          <motion.ul
+          <m.ul
             id={listId}
             role="listbox"
             initial={{ opacity: 0, y: -6 }}
@@ -304,7 +304,7 @@ export default function ZipSearch({
                 {COVERAGE.area} · free same-day
               </span>
             </li>
-          </motion.ul>
+          </m.ul>
         )}
       </AnimatePresence>
 

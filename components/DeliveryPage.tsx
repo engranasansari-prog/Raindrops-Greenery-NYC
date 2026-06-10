@@ -3,7 +3,8 @@
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 import { ArrowRight, Clock, ShieldCheck, Sparkles, Truck } from 'lucide-react';
 import { useState } from 'react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
@@ -70,6 +71,7 @@ export default function DeliveryPage() {
   const reduce = useReducedMotion();
 
   return (
+    <MotionProvider>
     <SiteChrome>
       {/* Hero — full-width pill with backdrop image + headline */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
@@ -123,7 +125,7 @@ export default function DeliveryPage() {
       {/* 7 cluster cards — synced with map */}
       <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
         <div className="luxury-shell">
-          <motion.div
+          <m.div
             initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -139,13 +141,13 @@ export default function DeliveryPage() {
                 Hover a card to highlight its zone on the map above. Tap to focus.
               </p>
             </div>
-          </motion.div>
+          </m.div>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {COVERAGE.clusters.map((cluster, index) => {
               const isActive = activeCluster === cluster.id;
               return (
-                <motion.div
+                <m.div
                   key={cluster.id}
                   initial={reduce ? false : { opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -239,7 +241,7 @@ export default function DeliveryPage() {
                       </div>
                     );
                   })()}
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -292,7 +294,7 @@ export default function DeliveryPage() {
       {/* Pillars */}
       <section className="bg-[color:var(--rd-ink)] py-16 text-[color:var(--rd-text)] sm:py-20">
         <div className="luxury-shell">
-          <motion.div
+          <m.div
             initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -303,7 +305,7 @@ export default function DeliveryPage() {
             <h2 className="mt-3 text-[color:var(--rd-text)]">
               The same rules <span className="italic">across every ZIP.</span>
             </h2>
-          </motion.div>
+          </m.div>
           <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {PILLARS.map((p) => {
               const Icon = p.icon;
@@ -353,5 +355,6 @@ export default function DeliveryPage() {
       {/* Out-of-area landmark for the map's scrollIntoView selector */}
       <div className="sr-only">Coverage map above</div>
     </SiteChrome>
+    </MotionProvider>
   );
 }

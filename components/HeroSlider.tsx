@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ChevronDown, Pause, Play } from 'lucide-react';
 import { startTransition, useCallback, useEffect, useRef, useState } from 'react';
 import SmokeLayer from '@/components/SmokeLayer';
@@ -179,7 +179,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       {/* Layer 1: slide image (cross-faded with slow zoom) */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} mode="popLayout">
-          <motion.div
+          <m.div
             key={slide.id}
             // Each cross-faded image wrapper represents the current slide for
             // assistive tech: role="group" + aria-roledescription="slide" pairs
@@ -249,7 +249,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[color:var(--rd-ink)] to-transparent" />
               </>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
 
@@ -267,7 +267,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       ) : (
         <div className="luxury-shell relative z-10 grid min-h-[440px] items-center py-12 sm:min-h-[560px] sm:py-16 md:min-h-[640px] md:py-20 lg:min-h-[80vh]">
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={slide.id}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -277,7 +277,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
             >
               {/* Eyebrow with live pulse */}
               {slide.eyebrow && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
@@ -285,12 +285,12 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 >
                   <span className="rd-pulse motion-safe:[animation-play-state:running]" aria-hidden />
                   <span className="rd-eyebrow text-[color:var(--rd-text)]">{slide.eyebrow}</span>
-                </motion.div>
+                </m.div>
               )}
 
               {/* Headline — Fraunces with mixed weight per brief */}
               {slide.headline && (
-                <motion.h2
+                <m.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.13, ease: easeOut }}
@@ -298,24 +298,24 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.035em' }}
                 >
                   {renderHeadline(slide.headline, slide.headlineAccent)}
-                </motion.h2>
+                </m.h2>
               )}
 
               {/* Subtext */}
               {slide.subtext && (
-                <motion.p
+                <m.p
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.21, ease: easeOut }}
                   className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--rd-text-dim)] sm:text-lg sm:leading-8 md:text-xl"
                 >
                   {slide.subtext}
-                </motion.p>
+                </m.p>
               )}
 
               {/* CTAs */}
               {(slide.primary || slide.secondary) && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.29, ease: easeOut }}
@@ -323,11 +323,11 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 >
                   {slide.primary && <SlideCta {...slide.primary} variant="gold" />}
                   {slide.secondary && <SlideCta {...slide.secondary} variant="ghost" />}
-                </motion.div>
+                </m.div>
               )}
 
               {/* Compliance footer line */}
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.4, ease: easeOut }}
@@ -335,8 +335,8 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
               >
                 <span className="h-px w-12 bg-[color:var(--rd-paper)]/24" />
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">21+ · NYC only · While supplies last</span>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </AnimatePresence>
         </div>
       )}

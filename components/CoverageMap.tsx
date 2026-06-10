@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowRight, Check, MapPin, Sparkles, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { COVERAGE, ALL_ZIPS } from '@/lib/coverage';
 import { checkZip } from '@/lib/zip-utils';
 import ZipSearch from '@/components/ZipSearch';
@@ -150,7 +150,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
       <div className="luxury-shell relative">
         {/* Heading (hidden in compact /delivery use) */}
         {!compact && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -168,7 +168,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               {ALL_ZIPS.length} ZIPs across Manhattan plus Williamsburg, Greenpoint, and Long Island City. Tax-free,
               free same-day delivery on orders over $25. Drop your ZIP — or tap any zone on the map.
             </p>
-          </motion.div>
+          </m.div>
         )}
 
         <div className={`grid gap-10 ${compact ? 'mt-0' : 'mt-10'} ${
@@ -199,7 +199,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
             <div className="mt-5 min-h-[80px]">
               <AnimatePresence mode="wait">
                 {result.status === 'supported' && result.cluster && (
-                  <motion.div
+                  <m.div
                     key="supported"
                     initial={{ opacity: 0, y: 8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -210,14 +210,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     <p className="inline-flex items-center gap-2 rd-eyebrow text-[color:var(--rd-glow)]">
                       {/* The check pops a beat AFTER the card lands — celebrates
                           the highest-intent moment ("yes, we deliver to you"). */}
-                      <motion.span
+                      <m.span
                         initial={{ scale: 0, rotate: -25 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{ type: 'spring', stiffness: 520, damping: 16, delay: 0.13 }}
                         className="inline-flex"
                       >
                         <Check className="h-3.5 w-3.5" />
-                      </motion.span>
+                      </m.span>
                       You’re in
                     </p>
                     <p className="mt-2 text-base font-medium text-[color:var(--rd-text)]">
@@ -235,10 +235,10 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                         See deals
                       </Link>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
                 {result.status === 'unsupported' && (
-                  <motion.div
+                  <m.div
                     key="unsupported"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -256,7 +256,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     <p className="mt-1 text-sm text-[color:var(--rd-text-dim)]">
                       Drop your email in the footer and we’ll notify you the day we hit your area.
                     </p>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -342,19 +342,19 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
             const c = COVERAGE.clusters.find((x) => x.id === openCluster);
             if (!c) return null;
             return (
-              <motion.div
+              <m.div
                 key={`panel-${c.id}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: easeOut }}
-                className="fixed inset-0 z-[70] flex items-end justify-center bg-[rgba(6,19,15,0.84)] p-0 sm:items-center sm:p-6"
+                className="fixed inset-0 z-[70] flex items-end justify-center bg-[color:var(--rd-scrim)] p-0 sm:items-center sm:p-6"
                 onClick={() => setOpenCluster(null)}
                 role="dialog"
                 aria-modal="true"
                 aria-label={`${c.name} delivery details`}
               >
-                <motion.div
+                <m.div
                   ref={clusterModalRef}
                   tabIndex={-1}
                   initial={{ y: 40, opacity: 0, scale: 0.97 }}
@@ -440,8 +440,8 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                       </button>
                     </div>
                   </div>
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
             );
           })()}
         </AnimatePresence>

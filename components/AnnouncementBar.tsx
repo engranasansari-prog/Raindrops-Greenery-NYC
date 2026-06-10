@@ -121,7 +121,7 @@ export default function AnnouncementBar() {
         aria-hidden
         style={{ background: 'linear-gradient(90deg, transparent, rgba(240,232,210,0.08) 18%, rgba(240,232,210,0.14) 50%, rgba(240,232,210,0.08) 82%, transparent)' }}
       />
-      <div className="relative flex h-full items-center whitespace-nowrap animate-marquee will-change-transform">
+      <div className="relative flex h-full items-center whitespace-nowrap animate-marquee">
         {repeated.map((item, i) => (
           <span key={i} className="inline-flex items-center">
             <Diamond tone={i % 2 === 0 ? 'lime' : 'amber'} />

@@ -89,9 +89,9 @@ export default function Nav() {
         className="fixed inset-x-0 top-9 z-50 h-[72px]
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
                    bg-[color:var(--rd-ink)]
-                   border-b border-[rgba(200,230,110,0.08)]
-                   data-[scrolled=true]:bg-[rgba(27,51,40,0.97)]
-                   data-[scrolled=true]:border-[rgba(200,230,110,0.15)]
+                   border-b border-[color:var(--rd-glow)]/8
+                   data-[scrolled=true]:bg-[color:var(--rd-ink)]/97
+                   data-[scrolled=true]:border-[color:var(--rd-glow)]/15
                    data-[scrolled=true]:shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)]"
       >
         <div className="relative mx-auto flex h-full max-w-[1280px] items-center justify-between gap-4 px-4 md:px-6">
@@ -129,7 +129,7 @@ export default function Nav() {
               alt="Raindrops Greenery"
               width={40}
               height={40}
-              className="rounded-full ring-1 ring-[rgba(200,230,110,0.2)]"
+              className="rounded-full ring-1 ring-[color:var(--rd-glow)]/20"
               priority
             />
             <span className="hidden flex-col leading-tight sm:flex">
@@ -187,18 +187,18 @@ export default function Nav() {
       {drawerOpen && (
         <>
           <div
-            className="fixed inset-0 z-[55] bg-[rgba(6,19,15,0.72)] backdrop-blur-md md:hidden"
+            className="fixed inset-0 z-[55] bg-[color:var(--rd-scrim)] backdrop-blur-md md:hidden"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
           />
           <aside
             id="rd-nav-drawer"
-            className="fixed bottom-0 left-0 top-0 z-[60] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[rgba(200,230,110,0.1)] bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
+            className="fixed bottom-0 left-0 top-0 z-[60] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[color:var(--rd-glow)]/10 bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-[rgba(240,232,210,0.06)] p-4">
+            <div className="flex items-center justify-between gap-3 border-b border-[color:var(--rd-paper)]/6 p-4">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                   21+
@@ -225,8 +225,8 @@ export default function Nav() {
                     aria-current={active ? 'page' : undefined}
                     className={`flex h-14 items-center gap-3 border-l-2 px-5 transition ${
                       active
-                        ? 'border-[color:var(--rd-glow)] bg-[rgba(200,230,110,0.04)] text-[color:var(--rd-glow)]'
-                        : 'border-transparent text-[color:var(--rd-text-dim)] hover:bg-[rgba(240,232,210,0.03)] hover:text-[color:var(--rd-text)]'
+                        ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/4 text-[color:var(--rd-glow)]'
+                        : 'border-transparent text-[color:var(--rd-text-dim)] hover:bg-[color:var(--rd-paper)]/3 hover:text-[color:var(--rd-text)]'
                     }`}
                   >
                     <Icon size={20} strokeWidth={1.75} />
@@ -236,7 +236,7 @@ export default function Nav() {
               })}
             </nav>
 
-            <div className="space-y-4 border-t border-[rgba(240,232,210,0.06)] p-4">
+            <div className="space-y-4 border-t border-[color:var(--rd-paper)]/6 p-4">
               <OrderButton className="w-full" />
               <a
                 href="https://www.instagram.com/raindropsgreenery/"

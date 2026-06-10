@@ -498,6 +498,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <AnalyticsPageview />
           </Suspense>
         )}
+        {/*
+          NOTE: no root MotionProvider here on purpose. Wrapping {children} at
+          the layout put the framer-motion core in the SHARED bundle, taxing
+          every static route (+35KB) — including pages with zero animation.
+          Instead, each animated surface owns its provider: the page roots
+          (HomePage, DeliveryPage, MenuExplorer, StrainQuiz) and the lazy
+          chrome islands (AgeGate, StickyOrderBar, ChatAssistant) wrap
+          themselves in <MotionProvider>, so motion costs only the routes and
+          chunks that actually animate.
+        */}
         {children}
         {/* Vercel Speed Insights — real-user Core Web Vitals (LCP / INP / CLS)
             field data. Sends nothing in dev; collects in production once Speed

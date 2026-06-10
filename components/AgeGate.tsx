@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import MotionProvider from '@/components/MotionProvider';
 import { useModalA11y } from '@/hooks/useModalA11y';
 import { trackSignup } from '@/lib/analytics';
 
@@ -120,9 +121,10 @@ export default function AgeGate() {
   };
 
   return (
+    <MotionProvider>
     <AnimatePresence>
       {showing && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[color:var(--rd-ink)] p-5 text-[color:var(--rd-text)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -145,7 +147,7 @@ export default function AgeGate() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(27,51,40,0.62),rgba(27,51,40,0.95))]" />
           </div>
 
-          <motion.div
+          <m.div
             ref={dialogRef}
             tabIndex={-1}
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
@@ -305,9 +307,10 @@ export default function AgeGate() {
                 </p>
               </>
             )}
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
+    </MotionProvider>
   );
 }

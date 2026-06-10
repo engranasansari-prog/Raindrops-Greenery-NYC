@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 import { ArrowRight, Cannabis, Check, Cigarette, Cookie, Filter, RotateCcw, Search, Share2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Fragment, memo, startTransition, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
@@ -142,7 +143,7 @@ const ProductCard = memo(function ProductCard({
          <article> with a pure-CSS entrance (rd-card-in) + React.memo on the
          component + a stable onDetails callback, so a filter change re-renders
          only the cards whose props actually changed, at zero framer cost. */
-      className="rd-card-in group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.5)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
+      className="rd-card-in group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] rd-card-shadow transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.12)]"
     >
       <div className="relative aspect-square overflow-hidden bg-[color:var(--rd-paper-soft)]">
         <ProductImage product={product} eager={eager} />
@@ -300,14 +301,14 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
   };
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[90] flex items-stretch justify-center bg-[rgba(6,19,15,0.84)] p-0 sm:items-center sm:p-4"
+    <m.div
+      className="fixed inset-0 z-[90] flex items-stretch justify-center bg-[color:var(--rd-scrim)] p-0 sm:items-center sm:p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         ref={dialogRef}
         tabIndex={-1}
         role="dialog"
@@ -333,8 +334,13 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               )}
             </div>
           </div>
-          <div className="p-6 sm:p-8 md:p-10">
-            <div className="flex items-start justify-between gap-4">
+          <div className="px-6 pb-6 sm:px-8 sm:pb-8 md:px-10 md:pb-10">
+            {/* Sticky dialog header — on long products the close (X) used to
+                scroll away on mobile; pinning the title row keeps dismissal
+                one tap away. Negative margins pull the header to the column
+                edges so its background + border span full width while the
+                inner padding mirrors the container's. */}
+            <div className="sticky top-0 z-10 -mx-6 flex items-start justify-between gap-4 border-b border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] px-6 pb-4 pt-6 sm:-mx-8 sm:px-8 sm:pt-8 md:-mx-10 md:px-10">
               <div className="min-w-0">
                 <p className="rd-eyebrow text-[color:var(--rd-glow)]">{product.category}</p>
                 <h2
@@ -462,8 +468,8 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
             </p>
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -629,6 +635,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
   };
 
   return (
+    <MotionProvider>
     <SiteChrome>
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
         <div
@@ -898,7 +905,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
             {visibleCount < filteredProducts.length ? (
               <button
                 onClick={() => setVisibleCount((count) => count + 18)}
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--rd-glow)] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] shadow-[0_12px_36px_rgba(200,230,110,0.32)] transition-[transform,box-shadow] duration-300 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 hover:shadow-[0_18px_48px_rgba(200,230,110,0.42)] [font-family:var(--font-mono)]"
+                className="btn-luxe btn-luxe-gold"
               >
                 Load more products
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -912,5 +919,6 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
 
       <AnimatePresence>{selectedProduct && <ProductDetailDialog product={selectedProduct} onClose={() => setSelectedProduct(null)} />}</AnimatePresence>
     </SiteChrome>
+    </MotionProvider>
   );
 }

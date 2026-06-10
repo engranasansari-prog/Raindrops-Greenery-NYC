@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 import {
   ArrowLeft,
   ArrowRight,
@@ -60,7 +61,7 @@ const easeOut = [0.22, 1, 0.36, 1] as const;
 // =====================================================================
 /**
  * Lighter reveal — CSS-only fade-up driven by IntersectionObserver.
- * Replaces a framer-motion <motion.div whileInView> per Reveal on the home
+ * Replaces a framer-motion <m.div whileInView> per Reveal on the home
  * page. The home page mounts ~12 Reveal instances; pre-fix this added
  * ~600ms to TBT on mobile because each instance instantiates framer's
  * animation context. Plain `transition` + a single class flip on intersect
@@ -302,7 +303,7 @@ function TestimonialFeature() {
               on every element so nothing inherits a near-white text
               token from the body. */}
           <div
-            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center shadow-[0_30px_90px_rgba(27,51,40,0.22)] sm:px-12 sm:py-16"
+            className="rd-card-shadow relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center sm:px-12 sm:py-16"
             style={{ color: 'var(--rd-text)' }}
           >
             {/* Soft brand glow well behind the quote */}
@@ -325,7 +326,7 @@ function TestimonialFeature() {
                   the page; crossfade swaps quote + author together. */}
               <div className="relative mt-4 min-h-[210px] sm:min-h-[240px]">
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <m.div
                     key={active}
                     initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -354,7 +355,7 @@ function TestimonialFeature() {
                         </span>
                       </span>
                     </figcaption>
-                  </motion.div>
+                  </m.div>
                 </AnimatePresence>
               </div>
 
@@ -451,6 +452,7 @@ export default function HomePage({ deals, valuePropsSlot }: { deals: FeaturedDea
   ];
 
   return (
+    <MotionProvider>
     <SiteChrome>
       <h1 className="sr-only">Tax-Free Weed Delivery in NYC — Raindrops Greenery</h1>
       <HeroSlider slides={slides} />
@@ -473,5 +475,6 @@ export default function HomePage({ deals, valuePropsSlot }: { deals: FeaturedDea
 
       <LiveOrderToasts />
     </SiteChrome>
+    </MotionProvider>
   );
 }

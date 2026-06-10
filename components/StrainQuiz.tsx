@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
+import MotionProvider from '@/components/MotionProvider';
 import { ArrowLeft, ArrowRight, Check, RotateCcw, Sparkles } from 'lucide-react';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import SiteChrome from '@/components/SiteChrome';
@@ -225,6 +226,7 @@ export default function StrainQuiz() {
   };
 
   return (
+    <MotionProvider>
     <SiteChrome>
       {/* Hero */}
       <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
@@ -262,7 +264,7 @@ export default function StrainQuiz() {
           {/* Progress rail */}
           {!finished && (
             <div className="mt-8 h-px w-full bg-[color:var(--rd-paper)]/8">
-              <motion.div
+              <m.div
                 initial={false}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.6, ease: easeOut }}
@@ -278,7 +280,7 @@ export default function StrainQuiz() {
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
             {!finished && current ? (
-              <motion.div
+              <m.div
                 key={`step-${step}`}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -341,9 +343,9 @@ export default function StrainQuiz() {
                   </button>
                   <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Tap an option to continue</span>
                 </div>
-              </motion.div>
+              </m.div>
             ) : (
-              <motion.div
+              <m.div
                 key="results"
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -396,7 +398,7 @@ export default function StrainQuiz() {
                       const thcMatch = potency.match(/THC\s+([\d.]+)/i);
                       const thc = thcMatch ? thcMatch[1] : null;
                       return (
-                        <motion.div
+                        <m.div
                           key={product.id}
                           initial={{ opacity: 0, y: 18 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -404,7 +406,7 @@ export default function StrainQuiz() {
                         >
                           <Link
                             href={`/menu?product=${encodeURIComponent(product.id)}`}
-                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] shadow-[0_20px_60px_rgba(8,18,14,0.52)] transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
+                            className="group flex h-full w-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] rd-card-shadow transition-[transform,border-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-glow)]/40 hover:shadow-[0_30px_70px_rgba(200,230,110,0.14)]"
                           >
                             <div className="relative aspect-square w-full overflow-hidden bg-[color:var(--rd-paper-soft)]">
                               {product.image && (
@@ -473,7 +475,7 @@ export default function StrainQuiz() {
                               </div>
                             </div>
                           </Link>
-                        </motion.div>
+                        </m.div>
                       );
                     })}
                   </div>
@@ -492,11 +494,12 @@ export default function StrainQuiz() {
                 <p className="mt-10 rd-eyebrow text-[color:var(--rd-text-mute)]">
                   Recommendations are educational, not medical advice. Cannabis affects each person differently. Start low, go slow — especially with edibles.
                 </p>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
       </section>
     </SiteChrome>
+    </MotionProvider>
   );
 }

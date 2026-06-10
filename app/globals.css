@@ -67,6 +67,9 @@
      either bar's height can't silently mis-offset content or anchor jumps. */
   --rd-chrome-h: 108px;
 
+  /* Unified modal/drawer scrim — replaces 3 hardcoded variants. */
+  --rd-scrim: rgba(6, 19, 15, 0.84);
+
   /* Legacy aliases — keep so all existing components inherit the new look
      without needing component-by-component rewrites this pass. */
   --ivory:          var(--rd-paper);
@@ -291,14 +294,6 @@ textarea:focus:not(:focus-visible) {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Cards / utility */
-.glass-card {
-  background: rgba(250, 245, 229, 0.82);
-  border: 1px solid rgba(240, 232, 210, 0.72);
-  box-shadow: var(--shadow-soft);
-  backdrop-filter: blur(22px);
-}
-
 /* =====================================================================
    Premium depth utilities — palette v2 polish
    ===================================================================== */
@@ -319,11 +314,6 @@ textarea:focus:not(:focus-visible) {
 /* Tonal variants — drop onto ALTERNATE dark sections so a long scroll reads as
    distinct "rooms" rather than one continuous green slab (the recurring
    "feels flat / two-colored" note). Same family, different light source. */
-.rd-luxe-dark--warm {
-  background:
-    radial-gradient(120% 80% at 85% 0%, color-mix(in srgb, var(--rd-amber) 12%, transparent) 0%, transparent 55%),
-    linear-gradient(165deg, var(--rd-ink-soft) 0%, var(--rd-ink) 62%);
-}
 .rd-luxe-dark--glow {
   background:
     radial-gradient(120% 85% at 12% 8%, color-mix(in srgb, var(--rd-glow) 11%, transparent) 0%, transparent 52%),
@@ -345,22 +335,12 @@ textarea:focus:not(:focus-visible) {
     0 32px 64px -16px rgba(27,51,40, 0.12);
 }
 
-/* Gold-edge ring — applied sparingly to important cards (testimonials,
-   gift modal). Reads as "framed art" not "form input." */
-.rd-ring-gold {
-  box-shadow:
-    0 0 0 1px rgba(212, 165, 116, 0.18),
-    0 24px 64px rgba(27,51,40, 0.14);
+/* Canonical dark-card resting shadow (product / post cards). In @layer
+   components — NOT unlayered — so per-card `hover:shadow-[…]` utilities can
+   still win on hover (same cascade rationale as .rd-eyebrow above). */
+@layer components {
+  .rd-card-shadow { box-shadow: 0 20px 60px rgba(8,18,14,0.5); }
 }
-
-.gold-text {
-  background: linear-gradient(120deg, var(--rd-amber-dark), var(--rd-amber) 45%, #fff0bc 55%, var(--rd-amber-dark));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.luxe-border { border: 1px solid rgba(212, 165, 116, 0.38); }
 
 /* Film-grain overlay for hero / dark sections */
 .rd-grain::before {
@@ -493,49 +473,6 @@ textarea:focus:not(:focus-visible) {
 
 @media (max-width: 480px) {
   .luxury-shell { width: calc(100% - 24px); }
-}
-
-/* =====================================================================
-   Reusable button primitives (use via className for new components)
-   ===================================================================== */
-.rd-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  min-height: 48px;
-  border-radius: 999px;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: transform 240ms var(--ease-out), background 240ms var(--ease-out), color 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
-  cursor: pointer;
-}
-.rd-cta-glow {
-  background: var(--rd-glow);
-  color: var(--rd-ink);
-  box-shadow: 0 12px 36px rgba(200, 230, 110, 0.32);
-}
-.rd-cta-glow:hover { transform: translateY(-1px); box-shadow: 0 16px 44px rgba(200, 230, 110, 0.42); }
-.rd-cta-ghost {
-  background: transparent;
-  color: var(--rd-text);
-  border: 1px solid rgba(240, 232, 210, 0.32);
-}
-.rd-cta-ghost:hover {
-  border-color: var(--rd-glow);
-  color: var(--rd-glow);
-}
-.rd-cta-ink {
-  background: var(--rd-ink);
-  color: var(--rd-paper);
-}
-.rd-cta-ink:hover {
-  background: var(--rd-moss);
-  transform: translateY(-1px);
 }
 
 /* "Live" pulsing dot (used in eyebrows and open indicator) */
