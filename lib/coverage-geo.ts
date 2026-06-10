@@ -79,6 +79,38 @@ export const ZIP_FILL_GEOJSON = {
   })
 };
 
+// ── Spotlight mask (V16) ─────────────────────────────────────────────────
+// One world-sized polygon with every coverage polygon punched out as a hole.
+// Rendered as a faint ink fill UNDER the ZIP fills, it dims everything
+// OUTSIDE the delivery area so the covered zones visibly pop — without
+// touching the basemap inside the boundary. Holes only need each part's
+// OUTER ring (part[0]); the boundary data has no inner-ring islands.
+export const COVERAGE_MASK_GEOJSON: {
+  type: 'Feature';
+  properties: Record<string, never>;
+  geometry: { type: 'Polygon'; coordinates: Ring[] };
+} = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'Polygon',
+    coordinates: [
+      // Outer ring — the whole world (Web-Mercator-safe ±85 latitude).
+      [
+        [-180, -85],
+        [180, -85],
+        [180, 85],
+        [-180, 85],
+        [-180, -85]
+      ],
+      // Holes — the outer ring of every polygon part of every covered ZIP.
+      ...ZIP_FILL_GEOJSON.features.flatMap((f) =>
+        f.geometry.coordinates.map((part) => part[0])
+      )
+    ]
+  }
+};
+
 // ── Per-ZIP label anchors (Census interior points) ───────────────────────
 export type ZipLabelFeature = {
   type: 'Feature';

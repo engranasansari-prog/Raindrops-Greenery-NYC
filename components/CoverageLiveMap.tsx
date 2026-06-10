@@ -5,6 +5,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
   CLUSTER_LABEL_GEOJSON,
+  COVERAGE_MASK_GEOJSON,
   MAP_BOUNDS,
   TILE_ATTRIBUTION,
   TILE_URL,
@@ -14,9 +15,18 @@ import {
 import { ALL_ZIPS } from '@/lib/coverage';
 
 /**
- * V15 — Real-boundary coverage map (MapLibre GL JS, no API key).
+ * V16 — "Spotlight" precision pass on the V15 real-boundary map.
  *
- * What changed from V14:
+ * What changed from V15:
+ *  • Spotlight mask: a world polygon with the coverage cut out dims everything
+ *    OUTSIDE the delivery area, and deepens while a cluster is selected.
+ *  • Boundary glow under the white casing (back-lit-glass edges), cinematic
+ *    staggered entrance, 350ms cross-fades on selection, a fine-pointer hover
+ *    tooltip driven by direct DOM writes, marching-ants route dashes + halo
+ *    breathing piggybacked on the existing courier rAF, and zoom-faded ZIP
+ *    labels. All of it sits behind the same visibility/reduced-motion gates.
+ *
+ * What changed from V14 (V15):
  *  • Polygons are now REAL US Census ZCTA boundaries for the 32 covered ZIPs
  *    (see lib/coverage-zip-boundaries.ts) — they follow streets and the
  *    waterfront, so the map reads as a precise coverage inset, not "squares."
@@ -70,6 +80,25 @@ function lineWidth(active: string | null): maplibregl.ExpressionSpecification {
   ] as unknown as maplibregl.ExpressionSpecification;
 }
 
+// V16 — glow opacity mirrors fillOpacity's attention ladder (hover > active
+// cluster > ambient) so the back-lit edge brightens exactly where the eye is.
+function glowOpacity(active: string | null): maplibregl.ExpressionSpecification {
+  return [
+    'case',
+    ['boolean', ['feature-state', 'hover'], false],
+    0.5,
+    ['==', ['get', 'clusterId'], active ?? ''],
+    0.42,
+    0.2
+  ] as unknown as maplibregl.ExpressionSpecification;
+}
+
+// V16 — spotlight mask strength: the outside-world ink wash deepens while a
+// cluster is selected so the spotlight visibly tightens around the choice.
+function maskOpacity(active: string | null): number {
+  return active ? 0.15 : 0.08;
+}
+
 // ── Live delivery couriers ────────────────────────────────────────────────
 // Short, LAND-ONLY routes that stay WITHIN a single neighborhood. This is the
 // hard lesson from the removed v12 dots: long straight lines between far points
@@ -85,6 +114,17 @@ const DELIVERY_ROUTES: Array<Array<[number, number]>> = [
   [[-74.001, 40.73], [-73.9985, 40.7285], [-73.996, 40.727], [-73.999, 40.7255]],
   // Williamsburg (Brooklyn — entirely east of the river, no crossing)
   [[-73.958, 40.713], [-73.9545, 40.7145], [-73.951, 40.716], [-73.9475, 40.715]]
+];
+
+// V16 — marching-ants frames for 'route-line': stepping line-dasharray through
+// this cycle (~every 140ms, inside the EXISTING courier rAF) makes the dashes
+// appear to flow toward the destination. dash+gap length stays constant (7) so
+// the pattern slides instead of flickering.
+const DASH_CYCLE: number[][] = [
+  [0, 4, 3],
+  [1, 4, 2],
+  [2, 4, 1],
+  [3, 4, 0]
 ];
 
 // Bike badge — deep-emerald disc, lime ring, cream Lucide "bike" glyph. Inlined
@@ -147,6 +187,17 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   const rafRef = useRef<number | null>(null);
   const visRef = useRef<(() => void) | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  // V16 — hover tooltip nodes, written DIRECTLY from map mousemove. Refs (not
+  // state) so a busy cursor never triggers a React render per frame.
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const tipNameRef = useRef<HTMLSpanElement | null>(null);
+  const tipMetaRef = useRef<HTMLSpanElement | null>(null);
+  // V16 — entrance-stagger timers, cleared on unmount so a fast navigation
+  // can't fire setPaintProperty against a removed map.
+  const timersRef = useRef<number[]>([]);
+  // V16 — latest activeCluster for the (load-time) entrance closure, so its
+  // staggered targets always match what the activeCluster effect would set.
+  const activeClusterRef = useRef<string | null>(activeCluster);
   // Keep onSelect fresh without re-binding the map click handler (which is
   // bound once at load). Fixes the stale-closure risk on /delivery.
   const onSelectRef = useRef(onSelect);
@@ -198,6 +249,14 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right');
 
     map.on('load', () => {
+      // Hoisted up from the courier block (V16) — the entrance fades and the
+      // hover tooltip below need these too, and matchMedia is cheap but not
+      // free, so query once per load.
+      const reduceMotion =
+        typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer =
+        typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches;
+
       // ── ZIP polygons (real ZCTA boundaries) ──────────────────────────
       map.addSource('zips', {
         type: 'geojson',
@@ -206,13 +265,51 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       });
 
       // Fill — brand sage gradient per cluster, dimmed/boosted by selection.
+      // V16: every coverage layer starts at opacity 0 and is raised by the
+      // staggered entrance below — no more polygons popping in fully formed.
       map.addLayer({
         id: 'zip-fill',
         type: 'fill',
         source: 'zips',
         paint: {
           'fill-color': ['get', 'color'],
-          'fill-opacity': fillOpacity(activeCluster)
+          'fill-opacity': 0 // entrance target: fillOpacity(active)
+        }
+      });
+
+      // ── Spotlight mask (V16) ──────────────────────────────────────────
+      // World polygon with the coverage punched out (lib/coverage-geo.ts):
+      // a faint ink wash over everything OUTSIDE the delivery area so the
+      // covered zones pop. beforeId slots it ABOVE the basemap raster but
+      // BELOW 'zip-fill', so it never tints the zones themselves.
+      map.addSource('coverage-mask', { type: 'geojson', data: COVERAGE_MASK_GEOJSON });
+      map.addLayer(
+        {
+          id: 'coverage-mask',
+          type: 'fill',
+          source: 'coverage-mask',
+          paint: {
+            'fill-color': '#1B3328',
+            'fill-opacity': 0 // entrance target: maskOpacity(active) — 0.08 idle / 0.15 selected
+          }
+        },
+        'zip-fill'
+      );
+
+      // ── Boundary glow (V16) — UNDER the white casing ──────────────────
+      // A blurred, brand-colored echo of the boundary that reads like
+      // back-lit glass. Opacity follows attention (hover > active > ambient)
+      // via glowOpacity; width scales with zoom so the halo stays soft.
+      map.addLayer({
+        id: 'zip-glow',
+        type: 'line',
+        source: 'zips',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-blur': 5,
+          'line-width': ['interpolate', ['linear'], ['zoom'], 10, 5, 13, 9],
+          'line-opacity': 0 // entrance target: glowOpacity(active)
         }
       });
 
@@ -226,7 +323,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         paint: {
           'line-color': '#FFFFFF',
           'line-width': 2.8,
-          'line-opacity': 0.7
+          'line-opacity': 0 // entrance target: 0.7
         }
       });
 
@@ -239,7 +336,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         paint: {
           'line-color': ['get', 'color'],
           'line-width': lineWidth(activeCluster),
-          'line-opacity': 0.9
+          'line-opacity': 0 // entrance target: 0.9
         }
       });
 
@@ -319,9 +416,75 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         paint: {
           'text-color': 'rgba(22,39,31,0.9)',
           'text-halo-color': 'rgba(255,255,255,0.95)',
-          'text-halo-width': 1.6
+          'text-halo-width': 1.6,
+          // V16 — fade ZIP numbers in across the fly-in (zoom 13→13.4) so
+          // they develop with the camera instead of popping at the minzoom
+          // boundary. minzoom 13 stays as the cheap render gate.
+          'text-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0, 13.4, 0.95]
         }
       });
+
+      // ── Cinematic entrance + liquid transitions (V16) ──────────────────
+      // All coverage layers above were added at opacity 0. Once the first
+      // frame settles ('idle'), each fades up over 900ms in a short stagger —
+      // mask first, then glow+fill, then the crisp casing/line — so the
+      // coverage "develops" like a print instead of popping in. The targets
+      // come from the same fillOpacity/glowOpacity/maskOpacity helpers the
+      // activeCluster effect uses (via activeClusterRef), so the steady state
+      // never fights that effect. Reduced motion: jump straight to finals.
+      const entranceSteps: Array<{ layer: string; prop: string; target: unknown; delay: number }> = [
+        { layer: 'coverage-mask', prop: 'fill-opacity', target: 0, delay: 0 },
+        { layer: 'zip-glow', prop: 'line-opacity', target: 0, delay: 120 },
+        { layer: 'zip-fill', prop: 'fill-opacity', target: 0, delay: 120 },
+        { layer: 'zip-casing', prop: 'line-opacity', target: 0.7, delay: 240 },
+        { layer: 'zip-line', prop: 'line-opacity', target: 0.9, delay: 240 }
+      ];
+      // Targets that depend on the live selection are resolved at fire time.
+      const resolveTarget = (step: { layer: string; target: unknown }) => {
+        const active = activeClusterRef.current;
+        if (step.layer === 'coverage-mask') return maskOpacity(active);
+        if (step.layer === 'zip-glow') return glowOpacity(active);
+        if (step.layer === 'zip-fill') return fillOpacity(active);
+        return step.target;
+      };
+      // Liquid selection: once steady, every activeCluster change cross-fades
+      // (350ms) instead of stepping — dim/boost reads as one fluid move.
+      const setLiquidTransitions = () => {
+        const m = mapRef.current;
+        if (!m) return;
+        const t = { duration: 350, delay: 0 };
+        if (m.getLayer('zip-fill')) m.setPaintProperty('zip-fill', 'fill-opacity-transition', t);
+        if (m.getLayer('zip-line')) m.setPaintProperty('zip-line', 'line-width-transition', t);
+        if (m.getLayer('zip-glow')) m.setPaintProperty('zip-glow', 'line-opacity-transition', t);
+        if (m.getLayer('coverage-mask')) m.setPaintProperty('coverage-mask', 'fill-opacity-transition', t);
+      };
+      if (reduceMotion) {
+        // Reduced motion: no entrance fade, no selection cross-fade — every
+        // value lands instantly, exactly as the preference asks. Transitions
+        // must be pinned to 0 explicitly (MapLibre's default is 300ms).
+        const instant = { duration: 0, delay: 0 };
+        for (const step of entranceSteps) {
+          map.setPaintProperty(step.layer, `${step.prop}-transition`, instant);
+          map.setPaintProperty(step.layer, step.prop, resolveTarget(step));
+        }
+        map.setPaintProperty('zip-line', 'line-width-transition', instant);
+      } else {
+        map.once('idle', () => {
+          for (const step of entranceSteps) {
+            timersRef.current.push(
+              window.setTimeout(() => {
+                const m = mapRef.current;
+                if (!m || !m.getLayer(step.layer)) return;
+                m.setPaintProperty(step.layer, `${step.prop}-transition`, { duration: 900, delay: 0 });
+                m.setPaintProperty(step.layer, step.prop, resolveTarget(step));
+              }, step.delay)
+            );
+          }
+          // Hand the slow entrance transitions over to the 350ms selection
+          // cross-fade once the last fade has fully landed (240ms + 900ms).
+          timersRef.current.push(window.setTimeout(setLiquidTransitions, 1200));
+        });
+      }
 
       // ── Interactions ─────────────────────────────────────────────────
       const setHover = (id: number | string | null) => {
@@ -338,10 +501,33 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         e.target.getCanvas().style.cursor = 'pointer';
         const f = e.features?.[0];
         if (f && f.id != null) setHover(f.id);
+        // V16 hover tooltip — fine pointers only, updated via REFS + direct
+        // DOM writes (textContent / style.transform). Zero React state per
+        // mousemove, so hovering across dense boundaries never re-renders.
+        const tip = tooltipRef.current;
+        if (finePointer && tip && f) {
+          const p = f.properties as {
+            clusterShortName?: string;
+            etaMinutes?: number;
+            zip?: string;
+          };
+          if (tipNameRef.current) tipNameRef.current.textContent = p.clusterShortName ?? '';
+          if (tipMetaRef.current) tipMetaRef.current.textContent = `~${p.etaMinutes} min · ZIP ${p.zip}`;
+          // Offset clear of the cursor; flip to the cursor's left near the
+          // right edge so the pill never clips outside the rounded frame.
+          const width = containerRef.current?.clientWidth ?? 0;
+          const flip = e.point.x > width - 200;
+          tip.style.transform = flip
+            ? `translate(${e.point.x - 14}px, ${e.point.y + 14}px) translateX(-100%)`
+            : `translate(${e.point.x + 14}px, ${e.point.y + 14}px)`;
+          tip.style.opacity = '1';
+        }
       });
       map.on('mouseleave', 'zip-fill', (e) => {
         e.target.getCanvas().style.cursor = '';
         setHover(null);
+        // Hide the V16 tooltip (DOM write only — same no-state rule).
+        if (tooltipRef.current) tooltipRef.current.style.opacity = '0';
       });
       map.on('mouseenter', 'cluster-pin', (e) => {
         e.target.getCanvas().style.cursor = 'pointer';
@@ -395,9 +581,6 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       const progress = DELIVERY_ROUTES.map((_, i) => i / DELIVERY_ROUTES.length);
       map.addSource('couriers', { type: 'geojson', data: courierGeojson(progress) });
 
-      const reduceMotion =
-        typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
       const img = new Image(48, 48);
       img.onload = () => {
         const m = mapRef.current;
@@ -420,6 +603,11 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
 
         const SPEED = 1 / 14000; // a full local route every ~14s
         let last = performance.now();
+        // V16 living details — accumulated in THIS tick (never a second rAF)
+        // so they inherit the exact same gating: off-screen, hidden tab, and
+        // reduced-motion all stop them along with the couriers.
+        let dashElapsed = 0;
+        let dashStep = 0;
         const tick = (now: number) => {
           const dt = now - last;
           last = now;
@@ -431,6 +619,21 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           if (src) src.setData(courierGeojson(progress));
           if (m.getLayer('dest-pulse')) {
             m.setPaintProperty('dest-pulse', 'circle-radius', 7 + 3 * Math.sin(now / 600));
+          }
+          // V16 marching ants — step the route dash pattern every ~140ms so
+          // the dashes flow toward the destination (a 60fps step would strobe).
+          dashElapsed += dt;
+          if (dashElapsed >= 140) {
+            dashElapsed = 0;
+            dashStep = (dashStep + 1) % DASH_CYCLE.length;
+            if (m.getLayer('route-line')) {
+              m.setPaintProperty('route-line', 'line-dasharray', DASH_CYCLE[dashStep]);
+            }
+          }
+          // V16 halo breathing — a gentle ±0.05 sine around 0.15 keeps the
+          // cluster pins feeling alive without ever shouting.
+          if (m.getLayer('cluster-halo')) {
+            m.setPaintProperty('cluster-halo', 'circle-opacity', 0.15 + 0.05 * Math.sin(now / 900));
           }
           rafRef.current = requestAnimationFrame(tick);
         };
@@ -486,6 +689,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     return () => {
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
+      // V16 — kill pending entrance timers so they can't touch a removed map.
+      timersRef.current.forEach((t) => window.clearTimeout(t));
+      timersRef.current = [];
       if (visRef.current) document.removeEventListener('visibilitychange', visRef.current);
       visRef.current = null;
       if (observerRef.current) observerRef.current.disconnect();
@@ -500,6 +706,9 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
 
   // Reflect activeCluster changes — repaint + fly.
   useEffect(() => {
+    // Keep the ref current even before the map is ready: the V16 entrance
+    // reads it at fire time so its targets always match this effect's.
+    activeClusterRef.current = activeCluster;
     const map = mapRef.current;
     if (!map || !ready.current) return;
 
@@ -508,6 +717,15 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
     }
     if (map.getLayer('zip-line')) {
       map.setPaintProperty('zip-line', 'line-width', lineWidth(activeCluster));
+    }
+    // V16 — the glow tracks the selection and the spotlight mask deepens
+    // (0.08 → 0.15) while a cluster is active. Both cross-fade through the
+    // 350ms transitions set at load, so the change reads liquid, not stepped.
+    if (map.getLayer('zip-glow')) {
+      map.setPaintProperty('zip-glow', 'line-opacity', glowOpacity(activeCluster));
+    }
+    if (map.getLayer('coverage-mask')) {
+      map.setPaintProperty('coverage-mask', 'fill-opacity', maskOpacity(activeCluster));
     }
 
     if (activeCluster) {
@@ -536,6 +754,23 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
         aria-label="Map of Raindrops Greenery NYC delivery coverage — Manhattan, Long Island City, Williamsburg, and Greenpoint, shown as real ZIP-code boundaries. Use the coverage cards beside the map to view each zone's delivery details."
         role="img"
       />
+      {/* V16 hover tooltip — desktop (fine pointer) only; positioned and
+          filled IMPERATIVELY from the map's mousemove via refs, never state.
+          pointer-events-none so it can't steal the hover it follows; hidden
+          from AT (the hover data duplicates the coverage cards beside the
+          map). Starts parked off-canvas + transparent until the first hover. */}
+      <div
+        ref={tooltipRef}
+        aria-hidden
+        style={{ transform: 'translate(-9999px, -9999px)' }}
+        className="pointer-events-none absolute left-0 top-0 z-20 hidden flex-col rounded-full border border-[color:var(--rd-glow)]/25 bg-[color:var(--rd-ink)]/85 px-3 py-1.5 opacity-0 backdrop-blur-md motion-safe:transition-opacity motion-safe:duration-150 pointer-fine:flex"
+      >
+        <span
+          ref={tipNameRef}
+          className="text-[13px] font-semibold leading-tight text-[color:var(--rd-paper)]"
+        />
+        <span ref={tipMetaRef} className="rd-eyebrow text-[color:var(--rd-glow)]" />
+      </div>
       {/* Brand vignette — ties the generic basemap to the site without
           dimming labels. Pure decoration, never intercepts pointer events. */}
       <div
