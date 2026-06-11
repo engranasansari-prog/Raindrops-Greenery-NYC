@@ -4,7 +4,6 @@ import Script from 'next/script';
 import { Fraunces, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import { business, serviceAreas, social } from '@/lib/site-data';
 import { COVERAGE } from '@/lib/coverage';
-import { getBlogPosts } from '@/lib/blog-posts';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
 import AnalyticsPageview from '@/components/AnalyticsPageview';
@@ -403,9 +402,6 @@ const GA_ID =
 const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // Journal titles for the Ctrl+K command palette in Nav. Read server-side
-  // here — lib/blog-posts uses fs, which the client Nav can't touch.
-  const palettePosts = getBlogPosts().map((post) => ({ slug: post.slug, title: post.title }));
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <head>
@@ -466,7 +462,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <AnnouncementBar />
-        <Nav posts={palettePosts} />
+        <Nav />
         {/*
           Analytics — fully wired, zero code changes needed to go live. The
           scripts auto-load ONLY when their env var is set in Vercel:
