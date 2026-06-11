@@ -20,6 +20,15 @@ import { checkZip, normalizeZip } from '@/lib/zip-utils';
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+// Spark trajectories for the ZIP-match celebration — four up-and-out
+// diagonals consumed by the .rd-pop-spark keyframe via CSS vars.
+const SPARK_OFFSETS = [
+  { x: '22px', y: '-16px' },
+  { x: '-22px', y: '-16px' },
+  { x: '14px', y: '-26px' },
+  { x: '-14px', y: '-26px' }
+] as const;
+
 export type ZipSearchSize = 'lg' | 'md';
 
 type Props = {
@@ -312,12 +321,33 @@ export default function ZipSearch({
           user has typed a valid ZIP, before they submit. Gives instant
           "you're covered" feedback. */}
       {result.status === 'supported' && result.cluster && !showDropdown && (
-        <p
-          className="mt-3 inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
-        >
-          <MapPin className="h-3 w-3" />
-          {result.cluster.shortName} · ~{result.cluster.etaMinutes} min
-        </p>
+        // Keyed by the matched ZIP so checking a different covered ZIP
+        // replays the one-shot celebration (pure CSS mount animation —
+        // `both` fill self-finishes at opacity 0, no timers/state).
+        <div key={result.zip} className="relative mt-3 inline-flex">
+          <p
+            className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
+          >
+            <MapPin className="h-3 w-3" />
+            {result.cluster.shortName} · ~{result.cluster.etaMinutes} min
+          </p>
+          {/* Celebration burst — decorative ring + sparks; inset-0/m-auto
+              centering (not translate) so the keyframe transforms don't
+              fight the positioning. prefers-reduced-motion neutralizes
+              both animations globally in globals.css. */}
+          <span
+            aria-hidden="true"
+            className="rd-pop-ring pointer-events-none absolute inset-0 m-auto h-9 w-9 rounded-full border-2 border-[color:var(--rd-glow)]"
+          />
+          {SPARK_OFFSETS.map((s) => (
+            <span
+              key={`${s.x}${s.y}`}
+              aria-hidden="true"
+              style={{ '--rd-spark-x': s.x, '--rd-spark-y': s.y } as React.CSSProperties}
+              className="rd-pop-spark pointer-events-none absolute inset-0 m-auto h-1.5 w-1.5 rounded-full bg-[color:var(--rd-glow)]"
+            />
+          ))}
+        </div>
       )}
     </div>
   );

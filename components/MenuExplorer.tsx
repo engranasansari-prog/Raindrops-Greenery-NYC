@@ -44,6 +44,7 @@ const STRAIN_BADGE: Record<StrainTag, string> = {
 };
 import { checkout } from '@/lib/site-data';
 import { PRODUCT_BLUR_DATA_URL } from '@/lib/image-blur';
+import { getRecentlyViewed, recordView } from '@/lib/recently-viewed';
 import { useModalA11y } from '@/hooks/useModalA11y';
 
 type CategoryFilter = 'All' | LiveMenuProduct['category'];
@@ -542,6 +543,26 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Recently viewed — ids live in localStorage, so seed [] and populate in an
+  // effect (client-only) to stay hydration-safe. The same effect records a
+  // view whenever the modal opens and re-reads storage whenever it closes, so
+  // the strip stays current within the session.
+  const [recentIds, setRecentIds] = useState<string[]>([]);
+  useEffect(() => {
+    if (selectedProduct) {
+      recordView(selectedProduct.id);
+      return;
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRecentIds(getRecentlyViewed());
+  }, [selectedProduct]);
+
+  // Map stored ids → live products; ids no longer on the menu silently drop.
+  const recentProducts = useMemo(
+    () => recentIds.map((id) => menuProducts.find((product) => product.id === id)).filter((product): product is LiveMenuProduct => Boolean(product)),
+    [recentIds]
+  );
+
   // Keep ?product= in the URL in sync with the open modal so individual items are shareable.
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -874,6 +895,34 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
               and crawlers the H2 level between the page H1 and the H3 product
               titles — fixes the H1→H3 heading-order skip. */}
           <h2 className="sr-only">Cannabis delivery menu — Flower Strains, Pre-Rolls, and Edibles</h2>
+          {/* Recently viewed — quiet one-row strip above the grid. Renders only
+              once localStorage has matching live products, so first-time
+              visitors (and SSR) see nothing. Cards reuse handleDetails so the
+              modal + product-view tracking fire exactly like a grid click. */}
+          {recentProducts.length > 0 && (
+            <div className="rd-card-in mb-8">
+              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Recently viewed</p>
+              <div className="no-scrollbar mt-3 flex gap-3 overflow-x-auto pb-1">
+                {recentProducts.map((product) => (
+                  <button
+                    key={product.id}
+                    onClick={() => handleDetails(product)}
+                    aria-label={`View details for ${product.name}`}
+                    className="flex min-h-11 shrink-0 items-center gap-3 rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] py-2 pl-2 pr-4 text-left transition hover:border-[color:var(--rd-glow)]/40"
+                  >
+                    <span className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[color:var(--rd-paper-soft)]">
+                      {/* Image always present — image-less products are filtered out in lib/menu.ts. */}
+                      <Image src={product.image!} alt="" fill sizes="56px" className="object-contain p-1.5" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block max-w-[140px] truncate text-sm text-[color:var(--rd-text)]">{product.name}</span>
+                      <span className="block text-xs text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">{formatPrice(product.salePrice)}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           {visibleProducts.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {visibleProducts.map((product, i) => (

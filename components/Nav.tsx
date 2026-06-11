@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import {
@@ -11,6 +12,7 @@ import {
   Info,
   Mail,
   Menu,
+  Search,
   ShoppingBag,
   Sparkles,
   Tag,
@@ -20,6 +22,10 @@ import {
 import { InstagramIcon } from '@/components/SocialIcons';
 import DeliveryEta from '@/components/DeliveryEta';
 import { OrderButton } from '@/components/SiteChrome';
+
+// Lazy-load the palette (and its product index) into its own chunk — it
+// should cost the shared first paint nothing.
+const CommandPalette = dynamic(() => import('@/components/CommandPalette'), { ssr: false });
 
 /**
  * V7 §1 drop-in nav.
@@ -48,10 +54,11 @@ const NAV_ITEMS = [
   { href: '/contact', label: 'Contact', short: 'Contact', icon: Mail }
 ];
 
-export default function Nav() {
+export default function Nav({ posts = [] }: { posts?: Array<{ slug: string; title: string }> }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -174,6 +181,22 @@ export default function Nav() {
               a 220px-wide pill dominating the right half. At md: and up
               the button expands to its full "ORDER NOW →" form. */}
           <div className="flex items-center gap-2 md:gap-3">
+            {/* Command palette trigger — kbd hint chip on md+ only */}
+            <button
+              type="button"
+              onClick={() => setPaletteOpen(true)}
+              aria-label="Search the site (Ctrl+K)"
+              aria-haspopup="dialog"
+              className="inline-flex h-11 min-w-11 items-center justify-center gap-2 text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+            >
+              <Search size={20} strokeWidth={1.75} />
+              <kbd
+                aria-hidden="true"
+                className="hidden rounded-md border border-[color:var(--rd-paper)]/14 px-1.5 py-0.5 text-[10px] font-medium text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)] md:inline-block"
+              >
+                Ctrl K
+              </kbd>
+            </button>
             <DeliveryEta variant="desktop" />
             <span className="hidden items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[color:var(--rd-ink)] [font-family:var(--font-mono)] sm:inline-flex">
               21+
@@ -252,6 +275,10 @@ export default function Nav() {
           </aside>
         </>
       )}
+
+      {/* Always mounted (renders nothing while closed) so the global Ctrl+K
+          listener inside it is armed on every page. */}
+      <CommandPalette posts={posts} open={paletteOpen} onOpenChange={setPaletteOpen} />
     </>
   );
 }

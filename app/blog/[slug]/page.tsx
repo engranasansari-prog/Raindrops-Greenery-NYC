@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, CalendarDays } from 'lucide-react';
 import SiteChrome, { OrderButton } from '@/components/SiteChrome';
+import ReadingProgress from '@/components/ReadingProgress';
 import { getBlogPost, getBlogPosts, type InlineSegment } from '@/lib/blog-posts';
 import { business } from '@/lib/site-data';
 
@@ -160,6 +161,8 @@ export default async function BlogPostPage({ params }: PageProps) {
          
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      {/* Reading progress — thin bar under the chrome tracking the body below */}
+      <ReadingProgress targetId="article-body" />
       <article>
         {/* Hero — dark ink to match the rest of the site */}
         <section className="relative overflow-hidden bg-[color:var(--rd-ink)] text-[color:var(--rd-text)]">
@@ -197,7 +200,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <section className="bg-[color:var(--rd-paper)] py-12 sm:py-16 lg:py-20">
           <div className="luxury-shell grid gap-8 lg:grid-cols-[minmax(0,0.75fr)_280px]">
             <div className="rounded-3xl border border-[color:var(--rd-ink)]/8 bg-[color:var(--rd-paper-soft)]/80 p-6 shadow-[0_18px_54px_rgba(46,82,64,0.08)] sm:p-10">
-              <div className="blog-prose">
+              <div id="article-body" className="blog-prose">
                 {post.blocks.map((block, index) => {
                   if (block.type === 'heading') {
                     return <h2 key={`h-${index}`}>{block.text}</h2>;
