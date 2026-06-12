@@ -128,14 +128,21 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
     return () => window.removeEventListener('keydown', handler);
   }, [next, prev]);
 
-  const touchRef = useRef<{ startX: number } | null>(null);
+  const touchRef = useRef<{ startX: number; startY: number } | null>(null);
   const onTouchStart = (event: React.TouchEvent) => {
-    touchRef.current = { startX: event.touches[0].clientX };
+    touchRef.current = {
+      startX: event.touches[0].clientX,
+      startY: event.touches[0].clientY
+    };
   };
   const onTouchEnd = (event: React.TouchEvent) => {
     if (!touchRef.current) return;
     const dx = event.changedTouches[0].clientX - touchRef.current.startX;
-    if (Math.abs(dx) > 40) {
+    const dy = event.changedTouches[0].clientY - touchRef.current.startY;
+    // Horizontal-intent guard: only navigate when the gesture is clearly
+    // sideways (dx dominates dy by 1.5×), so diagonal scroll flicks while
+    // reading the page don't accidentally change slides.
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
       if (dx < 0) next();
       else prev();
     }
@@ -344,9 +351,9 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       {/* Layer 4: controls */}
       {slides.length > 1 && (
         <>
-          {/* Dots — each pip sits inside a ≥44px tall button so the tap target
-              meets the minimum even though the visual pip is ~6px (matches the
-              FeaturedDeals dot pattern). */}
+          {/* Dots — each pip sits inside a ≥44px tall AND ≥44px wide button so
+              the tap target meets the minimum even though the visual pip is
+              ~6px (matches the FeaturedDeals dot pattern). */}
           <div className="absolute inset-x-0 bottom-3 z-20 flex justify-center sm:bottom-7">
             {slides.map((s, i) => (
               <button
@@ -354,7 +361,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
                 aria-label={`Go to slide ${i + 1}`}
                 aria-current={i === index}
                 onClick={() => goTo(i)}
-                className="group flex h-11 items-center px-1.5"
+                className="group flex h-11 min-w-11 items-center justify-center px-1.5"
               >
                 <span
                   className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
@@ -397,8 +404,15 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
         </>
       )}
 
-      {/* Layer 5: scroll cue */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center pb-[max(env(safe-area-inset-bottom,0px),8px)] sm:bottom-4">
+      {/* Layer 5: scroll cue — hidden on mobile when the dots band renders
+          (slides.length > 1): the bobbing chevron collides with the dots at
+          small viewports (worse with safe-area insets), and the dots already
+          signal interactivity there. */}
+      <div
+        className={`pointer-events-none absolute inset-x-0 bottom-2 z-20 justify-center pb-[max(env(safe-area-inset-bottom,0px),8px)] sm:bottom-4 ${
+          slides.length > 1 ? 'hidden sm:flex' : 'flex'
+        }`}
+      >
         <ChevronDown className="rd-scroll-cue h-5 w-5 text-[color:var(--rd-text-mute)]" aria-hidden />
       </div>
     </section>

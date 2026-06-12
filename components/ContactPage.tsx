@@ -169,11 +169,11 @@ export default function ContactPage() {
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="grid gap-2">
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Your name</span>
-                <input required value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
+                <input required name="name" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2">
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Email</span>
-                <input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
+                <input required type="email" name="email" autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2 md:col-span-2">
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Topic</span>
@@ -187,6 +187,7 @@ export default function ContactPage() {
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Message</span>
                 <textarea
                   required
+                  name="message"
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}

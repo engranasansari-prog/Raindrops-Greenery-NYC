@@ -276,9 +276,13 @@ textarea:focus:not(:focus-visible) {
   }
 }
 
-/* Cap letter-spacing on uppercase eyebrow text on phones */
+/* Cap letter-spacing on uppercase eyebrow text on phones. Must also target
+   .rd-eyebrow explicitly — it sets its own uppercase + 0.18em tracking inside
+   @layer components, so the .uppercase utility selector alone never caps
+   design-system eyebrows (e.g. the StickyOrderBar eyebrow wrapping). */
 @media (max-width: 480px) {
-  .uppercase { letter-spacing: 0.08em !important; }
+  .uppercase,
+  .rd-eyebrow { letter-spacing: 0.08em !important; }
 }
 
 .safe-bottom { padding-bottom: max(1rem, calc(var(--safe-bottom) + 0.75rem)); }
@@ -684,9 +688,12 @@ textarea:focus:not(:focus-visible) {
    Same color/font/tracking specs as the base; only padding + min-height
    change. This is the one design-system addition that lets every CTA
    on the site (including in product cards and the newsletter form) use
-   the canonical button system instead of hand-rolled inline Tailwind. */
+   the canonical button system instead of hand-rolled inline Tailwind.
+   min-height stays at the 44px touch floor (WCAG 2.5.8 / iOS HIG) — these
+   are the menu-card Details/Order CTAs, the most-tapped controls on the
+   site; "denser" comes from the padding + font-size only. */
 .btn-luxe-sm {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.5rem 1rem;
   font-size: 0.6875rem;       /* 11px */
 }

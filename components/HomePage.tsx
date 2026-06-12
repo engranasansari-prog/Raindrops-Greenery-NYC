@@ -132,7 +132,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             </div>
             <Link
               href="/deals"
-              className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+              className="group inline-flex items-center gap-2 py-3 -my-3 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
             >
               <span className="border-b border-[color:var(--rd-glow)] pb-0.5">See all picks</span>
               <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
@@ -142,7 +142,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
 
         <div
           ref={scrollerRef}
-          className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:pb-0 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
+          className="no-scrollbar -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-3 pb-2 sm:pb-0 md:mx-0 md:grid md:snap-none md:grid-cols-3 md:gap-5 md:overflow-visible md:px-0"
         >
           {deals.map((deal) => (
             <Link
@@ -168,17 +168,17 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                   />
                 )}
                 <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-                  <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[deal.strain]}`}>
+                  <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] [font-family:var(--font-mono)] ${strainTone[deal.strain]}`}>
                     {deal.strain}
                   </span>
                   {deal.sticky && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                       ✦ STICKY
                     </span>
                   )}
                 </div>
                 {deal.pctOff > 0 && (
-                  <span className="absolute right-3 top-3 inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
+                  <span className="absolute right-3 top-3 inline-flex items-center rounded-full bg-[color:var(--rd-glow)] px-2.5 py-1 text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
                     {deal.pctOff}% off
                   </span>
                 )}
@@ -241,7 +241,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
               aria-selected={i === activeIndex}
               aria-label={`Show deal ${i + 1}`}
               onClick={() => scrollToIndex(i)}
-              className="group flex h-11 items-center px-1"
+              className="group flex h-11 min-w-11 items-center justify-center px-1"
             >
               <span
                 className={`h-1.5 rounded-full transition-all duration-500 [transition-timing-function:var(--ease-out)] ${
@@ -324,7 +324,7 @@ function TestimonialFeature() {
               </div>
               {/* Fixed min-height holds the layout so rotation never shifts
                   the page; crossfade swaps quote + author together. */}
-              <div className="relative mt-4 min-h-[210px] sm:min-h-[240px]">
+              <div className="relative mt-4 min-h-[340px] sm:min-h-[240px]">
                 <AnimatePresence mode="wait">
                   <m.div
                     key={active}
@@ -368,7 +368,7 @@ function TestimonialFeature() {
                       onClick={() => setActive(i)}
                       aria-label={`Show review from ${item.author}`}
                       aria-current={i === active ? 'true' : undefined}
-                      className="group flex h-11 items-center px-1.5"
+                      className="group flex h-11 min-w-11 items-center justify-center px-1.5"
                     >
                       <span
                         className={`h-1.5 rounded-full transition-all duration-300 [transition-timing-function:var(--ease-out)] ${
@@ -385,7 +385,7 @@ function TestimonialFeature() {
               <div className="mt-8 inline-flex">
                 <Link
                   href="/about"
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-text-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-glow)]"
+                  className="group inline-flex items-center gap-2 py-3 -my-3 text-sm font-medium text-[color:var(--rd-text-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-glow)]"
                 >
                   <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Read more customer stories</span>
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />

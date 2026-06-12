@@ -183,17 +183,22 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer.
+          Stacking: the drawer is a true modal (aria-modal + body scroll lock),
+          so its scrim must dim EVERYTHING non-modal — including the
+          AnnouncementBar (z-[60]) and the chat launcher/panel (z-[61]/z-[62]).
+          Scrim z-[63] / drawer z-[64] keeps chat consistently *below* this
+          modal while staying under the CoverageMap modal (z-[70]). */}
       {drawerOpen && (
         <>
           <div
-            className="fixed inset-0 z-[55] bg-[color:var(--rd-scrim)] backdrop-blur-md md:hidden"
+            className="fixed inset-0 z-[63] bg-[color:var(--rd-scrim)] backdrop-blur-md md:hidden"
             onClick={() => setDrawerOpen(false)}
             aria-hidden="true"
           />
           <aside
             id="rd-nav-drawer"
-            className="fixed bottom-0 left-0 top-0 z-[60] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[color:var(--rd-glow)]/10 bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
+            className="fixed bottom-0 left-0 top-0 z-[64] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[color:var(--rd-glow)]/10 bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
@@ -236,7 +241,7 @@ export default function Nav() {
               })}
             </nav>
 
-            <div className="space-y-4 border-t border-[color:var(--rd-paper)]/6 p-4">
+            <div className="space-y-4 border-t border-[color:var(--rd-paper)]/6 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
               <OrderButton className="w-full" />
               <a
                 href="https://www.instagram.com/raindropsgreenery/"

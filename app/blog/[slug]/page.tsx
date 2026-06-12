@@ -173,7 +173,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="luxury-shell relative py-12 sm:py-16 lg:py-20">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to journal
@@ -273,7 +273,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </div>
                 <Link
                   href="/blog"
-                  className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-moss)]"
+                  className="group -my-3 inline-flex min-h-11 items-center gap-2 py-3 text-sm text-[color:var(--rd-on-paper-dim)] transition hover:text-[color:var(--rd-moss)]"
                 >
                   <span className="border-b border-[color:var(--rd-moss)] pb-0.5">All articles</span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

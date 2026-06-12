@@ -74,7 +74,9 @@ export default function LiveOrderToasts() {
 
   return (
     <div
-      className="pointer-events-none fixed bottom-4 left-4 z-40 hidden max-w-[280px] sm:bottom-6 sm:left-6 sm:block"
+      // md:block (not sm:block): StickyOrderBar is md:hidden, so in the
+      // 640-767px band both occupied bottom-left at z-40 and collided.
+      className="pointer-events-none fixed bottom-4 left-4 z-40 hidden max-w-[280px] md:bottom-6 md:left-6 md:block"
       aria-live="polite"
       aria-atomic="true"
     >
@@ -117,7 +119,10 @@ export default function LiveOrderToasts() {
               type="button"
               onClick={dismiss}
               aria-label="Dismiss notifications"
-              className="-mr-1 -mt-1 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[color:var(--rd-text-mute)] transition hover:bg-[color:var(--rd-paper)]/8 hover:text-[color:var(--rd-text-dim)]"
+              // 40px hit area (h-10 w-10) for the touch floor; the extra -8px
+              // of negative margin per side vs the old h-6 w-6 -mt-1 -mr-1 box
+              // keeps the visible icon position and toast layout unchanged.
+              className="-mb-2 -ml-2 -mr-3 -mt-3 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[color:var(--rd-text-mute)] transition hover:bg-[color:var(--rd-paper)]/8 hover:text-[color:var(--rd-text-dim)]"
             >
               <X className="h-3.5 w-3.5" />
             </button>

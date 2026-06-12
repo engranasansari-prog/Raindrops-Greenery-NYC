@@ -330,7 +330,14 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   </span>
                   Active coverage · 7 zones
                 </span>
-                <span>Tap a zone for details · ⌘+scroll to zoom</span>
+                {/* Pointer-aware zoom hint — mirrors the in-map chip in
+                    CoverageLiveMap: ⌘+scroll only makes sense with a mouse,
+                    touch users get the pinch wording. */}
+                <span>
+                  Tap a zone for details ·{' '}
+                  <span className="hidden pointer-fine:inline">⌘+scroll to zoom</span>
+                  <span className="pointer-fine:hidden">pinch to zoom</span>
+                </span>
               </div>
             </div>
           </div>
@@ -362,7 +369,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   exit={{ y: 40, opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.45, ease: easeOut }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative flex max-h-[88vh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80vh] sm:rounded-3xl"
+                  className="relative flex max-h-[88dvh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80dvh] sm:rounded-3xl"
                 >
                   {/* Sticky header — close button doesn't overlap text */}
                   <div className="relative flex items-start gap-3 px-5 pt-5 pb-3 sm:px-7 sm:pt-7">
@@ -398,15 +405,15 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     <div className="mt-2 grid grid-cols-3 gap-2 [font-family:var(--font-mono)] sm:gap-3">
                       <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
                         <p className="text-xl font-semibold text-[color:var(--rd-glow)] sm:text-2xl">~{c.etaMinutes}</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">min ETA</p>
+                        <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">min ETA</p>
                       </div>
                       <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
                         <p className="text-xl font-semibold text-[color:var(--rd-text)] sm:text-2xl">{c.zips.length}</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">ZIPs</p>
+                        <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">ZIPs</p>
                       </div>
                       <div className="overflow-hidden rounded-2xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)]/55 px-2 py-3 text-center sm:p-3">
                         <p className="text-xl font-semibold text-[color:var(--rd-amber)] sm:text-2xl">$25+</p>
-                        <p className="mt-1 truncate text-[9px] uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] sm:text-[10px] sm:tracking-[0.16em]">free ship</p>
+                        <p className="mt-1 truncate text-[10px] uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)]">free ship</p>
                       </div>
                     </div>
 
@@ -421,7 +428,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   </div>
 
                   {/* Sticky CTA footer */}
-                  <div className="border-t border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] px-5 py-4 sm:px-7 sm:py-5">
+                  <div className="border-t border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] px-5 pt-4 pb-[max(1rem,var(--safe-bottom))] sm:px-7 sm:py-5">
                     <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                       <Link href="/menu" className="btn-luxe btn-luxe-gold w-full justify-center sm:w-auto">
                         Order menu

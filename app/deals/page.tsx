@@ -53,7 +53,7 @@ function Section({
           </div>
           <Link
             href="/menu"
-            className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
+            className="group -my-3 inline-flex min-h-11 items-center gap-2 py-3 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
           >
             <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Open full menu</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />

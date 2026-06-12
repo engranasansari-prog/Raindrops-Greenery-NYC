@@ -194,7 +194,7 @@ const ProductCard = memo(function ProductCard({
               <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-1 text-right">
                 {product.variants.map((variant, i) => (
                   <Fragment key={variant.label}>
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
                       {variant.label}
                     </span>
                     <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
@@ -335,7 +335,7 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               )}
             </div>
           </div>
-          <div className="px-6 pb-6 sm:px-8 sm:pb-8 md:px-10 md:pb-10">
+          <div className="px-6 pb-[max(1.5rem,calc(var(--safe-bottom)+1rem))] sm:px-8 sm:pb-8 md:px-10 md:pb-10">
             {/* Sticky dialog header — on long products the close (X) used to
                 scroll away on mobile; pinning the title row keeps dismissal
                 one tap away. Negative margins pull the header to the column
@@ -345,8 +345,9 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
               <div className="min-w-0">
                 <p className="rd-eyebrow text-[color:var(--rd-glow)]">{product.category}</p>
                 <h2
-                  className="mt-3 text-[color:var(--rd-text)]"
+                  className="mt-3 line-clamp-2 text-[color:var(--rd-text)]"
                   style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 'clamp(1.85rem, 2.4vw, 2.6rem)', lineHeight: 1.15, letterSpacing: '-0.02em' }}
+                  title={product.name}
                 >
                   {product.name}
                 </h2>
@@ -756,7 +757,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
                   onChange={(event) => setFilter(setQuery, event.target.value)}
                   className="min-w-0 flex-1 bg-transparent text-sm text-[color:var(--rd-text)] outline-none placeholder:text-[color:var(--rd-text-mute)]"
                   aria-label="Search menu"
-                  placeholder="Search product name, brand, profile, THC, size, or deal"
+                  placeholder="Search name, brand, THC..."
                 />
               </label>
               <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
@@ -769,7 +770,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
                       key={item}
                       onClick={() => setFilter(setCategory, item)}
                       aria-pressed={active}
-                      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
+                      className={`inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
                         active
                           ? 'bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(200,230,110,0.32)]'
                           : 'border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]'
@@ -873,7 +874,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={resetFilters}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)] [font-family:var(--font-mono)]"
                 >
                   <RotateCcw className="h-4 w-4" />
                   Reset

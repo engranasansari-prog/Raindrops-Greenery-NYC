@@ -345,7 +345,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed right-4 z-[61] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_16px_44px_rgba(200,230,110,0.45)] transition-transform hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+5.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
+            className="fixed right-4 z-[61] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_16px_44px_rgba(200,230,110,0.45)] transition-transform hover:-translate-y-1 bottom-[calc(env(safe-area-inset-bottom,0px)+6.5rem)] md:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
           >
             <MessageCircle className="h-6 w-6" />
             <span className="absolute right-0 top-0 flex h-3.5 w-3.5">
@@ -365,7 +365,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="rd-luxe-dark fixed inset-x-3 z-[62] flex max-h-[78vh] flex-col overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] bottom-[calc(env(safe-area-inset-bottom,0px)+1rem)] sm:inset-x-auto sm:right-4 sm:w-[384px] sm:max-h-[560px] sm:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
+            className="rd-luxe-dark fixed inset-x-3 z-[62] flex max-h-[78dvh] flex-col overflow-hidden rounded-3xl border border-[color:var(--rd-paper)]/12 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] bottom-[calc(env(safe-area-inset-bottom,0px)+6.5rem)] sm:inset-x-auto sm:right-4 sm:w-[384px] sm:max-h-[560px] sm:bottom-[calc(env(safe-area-inset-bottom,0px)+1.5rem)]"
           >
             {/* Header */}
             <div className="flex items-center justify-between gap-3 border-b border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink)] px-4 py-3.5">
@@ -385,7 +385,7 @@ export default function ChatAssistant() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close chat"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-text)]"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-text)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -463,7 +463,7 @@ export default function ChatAssistant() {
                     key={chip}
                     type="button"
                     onClick={() => send(chip)}
-                    className="rounded-full border border-[color:var(--rd-glow)]/35 bg-[color:var(--rd-glow)]/8 px-3 py-1.5 text-xs font-medium text-[color:var(--rd-text)] transition hover:border-[color:var(--rd-glow)] hover:bg-[color:var(--rd-glow)]/15"
+                    className="min-h-[40px] rounded-full border border-[color:var(--rd-glow)]/35 bg-[color:var(--rd-glow)]/8 px-3 py-1.5 text-xs font-medium text-[color:var(--rd-text)] transition hover:border-[color:var(--rd-glow)] hover:bg-[color:var(--rd-glow)]/15"
                   >
                     {chip}
                   </button>
@@ -491,7 +491,7 @@ export default function ChatAssistant() {
                 type="submit"
                 disabled={!input.trim() || typing}
                 aria-label="Send message"
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] transition hover:brightness-105 disabled:opacity-40"
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] transition hover:brightness-105 disabled:opacity-40"
               >
                 <Send className="h-4 w-4" />
               </button>

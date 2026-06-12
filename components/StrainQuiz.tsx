@@ -202,12 +202,21 @@ export default function StrainQuiz() {
     }
   }, [finished, results]);
 
-  // Scroll-to-top on step change so each question lands at the same visual position.
+  // Scroll the quiz body into view on step change so each question lands at
+  // the same visual position — NOT page top, which buries the next question
+  // below the hero on phones. scroll-mt on the section accounts for the
+  // fixed chrome. Skips the initial mount so page load stays at the top.
+  const quizSectionRef = useRef<HTMLElement | null>(null);
+  const didMountRef = useRef(false);
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     // Respect reduced-motion — the quiz auto-advances + scrolls on every answer.
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
+    quizSectionRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
   }, [step]);
 
   const select = (value: string) => {
@@ -276,7 +285,11 @@ export default function StrainQuiz() {
       </section>
 
       {/* Quiz body */}
-      <section className="rd-luxe-dark overflow-hidden pb-20 text-[color:var(--rd-text)] sm:pb-24">
+      <section
+        id="quiz"
+        ref={quizSectionRef}
+        className="rd-luxe-dark overflow-hidden scroll-mt-[calc(var(--rd-chrome-h)+12px)] pb-20 text-[color:var(--rd-text)] sm:pb-24"
+      >
         <div className="luxury-shell">
           <AnimatePresence mode="wait">
             {!finished && current ? (
@@ -336,7 +349,7 @@ export default function StrainQuiz() {
                     type="button"
                     onClick={back}
                     disabled={step === 0}
-                    className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-text)] disabled:cursor-not-allowed disabled:opacity-30"
+                    className="-my-3 inline-flex min-h-11 items-center gap-2 py-3 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-text)] disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     <ArrowLeft className="h-4 w-4" />
                     Back
@@ -378,7 +391,7 @@ export default function StrainQuiz() {
                   <button
                     type="button"
                     onClick={reset}
-                    className="inline-flex items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)] sm:self-auto [font-family:var(--font-mono)]"
+                    className="inline-flex min-h-11 items-center gap-2 self-start rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-glow)] sm:self-auto [font-family:var(--font-mono)]"
                   >
                     <RotateCcw className="h-4 w-4" />
                     Retake

@@ -89,7 +89,7 @@ export default function DeliveryEta({ variant = 'desktop' }: { variant?: 'deskto
 
       {/* Two-line stack: eyebrow + hours */}
       <span className="flex flex-col leading-none">
-        <span className="text-[9px] font-semibold uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
           {status.eyebrow}
         </span>
         <span

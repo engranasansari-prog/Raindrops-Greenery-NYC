@@ -76,7 +76,7 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
               <div className="grid grid-cols-[auto_auto] items-baseline gap-x-3 gap-y-0.5">
                 {product.variants.map((variant, i) => (
                   <Fragment key={variant.label}>
-                    <span className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
+                    <span className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
                       {variant.label}
                     </span>
                     <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>

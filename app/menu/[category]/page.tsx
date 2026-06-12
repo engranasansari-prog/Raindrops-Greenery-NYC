@@ -191,7 +191,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                   Browse our <span className="italic">{c.name.toLowerCase()}.</span>
                 </h2>
               </div>
-              <Link href="/menu" className="group inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">
+              <Link href="/menu" className="group inline-flex items-center gap-2 py-3 -my-3 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]">
                 <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Filter the full menu</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
               </Link>
@@ -252,7 +252,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                   <li key={o.slug}>
                     <Link
                       href={`/menu/${o.slug}`}
-                      className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
+                      className="group inline-flex items-center gap-2 py-2 -my-1 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                     >
                       <Leaf className="h-4 w-4 text-[color:var(--rd-moss)]" />
                       <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">
@@ -264,7 +264,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                 <li>
                   <Link
                     href="/deals"
-                    className="group inline-flex items-center gap-2 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
+                    className="group inline-flex items-center gap-2 py-2 -my-1 text-sm font-medium text-[color:var(--rd-ink)] transition-colors hover:text-[color:var(--rd-moss)]"
                   >
                     <ArrowRight className="h-4 w-4 text-[color:var(--rd-moss)]" />
                     <span className="border-b border-transparent transition-colors group-hover:border-[color:var(--rd-glow)]">

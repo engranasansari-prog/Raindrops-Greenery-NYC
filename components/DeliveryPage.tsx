@@ -51,7 +51,10 @@ const CLUSTER_TO_NEIGHBORHOODS: Record<string, { slug: string; name: string }[]>
 const CoverageMap = dynamic(() => import('@/components/CoverageMap'), {
   ssr: false,
   loading: () => (
-    <div className="h-[520px] w-full rounded-3xl bg-[color:var(--rd-ink-soft)]/40" />
+    // Sized to match the rendered compact section (py + map block + ZIP form
+    // column) so the swap-in causes no layout shift: the old h-[520px] was
+    // ~400px short of the ~930px the section actually renders on mobile.
+    <div className="h-[920px] w-full rounded-3xl bg-[color:var(--rd-ink-soft)]/40 sm:h-[960px] lg:h-[1030px]" />
   )
 });
 

@@ -128,13 +128,13 @@ function Footer() {
           <ul className="mt-6 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              <a href={business.phoneHref} className="transition-colors hover:text-[color:var(--rd-text)]">
+              <a href={business.phoneHref} className="inline-flex items-center py-1.5 -my-1.5 transition-colors hover:text-[color:var(--rd-text)]">
                 {business.phone}
               </a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-4 w-4 shrink-0 text-[color:var(--rd-glow)]" />
-              <a href={business.emailHref} className="transition-colors hover:text-[color:var(--rd-text)]">
+              <a href={business.emailHref} className="inline-flex items-center py-1.5 -my-1.5 transition-colors hover:text-[color:var(--rd-text)]">
                 {business.email}
               </a>
             </li>
@@ -156,12 +156,16 @@ function Footer() {
               <ul className="mt-4 grid gap-2 text-sm text-[color:var(--rd-text-dim)]">
                 {group.links.map((link) => (
                   <li key={link.href}>
+                    {/* py-1.5 -my-1.5 widens the tap target to ~32px without
+                        changing the visual rhythm; the hover underline moves
+                        from -bottom-0.5 to bottom-1 so it stays ~2px under
+                        the text now that the padding box is taller. */}
                     <Link
                       href={link.href}
-                      className="group inline-block relative transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-text)]"
+                      className="group inline-block relative py-1.5 -my-1.5 transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-text)]"
                     >
                       <span>{link.label}</span>
-                      <span className="pointer-events-none absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--rd-glow)] transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:scale-x-100" />
+                      <span className="pointer-events-none absolute bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[color:var(--rd-glow)] transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:scale-x-100" />
                     </Link>
                   </li>
                 ))}

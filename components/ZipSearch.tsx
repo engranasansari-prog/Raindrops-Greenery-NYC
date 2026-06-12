@@ -168,7 +168,9 @@ export default function ZipSearch({
           type="button"
           onClick={useLocation}
           disabled={geoStatus === 'requesting' || geoStatus === 'looking-up'}
-          className="group inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-glow)] disabled:opacity-60 [font-family:var(--font-mono)]"
+          /* min-h-11 + -my-2 grows the tap target to 44px without changing
+             the row's visual height (negative margins absorb the extra). */
+          className="group inline-flex min-h-11 items-center gap-1.5 px-2 -my-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-glow)] disabled:opacity-60 [font-family:var(--font-mono)]"
           /* aria-label must START WITH the visible text "Use location" so
              voice-control + screen-reader users get a consistent name
              (WCAG 2.5.3). */
@@ -232,7 +234,9 @@ export default function ZipSearch({
                 inputRef.current?.focus();
               }}
               aria-label="Clear ZIP"
-              className="text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-text-dim)]"
+              /* 44px hit area around the 16px X — negative margins keep the
+                 input shell's visual size unchanged. */
+              className="inline-flex h-11 w-11 -my-3 -mr-3 shrink-0 items-center justify-center text-[color:var(--rd-text-mute)] transition hover:text-[color:var(--rd-text-dim)]"
             >
               <X className="h-4 w-4" />
             </button>

@@ -47,7 +47,10 @@ export default function StickyOrderBar() {
                 smallest phones, leaving a bare button). Reinforces the offer
                 everywhere the omnipresent bar shows. */}
             <div className="min-w-0 pl-4">
-              <p className="rd-eyebrow text-[color:var(--rd-glow)]">Free gift every order</p>
+              {/* truncate + leading-tight keep this a single stable line even if
+                  tracking/viewport ever conspire to overflow (sibling below
+                  already truncates) — bar height stays constant. */}
+              <p className="rd-eyebrow truncate leading-tight text-[color:var(--rd-glow)]">Free gift every order</p>
               <p className="mt-0.5 truncate text-sm text-[color:var(--rd-text)]">Free delivery over $25</p>
             </div>
             <OrderButton className="shrink-0" />

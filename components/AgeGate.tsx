@@ -295,9 +295,11 @@ export default function AgeGate() {
                   )}
                 </form>
 
+                {/* The only non-subscribe exit on touch — needs a real (44px)
+                    hit area while keeping the quiet eyebrow visual. */}
                 <button
                   onClick={close}
-                  className="mt-4 rd-eyebrow text-[color:var(--rd-text-mute)] underline-offset-4 transition hover:text-[color:var(--rd-text-dim)] hover:underline"
+                  className="mt-4 inline-flex min-h-11 items-center px-4 rd-eyebrow text-[color:var(--rd-text-mute)] underline-offset-4 transition hover:text-[color:var(--rd-text-dim)] hover:underline"
                 >
                   Skip for now
                 </button>
