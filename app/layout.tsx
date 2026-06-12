@@ -6,6 +6,7 @@ import { business, serviceAreas, social } from '@/lib/site-data';
 import { COVERAGE } from '@/lib/coverage';
 import Nav from '@/components/Nav';
 import AnnouncementBar from '@/components/AnnouncementBar';
+import HideOnDashboard from '@/components/HideOnDashboard';
 import AnalyticsPageview from '@/components/AnalyticsPageview';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -461,8 +462,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[120] focus:rounded-full focus:bg-[var(--rd-glow)] focus:px-4 focus:py-2 focus:text-xs focus:font-extrabold focus:uppercase focus:tracking-[0.16em] focus:text-[var(--rd-ink)]">
           Skip to content
         </a>
-        <AnnouncementBar />
-        <Nav />
+        {/* Marketing chrome is hidden on the internal /dashboard routes. */}
+        <HideOnDashboard>
+          <AnnouncementBar />
+          <Nav />
+        </HideOnDashboard>
         {/*
           Analytics — fully wired, zero code changes needed to go live. The
           scripts auto-load ONLY when their env var is set in Vercel:

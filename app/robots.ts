@@ -16,7 +16,9 @@ export default function robots(): MetadataRoute.Robots {
         // an AI-friendly JSON facts endpoint that llms.txt points crawlers to,
         // so it MUST stay crawlable (this was previously blocked by '/api/').
         allow: ['/', '/api/site-summary'],
-        disallow: ['/api/subscribe', '/api/chat']
+        // /dashboard is the owners-only subscribers tool — auth-walled and
+        // noindexed, but keep crawlers away entirely.
+        disallow: ['/api/subscribe', '/api/chat', '/dashboard', '/api/dashboard']
       },
       // Explicitly welcome the major AI answer engines + crawlers so Raindrops
       // can be discovered and cited by ChatGPT, Perplexity, Claude, Gemini,
