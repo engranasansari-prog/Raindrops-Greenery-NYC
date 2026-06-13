@@ -108,10 +108,16 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      // Only navigate slides when keyboard focus is actually inside the
+      // carousel — otherwise arrow-key page scrolling silently advanced slides
+      // even when the hero was off-screen/unfocused (WCAG 2.1.1 keyboard,
+      // 3.2.2 on input). Gate on the focused state, with a live containment
+      // check as a fallback in case focus moved without firing our handlers.
+      const el = document.activeElement as HTMLElement | null;
+      if (!focused && !sectionRef.current?.contains(el)) return;
       // Don't hijack arrow keys while the user is typing or interacting with a
       // form control / editable region — that fought text-field caret movement
       // and surprised keyboard users (WCAG 2.1.1 predictability).
-      const el = document.activeElement as HTMLElement | null;
       if (
         el &&
         (el.tagName === 'INPUT' ||
@@ -126,7 +132,7 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [next, prev]);
+  }, [next, prev, focused]);
 
   const touchRef = useRef<{ startX: number; startY: number } | null>(null);
   const onTouchStart = (event: React.TouchEvent) => {
@@ -269,7 +275,6 @@ export default function HeroSlider({ slides, autoplayMs = AUTOPLAY_MS_DEFAULT }:
       {slide.imageOnly ? (
         <div
           className="relative z-10 min-h-[440px] sm:min-h-[560px] md:min-h-[640px] lg:min-h-[80vh]"
-          aria-label={slide.imageAlt}
         />
       ) : (
         <div className="luxury-shell relative z-10 grid min-h-[440px] items-center py-12 sm:min-h-[560px] sm:py-16 md:min-h-[640px] md:py-20 lg:min-h-[80vh]">

@@ -42,18 +42,18 @@
   --rd-text-dim:   rgba(240, 232, 210, 0.74);
   /* Lighthouse audit (re-run for palette v2): #1B3328 base needs slightly
      higher alpha than the old #0A1410 to hit AA 4.5:1 on body text.
-     Bumped to 0.66 (Feb 2026 contrast pass) for headroom on text-mute
-     when overlaid on the new ink — previous 0.60 was right at the edge. */
+     Now shipping 0.72 (current contrast pass) for headroom on text-mute
+     when overlaid on the new ink — earlier values were right at the edge. */
   --rd-text-mute:  rgba(240, 232, 210, 0.72);
 
   /* Text — on paper */
   --rd-on-paper:        #1B3328;   /* matches new ink */
   --rd-on-paper-dim:    rgba(27,51,40, 0.74);
   /* Bumped 0.46 → 0.64 (a11y pass): the old value rendered real footnote +
-     legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1. 0.64
-     clears ~4.6:1 while still reading as a muted tertiary tone.
+     legal/licensing text at ~2.7:1 on cream — below WCAG AA 4.5:1.
      Re-audit (Jun 2026): 0.68 measured ~4.27:1 on the cream card — an AA
-     fail for regulatory fine print. Bumped to 0.74 (≈4.8:1) for headroom. */
+     fail for regulatory fine print. Both on-paper dim & mute now ship at
+     0.74 (≈4.8:1) for headroom. */
   --rd-on-paper-mute:   rgba(27,51,40, 0.74);
 
   /* Motion */
@@ -196,13 +196,17 @@ h6 { font-size: 1rem; font-weight: 600; line-height: 1.4; font-variation-setting
    cluster-card "Williamsburg / ZIPs" labels). In @layer components the utility
    overrides win, while bare .rd-eyebrow still gets the dim default. */
 @layer components {
+  /* No default `color` — the base token (--rd-text-dim, cream-on-dark) renders
+     at ~1:1 on light surfaces (WCAG 1.4.3 footgun). Callsites MUST set a
+     surface-appropriate color utility (e.g. text-[color:var(--rd-glow)] on
+     dark, text-[color:var(--rd-on-paper-mute)] on cream). Bare .rd-eyebrow
+     inherits its parent's color. */
   .rd-eyebrow {
     font-family: var(--font-mono), 'JetBrains Mono', monospace;
     font-size: 0.6875rem;        /* 11px */
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--rd-text-dim);
   }
   @media (min-width: 768px) { .rd-eyebrow { font-size: 0.75rem; } }
 }
@@ -629,7 +633,7 @@ textarea:focus:not(:focus-visible) {
 .btn-luxe-ghost {
   background: transparent;
   color: var(--rd-text);
-  border: 1px solid rgba(240, 232, 210, 0.28);
+  border: 1px solid rgba(240, 232, 210, 0.42);
 }
 .btn-luxe-ghost:hover {
   color: var(--rd-glow);
@@ -657,7 +661,7 @@ textarea:focus:not(:focus-visible) {
 .btn-luxe-outline {
   background: transparent;
   color: var(--rd-ink);
-  border: 1px solid rgba(27,51,40, 0.22);
+  border: 1px solid rgba(27,51,40, 0.55);
 }
 .btn-luxe-outline:hover {
   border-color: var(--rd-moss);

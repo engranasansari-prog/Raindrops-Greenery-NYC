@@ -118,7 +118,7 @@ function Footer() {
             </span>
             <span>
               <span className="block text-2xl text-[color:var(--rd-text)] [font-family:var(--font-display)]">{business.tradeName}</span>
-              <span className="rd-eyebrow mt-1 block">New York delivery</span>
+              <span className="rd-eyebrow mt-1 block text-[color:var(--rd-text-dim)]">New York delivery</span>
             </span>
           </Link>
           <p className="mt-5 max-w-md text-sm leading-7 text-[color:var(--rd-text-dim)]">

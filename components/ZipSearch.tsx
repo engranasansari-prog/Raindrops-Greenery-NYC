@@ -328,7 +328,7 @@ export default function ZipSearch({
         // Keyed by the matched ZIP so checking a different covered ZIP
         // replays the one-shot celebration (pure CSS mount animation —
         // `both` fill self-finishes at opacity 0, no timers/state).
-        <div key={result.zip} className="relative mt-3 inline-flex">
+        <div key={result.zip} role="status" aria-live="polite" className="relative mt-3 inline-flex">
           <p
             className="inline-flex items-center gap-2 rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-glow)]/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-glow)] [font-family:var(--font-mono)]"
           >

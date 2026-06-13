@@ -33,7 +33,7 @@ export default function ValueProps() {
               <Reveal key={item.title} delay={index * 0.05}>
                 <div className="rd-shadow-luxe group relative h-full overflow-hidden rounded-3xl border border-[color:var(--rd-ink)]/12 bg-[color:var(--rd-paper-bright)] p-6 transition-[transform,border-color] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-1 hover:border-[color:var(--rd-moss)]/35 sm:p-8 lg:p-9">
                   <div className="flex items-start justify-between gap-4">
-                    <Icon className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
+                    <Icon aria-hidden="true" className="h-8 w-8 text-[color:var(--rd-moss)] transition-transform duration-700 [transition-timing-function:var(--ease-out)] group-hover:rotate-[-6deg] sm:h-11 sm:w-11 lg:h-12 lg:w-12" />
                     <span
                       className="text-4xl text-[color:var(--rd-amber)]/35 sm:text-5xl lg:text-6xl"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 300, letterSpacing: '-0.05em' }}

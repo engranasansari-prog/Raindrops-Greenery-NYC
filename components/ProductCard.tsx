@@ -79,7 +79,7 @@ export function ProductCard({ product, eager = false }: { product: LiveMenuProdu
                     <span className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)] text-left">
                       {variant.label}
                     </span>
-                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg opacity-85'}`}>
+                    <span className={`font-semibold tabular-nums text-[color:var(--rd-amber)] text-right ${i === 0 ? 'text-xl sm:text-2xl' : 'text-base sm:text-lg'}`}>
                       {formatPrice(variant.price)}
                     </span>
                   </Fragment>

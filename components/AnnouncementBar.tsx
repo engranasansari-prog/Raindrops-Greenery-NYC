@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * V8 §1 — luxury 36px marquee strip pinned to the very top of the page,
  * above the main nav.
@@ -7,9 +9,13 @@
  * with subtle glow well, fine hairline border-bottom in low-opacity lime.
  * Slower 48s cadence for a more sophisticated, less-frantic feel.
  *
- * Pauses on hover. Disabled by prefers-reduced-motion (global rule).
- * Server component — zero client JS.
+ * Pauses on hover and via an explicit keyboard-operable Pause/Play toggle
+ * (WCAG 2.2.2 — auto-moving content must have a stop control). Disabled by
+ * prefers-reduced-motion (global rule). Client component for the toggle state.
  */
+
+import { useState } from 'react';
+import { Pause, Play } from 'lucide-react';
 
 type Item = { lead: string; accent: string; tail: string };
 
@@ -83,6 +89,12 @@ function Pip({ children }: { children: Item }) {
 }
 
 export default function AnnouncementBar() {
+  // Explicit user-controlled pause (WCAG 2.2.2). When true we set
+  // animation-play-state: paused inline on the marquee row. Independent of the
+  // hover-pause (CSS-only) and prefers-reduced-motion (also CSS-only) — all
+  // three coexist.
+  const [userPaused, setUserPaused] = useState(false);
+
   // Render exactly TWO identical copies. The CSS keyframe translates by
   // -50% over one cycle, so the second copy lands precisely where the
   // first started — the loop seam is invisible. (Previously we used
@@ -121,9 +133,24 @@ export default function AnnouncementBar() {
         aria-hidden
         style={{ background: 'linear-gradient(90deg, transparent, rgba(240,232,210,0.08) 18%, rgba(240,232,210,0.14) 50%, rgba(240,232,210,0.08) 82%, transparent)' }}
       />
-      <div className="relative flex h-full items-center whitespace-nowrap animate-marquee">
+      <div
+        className="relative flex h-full items-center whitespace-nowrap animate-marquee"
+        // Explicit pause control (WCAG 2.2.2). Inline style so the toggle
+        // lives entirely in this component without touching globals.css. The
+        // CSS hover-pause and prefers-reduced-motion rules still apply; this
+        // only adds a user-driven override. `undefined` lets the stylesheet's
+        // running/hover/reduced-motion behavior govern when not paused.
+        style={userPaused ? { animationPlayState: 'paused' } : undefined}
+      >
         {repeated.map((item, i) => (
-          <span key={i} className="inline-flex items-center">
+          <span
+            key={i}
+            className="inline-flex items-center"
+            // The second copy (i >= ITEMS.length) is a visual clone for the
+            // seamless loop. Hide it from the a11y tree so screen readers read
+            // each announcement exactly once, not twice (WCAG 1.3.1).
+            aria-hidden={i >= ITEMS.length ? true : undefined}
+          >
             <Diamond tone={i % 2 === 0 ? 'lime' : 'amber'} />
             <Pip>{item}</Pip>
           </span>
@@ -145,6 +172,20 @@ export default function AnnouncementBar() {
         aria-hidden
         style={{ background: 'linear-gradient(270deg, var(--rd-ink) 0%, rgba(27,51,40, 0.9) 40%, transparent)' }}
       />
+      {/* Pause/Play toggle (WCAG 2.2.2). Pinned to the right end, above the
+          edge fades. The 36px bar is short, so the button itself is the bar
+          height while the tap target is padded out horizontally to meet the
+          44px minimum touch area. Inherits the global :focus-visible lime
+          ring. */}
+      <button
+        type="button"
+        onClick={() => setUserPaused((value) => !value)}
+        aria-pressed={userPaused}
+        aria-label={userPaused ? 'Play announcements' : 'Pause announcements'}
+        className="absolute inset-y-0 right-0 z-10 inline-flex h-full min-w-11 items-center justify-center px-3 text-[color:var(--rd-text-dim)] transition-colors hover:text-[color:var(--rd-glow)]"
+      >
+        {userPaused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
+      </button>
     </div>
   );
 }

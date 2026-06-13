@@ -191,6 +191,20 @@ export default function StrainQuiz() {
 
   const results = useMemo(() => (finished ? recommend(answers) : []), [answers, finished]);
 
+  // Polite status text announced when the quiz finishes (WCAG 4.1.3). Empty
+  // while in-quiz so the region stays silent until there's something to report.
+  const resultsAnnouncement = useMemo(() => {
+    if (!finished) return '';
+    if (results.length === 0) {
+      return 'Quiz complete. No exact matches in stock right now — open the full menu to keep browsing.';
+    }
+    const names = results.map((product) => product.name).join(', ');
+    const COUNT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five'];
+    const countWord = COUNT_WORDS[results.length] ?? String(results.length);
+    const noun = results.length === 1 ? 'strain' : 'strains';
+    return `Quiz complete. ${countWord.charAt(0).toUpperCase()}${countWord.slice(1)} ${noun} matched: ${names}.`;
+  }, [finished, results]);
+
   // Conversion event: fire once each time the quiz completes (re-arms on retake).
   const quizDoneRef = useRef(false);
   useEffect(() => {
@@ -219,12 +233,51 @@ export default function StrainQuiz() {
     quizSectionRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
   }, [step]);
 
+  // WCAG 2.4.3 — when a step changes the clicked option unmounts, dropping focus
+  // to <body>. Move focus to a logical anchor in the freshly mounted panel: the
+  // question heading mid-quiz, or the results heading on completion. Guard the
+  // very first mount (like the scroll effect) so page load doesn't steal focus.
+  const questionHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const resultsHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const didFocusMountRef = useRef(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!didFocusMountRef.current) {
+      didFocusMountRef.current = true;
+      return;
+    }
+    const target = finished ? resultsHeadingRef.current : questionHeadingRef.current;
+    target?.focus();
+  }, [step, finished]);
+
   const select = (value: string) => {
     if (!current) return;
     const nextAnswers: Answers = { ...answers, [current.key]: value };
     setAnswers(nextAnswers);
     // Auto-advance the moment they pick. No timer race — go immediately.
     setStep((s) => s + 1);
+  };
+
+  // Roving focus within the radiogroup. Arrow keys move focus between options
+  // (wrapping at the ends); Enter/Space fall through to the native button click,
+  // which selects + auto-advances, so that behavior is preserved.
+  const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const handleOptionKeyDown = (
+    e: React.KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    const count = current?.options.length ?? 0;
+    if (count === 0) return;
+    let next: number | null = null;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      next = (index + 1) % count;
+    } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      next = (index - 1 + count) % count;
+    }
+    if (next !== null) {
+      e.preventDefault();
+      optionRefs.current[next]?.focus();
+    }
   };
 
   const back = () => setStep((s) => Math.max(0, s - 1));
@@ -301,19 +354,40 @@ export default function StrainQuiz() {
                 transition={{ duration: 0.45, ease: easeOut }}
               >
                 <p className="rd-eyebrow text-[color:var(--rd-text-mute)]">Question {step + 1} of {total}</p>
-                <h2 className="mt-3 text-[color:var(--rd-text)]">
+                <h2
+                  ref={questionHeadingRef}
+                  id={`quiz-question-${step}`}
+                  tabIndex={-1}
+                  className="mt-3 text-[color:var(--rd-text)] outline-none"
+                >
                   {current.label} <span className="italic">{current.italic}</span>
                 </h2>
 
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {current.options.map((option) => {
+                <div
+                  role="radiogroup"
+                  aria-labelledby={`quiz-question-${step}`}
+                  className="mt-8 grid gap-4 sm:grid-cols-2"
+                >
+                  {current.options.map((option, optionIndex) => {
                     const isSelected = selectedValue === option.value;
+                    // Roving tabindex: the checked radio is the single tab stop;
+                    // with nothing selected yet, the first option is tabbable so
+                    // a keyboard user can enter the group, then arrow between them.
+                    const isRovingStop = selectedValue
+                      ? isSelected
+                      : optionIndex === 0;
                     return (
                       <button
                         key={option.value}
+                        ref={(el) => {
+                          optionRefs.current[optionIndex] = el;
+                        }}
                         type="button"
+                        role="radio"
+                        aria-checked={isSelected}
+                        tabIndex={isRovingStop ? 0 : -1}
                         onClick={() => select(option.value)}
-                        aria-pressed={isSelected}
+                        onKeyDown={(e) => handleOptionKeyDown(e, optionIndex)}
                         className={`group relative overflow-hidden rounded-2xl border p-6 text-left transition-[transform,border-color,background-color,box-shadow] duration-500 [transition-timing-function:var(--ease-out)] hover:-translate-y-0.5 ${
                           isSelected
                             ? 'border-[color:var(--rd-glow)] bg-[color:var(--rd-glow)]/12 shadow-[0_20px_60px_rgba(200,230,110,0.18)]'
@@ -365,13 +439,24 @@ export default function StrainQuiz() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.6, ease: easeOut }}
               >
+                {/* WCAG 4.1.3 — announce completion + matches to assistive tech.
+                    The results render with no DOM change a screen reader can
+                    perceive as "done", so a polite status region narrates it. */}
+                <p role="status" aria-live="polite" className="sr-only">
+                  {resultsAnnouncement}
+                </p>
+
                 <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
                   <div className="min-w-0">
                     <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
                       <Check className="h-3.5 w-3.5" />
                       Matched
                     </p>
-                    <h2 className="mt-3 break-words text-[color:var(--rd-text)]">
+                    <h2
+                      ref={resultsHeadingRef}
+                      tabIndex={-1}
+                      className="mt-3 break-words text-[color:var(--rd-text)] outline-none"
+                    >
                       Three drops <span className="italic">picked for you.</span>
                     </h2>
                     {/* Chip row instead of inline sentence — wraps cleanly on mobile */}

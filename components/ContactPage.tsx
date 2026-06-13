@@ -117,7 +117,7 @@ export default function ContactPage() {
   };
 
   const inputClass =
-    'h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]';
+    'h-12 rounded-full border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]';
 
   return (
     <SiteChrome>
@@ -166,14 +166,22 @@ export default function ContactPage() {
               Tell us what <span className="italic">you need.</span>
             </h2>
 
+            <p className="mt-4 text-[11px] text-[color:var(--rd-text-mute)] [font-family:var(--font-mono)]">
+              <span aria-hidden="true" className="text-[color:var(--rd-glow)]">*</span> required
+            </p>
+
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <label className="grid gap-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Your name</span>
-                <input required name="name" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
+                  Your name <span aria-hidden="true" className="text-[color:var(--rd-glow)]">*</span>
+                </span>
+                <input required aria-required="true" name="name" autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Email</span>
-                <input required type="email" name="email" autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
+                  Email <span aria-hidden="true" className="text-[color:var(--rd-glow)]">*</span>
+                </span>
+                <input required aria-required="true" type="email" name="email" autoComplete="email" inputMode="email" value={email} onChange={(event) => setEmail(event.target.value)} className={inputClass} />
               </label>
               <label className="grid gap-2 md:col-span-2">
                 <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Topic</span>
@@ -184,14 +192,17 @@ export default function ContactPage() {
                 </select>
               </label>
               <label className="grid gap-2 md:col-span-2">
-                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">Message</span>
+                <span className="rd-eyebrow text-[color:var(--rd-text-mute)]">
+                  Message <span aria-hidden="true" className="text-[color:var(--rd-glow)]">*</span>
+                </span>
                 <textarea
                   required
+                  aria-required="true"
                   name="message"
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
                   rows={5}
-                  className="rounded-2xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]"
+                  className="rounded-2xl border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink)]/55 p-4 text-sm leading-7 text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)]"
                 />
               </label>
             </div>

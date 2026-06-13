@@ -371,7 +371,7 @@ function ProductDetailDialog({ product, onClose }: { product: LiveMenuProduct; o
                 <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
                   {product.variants.map((variant, i) => (
                     <div key={variant.label} className="flex flex-col">
-                      <p className={`font-semibold text-[color:var(--rd-amber)] ${i === 0 ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl opacity-80'}`}>
+                      <p className={`font-semibold text-[color:var(--rd-amber)] ${i === 0 ? 'text-4xl sm:text-5xl' : 'text-2xl sm:text-3xl'}`}>
                         {formatPrice(variant.price)}
                       </p>
                       <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-[color:var(--rd-text-mute)]">
@@ -482,7 +482,7 @@ function SelectField({ label, value, onChange, children }: { label: string; valu
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] [font-family:var(--font-sans)]"
+        className="h-12 rounded-full border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink)]/55 px-4 text-sm font-medium text-[color:var(--rd-text)] outline-none transition hover:border-[color:var(--rd-glow)]/30 focus:border-[color:var(--rd-glow)] focus:shadow-[0_0_0_4px_rgba(200,230,110,0.18)] [font-family:var(--font-sans)]"
       >
         {children}
       </select>
@@ -750,7 +750,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
         <div className="luxury-shell">
           <div className="rounded-3xl border border-[color:var(--rd-paper)]/10 bg-[color:var(--rd-ink-soft)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.32)] sm:p-6">
             <div className="grid gap-4 xl:grid-cols-[1fr_auto] xl:items-center">
-              <label className="flex min-w-0 items-center gap-3 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 px-5 py-3 transition focus-within:border-[color:var(--rd-glow)]/50">
+              <label className="flex min-w-0 items-center gap-3 rounded-full border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink)]/55 px-5 py-3 transition focus-within:border-[color:var(--rd-glow)]/50">
                 <Search className="h-5 w-5 shrink-0 text-[color:var(--rd-glow)]" />
                 <input
                   value={query}
@@ -773,7 +773,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
                       className={`inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition [font-family:var(--font-mono)] ${
                         active
                           ? 'bg-[color:var(--rd-glow)] text-[color:var(--rd-ink)] shadow-[0_8px_24px_rgba(200,230,110,0.32)]'
-                          : 'border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]'
+                          : 'border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink)]/55 text-[color:var(--rd-text-dim)] hover:border-[color:var(--rd-glow)]/40 hover:text-[color:var(--rd-text)]'
                       }`}
                     >
                       {Icon && <Icon className="h-3.5 w-3.5" strokeWidth={1.8} />}
@@ -880,7 +880,7 @@ export default function MenuExplorer({ initialCategory, initialProductId }: { in
                   Reset
                 </button>
               </div>
-              <p className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)]">
+              <p role="status" aria-live="polite" aria-atomic="true" className="inline-flex items-center gap-2 text-sm text-[color:var(--rd-text-dim)]">
                 <Filter className="h-4 w-4 text-[color:var(--rd-glow)]" />
                 Showing <span className="text-[color:var(--rd-text)] [font-family:var(--font-mono)]">{filteredProducts.length}</span> of <span className="text-[color:var(--rd-text)] [font-family:var(--font-mono)]">{menuProducts.length}</span> products
               </p>

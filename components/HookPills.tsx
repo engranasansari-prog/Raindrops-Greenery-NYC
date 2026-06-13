@@ -33,7 +33,7 @@ export default function HookPills({ tone = 'dark' }: { tone?: 'dark' | 'light' }
                   : 'border-[color:var(--rd-moss)]/45 bg-[color:var(--rd-glow)]/15 text-[color:var(--rd-ink)]'
               }`}
             >
-              <Icon className="h-3.5 w-3.5" />
+              <Icon aria-hidden="true" className="h-3.5 w-3.5" />
               {hook.label}
             </span>
           </li>

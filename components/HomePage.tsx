@@ -8,6 +8,8 @@ import MotionProvider from '@/components/MotionProvider';
 import {
   ArrowLeft,
   ArrowRight,
+  Pause,
+  Play,
   Plus,
   Star
 } from 'lucide-react';
@@ -123,7 +125,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
           <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <p className="rd-eyebrow inline-flex items-center gap-2 text-[color:var(--rd-glow)]">
-                <Star className="h-3.5 w-3.5" />
+                <Star className="h-3.5 w-3.5" aria-hidden />
                 Featured picks
               </p>
               <h2 className="mt-4 text-[color:var(--rd-text)]">
@@ -135,7 +137,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
               className="group inline-flex items-center gap-2 py-3 -my-3 text-sm text-[color:var(--rd-text-dim)] transition hover:text-[color:var(--rd-glow)]"
             >
               <span className="border-b border-[color:var(--rd-glow)] pb-0.5">See all picks</span>
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" aria-hidden />
             </Link>
           </div>
         </Reveal>
@@ -184,7 +186,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
                 )}
                 <div className="pointer-events-none absolute inset-x-3 bottom-3 translate-y-3 opacity-0 transition-all duration-500 [transition-timing-function:var(--ease-out)] group-hover:translate-y-0 group-hover:opacity-100">
                   <span className="pointer-events-auto inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[color:var(--rd-glow)] py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[color:var(--rd-ink)] [font-family:var(--font-mono)]">
-                    <Plus className="h-3.5 w-3.5" /> Add
+                    <Plus className="h-3.5 w-3.5" aria-hidden /> Add
                   </span>
                 </div>
               </div>
@@ -231,15 +233,17 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
           ))}
         </div>
 
-        {/* Mobile position dots */}
-        <div className="mt-6 flex justify-center gap-2 md:hidden" role="tablist" aria-label="Featured deals position">
+        {/* Mobile position dots — plain buttons with aria-current (mirrors the
+            HeroSlider dots pattern). The old role=tablist/tab markup promised a
+            tabpanel relationship that doesn't exist here (these scroll a
+            carousel, they don't switch panels), so it was dropped (WCAG 4.1.2). */}
+        <div className="mt-6 flex justify-center gap-2 md:hidden">
           {deals.map((deal, i) => (
             <button
               key={deal.id}
               type="button"
-              role="tab"
-              aria-selected={i === activeIndex}
               aria-label={`Show deal ${i + 1}`}
+              aria-current={i === activeIndex ? 'true' : undefined}
               onClick={() => scrollToIndex(i)}
               className="group flex h-11 min-w-11 items-center justify-center px-1"
             >
@@ -261,7 +265,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             aria-label="Previous deal"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" aria-hidden />
           </button>
           <button
             type="button"
@@ -270,7 +274,7 @@ function FeaturedDeals({ deals }: { deals: FeaturedDeal[] }) {
             aria-label="Next deal"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/14 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)]/40 disabled:opacity-30"
           >
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" aria-hidden />
           </button>
         </div>
       </div>
@@ -287,12 +291,17 @@ function TestimonialFeature() {
   // advances; pauses entirely under reduced-motion; dots let users jump.
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  // userPaused: explicit Pause button (WCAG 2.2.2). hovering: pointer/keyboard
+  // is over the card, so the quote never swaps out mid-read. Both gate the
+  // auto-advance interval below.
+  const [userPaused, setUserPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
   const count = testimonials.length;
   useEffect(() => {
-    if (reduceMotion || count < 2) return;
+    if (reduceMotion || userPaused || hovering || count < 2) return;
     const id = setInterval(() => setActive((i) => (i + 1) % count), 6500);
     return () => clearInterval(id);
-  }, [reduceMotion, count]);
+  }, [reduceMotion, userPaused, hovering, count]);
   const t = testimonials[active];
   return (
     <section className="bg-[color:var(--rd-paper-soft)] py-14 sm:py-20 lg:py-24">
@@ -305,6 +314,15 @@ function TestimonialFeature() {
           <div
             className="rd-card-shadow relative mx-auto max-w-3xl overflow-hidden rounded-3xl bg-[color:var(--rd-ink)] px-6 py-12 text-center sm:px-12 sm:py-16"
             style={{ color: 'var(--rd-text)' }}
+            // Pause auto-advance while the user is reading (pointer hover or
+            // keyboard focus anywhere in the card) so the quote never swaps
+            // mid-read (WCAG 2.2.2).
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => setHovering(false)}
+            onFocusCapture={() => setHovering(true)}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setHovering(false);
+            }}
           >
             {/* Soft brand glow well behind the quote */}
             <div
@@ -317,7 +335,13 @@ function TestimonialFeature() {
             />
 
             <div className="relative">
-              <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber)]">
+              {/* Polite live region — announces the current review to screen
+                  readers as the crossfade swaps, without stealing focus
+                  (WCAG 4.1.3). Visually hidden. */}
+              <div aria-live="polite" aria-atomic="true" className="sr-only">
+                {count > 1 ? `Review ${active + 1} of ${count}: ${t.author}, ${t.location}` : ''}
+              </div>
+              <div className="flex items-center justify-center gap-1 text-[color:var(--rd-amber)]" aria-hidden>
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
@@ -360,7 +384,19 @@ function TestimonialFeature() {
               </div>
 
               {count > 1 && (
-                <div className="mt-6 flex items-center justify-center">
+                <div className="mt-6 flex items-center justify-center gap-1">
+                  {/* Pause/Play toggle (WCAG 2.2.2) — mirrors the HeroSlider
+                      pause control: real button, aria-pressed, swapping
+                      aria-label, lime focus-visible ring (global). */}
+                  <button
+                    type="button"
+                    onClick={() => setUserPaused((value) => !value)}
+                    aria-pressed={userPaused}
+                    aria-label={userPaused ? 'Play reviews' : 'Pause reviews'}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-paper)]/18 text-[color:var(--rd-text-dim)] transition hover:border-[color:var(--rd-glow)] hover:text-[color:var(--rd-glow)]"
+                  >
+                    {userPaused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
+                  </button>
                   {testimonials.map((item, i) => (
                     <button
                       key={item.author}
@@ -388,7 +424,7 @@ function TestimonialFeature() {
                   className="group inline-flex items-center gap-2 py-3 -my-3 text-sm font-medium text-[color:var(--rd-text-dim)] transition-colors duration-300 [transition-timing-function:var(--ease-out)] hover:text-[color:var(--rd-glow)]"
                 >
                   <span className="border-b border-[color:var(--rd-glow)] pb-0.5">Read more customer stories</span>
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:translate-x-1" aria-hidden />
                 </Link>
               </div>
             </div>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   BookOpen,
   HelpCircle,
@@ -20,6 +20,7 @@ import {
 import { InstagramIcon } from '@/components/SocialIcons';
 import DeliveryEta from '@/components/DeliveryEta';
 import { OrderButton } from '@/components/SiteChrome';
+import { useModalA11y } from '@/hooks/useModalA11y';
 
 /**
  * V7 §1 drop-in nav.
@@ -52,6 +53,7 @@ export default function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -66,26 +68,20 @@ export default function Nav() {
     setDrawerOpen(false);
   }, [pathname]);
 
-  // Lock body scroll + ESC to close while drawer is open
-  useEffect(() => {
-    if (drawerOpen) {
-      const previousOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      const onKey = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') setDrawerOpen(false);
-      };
-      window.addEventListener('keydown', onKey);
-      return () => {
-        document.body.style.overflow = previousOverflow;
-        window.removeEventListener('keydown', onKey);
-      };
-    }
-  }, [drawerOpen]);
+  // Modal a11y for the mobile drawer: move focus into the dialog on open, trap
+  // Tab / Shift+Tab inside it, close on Escape, lock body scroll, and restore
+  // focus to the hamburger on close. Replaces the prior hand-rolled scroll-lock
+  // + Escape effect (which had no focus trap and never moved focus in).
+  useModalA11y(drawerOpen, drawerRef, { onEscape: () => setDrawerOpen(false) });
 
   return (
     <>
       <header
         data-scrolled={scrolled}
+        // While the mobile drawer (a true modal) is open, take the header out of
+        // the a11y tree + tab order so focus/AT stay inside the dialog.
+        aria-hidden={drawerOpen || undefined}
+        inert={drawerOpen || undefined}
         className="fixed inset-x-0 top-9 z-50 h-[72px]
                    transition-all duration-[250ms] ease-[cubic-bezier(0.22,1,0.36,1)]
                    bg-[color:var(--rd-ink)]
@@ -197,8 +193,10 @@ export default function Nav() {
             aria-hidden="true"
           />
           <aside
+            ref={drawerRef}
             id="rd-nav-drawer"
-            className="fixed bottom-0 left-0 top-0 z-[64] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[color:var(--rd-glow)]/10 bg-[color:var(--rd-ink)] animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
+            tabIndex={-1}
+            className="fixed bottom-0 left-0 top-0 z-[64] flex w-[85vw] max-w-[360px] flex-col overflow-y-auto border-r border-[color:var(--rd-glow)]/10 bg-[color:var(--rd-ink)] outline-none animate-[slideInLeft_250ms_cubic-bezier(0.22,1,0.36,1)] md:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"

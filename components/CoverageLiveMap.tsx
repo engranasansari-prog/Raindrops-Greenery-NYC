@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Pause, Play } from 'lucide-react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import {
@@ -204,6 +205,29 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
+
+  // ── On-demand pause (WCAG 2.2.2 Pause, Stop, Hide) ────────────────────────
+  // The couriers / marching-ants / pulse / halo loops are gated to only run
+  // while on-screen + tab-visible, but a user must also be able to STOP the
+  // motion on demand. `userPaused` is the source of truth the button toggles;
+  // `syncRef` points at the load-time sync() so the button can re-run the
+  // gate after flipping it. We keep both a ref (read inside the rAF gate, no
+  // re-render) and React state (drives the button's aria-pressed + label).
+  const userPausedRef = useRef(false);
+  const [userPaused, setUserPaused] = useState(false);
+  const syncRef = useRef<(() => void) | null>(null);
+  // Only show the toggle once the courier loop has actually been wired up —
+  // before that there's nothing to pause, and reduced-motion never animates.
+  const [motionControllable, setMotionControllable] = useState(false);
+
+  const toggleMotion = useCallback(() => {
+    const next = !userPausedRef.current;
+    userPausedRef.current = next;
+    setUserPaused(next);
+    // Re-evaluate the gate: pausing stops immediately; resuming only restarts
+    // if the map is still in view + the tab is visible (sync() owns that AND).
+    syncRef.current?.();
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -650,14 +674,22 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           }
         };
 
-        // Only animate while the map is BOTH on-screen and the tab is visible.
-        // Without this, the rAF kept repainting the GL canvas every frame even
-        // while the visitor sat at the top of the page or had scrolled past —
-        // pure wasted CPU/battery (worst on mobile). Now the cost is zero
-        // unless the customer is actually looking at the map.
+        // Only animate while the map is BOTH on-screen and the tab is visible —
+        // AND the user hasn't pressed Pause. Without the on-screen gate the rAF
+        // kept repainting the GL canvas every frame even while the visitor sat
+        // at the top of the page or had scrolled past — pure wasted CPU/battery
+        // (worst on mobile). The userPaused gate (WCAG 2.2.2) lets anyone stop
+        // the motion on demand; resuming still respects in-view + tab-visible.
         let inView = false;
         let tabVisible = typeof document === 'undefined' || !document.hidden;
-        const sync = () => (inView && tabVisible ? start() : stop());
+        const sync = () =>
+          inView && tabVisible && !userPausedRef.current ? start() : stop();
+
+        // Expose sync() so the on-screen Pause/Play button can re-run the gate
+        // after toggling userPaused, and reveal the control now that there's a
+        // live loop to pause.
+        syncRef.current = sync;
+        setMotionControllable(true);
 
         const onVis = () => {
           tabVisible = !document.hidden;
@@ -696,6 +728,7 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
       visRef.current = null;
       if (observerRef.current) observerRef.current.disconnect();
       observerRef.current = null;
+      syncRef.current = null;
       map.remove();
       mapRef.current = null;
       ready.current = false;
@@ -787,6 +820,29 @@ export default function CoverageLiveMap({ activeCluster, onSelect }: Props) {
           {ALL_ZIPS.length} ZIPs · Same-day NYC
         </span>
       </div>
+      {/* Pause / Play motion toggle (WCAG 2.2.2) — the couriers, marching-ants
+          route dashes, destination pulse, and pin halos all loop indefinitely,
+          so users must be able to stop them on demand. Mirrors the canonical
+          HeroSlider control: a real <button>, aria-pressed, an aria-label that
+          swaps Play/Pause, the global lime :focus-visible ring, and a ≥44px hit
+          area. Sits top-right, clear of the top-left stat chip and the
+          bottom-right zoom controls. Hidden until the loop is wired up (and
+          never shown under reduced-motion, where nothing animates). */}
+      {motionControllable && (
+        <button
+          type="button"
+          onClick={toggleMotion}
+          aria-pressed={userPaused}
+          aria-label={userPaused ? 'Play map motion' : 'Pause map motion'}
+          className="absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--rd-glow)]/30 bg-[color:var(--rd-ink)]/72 text-[color:var(--rd-glow)] backdrop-blur-md transition hover:border-[color:var(--rd-glow)]/55 hover:bg-[color:var(--rd-ink)]/85 sm:right-5 sm:top-5"
+        >
+          {userPaused ? (
+            <Play className="h-4 w-4" aria-hidden />
+          ) : (
+            <Pause className="h-4 w-4" aria-hidden />
+          )}
+        </button>
+      )}
       {/* Responsive zoom hint — cooperative gestures change the interaction per
           device, so the prompt must too. Touch (coarse pointer) reads "Pinch to
           zoom"; mouse (fine pointer) reads "⌘ + scroll". Sits bottom-left, clear

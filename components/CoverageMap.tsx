@@ -196,7 +196,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               size={compact ? 'md' : 'lg'}
             />
 
-            <div className="mt-5 min-h-[80px]">
+            <div className="mt-5 min-h-[80px]" role="status" aria-live="polite" aria-atomic="true">
               <AnimatePresence mode="wait">
                 {result.status === 'supported' && result.cluster && (
                   <m.div
@@ -261,10 +261,13 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
               </AnimatePresence>
             </div>
 
-            {/* Cluster summary cards — only on the home variant */}
-            {!compact && (
-              <div className="mt-8 grid gap-2 sm:grid-cols-2">
-                {COVERAGE.clusters.map((cluster) => {
+            {/* Cluster summary cards — rendered on BOTH variants. The map is a
+                labelled image with no keyboard path to per-zone detail, so these
+                real <button>s are the accessible route to every zone's modal
+                (WCAG 2.1.1). On the compact /delivery layout these cards are the
+                only keyboard entry point, so they must render there too. */}
+            <div className={`grid gap-2 sm:grid-cols-2 ${compact ? 'mt-6' : 'mt-8'}`}>
+              {COVERAGE.clusters.map((cluster) => {
                   const isActive = highlight === cluster.id;
                   return (
                     <button
@@ -297,8 +300,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                     </button>
                   );
                 })}
-              </div>
-            )}
+            </div>
           </div>
 
           {/* The map */}
@@ -369,7 +371,7 @@ export default function CoverageMap({ compact = false, externalActiveCluster, on
                   exit={{ y: 40, opacity: 0, scale: 0.97 }}
                   transition={{ duration: 0.45, ease: easeOut }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative flex max-h-[88dvh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80dvh] sm:rounded-3xl"
+                  className="relative flex max-h-[88dvh] w-full max-w-lg flex-col rounded-t-3xl border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink-soft)] text-[color:var(--rd-text)] shadow-[0_40px_120px_rgba(0,0,0,0.55)] outline-none sm:max-h-[80dvh] sm:rounded-3xl"
                 >
                   {/* Sticky header — close button doesn't overlap text */}
                   <div className="relative flex items-start gap-3 px-5 pt-5 pb-3 sm:px-7 sm:pt-7">

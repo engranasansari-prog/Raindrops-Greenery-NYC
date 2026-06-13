@@ -341,6 +341,7 @@ export default function ChatAssistant() {
             onClick={() => setOpen(true)}
             aria-label="Open the Raindrops chat concierge"
             aria-expanded={open}
+            aria-controls="rd-chat-panel"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -359,6 +360,7 @@ export default function ChatAssistant() {
       <AnimatePresence>
         {open && (
           <m.div
+            id="rd-chat-panel"
             role="dialog"
             aria-label="Raindrops concierge chat"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -391,8 +393,16 @@ export default function ChatAssistant() {
               </button>
             </div>
 
-            {/* Messages */}
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            {/* Messages — a polite live region so appended bot replies are
+                announced to screen readers without stealing focus. */}
+            <div
+              ref={listRef}
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+              aria-atomic="false"
+              className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+            >
               {messages.map((m) =>
                 m.role === 'user' ? (
                   <div key={m.id} className="flex justify-end">
@@ -442,14 +452,16 @@ export default function ChatAssistant() {
 
               {typing && (
                 <div className="flex">
-                  <span className="inline-flex items-center gap-1 rounded-2xl rounded-bl-sm bg-[color:var(--rd-ink)] px-4 py-3" aria-label="Concierge is typing">
+                  <span className="inline-flex items-center gap-1 rounded-2xl rounded-bl-sm bg-[color:var(--rd-ink)] px-4 py-3">
                     {[0, 1, 2].map((i) => (
                       <span
                         key={i}
+                        aria-hidden="true"
                         className="h-1.5 w-1.5 animate-bounce rounded-full bg-[color:var(--rd-text-mute)]"
                         style={{ animationDelay: `${i * 0.15}s` }}
                       />
                     ))}
+                    <span className="sr-only">Concierge is typing</span>
                   </span>
                 </div>
               )}
@@ -485,7 +497,7 @@ export default function ChatAssistant() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about delivery, the menu, the free gift…"
                 aria-label="Type your message"
-                className="min-w-0 flex-1 rounded-full border border-[color:var(--rd-paper)]/14 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)]"
+                className="min-w-0 flex-1 rounded-full border border-[color:var(--rd-paper)]/40 bg-[color:var(--rd-ink-soft)] px-4 py-2.5 text-sm text-[color:var(--rd-text)] outline-none transition placeholder:text-[color:var(--rd-text-mute)] focus:border-[color:var(--rd-glow)]"
               />
               <button
                 type="submit"
