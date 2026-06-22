@@ -31,12 +31,15 @@ export const business = {
   // Tribal land base (Shinnecock Nation, Long Island, New York).
   jurisdiction: 'Shinnecock Nation, Long Island, New York',
   serviceRegion: 'New York City',
-  // Production deploy: the site lives at the subdomain
-  // https://nyc.raindropsgreenery.com (connected to Vercel via a CNAME).
-  // Used by canonical URLs, OG meta, sitemap entries, robots host, and every
-  // JSON-LD @id/url field — single source of truth.
-  domain: 'nyc.raindropsgreenery.com',
-  baseUrl: 'https://nyc.raindropsgreenery.com',
+  // Production deploy: this NYC delivery site is served at its Vercel origin
+  // and reached via the "Delivery" link on the parent brand site
+  // (https://www.raindropsgreenery.com, built separately on Base44). The
+  // branded nyc.raindropsgreenery.com subdomain was never connected at the
+  // registrar, so canonicals/sitemap/OG/JSON-LD must point at the address the
+  // site is ACTUALLY served from — otherwise crawlers see a canonical aimed at
+  // a non-resolving host. Single source of truth for every URL field below.
+  domain: 'raindrops-greenery-nyc.vercel.app',
+  baseUrl: 'https://raindrops-greenery-nyc.vercel.app',
   // Manhattan-centered coordinates for LocalBusiness geo signal. Cannabis
   // delivery is operated from a Manhattan dispatch hub; this is the
   // anchor point shown to Google for local-pack queries.
