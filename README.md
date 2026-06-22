@@ -76,7 +76,9 @@ NEXT_PUBLIC_META_PIXEL_ID=000000000000   # Meta Pixel ID
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-`NEXT_PUBLIC_BASE_PATH` must stay **unset** in production: the site serves at the subdomain root (`https://nyc.raindropsgreenery.com`), and canonicals, sitemap, and JSON-LD all assume the bare root. Only set it if the site moves to a sub-path host. See `.env.example` for the full annotated list.
+`NEXT_PUBLIC_BASE_PATH` must stay **unset** in production: the site serves at its origin root (`https://raindrops-greenery-nyc.vercel.app`), and canonicals, sitemap, and JSON-LD all assume the bare root. Only set it if the site moves to a sub-path host. See `.env.example` for the full annotated list.
+
+> **Production URL note:** this NYC delivery site is served from its Vercel origin (`https://raindrops-greenery-nyc.vercel.app`) and reached via the **"Delivery"** link on the parent brand site (`https://www.raindropsgreenery.com`, built separately on Base44). The branded `nyc.raindropsgreenery.com` subdomain was planned but never connected at the registrar, so `business.baseUrl` points at the Vercel origin — the address the site is actually served from. If the subdomain is ever connected, change `business.domain`/`business.baseUrl` in `lib/site-data.ts` (single source of truth) and everything else follows.
 
 ## Quality checks
 
@@ -95,7 +97,7 @@ Business details live in `lib/site-data.ts` (single source of truth for contact 
 - [x] Business hours — Daily 10:00 AM – 10:00 PM
 - [x] Licensing — Shinnecock Nation Cannabis Regulatory Division (`license` / `licensingAuthority`)
 - [x] Instagram profile URL (`social[]` — Instagram only)
-- [x] Production hostname in `business.domain` / `business.baseUrl` (`nyc.raindropsgreenery.com`)
+- [x] Production hostname in `business.domain` / `business.baseUrl` (`raindrops-greenery-nyc.vercel.app` — served from the Vercel origin, linked from the Base44 parent site)
 
 Then:
 

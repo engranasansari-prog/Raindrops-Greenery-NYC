@@ -44,7 +44,7 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: `${business.baseUrl}/sitemap.xml`,
     // host must be a bare hostname per the robots spec — no scheme, no path.
-    // business.domain is the bare subdomain (nyc.raindropsgreenery.com);
+    // business.domain is the bare host (raindrops-greenery-nyc.vercel.app);
     // business.baseUrl carries the scheme, which the host field must omit.
     host: business.domain
   };

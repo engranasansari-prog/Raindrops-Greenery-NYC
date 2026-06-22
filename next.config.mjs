@@ -64,8 +64,8 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion']
   },
-  // Production deploy: the site is served at the ROOT of the subdomain
-  // https://nyc.raindropsgreenery.com, so basePath stays empty. The env
+  // Production deploy: the site is served at the ROOT of its Vercel origin
+  // https://raindrops-greenery-nyc.vercel.app, so basePath stays empty. The env
   // override is kept only as an escape hatch for a future sub-path host —
   // leave NEXT_PUBLIC_BASE_PATH UNSET in Vercel (setting it would prefix
   // every route while canonicals / sitemap / JSON-LD still point at the bare

@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next';
  * PWA manifest — generated (not a static public/manifest.json) so that
  * start_url, scope, and icon paths derive from the same NEXT_PUBLIC_BASE_PATH
  * that next.config uses, keeping them in lockstep. Production serves at the
- * subdomain root (https://nyc.raindropsgreenery.com) with BASE_PATH unset, so
+ * Vercel origin root (https://raindrops-greenery-nyc.vercel.app) with BASE_PATH unset, so
  * BASE is '' and everything resolves from '/'. The env hook remains only as an
  * escape hatch for a future sub-path host.
  */

@@ -14,7 +14,7 @@ Search engines build trust when your **N**ame, **A**ddress/area, and **P**hone m
 |---|---|
 | **Business name** | `Raindrops Greenery` (use `Raindrops Greenery NY LLC` only where a platform legally requires the registered entity) |
 | **Phone** | `(888) 448-4717` |
-| **Website** | `https://nyc.raindropsgreenery.com` *(the final subdomain — never the temporary vercel.app URL)* |
+| **Website** | `https://raindrops-greenery-nyc.vercel.app` *(the live served origin — use this exact URL on every citation/GBP/profile so it matches the site's own canonical. The `nyc.raindropsgreenery.com` subdomain was never connected; do NOT use it.)* |
 | **Email** | `nycraindrops@gmail.com` *(upgrade to a branded address e.g. `hello@raindropsgreenery.com` when available, then update everywhere)* |
 | **Hours** | Every day, `10:00 AM – 10:00 PM` |
 | **Service areas** | Manhattan · Williamsburg, Brooklyn · Greenpoint, Brooklyn · Long Island City, Queens |
@@ -41,7 +41,7 @@ This is the single highest‑value off‑site action. It's the **only** way to a
 2. **Business name:** `Raindrops Greenery` — exactly, nothing appended.
 3. **Primary category:** `Cannabis store`. (Never pick a softer category to unlock features — fastest route to suspension.)
 4. **Delivery / service‑area business:** choose *"I deliver goods and services to my customers"* and **hide the street address**. Add service areas: **Manhattan, Williamsburg, Greenpoint, Long Island City**.
-5. **Phone:** `(888) 448-4717`. **Website:** `https://nyc.raindropsgreenery.com`.
+5. **Phone:** `(888) 448-4717`. **Website:** `https://raindrops-greenery-nyc.vercel.app`.
 6. **Hours:** every day 10:00 AM – 10:00 PM.
 7. **Description:** paste the block below.
 8. **Verify** following Google's prompts (likely video). Don't skip.
@@ -61,7 +61,7 @@ Aggregators outrank everyone for cannabis terms and are heavily cited by AI answ
 - **Weedmaps** (weedmaps.com/biz — "List your business") → create a **Delivery** listing.
 - **Leafly** (business.leafly.com) → create a **Delivery** profile.
 
-For both: use the exact NAP from §0, set hours, set the delivery service area to the four neighborhoods, link to `https://nyc.raindropsgreenery.com`, and keep the menu/hours accurate.
+For both: use the exact NAP from §0, set hours, set the delivery service area to the four neighborhoods, link to `https://raindrops-greenery-nyc.vercel.app`, and keep the menu/hours accurate.
 
 **Profile "About" text (copy‑paste, ~360 characters):**
 ```
@@ -127,9 +127,9 @@ Thanks for the support — and enjoy responsibly. 21+ only.
 
 All the new pages (deals, /menu/flower·pre-rolls·edibles, the 8 neighborhood pages) need Google to crawl them. GSC kicks that off.
 
-1. Go to **search.google.com/search-console** and add the property `https://nyc.raindropsgreenery.com` *(do this once the domain/DNS is live)*.
+1. Go to **search.google.com/search-console** and add the property `https://raindrops-greenery-nyc.vercel.app` *(do this once the domain/DNS is live)*.
 2. Verify ownership. Easiest options: a **DNS TXT record**, or an **HTML meta tag** — if you choose the meta tag, send me the code and I'll add it to the site in one edit.
-3. Submit the sitemap: `https://nyc.raindropsgreenery.com/sitemap.xml`
+3. Submit the sitemap: `https://raindrops-greenery-nyc.vercel.app/sitemap.xml`
 4. Use **URL Inspection → Request indexing** on the key pages first (home, /delivery, the neighborhood + category pages).
 5. Repeat in **Bing Webmaster Tools** (bing.com/webmasters) — powers Copilot + ChatGPT browsing.
 
