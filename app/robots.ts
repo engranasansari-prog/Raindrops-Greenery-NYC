@@ -39,7 +39,8 @@ export default function robots(): MetadataRoute.Robots {
           'CCBot',
           'cohere-ai'
         ],
-        allow: '/'
+        allow: '/',
+        disallow: ['/api/subscribe', '/api/chat']
       }
     ],
     sitemap: `${business.baseUrl}/sitemap.xml`,

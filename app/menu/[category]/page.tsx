@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 // Module scope — avoids an impure Date.now() inside the component render
 // (the Next 16 React compiler flags that), same pattern as /deals.
-const PRICE_VALID_UNTIL = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+const PRICE_VALID_UNTIL = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
 
 function buildItemListLd(slug: string, name: string, products: LiveMenuProduct[]) {
   return {

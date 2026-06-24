@@ -95,7 +95,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
     name: 'Edibles',
     title: 'Weed Edibles Delivery NYC',
     metaDescription:
-      'Same-day, tax-free edibles delivery in NYC. Browse cannabis edibles by THC content and price. Free delivery over $25. 21+.',
+      'Same-day, tax-free edibles delivery in NYC. Browse cannabis gummies & chocolates by THC and price. Free over $25, plus a free gift every order. 21+.',
     eyebrow: 'Edibles · 21+',
     heroLede:
       'Cannabis edibles delivered same-day across NYC — browse by THC content and price. Tax-free, free on orders over $25, daily 10 AM–10 PM.',

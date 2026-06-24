@@ -77,7 +77,7 @@ function Section({
 // priceValidUntil out of an inline `new Date()` per product (the prior
 // shape called Date.now() ~20 times per build), which the Next 16 React
 // compiler flagged as an impure render.
-const PRICE_VALID_UNTIL = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+const PRICE_VALID_UNTIL = new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10);
 
 // --- Curated "Featured picks" buckets ----------------------------------
 // Mutually exclusive by PRICE BAND so a product never repeats across

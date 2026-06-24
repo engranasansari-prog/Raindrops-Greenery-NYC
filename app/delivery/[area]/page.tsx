@@ -98,7 +98,11 @@ export default async function NeighborhoodPage({ params }: { params: Promise<{ a
     description: n.metaDescription,
     url: PAGE_URL,
     provider: { '@id': `${business.baseUrl}#business` },
-    areaServed: { '@type': 'Place', name: n.fullName },
+    areaServed: {
+      '@type': 'Place',
+      name: n.fullName,
+      geo: { '@type': 'GeoCoordinates', latitude: n.geo.lat, longitude: n.geo.lng }
+    },
     hoursAvailable: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

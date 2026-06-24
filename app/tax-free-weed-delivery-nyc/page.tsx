@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   // ranks for the commercial head term "Tax-Free Weed Delivery NYC".
   title: 'Why Is Raindrops Weed Delivery Tax-Free?',
   description:
-    'Why is Raindrops Greenery weed delivery tax-free? Because it is a Tribally licensed dispensary selling on Native Sovereign Land — the listed NYC price is what you pay. 21+.',
+    'Why is Raindrops Greenery weed delivery tax-free? It is a Tribally licensed dispensary on Native Sovereign Land — the listed NYC price is what you pay. 21+.',
   alternates: { canonical: '/tax-free-weed-delivery-nyc' },
   openGraph: {
     title: 'Why Is Raindrops Weed Delivery Tax-Free? | Raindrops Greenery',

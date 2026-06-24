@@ -235,7 +235,7 @@ const organizationLd = {
       telephone: business.phoneHref.replace('tel:', ''),
       email: business.email,
       contactType: 'customer service',
-      areaServed: 'US-NY',
+      areaServed: { '@type': 'City', name: 'New York' },
       availableLanguage: ['English'],
       hoursAvailable: {
         '@type': 'OpeningHoursSpecification',
@@ -289,7 +289,11 @@ const localBusinessLd = {
   // Every city we serve + every covered ZIP — this is what unlocks
   // local-pack rankings for neighborhood-specific queries.
   areaServed: [
-    ...serviceAreas.map((area) => ({ '@type': 'City', name: area })),
+    ...serviceAreas.map((area) => ({
+      '@type': 'AdministrativeArea',
+      name: area,
+      containedInPlace: { '@type': 'City', name: 'New York' }
+    })),
     ...COVERAGE.clusters.map((cluster) => ({
       '@type': 'AdministrativeArea',
       name: cluster.name,

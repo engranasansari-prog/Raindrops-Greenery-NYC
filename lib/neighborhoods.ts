@@ -57,6 +57,10 @@ export type Neighborhood = {
   landmarks: string[];
   /** How we route there fast (unique logistics paragraph). */
   routing: string;
+  /** Area centroid (lat/lng) for the per-area LocalBusiness/Place schema, so
+   *  each page emits its own geo coordinate instead of the Midtown business
+   *  centroid. Approximate neighborhood centers. */
+  geo: { lat: number; lng: number };
   /** Optional local social proof. */
   proof?: NeighborhoodProof;
   /** Unique, answer-first local FAQs (rendered visibly + as FAQPage schema). */
@@ -90,9 +94,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       'Same-day, tax-free weed delivery to Williamsburg, Brooklyn (11211) — North Side, South Side, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Brooklyn · 11211 · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery to the heart of Williamsburg — North Side, South Side, and the East River waterfront. Free on orders over $25, with a free pre-roll in every bag.',
+      'From the Bedford Avenue cafés to the Domino Park waterfront, Williamsburg is one of North Brooklyn’s busiest weed-delivery zones — and a short Williamsburg Bridge hop from our Manhattan dispatch. Tax-free, same-day, free on orders over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across Williamsburg (ZIP 11211) every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so the price on the menu is the price at your door. Delivery is free on orders over $25.',
+      'Williamsburg moves fast — the South Side below Grand, the boutiques along Bedford Avenue, and the Kent Avenue towers from Domino Park up to McCarren all sit inside ZIP 11211, and Raindrops Greenery covers every block of it. We deliver weed across Williamsburg every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so the price on the menu is the price at your door. Delivery is free on orders over $25.',
     zones: [
       { name: 'North Side', blurb: 'Bedford Avenue above Grand Street, the boutiques and cafés around the Bedford Av L stop, and the blocks running down to the waterfront.' },
       { name: 'South Side', blurb: 'Below Grand toward Broadway and the foot of the Williamsburg Bridge — our quickest drop once a driver clears the bridge from Manhattan.' },
@@ -102,6 +106,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['McCarren Park', 'Domino Park', 'the Williamsburg Bridge', 'the Bedford Av L stop', 'Marsha P. Johnson State Park'],
     routing:
       'We dispatch from Manhattan and cross the Williamsburg Bridge straight into the South Side, which makes 11211 one of our fastest North Brooklyn drops despite the river. Average drop-off is in under an hour, and often quicker outside rush hour. We treat the bridge crossing as a routing problem with a known solution — not an excuse to tack on a surcharge.',
+    geo: { lat: 40.7081, lng: -73.9571 },
     proof: {
       quote: 'The site made it easy to compare a few hybrids before I ordered. Driver was on time, ID verified at the door, no fuss.',
       author: 'Jordan M.',
@@ -110,7 +115,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     faqs: [
       {
         q: 'Is weed delivery legal in Williamsburg?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary and serves adults 21 and older only. A valid government photo ID is verified at the door before every handoff.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across Williamsburg, Brooklyn (ZIP 11211) — from the South Side at the foot of the Williamsburg Bridge up to McCarren Park. A valid government photo ID is verified at the door before every handoff.'
       },
       {
         q: 'How long does weed delivery to Williamsburg take?',
@@ -122,7 +127,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free in Williamsburg?',
-        a: 'Yes — delivery is free on every Williamsburg order over $25. There is no surge pricing and no hidden fees, and every order includes a complimentary pre-roll while supplies last.'
+        a: 'Yes — delivery is free on every Williamsburg (11211) order over $25, whether you are on Bedford Avenue, the South Side, or the Kent Avenue waterfront. There is no surge pricing and no hidden fees, and every order includes a complimentary pre-roll while supplies last.'
       }
     ],
     relatedPosts: ['east-river-50-minutes', 'nyc-delivery-menu-guide', 'how-checkout-works']
@@ -138,12 +143,12 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     etaLabel: '~55 min',
     title: 'Weed Delivery in Greenpoint',
     metaDescription:
-      'Same-day, tax-free weed delivery to Greenpoint, Brooklyn (11222) — Franklin Street, Manhattan Avenue, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery to Greenpoint, Brooklyn (11222) — Franklin St, Manhattan Ave, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Brooklyn · 11222 · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery to Greenpoint — Franklin Street, Manhattan Avenue, and the northern Brooklyn waterfront. Free on orders over $25, with a free pre-roll in every bag.',
+      'Manhattan Avenue’s Polish bakeries, the Franklin Street bar crawl, and the Transmitter Park ferry pier — Greenpoint sits at the very top of Brooklyn, and we reach it up from Williamsburg or over the Pulaski Bridge. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across Greenpoint (ZIP 11222) every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so the listed price is the price you pay, with free delivery over $25.',
+      'Greenpoint keeps its own rhythm — the Polish-American heart along Manhattan Avenue, the cafés and the WNYC Transmitter Park ferry off Franklin Street, and the quiet residential blocks ringing McGolrick Park toward Newtown Creek. Raindrops Greenery delivers weed across all of ZIP 11222 every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so the listed price is the price you pay, with free delivery over $25.',
     zones: [
       { name: 'Franklin Street corridor', blurb: 'The cafés, bars, and shops running north toward the WNYC Transmitter Park ferry pier.' },
       { name: 'Manhattan Avenue', blurb: 'Greenpoint’s main commercial spine through the historic Polish-American heart of the neighborhood.' },
@@ -153,10 +158,11 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['McGolrick Park', 'WNYC Transmitter Park', 'the India Street ferry pier', 'McCarren Park', 'Manhattan Avenue'],
     routing:
       'Greenpoint sits at the northern tip of Brooklyn, so we reach it either up from Williamsburg or across the Pulaski Bridge from Long Island City — the same fast North Brooklyn route. Average drop-off is in under an hour, and there is never a bridge or crossing surcharge.',
+    geo: { lat: 40.7304, lng: -73.9512 },
     faqs: [
       {
         q: 'Is weed delivery legal in Greenpoint?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is checked at the door on every delivery.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across Greenpoint, Brooklyn (ZIP 11222) — from Manhattan Avenue and Franklin Street out to McGolrick Park. A valid government photo ID is checked at the door on every delivery.'
       },
       {
         q: 'How long does weed delivery to Greenpoint take?',
@@ -168,7 +174,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is there free weed delivery in Greenpoint?',
-        a: 'Yes — delivery is free on every Greenpoint order over $25, with no hidden fees, plus a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every Greenpoint (11222) order over $25, from the Franklin Street corridor to the India Street waterfront, with no bridge surcharge and no hidden fees, plus a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['east-river-50-minutes', 'flower-prerolls-edibles-guide', 'how-checkout-works']
@@ -184,12 +190,12 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     etaLabel: '~55 min',
     title: 'Weed Delivery in Long Island City',
     metaDescription:
-      'Same-day, tax-free weed delivery to Long Island City, Queens (11101) — Hunters Point, Court Square, and the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery to Long Island City, Queens (11101) — Hunters Point, Court Square & the waterfront. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Queens · 11101 · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery to Long Island City — Hunters Point, Court Square, and the Gantry Plaza waterfront. Free on orders over $25, with a free pre-roll in every bag.',
+      'Under the Queensboro Bridge towers and along the Gantry Plaza waterfront, Long Island City packs Hunters Point high-rises and the Court Square hub into one fast Queens drop — a single bridge or tunnel from Midtown. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across Long Island City (ZIP 11101) every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so what you see on the menu is what you pay, with free delivery over $25.',
+      'Long Island City stacks up along the East River — the Center Boulevard and Vernon Boulevard towers of Hunters Point, the offices around Court Square and MoMA PS1, and the Gantry Plaza parks staring straight back at Midtown. Raindrops Greenery delivers weed across ZIP 11101 every day from 10 AM to 10 PM. We are a Tribally licensed dispensary — all products are produced, packaged, and sold on Native Sovereign Land — and pricing is tax-free, so what you see on the menu is what you pay, with free delivery over $25.',
     zones: [
       { name: 'Hunters Point', blurb: 'The Center Boulevard and Vernon Boulevard high-rises along the waterfront — some of our most frequent LIC stops.' },
       { name: 'Court Square', blurb: 'The towers and offices around the Court Sq subway hub and MoMA PS1.' },
@@ -199,6 +205,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Gantry Plaza State Park', 'MoMA PS1', 'the Pepsi-Cola sign', 'Court Square', 'the Queensboro Bridge'],
     routing:
       'Long Island City is a single bridge or tunnel from Midtown — our drivers take the Queensboro Bridge or the Queens-Midtown Tunnel and are in Hunters Point quickly. Average drop-off is in under an hour, free on orders over $25, with no crossing surcharge.',
+    geo: { lat: 40.7447, lng: -73.9485 },
     proof: {
       quote: 'Ordered edibles on a Friday and they crossed the bridge in 50 minutes. Doing this again.',
       author: 'Daniel R.',
@@ -207,7 +214,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     faqs: [
       {
         q: 'Is weed delivery legal in Long Island City?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is verified at the door before handoff.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across Long Island City, Queens (ZIP 11101) — from the Hunters Point waterfront to Court Square and Vernon Boulevard. A valid government photo ID is verified at the door before handoff.'
       },
       {
         q: 'How fast is weed delivery to Long Island City?',
@@ -219,7 +226,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free in Long Island City?',
-        a: 'Yes — delivery is free on every LIC order over $25, with no hidden fees and a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every LIC (11101) order over $25, from Hunters Point to Court Square, with no Queensboro Bridge or tunnel surcharge and no hidden fees, plus a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['east-river-50-minutes', 'nyc-delivery-menu-guide', 'flower-prerolls-edibles-guide']
@@ -235,12 +242,12 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     etaLabel: '35–50 min',
     title: 'Weed Delivery in Manhattan, NYC',
     metaDescription:
-      'Same-day, tax-free weed delivery across most of Manhattan — Upper East & West Sides, Midtown, the Village, SoHo & FiDi. Free over $25, daily 10 AM–10 PM. 21+.',
+      'Same-day, tax-free weed delivery across most of Manhattan — Upper East & West Sides, Midtown, the Village & FiDi. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · 21+ · Same-day',
     heroLede:
-      'Tax-free, same-day cannabis delivery across most of Manhattan — from the Financial District up through Midtown to the Upper East and Upper West Sides. Free on orders over $25, with a free pre-roll in every bag.',
+      'Manhattan is our home turf — no bridges to cross, roughly thirty ZIP codes from Wall Street and Battery Park up through Midtown to the Upper East and Upper West Sides, with downtown drops in as little as 35 minutes. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across most of Manhattan every day from 10 AM to 10 PM, covering roughly thirty ZIP codes in six zones. Manhattan is our home turf, so there is no bridge crossing — it is our fastest coverage, with downtown drops in as little as 35 minutes. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free over $25.',
+      'Manhattan is where Raindrops Greenery moves fastest: six zones, roughly thirty ZIP codes, and no river to cross between our dispatch and your door. We deliver weed across most of the borough every day from 10 AM to 10 PM, with downtown drops in Greenwich Village, SoHo, and the East Village in as little as 35 minutes. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free over $25.',
     zones: [
       { name: 'Upper East & Upper West Sides', blurb: 'The avenues flanking Central Park, from the 60s up through the 120s (10023, 10024, 10025, 10028, 10128 and more).' },
       { name: 'Midtown', blurb: 'From Hudson Yards and the Theater District across to Murray Hill and the East 50s.' },
@@ -252,6 +259,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Central Park', 'Washington Square Park', 'the High Line', 'the Financial District', 'the South Street Seaport'],
     routing:
       'Because every Manhattan zone is reachable without crossing a bridge, this is our fastest and most heavily covered borough. Downtown orders in Greenwich Village, SoHo, Tribeca, and the East Village can arrive in as little as 35 minutes; uptown drops on the Upper East and West Sides average about 50. We deliver daily, 10 AM to 10 PM.',
+    geo: { lat: 40.7484, lng: -73.9857 },
     proof: {
       quote: 'Cleanest menu I’ve used in New York. Pre-rolls were exactly what was on the page, prices matched. Easy.',
       author: 'Priya S.',
@@ -292,9 +300,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       'Same-day, tax-free weed delivery to the Upper East Side (10021, 10028, 10065, 10075, 10128) — Lenox Hill & Yorkville. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · UES · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery across the Upper East Side — Lenox Hill, Yorkville, and Carnegie Hill. Free on orders over $25, with a free pre-roll in every bag.',
+      'Along Museum Mile and the avenues east of Central Park — Lenox Hill, Yorkville, Carnegie Hill — the Upper East Side is pure in-borough delivery with no bridge to cross. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across the Upper East Side every day from 10 AM to 10 PM, covering ZIP codes 10021, 10028, 10065, 10075, and 10128. We are a Tribally licensed dispensary with tax-free pricing — what you see on the menu is what you pay, and delivery is free on orders over $25.',
+      'The Upper East Side runs from the Lenox Hill blocks in the 60s and 70s up through Yorkville and Carnegie Hill, hugging Central Park’s east edge along Fifth, Madison, Park, and Lexington. Raindrops Greenery delivers weed here every day from 10 AM to 10 PM, covering ZIP codes 10021, 10028, 10065, 10075, and 10128. We are a Tribally licensed dispensary with tax-free pricing — what you see on the menu is what you pay, and delivery is free on orders over $25.',
     zones: [
       { name: 'Lenox Hill', blurb: 'The East 60s and 70s around Park and Lexington, down through the hospital corridor (10065, 10021).' },
       { name: 'Yorkville', blurb: 'The East 80s out toward the river and Carl Schurz Park (10028, 10128).' },
@@ -304,10 +312,11 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Central Park', 'the Met and Museum Mile', 'Lenox Hill', 'Carl Schurz Park', 'the Second Avenue subway'],
     routing:
       'The Upper East Side is pure in-borough delivery — no bridge crossing — so our driver runs straight up the East Side. Average drop-off is around 50 minutes, free on orders over $25, every day from 10 AM to 10 PM.',
+    geo: { lat: 40.7736, lng: -73.9566 },
     faqs: [
       {
         q: 'Is weed delivery legal on the Upper East Side?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is verified at the door before every handoff.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across the Upper East Side (ZIPs 10021, 10028, 10065, 10075, and 10128) — Lenox Hill, Yorkville, and Carnegie Hill. A valid government photo ID is verified at the door before every handoff.'
       },
       {
         q: 'How fast is weed delivery to the Upper East Side?',
@@ -319,7 +328,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free on the Upper East Side?',
-        a: 'Yes — delivery is free on every Upper East Side order over $25, with no hidden fees and a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every Upper East Side order over $25, from Lenox Hill up through Yorkville (10021–10128), with no hidden fees and a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['nyc-delivery-menu-guide', 'flower-prerolls-edibles-guide', 'how-checkout-works']
@@ -339,9 +348,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       'Same-day, tax-free weed delivery to the Upper West Side (10023, 10024, 10025) — Lincoln Square to Manhattan Valley. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · UWS · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery across the Upper West Side — from Lincoln Square up through Manhattan Valley. Free on orders over $25, with a free pre-roll in every bag.',
+      'From Lincoln Center up through the brownstone 70s and 80s to Manhattan Valley, the Upper West Side stretches between Central Park and Riverside — and it is all in-borough, no bridge crossing. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across the Upper West Side every day from 10 AM to 10 PM, covering ZIP codes 10023, 10024, and 10025. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
+      'The Upper West Side runs from Lincoln Square at Columbus Circle’s northern edge, through the brownstone 70s and 80s between the park and Riverside, up into Manhattan Valley near Morningside. Raindrops Greenery delivers weed here every day from 10 AM to 10 PM, covering ZIP codes 10023, 10024, and 10025. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
     zones: [
       { name: 'Lincoln Square', blurb: 'The blocks around Lincoln Center and Columbus Circle’s northern edge (10023).' },
       { name: 'The 70s & 80s', blurb: 'The heart of the Upper West Side between the park and Riverside (10024).' },
@@ -351,10 +360,11 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Central Park', 'Lincoln Center', 'the American Museum of Natural History', 'Riverside Park', 'Zabar’s'],
     routing:
       'The Upper West Side is in-borough delivery with no bridge crossing, so our driver runs straight up the West Side. Average drop-off is around 50 minutes, free on orders over $25, every day from 10 AM to 10 PM.',
+    geo: { lat: 40.787, lng: -73.9754 },
     faqs: [
       {
         q: 'Is weed delivery legal on the Upper West Side?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is checked at the door on every delivery.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across the Upper West Side (ZIPs 10023, 10024, and 10025) — from Lincoln Square through Manhattan Valley. A valid government photo ID is checked at the door on every delivery.'
       },
       {
         q: 'How fast is weed delivery to the Upper West Side?',
@@ -366,7 +376,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free on the Upper West Side?',
-        a: 'Yes — delivery is free on every Upper West Side order over $25, with no hidden fees and a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every Upper West Side order over $25, from Lincoln Square to Manhattan Valley (10023–10025), with no hidden fees and a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['nyc-delivery-menu-guide', 'flower-prerolls-edibles-guide', 'how-checkout-works']
@@ -386,9 +396,9 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       'Same-day, tax-free weed delivery to the East Village (10003, 10009) — Alphabet City, Tompkins Square & St. Marks. Free over $25, daily 10 AM–10 PM. 21+.',
     eyebrow: 'Manhattan · East Village · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery across the East Village — Alphabet City, Tompkins Square, and St. Marks. One of our fastest drops, free on orders over $25, with a free pre-roll in every bag.',
+      'St. Marks Place, the Tompkins Square blocks, and Alphabet City out to Avenue D — the East Village is one of our quickest downtown drops, often in about 35 minutes. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across the East Village every day from 10 AM to 10 PM, covering ZIP codes 10003 and 10009. It is one of our fastest downtown zones, with drops often arriving in around 35 minutes. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
+      'The East Village runs from Astor Place and St. Marks east through Tompkins Square Park and out into Alphabet City along Avenues A to D. Raindrops Greenery delivers weed here every day from 10 AM to 10 PM, covering ZIP codes 10003 and 10009 — one of our fastest downtown zones, with drops often arriving in around 35 minutes. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
     zones: [
       { name: 'Alphabet City', blurb: 'Avenues A through D and the blocks around Tompkins Square Park (10009).' },
       { name: 'Tompkins Square', blurb: 'The park and the streets that ring it, the heart of the East Village (10009).' },
@@ -398,10 +408,11 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Tompkins Square Park', 'St. Marks Place', 'Astor Place', 'the Public Theater', 'Union Square'],
     routing:
       'The East Village is one of our quickest zones — it sits in the fast downtown cluster with no bridge crossing — so drops often land in about 35 minutes. Free on orders over $25, every day from 10 AM to 10 PM.',
+    geo: { lat: 40.7265, lng: -73.9815 },
     faqs: [
       {
         q: 'Is weed delivery legal in the East Village?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is verified at the door before handoff.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across the East Village (ZIPs 10003 and 10009) — Alphabet City, Tompkins Square, St. Marks, and Astor Place. A valid government photo ID is verified at the door before handoff.'
       },
       {
         q: 'How fast is weed delivery to the East Village?',
@@ -413,7 +424,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free in the East Village?',
-        a: 'Yes — delivery is free on every East Village order over $25, with no hidden fees and a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every East Village order over $25, from St. Marks to Avenue D (10003 and 10009), with no hidden fees and a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['nyc-delivery-menu-guide', 'what-sticky-icky-means', 'how-checkout-works']
@@ -430,12 +441,12 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     etaLabel: '~40 min',
     title: 'Weed Delivery in Midtown Manhattan',
     metaDescription:
-      'Same-day, tax-free weed delivery across Midtown Manhattan — Hell’s Kitchen, Murray Hill, Grand Central & the Theater District. Free over $25, daily 10–10. 21+.',
+      'Same-day, tax-free weed delivery across Midtown Manhattan — Hell’s Kitchen, Murray Hill, Grand Central & the Theater District. Free over $25, 21+.',
     eyebrow: 'Manhattan · Midtown · 21+',
     heroLede:
-      'Tax-free, same-day cannabis delivery across Midtown — Hell’s Kitchen, the Theater District, Grand Central, and Murray Hill. Free on orders over $25, with a free pre-roll in every bag.',
+      'From Hell’s Kitchen and the Theater District across to Grand Central, Bryant Park, and Murray Hill, Midtown is the dead center of Manhattan — so it is central in-borough delivery with no bridge to cross. Tax-free, same-day, free over $25, with a free pre-roll in every bag.',
     intro:
-      'Raindrops Greenery delivers weed across Midtown Manhattan every day from 10 AM to 10 PM, covering ZIP codes 10001, 10016, 10017, 10018, 10019, 10022, and 10036. Midtown is central in-borough delivery with no bridge crossing. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
+      'Midtown sweeps from Hell’s Kitchen and Columbus Circle on the far West Side, through Times Square and the Theater District, across the Garment District and NoMad to Murray Hill, Grand Central, and Midtown East. Raindrops Greenery delivers weed here every day from 10 AM to 10 PM, covering ZIP codes 10001, 10016, 10017, 10018, 10019, 10022, and 10036 — central in-borough delivery with no bridge crossing. We are a Tribally licensed dispensary with tax-free pricing, and delivery is free on orders over $25.',
     zones: [
       { name: 'Hell’s Kitchen & Columbus Circle', blurb: 'The far West Side from the 40s through the 50s (10019).' },
       { name: 'Times Square & the Theater District', blurb: 'The Broadway core and the surrounding hotels and offices (10036).' },
@@ -445,10 +456,11 @@ export const NEIGHBORHOODS: Neighborhood[] = [
     landmarks: ['Times Square', 'Grand Central Terminal', 'Bryant Park', 'Rockefeller Center', 'Hudson Yards'],
     routing:
       'Midtown is central in-borough delivery with no bridge crossing, so drops average about 40 minutes. Free on orders over $25, every day from 10 AM to 10 PM.',
+    geo: { lat: 40.7549, lng: -73.984 },
     faqs: [
       {
         q: 'Is weed delivery legal in Midtown Manhattan?',
-        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only. A valid government photo ID is verified at the door before handoff.'
+        a: 'Raindrops Greenery is a Tribally licensed dispensary serving adults 21 and older only across Midtown (ZIPs 10001, 10016, 10017, 10018, 10019, 10022, and 10036) — from Hell’s Kitchen and the Theater District to Grand Central and Midtown East. A valid government photo ID is verified at the door before handoff.'
       },
       {
         q: 'How fast is weed delivery to Midtown?',
@@ -460,7 +472,7 @@ export const NEIGHBORHOODS: Neighborhood[] = [
       },
       {
         q: 'Is delivery free in Midtown?',
-        a: 'Yes — delivery is free on every Midtown order over $25, with no hidden fees and a complimentary pre-roll in every order while supplies last.'
+        a: 'Yes — delivery is free on every Midtown order over $25, from Hell’s Kitchen to Midtown East (10001–10036), with no hidden fees and a complimentary pre-roll in every order while supplies last.'
       }
     ],
     relatedPosts: ['nyc-delivery-menu-guide', 'flower-prerolls-edibles-guide', 'how-checkout-works']
